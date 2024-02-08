@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import User
 from django.views.generic import ListView
 
+
 # Create your views here.
 class UserListView(ListView):
     model = User
@@ -10,14 +11,17 @@ class UserListView(ListView):
     context_object_name = "users"
 
 
-class UserDetailView():
+class UserDetailView:
     pass
 
-class UserCreateView():
+
+class UserCreateView:
     pass
 
-class UserUpdateView():
+
+class UserUpdateView:
     pass
 
-class UserDeleteView():
+
+class UserDeleteView:
     pass
