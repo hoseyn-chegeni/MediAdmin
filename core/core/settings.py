@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     "two_factor",
     # ------------
     "base",
-    "index"
-    "accounts",
+    "index" "accounts",
 ]
 
 MIDDLEWARE = [

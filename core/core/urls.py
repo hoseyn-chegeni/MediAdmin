@@ -22,11 +22,12 @@ from django.conf.urls.static import static
 from two_factor.urls import urlpatterns as tf_urls
 
 
-urlpatterns =( [
-    path("admin/", admin.site.urls),
-    path("", include(tf_urls)),
-    path("index/", include("index.urls")),
-    path("accounts/", include("accounts.urls")),
+urlpatterns = (
+    [
+        path("admin/", admin.site.urls),
+        path("", include(tf_urls)),
+        path("index/", include("index.urls")),
+        path("accounts/", include("accounts.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
