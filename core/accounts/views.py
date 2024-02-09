@@ -6,8 +6,9 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .froms import CustomUserCreationForm
+from django.contrib.auth.views import LogoutView
 
 
 # Create your views here.
@@ -46,3 +47,9 @@ class UserDeleteView(DeleteView):
     model = User
     template_name = "accounts/delete.html"
     success_url = reverse_lazy("accounts:user_list")
+
+
+
+class UserLogoutView(LogoutView):
+    def get_success_url(self):
+        return reverse("two_factor:login")
