@@ -1,8 +1,7 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.shortcuts import render
 from .models import User
 from django.views.generic import ListView, DetailView, CreateView,UpdateView,DeleteView
+from django.urls import reverse_lazy
+from .froms import CustomUserCreationForm
 
 
 # Create your views here.
@@ -19,13 +18,19 @@ class UserDetailView(DetailView):
     context_object_name = "user"
 
 
-class UserCreateView:
+class UserCreateView(CreateView):
+    model = User
+    form_class = CustomUserCreationForm
+    template_name = "accounts/create.html"
+   
+
+    def get_success_url(self):
+        return reverse_lazy("accounts:user_detail", kwargs={"pk": self.object.pk})
+
+
+class UserUpdateView(UpdateView):
     pass
 
 
-class UserUpdateView:
-    pass
-
-
-class UserDeleteView:
+class UserDeleteView(DeleteView):
     pass

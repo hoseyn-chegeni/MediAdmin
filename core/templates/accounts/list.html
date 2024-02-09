@@ -1,3 +1,4 @@
+<a href="{% url 'accounts:user_create' %}">Create User</a>
 {%for i in users%}
     {{i.id}}.{{i.email}},<a href="{% url 'accounts:user_detail' i.pk %}">Details</a>
 {% endfor %}
