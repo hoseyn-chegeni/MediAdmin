@@ -32,9 +32,11 @@ class UserUpdateView(UpdateView):
     model = User
     fields = ("first_name", "last_name")
     template_name = "accounts/update.html"
-    
+
     def get_success_url(self):
         return reverse_lazy("accounts:user_detail", kwargs={"pk": self.object.pk})
 
 class UserDeleteView(DeleteView):
-    pass
+    model = User
+    template_name = "accounts/delete.html"
+    success_url = reverse_lazy("accounts:user_list")
