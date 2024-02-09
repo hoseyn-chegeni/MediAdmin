@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "two_factor",
     # ------------
     "base",
-    "index" "accounts",
+    "index",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -135,6 +136,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 LOGIN_URL = "two_factor:login"
-LOGIN_REDIRECT_URL = "accounts:user_list"
+LOGIN_REDIRECT_URL = "index:index"
 
 TIME_ZONE = "Iran"
