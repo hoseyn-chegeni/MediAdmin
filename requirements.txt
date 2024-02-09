@@ -3,3 +3,5 @@ django-rest-framework
 django-filter
 Pillow
 black
+django-two-factor-auth
+phonenumbers
