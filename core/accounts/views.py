@@ -9,14 +9,17 @@ from django.views.generic import (
 from django.urls import reverse_lazy, reverse
 from .froms import CustomUserCreationForm
 from django.contrib.auth.views import LogoutView
+from django_filters.views import FilterView
+from .filters import UserFilter
 
 
 # Create your views here.
-class UserListView(ListView):
+class UserListView(FilterView):
     model = User
     template_name = "accounts/list.html"
     permission_required = "accounts.view_user"
     context_object_name = "users"
+    filterset_class = UserFilter
 
 
 class UserDetailView(DetailView):
