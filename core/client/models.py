@@ -24,5 +24,14 @@ class Client(models.Model):
     emergency_contact_name = models.CharField(max_length=100)
     emergency_contact_number = models.CharField(max_length=15)
 
+
+    #Health history and treatment
+    surgeries = models.CharField(max_length = 255, blank = True, null = True)
+    allergies= models.CharField(max_length = 255, blank = True, null = True)
+    medical_history = models.CharField(max_length = 255, blank = True, null = True)
+    medications = models.CharField(max_length = 255, blank = True, null = True)
+    smoker = models.CharField(max_length = 255, blank = True, null = True)
+    disease = models.CharField(max_length = 255, blank = True, null = True)
+
     def __str__(self):
         return self.case_id
