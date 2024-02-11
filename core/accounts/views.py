@@ -4,14 +4,19 @@ from .froms import CustomUserCreationForm
 from django.contrib.auth.views import LogoutView
 from django_filters.views import FilterView
 from .filters import UserFilter
-from base.views import BaseCreateView,BaseDeleteView,BaseDetailView,BaseListView,BaseUpdateView
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseDetailView,
+    BaseListView,
+    BaseUpdateView,
+)
 
 
 # Create your views here.
 class UserListView(FilterView):
     model = User
     template_name = "accounts/list.html"
-    permission_required = "accounts.view_user"
     context_object_name = "users"
     filterset_class = UserFilter
 
@@ -44,7 +49,6 @@ class UserDeleteView(BaseDeleteView):
     model = User
     template_name = "accounts/delete.html"
     success_url = reverse_lazy("accounts:user_list")
-
 
 
 class UserLogoutView(LogoutView):

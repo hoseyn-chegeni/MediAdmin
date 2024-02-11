@@ -1,3 +1,62 @@
 from django.shortcuts import render
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseListView,
+    BaseDetailView,
+    BaseUpdateView,
+)
+from .models import Client
+from .filters import ClientFilters
+from django.urls import reverse_lazy
+
 
 # Create your views here.
+class ClientListView(BaseListView):
+    model = Client
+    template_name = "client/list.html"
+    context_object_name = "clients"
+    filterset_class = ClientFilters
+
+
+class ClientCreateView(BaseCreateView):
+    model = Client
+    fields = [
+        "case_id",
+        "first_name",
+        "last_name",
+        "fathers_name",
+        "national_id",
+        "date_of_birth",
+        "gender",
+        "phone_number",
+        "address",
+        "marital_status",
+        "emergency_contact_name",
+        "emergency_contact_number",
+    ]
+    template_name = "client/create.html"
+
+    def get_success_url(self):
+        return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
+
+
+class ClientDetailView(BaseDetailView):
+    model = Client
+    template_name = "client/detail.html"
+    context_object_name = "client"
+
+
+class ClientUpdateView(BaseUpdateView):
+    model = Client
+    fields = ("first_name", "last_name")
+    template_name = "client/update.html"
+
+    def get_success_url(self):
+        return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
+
+
+class ClientDeleteView(BaseDeleteView):
+    model = Client
+    template_name = "client/delete.html"
+    success_url = reverse_lazy("client:list")

@@ -28,6 +28,8 @@ urlpatterns = (
         path("", include(tf_urls)),
         path("index/", include("index.urls")),
         path("accounts/", include("accounts.urls")),
+        path("client/", include("client.urls")),
+
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
