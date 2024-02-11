@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "base",
     "index",
     "accounts",
+    "client"
 ]
 
 MIDDLEWARE = [
