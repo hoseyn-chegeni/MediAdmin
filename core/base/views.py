@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DeleteView,DetailView,CreateView, UpdateView
+from django.views.generic import DeleteView,DetailView,CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django_filters.views import FilterView
+
 
 # Create your views here.
-class BaseListView(LoginRequiredMixin, ListView):
+class BaseListView(LoginRequiredMixin, FilterView):
     pass
 
 class BaseCreateView(LoginRequiredMixin, CreateView):
