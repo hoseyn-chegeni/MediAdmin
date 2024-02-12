@@ -29,6 +29,7 @@ urlpatterns = (
         path("index/", include("index.urls")),
         path("accounts/", include("accounts.urls")),
         path("client/", include("client.urls")),
+        path("reception/", include("reception.urls")),
 
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
