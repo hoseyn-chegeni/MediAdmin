@@ -1,0 +1,9 @@
+<a href="{% url 'reception:create' %}">Create Reception</a><br>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in users%}
+    {{i.id}}.{{i.email}},<a href="{% url 'reception:detail' i.pk %}">Details</a>
+{% endfor %}
