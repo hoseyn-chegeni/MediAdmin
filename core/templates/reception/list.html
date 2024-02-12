@@ -4,6 +4,6 @@
     {{filter.form.as_p}}
     <input type="submit">
 </form>
-{%for i in users%}
-    {{i.id}}.{{i.email}},<a href="{% url 'reception:detail' i.pk %}">Details</a>
+{%for i in reception%}
+    {{i.id}}:{{i.client}},<a href="{% url 'reception:detail' i.pk %}">Details</a> <br>
 {% endfor %}

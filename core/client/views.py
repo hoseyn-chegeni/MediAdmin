@@ -9,6 +9,7 @@ from base.views import (
 from .models import Client
 from .filters import ClientFilters
 from django.urls import reverse_lazy
+from reception.models import Reception
 
 
 # Create your views here.
@@ -32,6 +33,12 @@ class ClientDetailView(BaseDetailView):
     model = Client
     template_name = "client/detail.html"
     context_object_name = "client"
+
+    def get_context_data(self, **kwargs):
+        client = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["reception_history"] = Reception.objects.filter(client_id = client.id)
+        return context
 
 
 

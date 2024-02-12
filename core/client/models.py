@@ -31,7 +31,10 @@ class Client(models.Model):
     medical_history = models.CharField(max_length = 255, blank = True, null = True)
     medications = models.CharField(max_length = 255, blank = True, null = True)
     smoker = models.CharField(max_length = 255, blank = True, null = True)
-    disease = models.CharField(max_length = 255, blank = True, null = True)
+    disease = models.CharField(max_length = 255, blank = True, null = True) 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey('accounts.User',on_delete = models.SET_NULL, blank = True, null = True)
 
     def __str__(self):
-        return self.case_id
+        return f'{self.first_name} {self.last_name}'

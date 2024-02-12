@@ -3,3 +3,8 @@
 <p> Father's Name: {{client.fathers_name}}</p>
 <p> National id: {{client.national_id}}</p>
 <p> <a href="{% url 'client:edit_health_history' client.id%}">Edit Health History and Treatment</a></p>
+
+<h1>Reception History</h1>
+{% for i in  reception_history%}
+    {{i.id}}:{{i.reason}} <br>
+{%endfor%}
