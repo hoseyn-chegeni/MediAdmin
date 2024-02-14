@@ -24,17 +24,18 @@ class Client(models.Model):
     emergency_contact_name = models.CharField(max_length=100)
     emergency_contact_number = models.CharField(max_length=15)
 
-
-    #Health history and treatment
-    surgeries = models.CharField(max_length = 255, blank = True, null = True)
-    allergies= models.CharField(max_length = 255, blank = True, null = True)
-    medical_history = models.CharField(max_length = 255, blank = True, null = True)
-    medications = models.CharField(max_length = 255, blank = True, null = True)
-    smoker = models.CharField(max_length = 255, blank = True, null = True)
-    disease = models.CharField(max_length = 255, blank = True, null = True) 
+    # Health history and treatment
+    surgeries = models.CharField(max_length=255, blank=True, null=True)
+    allergies = models.CharField(max_length=255, blank=True, null=True)
+    medical_history = models.CharField(max_length=255, blank=True, null=True)
+    medications = models.CharField(max_length=255, blank=True, null=True)
+    smoker = models.CharField(max_length=255, blank=True, null=True)
+    disease = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey('accounts.User',on_delete = models.SET_NULL, blank = True, null = True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"

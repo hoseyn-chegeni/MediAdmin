@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "base",
     "index",
     "accounts",
-    "client",    
+    "client",
     "reception",
     "insurance",
 ]

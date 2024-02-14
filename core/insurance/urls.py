@@ -1,7 +1,5 @@
-from django.urls import path 
+from django.urls import path
 
-app_name = 'insurance'
+app_name = "insurance"
 
-urlpatterns =[
-    
-]
+urlpatterns = []

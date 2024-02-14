@@ -22,7 +22,7 @@ class ClientListView(BaseListView):
 
 class ClientCreateView(BaseCreateView):
     model = Client
-    fields ='__all__'
+    fields = "__all__"
     template_name = "client/create.html"
 
     def get_success_url(self):
@@ -37,9 +37,8 @@ class ClientDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         client = self.get_object()
         context = super().get_context_data(**kwargs)
-        context["reception_history"] = Reception.objects.filter(client_id = client.id)
+        context["reception_history"] = Reception.objects.filter(client_id=client.id)
         return context
-
 
 
 class ClientDeleteView(BaseDeleteView):
@@ -50,7 +49,7 @@ class ClientDeleteView(BaseDeleteView):
 
 class EditPersonalInfoView(BaseUpdateView):
     model = Client
-    fields =[        
+    fields = [
         "case_id",
         "first_name",
         "last_name",
@@ -68,18 +67,19 @@ class EditPersonalInfoView(BaseUpdateView):
 
     def get_success_url(self):
         return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
-    
+
 
 class EditHealthHistoryView(BaseUpdateView):
     model = Client
     template_name = "client/edit_health_history.html"
     fields = [
-        'surgeries',
-        'allergies',
-        'medical_history',
-        'medications',
-        'smoker',
-        'disease',
+        "surgeries",
+        "allergies",
+        "medical_history",
+        "medications",
+        "smoker",
+        "disease",
     ]
+
     def get_success_url(self):
         return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
