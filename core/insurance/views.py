@@ -9,6 +9,7 @@ from base.views import (
 from .models import Insurance
 from django.urls import reverse_lazy
 from .filters import InsuranceFilter
+from client.models import Client
 
 
 # Create your views here.
@@ -32,6 +33,13 @@ class InsuranceDetailView(BaseDetailView):
     model = Insurance
     template_name = "insurance/detail.html"
     context_object_name = "insurance"
+
+    def get_context_data(self, **kwargs):
+        insurance = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["clients"] = Client.objects.filter(insurance_id=insurance.id)
+        return context
+
 
 
 class InsuranceUpdateView(BaseUpdateView):

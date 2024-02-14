@@ -1,1 +1,5 @@
 {{insurance.id}}::{{insurance.name}}
+<p>---------------------------</p>
+{% for i in clients%}
+    {{i.first_name}} {{i.last_name}} <br>
+{%endfor%}
