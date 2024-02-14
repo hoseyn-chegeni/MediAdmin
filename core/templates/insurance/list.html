@@ -1,0 +1,13 @@
+<a href="{% url 'insurance:create' %}">Add Insurance</a><br>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in insurance%}
+  <p>  {{i.id}}.{{i.name}},
+      <a href="{% url 'insurance:detail' i.pk %}">Details</a>,
+      <a href="{% url 'insurance:update' i.pk %}">update</a>,
+      <a href="{% url 'insurance:delete' i.pk %}">Delete</a>
+    </p>
+{% endfor %}
