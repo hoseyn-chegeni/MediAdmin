@@ -9,10 +9,7 @@ class InsuranceFilter(FilterSet):
 
     class Meta:
         model = Insurance
-        fields = {
-            "id": ["exact"],
-            "policy_number": ["exact"]
-        }
+        fields = {"id": ["exact"], "policy_number": ["exact"]}
 
     def filter_by_name(self, queryset, name, value):
         return queryset.filter(

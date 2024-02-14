@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import InsuranceCreateView,InsuranceDetailView,InsuranceListView,InsuranceDeleteView,InsuranceUpdateView
+from .views import (
+    InsuranceCreateView,
+    InsuranceDetailView,
+    InsuranceListView,
+    InsuranceDeleteView,
+    InsuranceUpdateView,
+)
 
 app_name = "insurance"
 

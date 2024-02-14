@@ -1,8 +1,9 @@
 from django.db import models
 
+
 # Create your models here.
 class Insurance(models.Model):
-    name = models.CharField(max_length = 255)
+    name = models.CharField(max_length=255)
     policy_number = models.CharField(max_length=50)
     insurance_company = models.CharField(max_length=100)
     deductible = models.DecimalField(max_digits=10, decimal_places=2)

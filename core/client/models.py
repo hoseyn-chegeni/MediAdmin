@@ -36,6 +36,9 @@ class Client(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
+    insurance = models.ForeignKey(
+        "insurance.Insurance", on_delete=models.CASCADE, blank=True, null=True
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
