@@ -17,13 +17,7 @@ class ReceptionCreateView(BaseCreateView):
     model = Reception
     fields = ["reason", "payment_type", "payment_status", "client"]
     template_name = "reception/create.html"
-
-    def get_success_url(self):
-        return reverse_lazy("reception:detail", kwargs={"pk": self.object.pk})
-
-    # def form_valid(self, form):
-    #     form.instance.client = self.object.pk
-    #     return super().form_valid(form)
+    app_name = 'reception'
 
 
 class ReceptionDetailView(BaseDetailView):
@@ -36,9 +30,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
     model = Reception
     fields = ["reason", "payment_type", "payment_status"]
     template_name = "reception/create_profile.html"
-
-    def get_success_url(self):
-        return reverse_lazy("reception:detail", kwargs={"pk": self.object.pk})
+    app_name = 'reception'
 
     def get_initial(self):
         initial = super().get_initial()
