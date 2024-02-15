@@ -42,7 +42,7 @@ class ClientDetailView(BaseDetailView):
 class ClientDeleteView(BaseDeleteView):
     model = Client
     template_name = "client/delete.html"
-    success_url = reverse_lazy("client:list")
+    app_name = 'client'
 
 
 class EditPersonalInfoView(BaseUpdateView):

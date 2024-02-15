@@ -50,4 +50,4 @@ class InsuranceUpdateView(BaseUpdateView):
 class InsuranceDeleteView(BaseDeleteView):
     model = Insurance
     template_name = "insurance/delete.html"
-    success_url = reverse_lazy("insurance:list")
+    app_name = 'insurance'

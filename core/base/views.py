@@ -29,4 +29,7 @@ class BaseUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class BaseDeleteView(LoginRequiredMixin, DeleteView):
-    pass
+    app_name = ''
+    
+    def get_success_url(self):
+        return reverse_lazy(f'{self.app_name}:list')

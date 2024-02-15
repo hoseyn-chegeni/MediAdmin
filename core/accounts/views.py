@@ -43,7 +43,7 @@ class UserUpdateView(BaseUpdateView):
 class UserDeleteView(BaseDeleteView):
     model = User
     template_name = "accounts/delete.html"
-    success_url = reverse_lazy("accounts:user_list")
+    app_name = 'accounts'
 
 
 class UserLogoutView(LogoutView):
