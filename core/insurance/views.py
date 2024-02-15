@@ -24,9 +24,7 @@ class InsuranceCreateView(BaseCreateView):
     model = Insurance
     fields = "__all__"
     template_name = "insurance/create.html"
-
-    def get_success_url(self):
-        return reverse_lazy("insurance:detail", kwargs={"pk": self.object.pk})
+    app_name = 'insurance'
 
 
 class InsuranceDetailView(BaseDetailView):
@@ -46,9 +44,7 @@ class InsuranceUpdateView(BaseUpdateView):
     model = Insurance
     fields = "__all__"
     template_name = "insurance/update.html"
-
-    def get_success_url(self):
-        return reverse_lazy("insurance:detail", kwargs={"pk": self.object.pk})
+    app_name = 'insurance'
 
 
 class InsuranceDeleteView(BaseDeleteView):

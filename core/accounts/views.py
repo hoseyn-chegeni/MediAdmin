@@ -31,19 +31,14 @@ class UserCreateView(BaseCreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "accounts/create.html"
-
-    def get_success_url(self):
-        return reverse_lazy("accounts:user_detail", kwargs={"pk": self.object.pk})
+    app_name = 'accounts'
 
 
 class UserUpdateView(BaseUpdateView):
     model = User
     fields = ("first_name", "last_name")
     template_name = "accounts/update.html"
-
-    def get_success_url(self):
-        return reverse_lazy("accounts:user_detail", kwargs={"pk": self.object.pk})
-
+    app_name = 'accounts'
 
 class UserDeleteView(BaseDeleteView):
     model = User

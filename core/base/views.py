@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -10,7 +11,10 @@ class BaseListView(LoginRequiredMixin, FilterView):
 
 
 class BaseCreateView(LoginRequiredMixin, CreateView):
-    pass
+    app_name = ''
+
+    def get_success_url(self):
+        return reverse_lazy(f"{self.app_name}:detail", kwargs={"pk": self.object.pk})
 
 
 class BaseDetailView(LoginRequiredMixin, DetailView):
@@ -18,7 +22,10 @@ class BaseDetailView(LoginRequiredMixin, DetailView):
 
 
 class BaseUpdateView(LoginRequiredMixin, UpdateView):
-    pass
+    app_name = ''
+
+    def get_success_url(self):
+        return reverse_lazy(f"{self.app_name}:detail", kwargs={"pk": self.object.pk})
 
 
 class BaseDeleteView(LoginRequiredMixin, DeleteView):

@@ -24,9 +24,7 @@ class ClientCreateView(BaseCreateView):
     model = Client
     fields = "__all__"
     template_name = "client/create.html"
-
-    def get_success_url(self):
-        return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
+    app_name = 'client'
 
 
 class ClientDetailView(BaseDetailView):
@@ -65,9 +63,7 @@ class EditPersonalInfoView(BaseUpdateView):
         "insurance"
     ]
     template_name = "client/update.html"
-
-    def get_success_url(self):
-        return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
+    app_name = 'client'
 
 
 class EditHealthHistoryView(BaseUpdateView):
@@ -81,6 +77,4 @@ class EditHealthHistoryView(BaseUpdateView):
         "smoker",
         "disease",
     ]
-
-    def get_success_url(self):
-        return reverse_lazy("client:detail", kwargs={"pk": self.object.pk})
+    app_name = 'client'
