@@ -24,7 +24,7 @@ class ClientCreateView(BaseCreateView):
     model = Client
     fields = "__all__"
     template_name = "client/create.html"
-    app_name = 'client'
+    app_name = "client"
 
 
 class ClientDetailView(BaseDetailView):
@@ -42,7 +42,7 @@ class ClientDetailView(BaseDetailView):
 class ClientDeleteView(BaseDeleteView):
     model = Client
     template_name = "client/delete.html"
-    app_name = 'client'
+    app_name = "client"
 
 
 class EditPersonalInfoView(BaseUpdateView):
@@ -60,10 +60,10 @@ class EditPersonalInfoView(BaseUpdateView):
         "marital_status",
         "emergency_contact_name",
         "emergency_contact_number",
-        "insurance"
+        "insurance",
     ]
     template_name = "client/update.html"
-    app_name = 'client'
+    app_name = "client"
 
 
 class EditHealthHistoryView(BaseUpdateView):
@@ -77,4 +77,4 @@ class EditHealthHistoryView(BaseUpdateView):
         "smoker",
         "disease",
     ]
-    app_name = 'client'
+    app_name = "client"

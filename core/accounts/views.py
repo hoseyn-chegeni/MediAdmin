@@ -31,19 +31,20 @@ class UserCreateView(BaseCreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "accounts/create.html"
-    app_name = 'accounts'
+    app_name = "accounts"
 
 
 class UserUpdateView(BaseUpdateView):
     model = User
     fields = ("first_name", "last_name")
     template_name = "accounts/update.html"
-    app_name = 'accounts'
+    app_name = "accounts"
+
 
 class UserDeleteView(BaseDeleteView):
     model = User
     template_name = "accounts/delete.html"
-    app_name = 'accounts'
+    app_name = "accounts"
 
 
 class UserLogoutView(LogoutView):

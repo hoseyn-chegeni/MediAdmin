@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "client",
     "reception",
     "insurance",
+    "services",
 ]
 
 MIDDLEWARE = [
