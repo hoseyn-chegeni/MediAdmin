@@ -18,3 +18,13 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class ServiceConsumable(models.Model):
+    service = models.ForeignKey('services.Service', on_delete = models.CASCADE)
+    consumable = models.ForeignKey('asset.Consumable', on_delete = models.CASCADE)
+    dose = models.CharField(max_length = 10, blank = True, null = True)
+    note = models.TextField(blank = True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True)
