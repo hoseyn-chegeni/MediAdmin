@@ -7,6 +7,7 @@
     <title>Reception List</title>
 </head>
 <body>
+    <p><a href="{% url 'reception:create'%}">Add Recetpion</a></p>
     <h1>Reception List</h1>
 
     <!-- Filter Form -->
@@ -24,7 +25,12 @@
     <!-- Reception Entries -->
     <ul>
         {% for reception in reception %}
-            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }}</li>
+            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }}.
+                 <a href="{% url 'reception:detail' reception.id %}">Detail</a>
+                 <a href="{% url 'reception:update' reception.id %}">Update</a>
+                 <a href="{% url 'reception:delete' reception.id %}">Delete</a>
+
+                </li>
         {% empty %}
             <li>No reception entries found.</li>
         {% endfor %}
