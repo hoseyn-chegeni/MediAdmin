@@ -25,7 +25,7 @@
     <!-- Reception Entries -->
     <ul>
         {% for reception in reception %}
-            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }}.
+            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }} - {{reception.service}}.
                  <a href="{% url 'reception:detail' reception.id %}">Detail</a>
                  <a href="{% url 'reception:update' reception.id %}">Update</a>
                  <a href="{% url 'reception:delete' reception.id %}">Delete</a>

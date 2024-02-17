@@ -9,7 +9,7 @@
     <p>No reception</p>
 {% else %}
     {% for i in reception_history %}
-        {{ i.id }}:{{ i.created_at }} 
+        {{ i.id }}:{{ i.created_at }}:{{i.service}}
             <a href="{% url 'reception:detail' i.id %}">Detail</a>
             <a href="{% url 'reception:update' i.id %}">Update</a>
             <a href="{% url 'reception:delete' i.id %}">Delete</a> <br>
