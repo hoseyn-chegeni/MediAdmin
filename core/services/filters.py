@@ -9,7 +9,9 @@ class ServicesFilter(FilterSet):
 
     class Meta:
         model = Service
-        fields = {"id": ["exact"],}
+        fields = {
+            "id": ["exact"],
+        }
 
     def filter_by_name(self, queryset, name, value):
         return queryset.filter(

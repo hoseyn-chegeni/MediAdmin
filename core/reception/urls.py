@@ -5,7 +5,7 @@ from .views import (
     ReceptionDetailView,
     ReceptionCreateViewUsingProfile,
     ReceptionDeleteView,
-    ReceptionUpdateView
+    ReceptionUpdateView,
 )
 
 app_name = "reception"
@@ -21,6 +21,4 @@ urlpatterns = [
     ),
     path("update/<int:pk>/", ReceptionUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", ReceptionDeleteView.as_view(), name="delete"),
-
-
 ]

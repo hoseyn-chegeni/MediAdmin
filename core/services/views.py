@@ -1,7 +1,14 @@
-from base.views import BaseCreateView,BaseDeleteView,BaseDetailView,BaseListView,BaseUpdateView
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseDetailView,
+    BaseListView,
+    BaseUpdateView,
+)
 from .models import Service, ServiceConsumable
 from .filters import ServicesFilter
 from django.urls import reverse_lazy
+
 
 # Create your views here.
 class ServiceListView(BaseListView):
@@ -9,6 +16,7 @@ class ServiceListView(BaseListView):
     template_name = "services/list.html"
     context_object_name = "services"
     filterset_class = ServicesFilter
+
 
 class ServiceCreateView(BaseCreateView):
     model = Service
@@ -28,11 +36,13 @@ class ServiceDetailView(BaseDetailView):
         context["consumable"] = ServiceConsumable.objects.filter(service_id=service.id)
         return context
 
+
 class ServiceUpdateView(BaseUpdateView):
     model = Service
     fields = "__all__"
     template_name = "services/update.html"
     app_name = "services"
+
 
 class ServiceLDeleteView(BaseDeleteView):
     model = Service
@@ -40,28 +50,27 @@ class ServiceLDeleteView(BaseDeleteView):
     app_name = "services"
 
 
-
-#ServiceConsumable Views here.
+# ServiceConsumable Views here.
 class ServiceConsumableCreateView(BaseCreateView):
     model = ServiceConsumable
     fields = [
-        'consumable',
-        'dose',
-        'note',
+        "consumable",
+        "dose",
+        "note",
     ]
     template_name = "services/consumable_create.html"
 
-
     def form_valid(self, form):
-        form.instance.service = Service.objects.get(id = self.kwargs["pk"])
+        form.instance.service = Service.objects.get(id=self.kwargs["pk"])
         return super().form_valid(form)
-    
+
     def get_success_url(self):
-        return reverse_lazy("services:detail", kwargs={"pk":self.kwargs['pk']})
-
-
+        return reverse_lazy("services:detail", kwargs={"pk": self.kwargs["pk"]})
 
 
 class ServiceConsumableDeleteView(BaseDeleteView):
-    pass
+    model = ServiceConsumable
+    template_name = "services/consumable_delete.html"
 
+    def get_success_url(self):
+        return reverse_lazy("services:list")

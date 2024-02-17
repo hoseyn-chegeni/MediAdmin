@@ -3,7 +3,9 @@ from django.db import models
 
 class Reception(models.Model):
     client = models.ForeignKey("client.Client", on_delete=models.CASCADE)
-    service = models.ForeignKey("services.Service", on_delete=models.SET_NULL, blank = True, null = True)
+    service = models.ForeignKey(
+        "services.Service", on_delete=models.SET_NULL, blank=True, null=True
+    )
     reason = models.CharField(max_length=255)
     PAYMENT_TYPE_CHOICES = (
         ("CASH", "Cash"),

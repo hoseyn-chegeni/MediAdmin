@@ -10,6 +10,5 @@ class ConsumableFilter(FilterSet):
         model = Consumable
         fields = {
             "id": ["exact"],
-            "name":["exact"],
+            "name": ["exact"],
         }
-

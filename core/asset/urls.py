@@ -1,7 +1,13 @@
-from django.urls import path 
-from .views import ConsumableCreateView,ConsumableDeleteView, ConsumableDetailView,ConsumableListView,ConsumableUpdateView
+from django.urls import path
+from .views import (
+    ConsumableCreateView,
+    ConsumableDeleteView,
+    ConsumableDetailView,
+    ConsumableListView,
+    ConsumableUpdateView,
+)
 
-app_name = 'asset'
+app_name = "asset"
 
 urlpatterns = [
     path("consumable/list/", ConsumableListView.as_view(), name="list"),

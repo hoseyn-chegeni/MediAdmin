@@ -1,5 +1,11 @@
 from django.shortcuts import render
-from base.views import BaseCreateView, BaseListView, BaseDetailView, BaseDeleteView,BaseUpdateView
+from base.views import (
+    BaseCreateView,
+    BaseListView,
+    BaseDetailView,
+    BaseDeleteView,
+    BaseUpdateView,
+)
 from .models import Reception
 from django.urls import reverse_lazy
 from .filters import ReceptionFilter
@@ -15,7 +21,7 @@ class ReceptionListView(BaseListView):
 
 class ReceptionCreateView(BaseCreateView):
     model = Reception
-    fields = ["reason", "payment_type", "payment_status", "client",'service']
+    fields = ["reason", "payment_type", "payment_status", "client", "service"]
     template_name = "reception/create.html"
     app_name = "reception"
 
@@ -28,7 +34,7 @@ class ReceptionDetailView(BaseDetailView):
 
 class ReceptionCreateViewUsingProfile(BaseCreateView):
     model = Reception
-    fields = ["reason", "payment_type", "payment_status",'service']
+    fields = ["reason", "payment_type", "payment_status", "service"]
     template_name = "reception/create_profile.html"
     app_name = "reception"
 
@@ -46,7 +52,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
             "pk"
         ]  # Assuming client's pk is passed in the URL
         return super().form_valid(form)
-    
+
 
 class ReceptionUpdateView(BaseUpdateView):
     model = Reception
@@ -54,8 +60,8 @@ class ReceptionUpdateView(BaseUpdateView):
     template_name = "reception/update.html"
     app_name = "reception"
 
+
 class ReceptionDeleteView(BaseDeleteView):
     model = Reception
     template_name = "reception/delete.html"
     app_name = "reception"
-
