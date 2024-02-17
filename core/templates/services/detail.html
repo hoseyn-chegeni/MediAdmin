@@ -1,2 +1,6 @@
 {{services.id}}::{{services.name}}
 <p>---------------------------</p>
+{%for i in consumable%}
+    {{i.consumable}} <br>
+{%endfor%}
+<a href="{% url 'services:service_consumable_create' services.id %}">Add consumable</a>

@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from base.views import BaseCreateView,BaseDeleteView,BaseDetailView,BaseListView,BaseUpdateView
-from .models import Service
+from .models import Service, ServiceConsumable
 from .filters import ServicesFilter
-
+from django.urls import reverse_lazy
 
 # Create your views here.
 class ServiceListView(BaseListView):
@@ -23,6 +22,12 @@ class ServiceDetailView(BaseDetailView):
     template_name = "services/detail.html"
     context_object_name = "services"
 
+    def get_context_data(self, **kwargs):
+        service = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["consumable"] = ServiceConsumable.objects.filter(service_id=service.id)
+        return context
+
 class ServiceUpdateView(BaseUpdateView):
     model = Service
     fields = "__all__"
@@ -34,4 +39,29 @@ class ServiceLDeleteView(BaseDeleteView):
     template_name = "services/delete.html"
     app_name = "services"
 
+
+
+#ServiceConsumable Views here.
+class ServiceConsumableCreateView(BaseCreateView):
+    model = ServiceConsumable
+    fields = [
+        'consumable',
+        'dose',
+        'note',
+    ]
+    template_name = "services/consumable_create.html"
+
+
+    def form_valid(self, form):
+        form.instance.service = Service.objects.get(id = self.kwargs["pk"])
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy("services:detail", kwargs={"pk":self.kwargs['pk']})
+
+
+
+
+class ServiceConsumableDeleteView(BaseDeleteView):
+    pass
 
