@@ -5,6 +5,7 @@ from .views import (
     ConsumableDetailView,
     ConsumableListView,
     ConsumableUpdateView,
+    UpdateInventoryTrackingNumberViews,
     ConsumableCategoryCreateView,
     ConsumableCategoryDeleteView,
     ConsumableCategoryDetailView,
@@ -25,6 +26,11 @@ urlpatterns = [
     path("consumable/create/", ConsumableCreateView.as_view(), name="create"),
     path("consumable/update/<int:pk>/", ConsumableUpdateView.as_view(), name="update"),
     path("consumable/delete/<int:pk>/", ConsumableDeleteView.as_view(), name="delete"),
+    path(
+        "consumable/inventory_tracking_number/<int:pk>/",
+        UpdateInventoryTrackingNumberViews.as_view(),
+        name="inventory_tracking_number",
+    ),
     # CONSUMABLE CATEGORY
     path(
         "consumable/category/list/",
@@ -51,10 +57,22 @@ urlpatterns = [
         ConsumableCategoryDeleteView.as_view(),
         name="category_delete",
     ),
-    #SUPPLIER
+    # SUPPLIER
     path("supplier/list/", SupplierListView.as_view(), name="supplier_list"),
-    path("supplier/detail/<int:pk>/", SupplierDetailView.as_view(), name="supplier_detail"),
+    path(
+        "supplier/detail/<int:pk>/",
+        SupplierDetailView.as_view(),
+        name="supplier_detail",
+    ),
     path("supplier/create/", SupplierCreateView.as_view(), name="supplier_create"),
-    path("supplier/update/<int:pk>/", SupplierUpdateView.as_view(), name="supplier_update"),
-    path("supplier/delete/<int:pk>/", SupplierDeleteView.as_view(), name="supplier_delete"),
+    path(
+        "supplier/update/<int:pk>/",
+        SupplierUpdateView.as_view(),
+        name="supplier_update",
+    ),
+    path(
+        "supplier/delete/<int:pk>/",
+        SupplierDeleteView.as_view(),
+        name="supplier_delete",
+    ),
 ]

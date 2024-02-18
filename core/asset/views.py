@@ -47,6 +47,14 @@ class ConsumableDeleteView(BaseDeleteView):
     url_name = Supplier
 
 
+class UpdateInventoryTrackingNumberViews(BaseUpdateView):
+    model = Consumable
+    fields = ["inventory_tracking_number"]
+    template_name = "asset/update_inventory_tracking_number.html"
+    app_name = "asset"
+    url_name = "detail"
+
+
 # Consumable Category Views here.
 class ConsumableCategoryListView(BaseListView):
     model = ConsumableCategory
