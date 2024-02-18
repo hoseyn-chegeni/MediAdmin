@@ -13,6 +13,7 @@ class Consumable(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     unit = models.CharField(max_length=50)
     minimum_stock_level = models.PositiveIntegerField(default=0)
+    inventory_tracking_number = models.PositiveIntegerField(blank = True, null = True)
 
     # Purchase Information
     supplier = models.ForeignKey(
