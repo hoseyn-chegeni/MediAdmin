@@ -6,7 +6,7 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Consumable
+from .models import Consumable, ConsumableCategory
 from .filters import ConsumableFilter
 
 
@@ -41,4 +41,38 @@ class ConsumableUpdateView(BaseUpdateView):
 class ConsumableDeleteView(BaseDeleteView):
     model = Consumable
     template_name = "asset/delete.html"
+    app_name = "asset"
+
+
+#Consumable Category Views here.
+class ConsumableListView(BaseListView):
+    model = ConsumableCategory
+    template_name = "asset/category/list.html"
+    context_object_name = "category"
+    filterset_class = 0
+
+
+class ConsumableDetailView(BaseDetailView):
+    model = ConsumableCategory
+    template_name = "asset/category/detail.html"
+    context_object_name = "category"
+
+
+class ConsumableCreateView(BaseCreateView):
+    model = ConsumableCategory
+    fields = "__all__"
+    template_name = "asset/category/create.html"
+    app_name = "asset"
+
+
+class ConsumableUpdateView(BaseUpdateView):
+    model = ConsumableCategory
+    fields = "__all__"
+    template_name = "asset/category/update.html"
+    app_name = "asset"
+
+
+class ConsumableDeleteView(BaseDeleteView):
+    model = ConsumableCategory
+    template_name = "asset/category/delete.html"
     app_name = "asset"
