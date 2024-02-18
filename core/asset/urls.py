@@ -10,6 +10,11 @@ from .views import (
     ConsumableCategoryDetailView,
     ConsumableCategoryListView,
     ConsumableCategoryUpdateView,
+    SupplierCreateView,
+    SupplierDeleteView,
+    SupplierDetailView,
+    SupplierListView,
+    SupplierUpdateView,
 )
 
 app_name = "asset"
@@ -46,4 +51,10 @@ urlpatterns = [
         ConsumableCategoryDeleteView.as_view(),
         name="category_delete",
     ),
+    #SUPPLIER
+    path("supplier/list/", SupplierListView.as_view(), name="supplier_list"),
+    path("supplier/detail/<int:pk>/", SupplierDetailView.as_view(), name="supplier_detail"),
+    path("supplier/create/", SupplierCreateView.as_view(), name="supplier_create"),
+    path("supplier/update/<int:pk>/", SupplierUpdateView.as_view(), name="supplier_update"),
+    path("supplier/delete/<int:pk>/", SupplierDeleteView.as_view(), name="supplier_delete"),
 ]

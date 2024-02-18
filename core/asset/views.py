@@ -6,8 +6,8 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Consumable, ConsumableCategory
-from .filters import ConsumableFilter, ConsumableCategoryFilter
+from .models import Consumable, ConsumableCategory, Supplier
+from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
 
 
 # Create your views here.
@@ -44,7 +44,7 @@ class ConsumableDeleteView(BaseDeleteView):
     model = Consumable
     template_name = "asset/delete.html"
     app_name = "asset"
-    url_name = "list"
+    url_name = Supplier
 
 
 # Consumable Category Views here.
@@ -59,7 +59,7 @@ class ConsumableCategoryDetailView(BaseDetailView):
     model = ConsumableCategory
     template_name = "asset/category/detail.html"
     context_object_name = "category"
-    
+
     def get_context_data(self, **kwargs):
         category = self.get_object()
         context = super().get_context_data(**kwargs)
@@ -88,3 +88,40 @@ class ConsumableCategoryDeleteView(BaseDeleteView):
     template_name = "asset/category/delete.html"
     app_name = "asset"
     url_name = "category_list"
+
+
+# Supplier views here.
+class SupplierListView(BaseListView):
+    model = Supplier
+    template_name = "asset/supplier/list.html"
+    context_object_name = "supplier"
+    filterset_class = SupplierFilter
+
+
+class SupplierDetailView(BaseDetailView):
+    model = Supplier
+    template_name = "asset/supplier/detail.html"
+    context_object_name = "supplier"
+
+
+class SupplierCreateView(BaseCreateView):
+    model = Supplier
+    fields = "__all__"
+    template_name = "asset/supplier/create.html"
+    app_name = "asset"
+    url_name = "supplier_detail"
+
+
+class SupplierUpdateView(BaseUpdateView):
+    model = Supplier
+    fields = "__all__"
+    template_name = "asset/supplier/update.html"
+    app_name = "asset"
+    url_name = "supplier_detail"
+
+
+class SupplierDeleteView(BaseDeleteView):
+    model = Supplier
+    template_name = "asset/supplier/delete.html"
+    app_name = "asset"
+    url_name = "supplier_list"
