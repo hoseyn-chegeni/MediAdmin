@@ -15,7 +15,7 @@ class Consumable(models.Model):
     minimum_stock_level = models.PositiveIntegerField(default=0)
 
     # Purchase Information
-    supplier = models.CharField(max_length=255)
+    supplier  = models.ForeignKey('Supplier', on_delete = models.SET_NULL, blank = True, null = True)
     purchase_date = models.DateField()
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
     expiration_date = models.DateField(null=True, blank=True)
@@ -55,6 +55,19 @@ class ConsumableCategory(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
+
+    def __str__(self):
+        return self.name
+    
+    
+class Supplier(models.Model):
+    name = models.CharField(max_length=100)
+    contact_person = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    address = models.TextField()
+    city = models.CharField(max_length=50)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
