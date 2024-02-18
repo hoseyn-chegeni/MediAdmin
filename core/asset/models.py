@@ -7,7 +7,7 @@ from django.db import models
 class Consumable(models.Model):
     # General Information
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey('ConsumableCategory',on_delete = models.SET_NULL, blank = True, null = True)
     quantity = models.PositiveIntegerField(default=0)
     unit = models.CharField(max_length=50)
     minimum_stock_level = models.PositiveIntegerField(default=0)
@@ -43,3 +43,13 @@ class Consumable(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ConsumableCategory(models.Model):
+    name = models.CharField(max_length=255)
+    note = models.TextField(blank = True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
