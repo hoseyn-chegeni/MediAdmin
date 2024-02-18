@@ -5,6 +5,11 @@ from .views import (
     ConsumableDetailView,
     ConsumableListView,
     ConsumableUpdateView,
+    ConsumableCategoryCreateView,
+    ConsumableCategoryDeleteView,
+    ConsumableCategoryDetailView,
+    ConsumableCategoryListView,
+    ConsumableCategoryUpdateView,
 )
 
 app_name = "asset"
@@ -15,4 +20,30 @@ urlpatterns = [
     path("consumable/create/", ConsumableCreateView.as_view(), name="create"),
     path("consumable/update/<int:pk>/", ConsumableUpdateView.as_view(), name="update"),
     path("consumable/delete/<int:pk>/", ConsumableDeleteView.as_view(), name="delete"),
+    # CONSUMABLE CATEGORY
+    path(
+        "consumable/category/list/",
+        ConsumableCategoryListView.as_view(),
+        name="category_list",
+    ),
+    path(
+        "consumable/category/detail/<int:pk>/",
+        ConsumableCategoryDetailView.as_view(),
+        name="category_detail",
+    ),
+    path(
+        "consumable/category/create/",
+        ConsumableCategoryCreateView.as_view(),
+        name="category_create",
+    ),
+    path(
+        "consumable/category/update/<int:pk>/",
+        ConsumableCategoryUpdateView.as_view(),
+        name="category_update",
+    ),
+    path(
+        "consumable/category/delete/<int:pk>/",
+        ConsumableCategoryDeleteView.as_view(),
+        name="category_delete",
+    ),
 ]

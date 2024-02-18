@@ -11,6 +11,7 @@ class ConsumableFilter(FilterSet):
             "name": ["exact"],
         }
 
+
 class ConsumableCategoryFilter(FilterSet):
 
     class Meta:
