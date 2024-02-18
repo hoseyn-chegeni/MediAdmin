@@ -25,6 +25,7 @@ class ClientCreateView(BaseCreateView):
     fields = "__all__"
     template_name = "client/create.html"
     app_name = "client"
+    url_name = "detail"
 
 
 class ClientDetailView(BaseDetailView):
@@ -43,6 +44,7 @@ class ClientDeleteView(BaseDeleteView):
     model = Client
     template_name = "client/delete.html"
     app_name = "client"
+    url_name = "list"
 
 
 class EditPersonalInfoView(BaseUpdateView):
@@ -64,6 +66,7 @@ class EditPersonalInfoView(BaseUpdateView):
     ]
     template_name = "client/update.html"
     app_name = "client"
+    url_name = "detail"
 
 
 class EditHealthHistoryView(BaseUpdateView):
@@ -78,3 +81,4 @@ class EditHealthHistoryView(BaseUpdateView):
         "disease",
     ]
     app_name = "client"
+    url_name = "detail"

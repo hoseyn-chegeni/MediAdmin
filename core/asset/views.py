@@ -29,6 +29,7 @@ class ConsumableCreateView(BaseCreateView):
     fields = "__all__"
     template_name = "asset/create.html"
     app_name = "asset"
+    url_name = "detail"
 
 
 class ConsumableUpdateView(BaseUpdateView):
@@ -36,15 +37,17 @@ class ConsumableUpdateView(BaseUpdateView):
     fields = "__all__"
     template_name = "asset/update.html"
     app_name = "asset"
+    url_name = "detail"
 
 
 class ConsumableDeleteView(BaseDeleteView):
     model = Consumable
     template_name = "asset/delete.html"
     app_name = "asset"
+    url_name = "list"
 
 
-#Consumable Category Views here.
+# Consumable Category Views here.
 class ConsumableListView(BaseListView):
     model = ConsumableCategory
     template_name = "asset/category/list.html"
@@ -63,6 +66,7 @@ class ConsumableCreateView(BaseCreateView):
     fields = "__all__"
     template_name = "asset/category/create.html"
     app_name = "asset"
+    url_name = "category_detail"
 
 
 class ConsumableUpdateView(BaseUpdateView):
@@ -70,9 +74,11 @@ class ConsumableUpdateView(BaseUpdateView):
     fields = "__all__"
     template_name = "asset/category/update.html"
     app_name = "asset"
+    url_name = "category_detail"
 
 
 class ConsumableDeleteView(BaseDeleteView):
     model = ConsumableCategory
     template_name = "asset/category/delete.html"
     app_name = "asset"
+    url_name = "category_list"

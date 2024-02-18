@@ -24,6 +24,7 @@ class ReceptionCreateView(BaseCreateView):
     fields = ["reason", "payment_type", "payment_status", "client", "service"]
     template_name = "reception/create.html"
     app_name = "reception"
+    url_name = "detail"
 
 
 class ReceptionDetailView(BaseDetailView):
@@ -37,6 +38,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
     fields = ["reason", "payment_type", "payment_status", "service"]
     template_name = "reception/create_profile.html"
     app_name = "reception"
+    url_name = "detail"
 
     def get_initial(self):
         initial = super().get_initial()
@@ -59,9 +61,11 @@ class ReceptionUpdateView(BaseUpdateView):
     fields = "__all__"
     template_name = "reception/update.html"
     app_name = "reception"
+    url_name = "detail"
 
 
 class ReceptionDeleteView(BaseDeleteView):
     model = Reception
     template_name = "reception/delete.html"
     app_name = "reception"
+    url_name = "list"

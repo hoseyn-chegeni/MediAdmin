@@ -25,6 +25,7 @@ class InsuranceCreateView(BaseCreateView):
     fields = "__all__"
     template_name = "insurance/create.html"
     app_name = "insurance"
+    url_name = "detail"
 
 
 class InsuranceDetailView(BaseDetailView):
@@ -44,9 +45,11 @@ class InsuranceUpdateView(BaseUpdateView):
     fields = "__all__"
     template_name = "insurance/update.html"
     app_name = "insurance"
+    url_name = "detail"
 
 
 class InsuranceDeleteView(BaseDeleteView):
     model = Insurance
     template_name = "insurance/delete.html"
     app_name = "insurance"
+    url_name = "list"

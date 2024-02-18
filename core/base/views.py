@@ -12,9 +12,12 @@ class BaseListView(LoginRequiredMixin, FilterView):
 
 class BaseCreateView(LoginRequiredMixin, CreateView):
     app_name = ""
+    url_name = ""
 
     def get_success_url(self):
-        return reverse_lazy(f"{self.app_name}:detail", kwargs={"pk": self.object.pk})
+        return reverse_lazy(
+            f"{self.app_name}:{self.url_name}", kwargs={"pk": self.object.pk}
+        )
 
 
 class BaseDetailView(LoginRequiredMixin, DetailView):
@@ -23,13 +26,17 @@ class BaseDetailView(LoginRequiredMixin, DetailView):
 
 class BaseUpdateView(LoginRequiredMixin, UpdateView):
     app_name = ""
+    url_name = ""
 
     def get_success_url(self):
-        return reverse_lazy(f"{self.app_name}:detail", kwargs={"pk": self.object.pk})
+        return reverse_lazy(
+            f"{self.app_name}:{self.url_name}", kwargs={"pk": self.object.pk}
+        )
 
 
 class BaseDeleteView(LoginRequiredMixin, DeleteView):
     app_name = ""
+    url_name = ""
 
     def get_success_url(self):
-        return reverse_lazy(f"{self.app_name}:list")
+        return reverse_lazy(f"{self.app_name}:{self.url_name}")

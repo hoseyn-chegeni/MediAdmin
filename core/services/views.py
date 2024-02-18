@@ -23,6 +23,7 @@ class ServiceCreateView(BaseCreateView):
     fields = "__all__"
     template_name = "services/create.html"
     app_name = "services"
+    url_name = "detail"
 
 
 class ServiceDetailView(BaseDetailView):
@@ -42,12 +43,14 @@ class ServiceUpdateView(BaseUpdateView):
     fields = "__all__"
     template_name = "services/update.html"
     app_name = "services"
+    url_name = "detail"
 
 
 class ServiceLDeleteView(BaseDeleteView):
     model = Service
     template_name = "services/delete.html"
     app_name = "services"
+    url_name = "list"
 
 
 # ServiceConsumable Views here.
@@ -71,6 +74,5 @@ class ServiceConsumableCreateView(BaseCreateView):
 class ServiceConsumableDeleteView(BaseDeleteView):
     model = ServiceConsumable
     template_name = "services/consumable_delete.html"
-
-    def get_success_url(self):
-        return reverse_lazy("services:list")
+    app_name = "services"
+    url_name = "list"

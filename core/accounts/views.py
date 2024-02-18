@@ -2,7 +2,6 @@ from .models import User
 from django.urls import reverse_lazy, reverse
 from .froms import CustomUserCreationForm
 from django.contrib.auth.views import LogoutView
-from django_filters.views import FilterView
 from .filters import UserFilter
 from base.views import (
     BaseCreateView,
@@ -14,7 +13,7 @@ from base.views import (
 
 
 # Create your views here.
-class UserListView(FilterView):
+class UserListView(BaseListView):
     model = User
     template_name = "accounts/list.html"
     context_object_name = "users"
@@ -32,6 +31,7 @@ class UserCreateView(BaseCreateView):
     form_class = CustomUserCreationForm
     template_name = "accounts/create.html"
     app_name = "accounts"
+    url_name = "detail"
 
 
 class UserUpdateView(BaseUpdateView):
@@ -39,12 +39,14 @@ class UserUpdateView(BaseUpdateView):
     fields = ("first_name", "last_name")
     template_name = "accounts/update.html"
     app_name = "accounts"
+    url_name = "detail"
 
 
 class UserDeleteView(BaseDeleteView):
     model = User
     template_name = "accounts/delete.html"
     app_name = "accounts"
+    url_name = "list"
 
 
 class UserLogoutView(LogoutView):
