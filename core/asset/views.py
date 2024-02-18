@@ -59,6 +59,12 @@ class ConsumableCategoryDetailView(BaseDetailView):
     model = ConsumableCategory
     template_name = "asset/category/detail.html"
     context_object_name = "category"
+    
+    def get_context_data(self, **kwargs):
+        category = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["consumable"] = Consumable.objects.filter(category_id=category.id)
+        return context
 
 
 class ConsumableCategoryCreateView(BaseCreateView):
