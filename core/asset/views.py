@@ -103,6 +103,12 @@ class SupplierDetailView(BaseDetailView):
     template_name = "asset/supplier/detail.html"
     context_object_name = "supplier"
 
+    def get_context_data(self, **kwargs):
+        supplier = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["consumable"] = Consumable.objects.filter(supplier_id=supplier.id)
+        return context
+
 
 class SupplierCreateView(BaseCreateView):
     model = Supplier
