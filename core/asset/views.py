@@ -7,7 +7,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Consumable, ConsumableCategory
-from .filters import ConsumableFilter
+from .filters import ConsumableFilter, ConsumableCategoryFilter
 
 
 # Create your views here.
@@ -52,7 +52,7 @@ class ConsumableListView(BaseListView):
     model = ConsumableCategory
     template_name = "asset/category/list.html"
     context_object_name = "category"
-    filterset_class = 0
+    filterset_class = ConsumableCategoryFilter
 
 
 class ConsumableDetailView(BaseDetailView):
