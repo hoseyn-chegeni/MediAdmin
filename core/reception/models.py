@@ -6,6 +6,11 @@ class Reception(models.Model):
     service = models.ForeignKey(
         "services.Service", on_delete=models.SET_NULL, blank=True, null=True
     )
+    STATUS_CHOICES = (
+        ("WAITE", "Waite"),
+        ("DONE", "Done")
+    )
+    status = models.CharField(max_length =10, choices = STATUS_CHOICES,blank=True, null=True)
     reason = models.CharField(max_length=255)
     PAYMENT_TYPE_CHOICES = (
         ("CASH", "Cash"),
