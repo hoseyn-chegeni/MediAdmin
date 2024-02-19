@@ -1,0 +1,22 @@
+<!-- reception/list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting List</title>
+</head>
+<body>
+    <h1>Waiting List</h1>
+    <!-- Reception Entries -->
+    <ul>
+        {% for reception in reception %}
+            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }} - {{reception.service}}.
+                 <a href="{% url 'reception:detail' reception.id %}">Detail</a>
+                </li>
+        {% empty %}
+            <li>No reception entries found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

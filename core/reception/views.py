@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from base.views import (
     BaseCreateView,
     BaseListView,
@@ -7,8 +6,8 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Reception
-from django.urls import reverse_lazy
 from .filters import ReceptionFilter
+from django.views.generic import ListView
 
 
 # Create your views here.
@@ -76,3 +75,13 @@ class ReceptionDeleteView(BaseDeleteView):
     template_name = "reception/delete.html"
     app_name = "reception"
     url_name = "list"
+
+
+class WaitingListView(ListView):
+    model = Reception
+    template_name = "reception/waiting_list.html"
+    context_object_name = "reception"
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(status='WAITE')
