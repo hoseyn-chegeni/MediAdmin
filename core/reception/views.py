@@ -26,6 +26,12 @@ class ReceptionCreateView(BaseCreateView):
     app_name = "reception"
     url_name = "detail"
 
+    def form_valid(self, form):
+        # Set the client for the reception
+        form.instance.status = 'WAITE'
+        return super().form_valid(form)
+
+
 
 class ReceptionDetailView(BaseDetailView):
     model = Reception
@@ -50,6 +56,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
+        form.instance.status = 'WAITE'
         form.instance.client_id = self.kwargs[
             "pk"
         ]  # Assuming client's pk is passed in the URL
