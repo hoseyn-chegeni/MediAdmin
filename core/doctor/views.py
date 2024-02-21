@@ -8,6 +8,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .filters import DoctorFilter
+from prescription.models import PrescriptionHeader
 
 
 # Create your views here.
@@ -22,6 +23,12 @@ class DoctorDetailView(BaseDetailView):
     model = Doctor
     template_name = "doctor/detail.html"
     context_object_name = "doctor"
+
+    def get_context_data(self, **kwargs):
+        doctor = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["prescription"] = PrescriptionHeader.objects.get(doctor_id=doctor.id)
+        return context
 
 
 class DoctorCreateView(BaseCreateView):

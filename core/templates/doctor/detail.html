@@ -1,1 +1,7 @@
 {{doctor.first_name}} {{doctor.last_name}}
+<p>-----------</p>
+{% if prescription %}
+<a href="{% url 'prescription:update' prescription.id %}">Update prescription</a>
+{% else %}
+    <a href="{% url 'prescription:create' doctor.pk %}">Add prescription</a>
+{% endif %}
