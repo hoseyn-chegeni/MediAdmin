@@ -33,6 +33,8 @@ urlpatterns = (
         path("insurance/", include("insurance.urls")),
         path("services/", include("services.urls")),
         path("asset/", include("asset.urls")),
+        path("doctor/", include("doctor.urls")),
+
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
