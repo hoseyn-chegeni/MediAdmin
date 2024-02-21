@@ -39,6 +39,7 @@ class Client(models.Model):
     insurance = models.ForeignKey(
         "insurance.Insurance", on_delete=models.CASCADE, blank=True, null=True
     )
+    is_vip = models.BooleanField(default = False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
