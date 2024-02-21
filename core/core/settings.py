@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     "insurance",
     "services",
     "asset",
-    "doctor"
+    "doctor",
 ]
 
 MIDDLEWARE = [

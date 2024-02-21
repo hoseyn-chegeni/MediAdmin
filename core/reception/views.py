@@ -27,9 +27,8 @@ class ReceptionCreateView(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
-        form.instance.status = 'WAITE'
+        form.instance.status = "WAITE"
         return super().form_valid(form)
-
 
 
 class ReceptionDetailView(BaseDetailView):
@@ -55,7 +54,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
-        form.instance.status = 'WAITE'
+        form.instance.status = "WAITE"
         form.instance.client_id = self.kwargs[
             "pk"
         ]  # Assuming client's pk is passed in the URL
@@ -84,4 +83,4 @@ class WaitingListView(ListView):
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
-        return qs.filter(status='WAITE')
+        return qs.filter(status="WAITE")
