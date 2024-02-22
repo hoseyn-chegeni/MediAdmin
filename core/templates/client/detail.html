@@ -8,3 +8,5 @@
 {% for i in  reception_history%}
     {{i.id}}:{{i.created_at}} <br>
 {%endfor%}
+<a href="{% url 'reception:reception_create_using_profile' client.id %}">Add New Reception</a>
+

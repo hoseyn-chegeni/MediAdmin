@@ -5,5 +5,9 @@
     <input type="submit">
 </form>
 {%for i in clients%}
-  <p>  {{i.id}}.{{i.first_name}} {{i.last_name}},<a href="{% url 'client:detail' i.pk %}">Details</a>,<a href="{% url 'client:update' i.pk %}">Edit Personal Information</a> ,<a href="{% url 'client:delete' i.pk %}">Delete</a></p>
+  <p>  {{i.id}}.{{i.first_name}} {{i.last_name}},
+      <a href="{% url 'client:detail' i.pk %}">Details</a>,
+      <a href="{% url 'client:update' i.pk %}">Edit Personal Information</a>,
+      <a href="{% url 'client:delete' i.pk %}">Delete</a>
+    </p>
 {% endfor %}
