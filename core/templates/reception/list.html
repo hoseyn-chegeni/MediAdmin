@@ -1,9 +1,33 @@
-<a href="{% url 'reception:create' %}">Create Reception</a><br>
-<form action="" method="get">
-    {%csrf_token%}
-    {{filter.form.as_p}}
-    <input type="submit">
-</form>
-{%for i in reception%}
-    {{i.id}}:{{i.client}},<a href="{% url 'reception:detail' i.pk %}">Details</a> <br>
-{% endfor %}
+<!-- reception/list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reception List</title>
+</head>
+<body>
+    <h1>Reception List</h1>
+
+    <!-- Filter Form -->
+    <form method="get">
+        <label for="id_date_range">Filter by Date:</label>
+        <select name="date_range" id="id_date_range">
+            <option value="">All</option>
+            <option value="this_day">This Day</option>
+            <option value="this_week">This Week</option>
+            <option value="this_month">This Month</option>
+        </select>
+        <button type="submit">Apply Filter</button>
+    </form>
+
+    <!-- Reception Entries -->
+    <ul>
+        {% for reception in reception %}
+            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }}</li>
+        {% empty %}
+            <li>No reception entries found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
