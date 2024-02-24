@@ -12,7 +12,9 @@
     <ul>
         {% for reception in reception %}
             <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }} - {{reception.service}}.
-                 <a href="{% url 'reception:detail' reception.id %}">Detail</a>
+                 <a href="{% url 'reception:detail' reception.id %}">Reception Detail</a>,
+                 <a href="{% url 'client:detail' reception.client.id %}">Client profile</a>
+          
                 </li>
         {% empty %}
             <li>No reception entries found.</li>
