@@ -7,6 +7,7 @@ from .views import (
     ReceptionDeleteView,
     ReceptionUpdateView,
     WaitingListView,
+    CompleteReceptionView,
 )
 
 app_name = "reception"
@@ -23,4 +24,6 @@ urlpatterns = [
     path("update/<int:pk>/", ReceptionUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", ReceptionDeleteView.as_view(), name="delete"),
     path("waiting_list/", WaitingListView.as_view(), name="waiting_list"),
+    path("complete/<int:pk>/", CompleteReceptionView.as_view(), name="complete"),
+
 ]

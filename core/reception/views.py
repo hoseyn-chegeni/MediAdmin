@@ -8,7 +8,7 @@ from base.views import (
 from .models import Reception
 from .filters import ReceptionFilter
 from django.views.generic import ListView
-
+from django.urls import reverse_lazy
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -84,3 +84,16 @@ class WaitingListView(ListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(status="WAITE")
+
+
+class CompleteReceptionView(BaseUpdateView):
+    model = Reception
+    fields = ['status']
+    template_name = "reception/complete.html"
+    def get_success_url(self):
+        return reverse_lazy('reception:waiting_list')
+
+    def form_valid(self, form):
+        # Set the client for the reception
+        form.instance.status = "DONE"
+        return super().form_valid(form)
