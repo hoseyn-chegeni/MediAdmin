@@ -14,7 +14,6 @@ class ClientFilters(FilterSet):
             "case_id": ["exact"],
             "national_id": ["exact"],
             "is_vip": ["exact"],
-
         }
 
     def filter_by_name(self, queryset, name, value):

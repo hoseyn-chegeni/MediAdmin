@@ -27,17 +27,20 @@ class DoctorDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         doctor = self.get_object()
         context = super().get_context_data(**kwargs)
-        
+
         # Try to get the prescription header for the doctor
-        prescription_header = PrescriptionHeader.objects.filter(doctor_id=doctor.id).first()
-        
+        prescription_header = PrescriptionHeader.objects.filter(
+            doctor_id=doctor.id
+        ).first()
+
         # Check if a prescription header exists
         if prescription_header is not None:
             context["prescription"] = prescription_header
         else:
             context["prescription"] = None
-        
+
         return context
+
 
 class DoctorCreateView(BaseCreateView):
     model = Doctor

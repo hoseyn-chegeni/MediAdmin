@@ -1,9 +1,27 @@
-from django.urls import path 
-from .views import PrescriptionHeaderCreateView, PrescriptionHeaderUpdateView
+from django.urls import path
+from .views import (
+    PrescriptionHeaderCreateView,
+    PrescriptionHeaderUpdateView,
+    PrescriptionCreateView,
+    PrescriptionDeleteView,
+    PrescriptionDetailView,
+    PrescriptionUpdateView,
+    PrescriptionListView,
+)
 
-app_name = 'prescription'
+app_name = "prescription"
 
 urlpatterns = [
-    path("create/<int:pk>/",PrescriptionHeaderCreateView.as_view(),name="create",),
-    path("update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="update"),
+    path("list/", PrescriptionListView.as_view(), name="list"),
+    path("detail/<int:pk>/", PrescriptionDetailView.as_view(), name="detail"),
+    path("create/<int:pk>/", PrescriptionCreateView.as_view(), name="create"),
+    path("update/<int:pk>/", PrescriptionUpdateView.as_view(), name="update"),
+    path("delete/<int:pk>/", PrescriptionDeleteView.as_view(), name="delete"),
+    #Prescription Header Urls
+    path(
+        "create/<int:pk>/",
+        PrescriptionHeaderCreateView.as_view(),
+        name="header_create",
+    ),
+    path("update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="header_update"),
 ]
