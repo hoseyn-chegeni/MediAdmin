@@ -24,7 +24,6 @@ class Reception(models.Model):
         ("UNPAID", "Unpaid"),
     )
     payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES)
-    prescription = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
