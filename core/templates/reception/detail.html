@@ -1,5 +1,7 @@
 {{reception.client}} <br>
 {{reception.reason}}<br>
 {{reception.payment_type}}<br>
-<a href="{% url 'prescription:create' reception.pk %}">Add Prescription</a>
+<a href="{% url 'prescription:create' reception.pk %}">Add Prescription</a>,
+<a href="{% url 'reception:complete' reception.pk %}">Complete Reception</a>,
+
 
