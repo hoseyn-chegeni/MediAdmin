@@ -16,3 +16,18 @@
     {% endfor %}
 {% endif %}
 <a href="{% url 'reception:reception_create_using_profile' client.id %}">Add New Reception</a>
+
+
+
+<!-- Display prescriptions -->
+<h2>Prescriptions:</h2>
+<ul>
+{% for i in prescriptions %}
+    <li>{{ i }}   
+         <a href="{% url 'prescription:detail' i.id %}">Detail</a>
+        <a href="{% url 'prescription:update' i.id %}">Update</a>
+        <a href="{% url 'prescription:delete' i.id %}">Delete</a> <br>  </li>
+{% empty %}
+    <li>No prescriptions found.</li>
+{% endfor %}
+</ul>

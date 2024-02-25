@@ -10,6 +10,7 @@ from .models import Client
 from .filters import ClientFilters
 from django.urls import reverse_lazy
 from reception.models import Reception
+from prescription.models import Prescription
 
 
 # Create your views here.
@@ -36,9 +37,16 @@ class ClientDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         client = self.get_object()
         context = super().get_context_data(**kwargs)
-        context["reception_history"] = Reception.objects.filter(client_id=client.id)
+        
+        # Get reception history for the client
+        reception_history = Reception.objects.filter(client_id=client.id)
+        context["reception_history"] = reception_history
+        
+        # Get all prescriptions associated with the receptions
+        prescriptions = Prescription.objects.filter(reception__client_id=client.id)
+        context["prescriptions"] = prescriptions
+        
         return context
-
 
 class ClientDeleteView(BaseDeleteView):
     model = Client
