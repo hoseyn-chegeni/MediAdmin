@@ -9,14 +9,14 @@ from base.views import (
     BaseDetailView,
     BaseListView,
 )
-
+from .filters import PrescriptionFilter
 
 # Create your views here.
 class PrescriptionListView(BaseListView):
     model = Prescription
     template_name = "prescription/list.html"
     context_object_name = "prescription"
-    filterset_class = 0
+    filterset_class = PrescriptionFilter
 
 
 class PrescriptionCreateView(BaseCreateView):
@@ -40,7 +40,14 @@ class PrescriptionCreateView(BaseCreateView):
             "pk"
         ]  
         return super().form_valid(form)
+    
 
+class PrescriptionCreateWithoutPkView(BaseCreateView):
+    model = Prescription
+    fields = '__all__'
+    template_name = "prescription/create.html"
+    app_name = "prescription"
+    url_name = "detail"
 
 class PrescriptionDetailView(BaseDetailView):
     model = Prescription
