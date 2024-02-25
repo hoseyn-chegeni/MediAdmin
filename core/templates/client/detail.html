@@ -2,6 +2,8 @@
 <p> Name: {{client.first_name}} {{client.last_name}}</p>
 <p> Father's Name: {{client.fathers_name}}</p>
 <p> National id: {{client.national_id}}</p>
+<p>  Age: {{client.age}}</p>
+
 <p> <a href="{% url 'client:edit_health_history' client.id%}">Edit Health History and Treatment</a></p>
 
 <h1>Reception History</h1>
