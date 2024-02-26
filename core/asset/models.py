@@ -19,6 +19,7 @@ class Consumable(models.Model):
     supplier = models.ForeignKey(
         "Supplier", on_delete=models.SET_NULL, blank=True, null=True
     )
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField()
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
     expiration_date = models.DateField(null=True, blank=True)
