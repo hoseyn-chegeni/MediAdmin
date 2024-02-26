@@ -19,6 +19,11 @@ class Service(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+    therapeutic_measures = models.TextField(blank = True)  # اقدمات درمانی
+    recommendations = models.TextField(blank = True) # توصیه ها
+    # suggested_prescription = 0
+
     def __str__(self):
         return self.name
 
