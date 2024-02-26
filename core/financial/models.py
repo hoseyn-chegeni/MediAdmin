@@ -17,20 +17,24 @@ class Financial(models.Model):
     payment_received_date = models.DateField(blank=True, null=True)
     tax_rate = Decimal('0.09')
 
+   
     def save(self, *args, **kwargs):
-        # Calculate service price
-        self.service_price = self.reception.service.price
-        
-        # Calculate consumable prices
-        consumable_prices = sum(sc.consumable.price for sc in self.reception.service.serviceconsumable_set.all())
-        self.consumable_price = consumable_prices
-        
-        # Calculate total amount including tax
-        total_amount_before_tax = self.service_price + self.consumable_price
-        total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
-        
-        self.total_amount = total_amount_after_tax
+        # If the financial instance is being created for the first time
+        if not self.pk:
+            # Calculate service price and consumable prices
+            self.service_price = self.reception.service.price
+            self.consumable_price = sum(sc.consumable.price for sc in self.reception.service.serviceconsumable_set.all())
+            total_amount_before_tax = self.service_price + self.consumable_price
+            total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
+            self.total_amount = total_amount_after_tax
+        # Check if service price or consumable price has been modified
+        if 'service_price' in kwargs.get('update_fields', []) or 'consumable_price' in kwargs.get('update_fields', []):
+            # Recalculate total amount including tax
+            total_amount_before_tax = self.service_price + self.consumable_price
+            total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
+            self.total_amount = total_amount_after_tax
+            
         super().save(*args, **kwargs)
-
+    
     def __str__(self):
         return f"Invoice #{self.invoice_number} for {self.reception.client}"
