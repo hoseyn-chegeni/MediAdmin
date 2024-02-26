@@ -1,0 +1,13 @@
+<a href="{% url 'financial:create' %}">Add Paymanet</a><br>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in financial%}
+  <p>  {{i.id}}.{{i.reception}},
+      <a href="{% url 'financial:detail' i.pk %}">Details</a>,
+      <a href="{% url 'financial:update' i.pk %}">update</a>,
+      <a href="{% url 'financial:delete' i.pk %}">Delete</a>
+    </p>
+{% endfor %}
