@@ -5,3 +5,15 @@
 <a href="{% url 'reception:complete' reception.pk %}">Complete Reception</a>,
 
 
+<p>-------------</p>
+{% if financial %}
+    <h2>Financial Details</h2>
+    <p>Invoice Number: {{ financial.invoice_number }}</p>
+    <p>payment_status: {{ financial.payment_status }}</p>
+    <p>tax_rate: {{ financial.tax_rate }}</p>
+    <p>total_amount: {{ financial.total_amount }}</p>
+
+    <!-- Display other financial details as needed -->
+{% else %}
+    <p>No financial details found for this reception.</p>
+{% endif %}

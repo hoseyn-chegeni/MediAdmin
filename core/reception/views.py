@@ -36,7 +36,13 @@ class ReceptionDetailView(BaseDetailView):
     template_name = "reception/detail.html"
     context_object_name = "reception"
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reception = self.get_object()
+        context['financial'] = reception.financial
+        return context
+    
+    
 class ReceptionCreateViewUsingProfile(BaseCreateView):
     model = Reception
     fields = ["reason", "payment_type", "payment_status", "service"]
