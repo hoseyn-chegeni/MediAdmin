@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "asset",
     "doctor",
     "prescription",
+    "financial",
 ]
 
 MIDDLEWARE = [
