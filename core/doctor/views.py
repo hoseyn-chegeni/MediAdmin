@@ -9,6 +9,9 @@ from base.views import (
 )
 from .filters import DoctorFilter
 from prescription.models import PrescriptionHeader
+from services.models import Service
+from financial.models import Financial
+from reception.models import Reception
 
 
 # Create your views here.
@@ -27,6 +30,9 @@ class DoctorDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         doctor = self.get_object()
         context = super().get_context_data(**kwargs)
+        context['service'] = Service.objects.filter(doctor_id = doctor.id)
+        context['financial_instances'] = Financial.objects.filter(reception__service__doctor=doctor)
+        context['receptions'] = Reception.objects.filter(service__doctor=doctor)
 
         # Try to get the prescription header for the doctor
         prescription_header = PrescriptionHeader.objects.filter(
@@ -38,6 +44,7 @@ class DoctorDetailView(BaseDetailView):
             context["prescription"] = prescription_header
         else:
             context["prescription"] = None
+
 
         return context
 

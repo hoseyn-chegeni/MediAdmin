@@ -1,7 +1,37 @@
 {{doctor.first_name}} {{doctor.last_name}}
 <p>-----------</p>
 {% if prescription %}
-<a href="{% url 'prescription:header_update' prescription.id %}">Update prescription</a>
+<a href="{% url 'prescription:header_update' prescription.id %}">Update prescription header</a>
 {% else %}
-    <a href="{% url 'prescription:header_create' doctor.pk %}">Add prescription</a>
+    <a href="{% url 'prescription:header_create' doctor.pk %}">Add prescription header</a>
 {% endif %}
+<p>-----------</p>
+<p>Service</p>
+<ul>
+{%for i in service%}
+   <li> {{i}}</li>
+{%empty%}
+<li> No Service Found</li>
+ {%endfor%}
+</ul>
+
+<p>-----------</p>
+<p>Financial Instance</p>
+<ul>
+{%for i in financial_instances%}
+<li> {{i}}</li>
+{%empty%}
+<li> No financial Instance found </li>
+ {%endfor%}
+</ul>
+
+
+<p>-----------</p>
+<ul>
+<p>Reception</p>
+{%for i in receptions%}
+<li> {{i}}</li>
+{%empty%}
+<li>No Reception found</li>
+ {%endfor%}
+</ul>
