@@ -6,7 +6,7 @@
 <a href="{% url 'services:service_consumable_create' services.id %}">Add consumable</a>
 
 
-<h2>Financial Instances</h2>
+<h2>Reception</h2>
 <ul>
     {% for i in reception %}
         <li>
@@ -17,3 +17,4 @@
     <li>No Reception instance  found.</li>
     {% endfor %}
 </ul>
+<p>Receptions: {{num_reception}}</p>
