@@ -27,11 +27,16 @@
 
 
 <p>-----------</p>
-<ul>
 <p>Reception</p>
+<ul>
 {%for i in receptions%}
 <li> {{i}}</li>
 {%empty%}
 <li>No Reception found</li>
  {%endfor%}
 </ul>
+<p>---------------------------</p>
+<p>services: {{num_service}}</p>
+<p>reception: {{num_receptions}}</p>
+<p>Financial instances: {{num_financial_instances}}</p>
+<p>Total Amount: {{total_amount_sum}}</p>
