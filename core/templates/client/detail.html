@@ -33,6 +33,7 @@
     <li>No prescriptions found.</li>
 {% endfor %}
 
+
 </ul>
 
 
@@ -48,4 +49,10 @@
     {% empty %}
     <li>No Financial instance  found.</li>
     {% endfor %}
+    <p>--------------</p>
+    <p>Financial Instance:{{num_financial_instances}}</p>
+   <p>Total Amount:{{total_amount_sum}}</p>
+   <p>Reception: {{num_reception}}</p>
+   <p>Prescription: {{num_prescriptions}}</p>
+
 </ul>

@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from reception.models import Reception
 from prescription.models import Prescription
 from financial.models import Financial
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -42,12 +43,17 @@ class ClientDetailView(BaseDetailView):
         # Get reception history for the client
         reception_history = Reception.objects.filter(client_id=client.id)
         context["reception_history"] = reception_history
+        context['num_reception'] = reception_history.count()
         
         # Get all prescriptions associated with the receptions
         prescriptions = Prescription.objects.filter(reception__client_id=client.id)
         context["prescriptions"] = prescriptions
+        context['num_prescriptions'] = prescriptions.count()
         
         context['financial_instances'] = Financial.objects.filter(reception__client=client)
+        context['num_financial_instances'] = Financial.objects.filter(reception__client=client).count()
+        context['total_amount_sum'] = Financial.objects.filter(reception__client=client).aggregate(Sum('total_amount'))['total_amount__sum']
+
 
         return context
 
