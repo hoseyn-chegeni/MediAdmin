@@ -32,4 +32,20 @@
 {% empty %}
     <li>No prescriptions found.</li>
 {% endfor %}
+
+</ul>
+
+
+<h2>Financial Instances</h2>
+<ul>
+    {% for financial_instance in financial_instances %}
+        <li>
+            <strong>Invoice Number:</strong> {{ financial_instance.invoice_number }}<br>
+            <strong>Date Issued:</strong> {{ financial_instance.date_issued }}<br>
+            <strong>Total Amount:</strong> {{ financial_instance.total_amount }}<br>
+            <!-- Add other financial instance details as needed -->
+        </li>
+    {% empty %}
+    <li>No Financial instance  found.</li>
+    {% endfor %}
 </ul>

@@ -11,6 +11,7 @@ from .filters import ClientFilters
 from django.urls import reverse_lazy
 from reception.models import Reception
 from prescription.models import Prescription
+from financial.models import Financial
 
 
 # Create your views here.
@@ -46,6 +47,8 @@ class ClientDetailView(BaseDetailView):
         prescriptions = Prescription.objects.filter(reception__client_id=client.id)
         context["prescriptions"] = prescriptions
         
+        context['financial_instances'] = Financial.objects.filter(reception__client=client)
+
         return context
 
 class ClientDeleteView(BaseDeleteView):
