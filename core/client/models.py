@@ -41,6 +41,8 @@ class Client(models.Model):
         "insurance.Insurance", on_delete=models.CASCADE, blank=True, null=True
     )
     is_vip = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)  # Image field for the client
+
 
     @property
     def age(self):
