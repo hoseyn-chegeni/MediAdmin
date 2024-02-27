@@ -6,6 +6,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Service, ServiceConsumable
+from reception.models import Reception
 from .filters import ServicesFilter
 from django.urls import reverse_lazy
 
@@ -35,6 +36,7 @@ class ServiceDetailView(BaseDetailView):
         service = self.get_object()
         context = super().get_context_data(**kwargs)
         context["consumable"] = ServiceConsumable.objects.filter(service_id=service.id)
+        context['reception'] = Reception.objects.filter(service_id=service.id)
         return context
 
 

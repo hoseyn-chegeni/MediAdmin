@@ -4,3 +4,16 @@
     {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">Remove</a><br>
 {%endfor%}
 <a href="{% url 'services:service_consumable_create' services.id %}">Add consumable</a>
+
+
+<h2>Financial Instances</h2>
+<ul>
+    {% for i in reception %}
+        <li>
+                {{ i }} <a href="{% url 'reception:detail' i.id %}">Detail</a><br>
+            <!-- Add other financial instance details as needed -->
+        </li>
+    {% empty %}
+    <li>No Reception instance  found.</li>
+    {% endfor %}
+</ul>
