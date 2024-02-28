@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator 
 
 
 # Create your models here.
@@ -16,3 +17,14 @@ class Insurance(models.Model):
 
     def __str__(self):
         return self.name
+
+class InsuranceService(models.Model):
+    service = models.ForeignKey('services.Service',on_delete = models.CASCADE)
+    insurance = models.ForeignKey('Insurance',on_delete = models.CASCADE)
+    percentage = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.insurance}/{self.service}'
