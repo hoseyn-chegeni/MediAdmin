@@ -11,6 +11,7 @@ from base.views import (
 )
 from .filters import PrescriptionFilter
 
+
 # Create your views here.
 class PrescriptionListView(BaseListView):
     model = Prescription
@@ -36,18 +37,17 @@ class PrescriptionCreateView(BaseCreateView):
         return initial
 
     def form_valid(self, form):
-        form.instance.reception_id = self.kwargs[
-            "pk"
-        ]  
+        form.instance.reception_id = self.kwargs["pk"]
         return super().form_valid(form)
-    
+
 
 class PrescriptionCreateWithoutPkView(BaseCreateView):
     model = Prescription
-    fields = '__all__'
+    fields = "__all__"
     template_name = "prescription/create.html"
     app_name = "prescription"
     url_name = "detail"
+
 
 class PrescriptionDetailView(BaseDetailView):
     model = Prescription

@@ -39,23 +39,29 @@ class ClientDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         client = self.get_object()
         context = super().get_context_data(**kwargs)
-        
+
         # Get reception history for the client
         reception_history = Reception.objects.filter(client_id=client.id)
         context["reception_history"] = reception_history
-        context['num_reception'] = reception_history.count()
-        
+        context["num_reception"] = reception_history.count()
+
         # Get all prescriptions associated with the receptions
         prescriptions = Prescription.objects.filter(reception__client_id=client.id)
         context["prescriptions"] = prescriptions
-        context['num_prescriptions'] = prescriptions.count()
-        
-        context['financial_instances'] = Financial.objects.filter(reception__client=client)
-        context['num_financial_instances'] = Financial.objects.filter(reception__client=client).count()
-        context['total_amount_sum'] = Financial.objects.filter(reception__client=client).aggregate(Sum('total_amount'))['total_amount__sum']
+        context["num_prescriptions"] = prescriptions.count()
 
+        context["financial_instances"] = Financial.objects.filter(
+            reception__client=client
+        )
+        context["num_financial_instances"] = Financial.objects.filter(
+            reception__client=client
+        ).count()
+        context["total_amount_sum"] = Financial.objects.filter(
+            reception__client=client
+        ).aggregate(Sum("total_amount"))["total_amount__sum"]
 
         return context
+
 
 class ClientDeleteView(BaseDeleteView):
     model = Client

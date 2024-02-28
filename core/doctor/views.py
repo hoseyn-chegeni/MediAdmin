@@ -31,19 +31,22 @@ class DoctorDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         doctor = self.get_object()
         context = super().get_context_data(**kwargs)
-        services = Service.objects.filter(doctor_id = doctor.id)
-        context['service'] = services
-        context['num_service'] = services.count()
+        services = Service.objects.filter(doctor_id=doctor.id)
+        context["service"] = services
+        context["num_service"] = services.count()
 
-        financial_instances = Financial.objects.filter(reception__service__doctor=doctor)
-        context['financial_instances'] = financial_instances
-        context['num_financial_instances'] = financial_instances.count()
-        context['total_amount_sum'] = Financial.objects.filter(reception__service__doctor=doctor).aggregate(Sum('total_amount'))['total_amount__sum']
+        financial_instances = Financial.objects.filter(
+            reception__service__doctor=doctor
+        )
+        context["financial_instances"] = financial_instances
+        context["num_financial_instances"] = financial_instances.count()
+        context["total_amount_sum"] = Financial.objects.filter(
+            reception__service__doctor=doctor
+        ).aggregate(Sum("total_amount"))["total_amount__sum"]
 
         receptions = Reception.objects.filter(service__doctor=doctor)
-        context['receptions'] = receptions
-        context['num_receptions'] = receptions.count()
-
+        context["receptions"] = receptions
+        context["num_receptions"] = receptions.count()
 
         # Try to get the prescription header for the doctor
         prescription_header = PrescriptionHeader.objects.filter(
@@ -55,7 +58,6 @@ class DoctorDetailView(BaseDetailView):
             context["prescription"] = prescription_header
         else:
             context["prescription"] = None
-
 
         return context
 

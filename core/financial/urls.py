@@ -1,7 +1,13 @@
 from django.urls import path
-from .views import FinancialCreateView,FinancialDeleteView,FinancialDetailView,FinancialListView,FinancialUpdateView
+from .views import (
+    FinancialCreateView,
+    FinancialDeleteView,
+    FinancialDetailView,
+    FinancialListView,
+    FinancialUpdateView,
+)
 
-app_name = 'financial'
+app_name = "financial"
 
 urlpatterns = [
     path("list/", FinancialListView.as_view(), name="list"),

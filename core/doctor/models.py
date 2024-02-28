@@ -16,7 +16,9 @@ class Doctor(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-    image = models.ImageField(upload_to='images/', blank=True, null=True)  # Image field for the Doctor
+    image = models.ImageField(
+        upload_to="images/", blank=True, null=True
+    )  # Image field for the Doctor
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

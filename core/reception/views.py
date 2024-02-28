@@ -10,6 +10,7 @@ from .filters import ReceptionFilter
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -39,10 +40,10 @@ class ReceptionDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         reception = self.get_object()
-        context['financial'] = reception.financial
+        context["financial"] = reception.financial
         return context
-    
-    
+
+
 class ReceptionCreateViewUsingProfile(BaseCreateView):
     model = Reception
     fields = ["reason", "payment_type", "payment_status", "service"]
@@ -94,10 +95,11 @@ class WaitingListView(ListView):
 
 class CompleteReceptionView(BaseUpdateView):
     model = Reception
-    fields = ['status']
+    fields = ["status"]
     template_name = "reception/complete.html"
+
     def get_success_url(self):
-        return reverse_lazy('reception:waiting_list')
+        return reverse_lazy("reception:waiting_list")
 
     def form_valid(self, form):
         # Set the client for the reception

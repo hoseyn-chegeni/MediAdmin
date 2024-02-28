@@ -1,8 +1,11 @@
 from django.contrib import admin
-from .models import Insurance
+from .models import Insurance, InsuranceService
 
 
 # Register your models here.
+admin.site.register(InsuranceService)
+
+
 @admin.register(Insurance)
 class InsuranceAdmin(admin.ModelAdmin):
     list_display = [

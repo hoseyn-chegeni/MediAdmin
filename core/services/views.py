@@ -36,10 +36,10 @@ class ServiceDetailView(BaseDetailView):
         service = self.get_object()
         context = super().get_context_data(**kwargs)
         context["consumable"] = ServiceConsumable.objects.filter(service_id=service.id)
-        
+
         reception = Reception.objects.filter(service_id=service.id)
-        context['reception'] = reception
-        context['num_reception'] = reception.count()
+        context["reception"] = reception
+        context["num_reception"] = reception.count()
 
         return context
 

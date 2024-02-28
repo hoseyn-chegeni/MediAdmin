@@ -25,5 +25,4 @@ urlpatterns = [
     path("delete/<int:pk>/", ReceptionDeleteView.as_view(), name="delete"),
     path("waiting_list/", WaitingListView.as_view(), name="waiting_list"),
     path("complete/<int:pk>/", CompleteReceptionView.as_view(), name="complete"),
-
 ]

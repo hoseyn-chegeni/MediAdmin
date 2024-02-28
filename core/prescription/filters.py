@@ -9,5 +9,3 @@ class PrescriptionFilter(FilterSet):
     class Meta:
         model = Prescription
         fields = {"id": ["exact"]}
-
-

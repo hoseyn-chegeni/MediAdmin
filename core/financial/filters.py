@@ -11,5 +11,3 @@ class FinancialFilter(FilterSet):
         fields = {
             "id": ["exact"],
         }
-
-

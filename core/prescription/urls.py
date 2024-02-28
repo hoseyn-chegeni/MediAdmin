@@ -7,7 +7,7 @@ from .views import (
     PrescriptionDetailView,
     PrescriptionUpdateView,
     PrescriptionListView,
-    PrescriptionCreateWithoutPkView
+    PrescriptionCreateWithoutPkView,
 )
 
 app_name = "prescription"
@@ -15,16 +15,17 @@ app_name = "prescription"
 urlpatterns = [
     path("list/", PrescriptionListView.as_view(), name="list"),
     path("create/", PrescriptionCreateWithoutPkView.as_view(), name="create_no_pk"),
-
     path("detail/<int:pk>/", PrescriptionDetailView.as_view(), name="detail"),
     path("create/<int:pk>/", PrescriptionCreateView.as_view(), name="create"),
     path("update/<int:pk>/", PrescriptionUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", PrescriptionDeleteView.as_view(), name="delete"),
-    #Prescription Header Urls
+    # Prescription Header Urls
     path(
         "create/<int:pk>/",
         PrescriptionHeaderCreateView.as_view(),
         name="header_create",
     ),
-    path("update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="header_update"),
+    path(
+        "update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="header_update"
+    ),
 ]
