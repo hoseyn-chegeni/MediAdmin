@@ -37,6 +37,7 @@ class InsuranceDetailView(BaseDetailView):
         insurance = self.get_object()
         context = super().get_context_data(**kwargs)
         context["clients"] = Client.objects.filter(insurance_id=insurance.id)
+        context['service'] = InsuranceService.objects.filter(insurance_id = insurance.id)
         return context
 
 

@@ -3,3 +3,16 @@
 {% for i in clients%}
     {{i.first_name}} {{i.last_name}} <br>
 {%endfor%}
+
+
+<h2>Services</h2>
+<ul>
+    {% for i in service %}
+        <li>
+                {{ i.service }}:{{i.percentage}} <br>
+            <!-- Add other financial instance details as needed -->
+        </li>
+    {% empty %}
+    <li>No service found.</li>
+    {% endfor %}
+</ul>
