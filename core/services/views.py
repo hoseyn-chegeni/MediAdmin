@@ -9,6 +9,7 @@ from .models import Service, ServiceConsumable
 from reception.models import Reception
 from .filters import ServicesFilter
 from django.urls import reverse_lazy
+from insurance.models import InsuranceService
 
 
 # Create your views here.
@@ -40,6 +41,8 @@ class ServiceDetailView(BaseDetailView):
         reception = Reception.objects.filter(service_id=service.id)
         context["reception"] = reception
         context["num_reception"] = reception.count()
+
+        context['insurance'] = InsuranceService.objects.filter(service_id = service.id)
 
         return context
 

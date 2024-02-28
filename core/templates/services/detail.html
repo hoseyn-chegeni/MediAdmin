@@ -18,3 +18,16 @@
     {% endfor %}
 </ul>
 <p>Receptions: {{num_reception}}</p>
+
+
+<h2>Valid Insurance</h2>
+<ul>
+    {% for i in insurance %}
+        <li>
+                {{ i.insurance }}:{{i.percentage}} <br>
+            <!-- Add other financial instance details as needed -->
+        </li>
+    {% empty %}
+    <li>No Reception instance  found.</li>
+    {% endfor %}
+</ul>
