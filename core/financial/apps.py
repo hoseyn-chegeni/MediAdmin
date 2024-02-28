@@ -7,4 +7,4 @@ class FinancialConfig(AppConfig):
 
     def ready(self):
         # Import the signal handler function
-        from . import signals
+        from .signals import create_financial
