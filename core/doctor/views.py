@@ -22,6 +22,20 @@ class DoctorListView(BaseListView):
     context_object_name = "doctor"
     filterset_class = DoctorFilter
 
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=True)
+
+class SuspendDoctorListView(BaseListView):
+    model = Doctor
+    template_name = "doctor/suspend_list.html"
+    context_object_name = "doctor"
+    filterset_class = DoctorFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=False)
+
 
 class DoctorDetailView(BaseDetailView):
     model = Doctor
