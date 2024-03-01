@@ -157,18 +157,208 @@
         </button>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Management Panel</h5>
+            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">پنل مدیریتی</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input class="form-control me-2" type="search" placeholder="جستجوی بیمار" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">جستجو</button>
           </form>
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="#">صفحه اصلی </a>
               </li>
+
+              <li class="nav-item dropdown">            
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  پروفایل
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">پروفایل</a></li>
+                  <li>
+                  <hr class="dropdown-divider">
+                </li>
+                  <li><a class="dropdown-item" href="#">تغییر رمز ورود</a></li>
+                  <li>
+                  <hr class="dropdown-divider">
+                </li>
+                  <li><a class="dropdown-item" href="#"> مدیریت تایید دو مرحله ای</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown">            
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                کاربران
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">مدیریت کاربران</a></li>
+                <li>
+                <hr class="dropdown-divider">
+              </li>
+                <li><a class="dropdown-item" href="#"> لیست کاربران</a></li>
+                <li>
+                <hr class="dropdown-divider">
+              </li>
+                <li><a class="dropdown-item" href="#">ایجاد کاربر جدید</a></li>
+                <hr class="dropdown-divider">
+              </li>
+                <li><a class="dropdown-item" href="#">  لیست کاربران معلق</a></li>
+              </ul>
+            </li>        
+
+
+            <li class="nav-item dropdown">            
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              مدیریت بیماران
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#"> لیست بیماران</a></li>
+              <li>
+              <hr class="dropdown-divider">
+            </li>
+              <li><a class="dropdown-item" href="#">  لیست بیماران  VIP</a></li>
+              <li>
+              <hr class="dropdown-divider">
+            </li>
+              <li><a class="dropdown-item" href="#">ایجاد بیمار جدید</a></li>
+            </ul>
+          </li>      
+
+
+          <li class="nav-item dropdown">            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             پذیرش
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">صف انتظار ویزیت</a></li>
+            <li>
+            <hr class="dropdown-divider">
+          </li>
+            <li><a class="dropdown-item" href="#">لیست  پذیرش ها</a></li>
+            <li>
+            <hr class="dropdown-divider">
+          </li>
+            <li><a class="dropdown-item" href="#">پذیرش بیمار جدید</a></li>
+          </ul>
+        </li>   
+        
+        
+
+        <li class="nav-item dropdown">            
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           مدیریت مالی
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">لیست فاکتور ها</a></li>
+          <li>
+          <hr class="dropdown-divider">
+        </li>
+          <li><a class="dropdown-item" href="#">گزارشات</a></li>
+        </ul>
+      </li> 
+      
+
+      <li class="nav-item dropdown">            
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         پزشکان 
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">  لیست پزشکان</a></li>
+        <li>
+        <hr class="dropdown-divider">
+      </li>
+        <li><a class="dropdown-item" href="#">لیست پزشکان معلق</a></li>
+      </ul>
+    </li> 
+
+    <li class="nav-item dropdown">            
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+       مدیریت سرویس ها
+    </a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">  لیست سرویس ها</a></li>
+      <li>
+      <hr class="dropdown-divider">
+    </li>
+      <li><a class="dropdown-item" href="#">لیست سرویس های معلق</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+        <li><a class="dropdown-item" href="#">ایجاد سرویس جدید</a></li>
+    </ul>
+  </li> 
+
+
+
+  <li class="nav-item dropdown">            
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+     مدیریت نسخه ها
+  </a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">لیست نسخه ها</a></li>
+    <li>
+    <hr class="dropdown-divider">
+  </li>
+      <li><a class="dropdown-item" href="#">ایجاد نسخه جدید</a></li>
+  </ul>
+</li> 
+
+
+
+
+<li class="nav-item dropdown">            
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+     انبار داری
+</a>
+<ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="#">لیست مواد مصرفی</a></li>
+  <li>
+  <hr class="dropdown-divider">
+</li>
+    <li><a class="dropdown-item" href="#">Check in</a></li>
+    <li>
+      <hr class="dropdown-divider">
+    </li>
+      <li><a class="dropdown-item" href="#">لیست سفارش ها</a></li>
+      <li>
+      <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="#">لیست تامین کنندگان</a></li>
+      <li>
+      <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="#">لیست تامین کنندگان</a></li>
+      <li>
+        <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="#">ایجاد تامین کننده جدید</a></li>
+
+        <li>
+          <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">مدیریت دسته بندی مواد مصرفی</a></li>
+
+      <li class="nav-item dropdown">            
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          مدیریت بیمه ها
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">لیست بیمه خا</a></li>
+        <li>
+        <hr class="dropdown-divider">
+      </li>
+          <li><a class="dropdown-item" href="#">ایجاد بیمه جدید</a></li>
+      </ul>
+    </li> 
+
+
+</ul>
+</li> 
+
+
+      
+
 
           </div>
         </div>
