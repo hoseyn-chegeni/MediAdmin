@@ -167,7 +167,7 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">صفحه اصلی </a>
+                <a class="nav-link active" aria-current="page" href="{% url 'index:index' %}">صفحه اصلی </a>
               </li>
 
               <li class="nav-item dropdown">            
@@ -175,32 +175,29 @@
                   پروفایل
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">پروفایل</a></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">پروفایل</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#">تغییر رمز ورود</a></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:change_password' %}">تغییر رمز ورود</a></li>
                   <li>
                   <hr class="dropdown-divider">
                 </li>
-                  <li><a class="dropdown-item" href="#"> مدیریت تایید دو مرحله ای</a></li>
+                  <li><a class="dropdown-item" href="{% url 'two_factor:setup' %}"> مدیریت تایید دو مرحله ای</a></li>
                 </ul>
               </li>
 
               <li class="nav-item dropdown">            
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                کاربران
+                مدیریت کاربران
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">مدیریت کاربران</a></li>
+              </li>
+                <li><a class="dropdown-item" href="{% url 'accounts:user_list' %}"> لیست کاربران</a></li>
                 <li>
                 <hr class="dropdown-divider">
               </li>
-                <li><a class="dropdown-item" href="#"> لیست کاربران</a></li>
-                <li>
-                <hr class="dropdown-divider">
-              </li>
-                <li><a class="dropdown-item" href="#">ایجاد کاربر جدید</a></li>
+                <li><a class="dropdown-item" href="{% url 'accounts:user_create' %}">ایجاد کاربر جدید</a></li>
                 <hr class="dropdown-divider">
               </li>
                 <li><a class="dropdown-item" href="#">  لیست کاربران معلق</a></li>
@@ -213,7 +210,7 @@
               مدیریت بیماران
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#"> لیست بیماران</a></li>
+              <li><a class="dropdown-item" href="{% url 'client:list' %}"> لیست بیماران</a></li>
               <li>
               <hr class="dropdown-divider">
             </li>
@@ -221,7 +218,7 @@
               <li>
               <hr class="dropdown-divider">
             </li>
-              <li><a class="dropdown-item" href="#">ایجاد بیمار جدید</a></li>
+              <li><a class="dropdown-item" href="{% url 'client:create' %}">ایجاد بیمار جدید</a></li>
             </ul>
           </li>      
 
@@ -231,15 +228,15 @@
              پذیرش
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">صف انتظار ویزیت</a></li>
+            <li><a class="dropdown-item" href="{% url 'reception:waiting_list' %}">صف انتظار ویزیت</a></li>
             <li>
             <hr class="dropdown-divider">
           </li>
-            <li><a class="dropdown-item" href="#">لیست  پذیرش ها</a></li>
+            <li><a class="dropdown-item" href="{% url 'reception:list' %}">لیست  پذیرش ها</a></li>
             <li>
             <hr class="dropdown-divider">
           </li>
-            <li><a class="dropdown-item" href="#">پذیرش بیمار جدید</a></li>
+            <li><a class="dropdown-item" href="{% url 'reception:create' %}">پذیرش بیمار جدید</a></li>
           </ul>
         </li>   
         
@@ -250,7 +247,7 @@
            مدیریت مالی
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">لیست فاکتور ها</a></li>
+          <li><a class="dropdown-item" href="{% url 'financial:list' %}">لیست فاکتور ها</a></li>
           <li>
           <hr class="dropdown-divider">
         </li>
@@ -264,7 +261,7 @@
          پزشکان 
       </a>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">  لیست پزشکان</a></li>
+        <li><a class="dropdown-item" href="{% url 'doctor:list' %}">  لیست پزشکان</a></li>
         <li>
         <hr class="dropdown-divider">
       </li>
@@ -277,7 +274,7 @@
        مدیریت سرویس ها
     </a>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">  لیست سرویس ها</a></li>
+      <li><a class="dropdown-item" href="{% url 'services:list' %}">  لیست سرویس ها</a></li>
       <li>
       <hr class="dropdown-divider">
     </li>
@@ -285,7 +282,7 @@
       <li>
         <hr class="dropdown-divider">
       </li>
-        <li><a class="dropdown-item" href="#">ایجاد سرویس جدید</a></li>
+        <li><a class="dropdown-item" href="{% url 'services:create' %}">ایجاد سرویس جدید</a></li>
     </ul>
   </li> 
 
@@ -296,7 +293,7 @@
      مدیریت نسخه ها
   </a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">لیست نسخه ها</a></li>
+    <li><a class="dropdown-item" href="{% url 'prescription:list' %}">لیست نسخه ها</a></li>
     <li>
     <hr class="dropdown-divider">
   </li>
@@ -312,11 +309,11 @@
      انبار داری
 </a>
 <ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="#">لیست مواد مصرفی</a></li>
+  <li><a class="dropdown-item" href="{% url 'asset:list' %}">لیست مواد مصرفی</a></li>
   <li>
   <hr class="dropdown-divider">
 </li>
-    <li><a class="dropdown-item" href="#">Check in</a></li>
+    <li><a class="dropdown-item" href="{% url 'asset:create' %}">Check in</a></li>
     <li>
       <hr class="dropdown-divider">
     </li>
@@ -324,31 +321,28 @@
       <li>
       <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="#">لیست تامین کنندگان</a></li>
+      <li><a class="dropdown-item" href="{% url 'asset:supplier_list' %}">لیست تامین کنندگان</a></li>
       <li>
       <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" href="#">لیست تامین کنندگان</a></li>
-      <li>
-        <hr class="dropdown-divider">
         </li>
-        <li><a class="dropdown-item" href="#">ایجاد تامین کننده جدید</a></li>
+        <li><a class="dropdown-item" href="{% url 'asset:supplier_create' %}">ایجاد تامین کننده جدید</a></li>
 
         <li>
           <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="#">مدیریت دسته بندی مواد مصرفی</a></li>
+          <li><a class="dropdown-item" href="{% url 'asset:category_list' %}">مدیریت دسته بندی مواد مصرفی</a></li>
 
       <li class="nav-item dropdown">            
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           مدیریت بیمه ها
       </a>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">لیست بیمه خا</a></li>
+        <li><a class="dropdown-item" href="{% url 'insurance:list' %}">لیست بیمه ها</a></li>
         <li>
         <hr class="dropdown-divider">
       </li>
-          <li><a class="dropdown-item" href="#">ایجاد بیمه جدید</a></li>
+          <li><a class="dropdown-item" href="{% url 'insurance:create' %}">ایجاد بیمه جدید</a></li>
       </ul>
     </li> 
 
