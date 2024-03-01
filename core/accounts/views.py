@@ -52,3 +52,19 @@ class UserDeleteView(BaseDeleteView):
 class UserLogoutView(LogoutView):
     def get_success_url(self):
         return reverse("two_factor:login")
+
+
+
+class ProfileView(BaseDetailView):
+    model = User
+    template_name = 'accounts/profile.html'
+    context_object_name = 'profile'
+
+    def get_object(self, queryset=None):
+        # Assuming UserProfile is associated with User model through a OneToOneField named 'user'
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
