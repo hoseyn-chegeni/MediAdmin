@@ -19,6 +19,20 @@ class ServiceListView(BaseListView):
     context_object_name = "services"
     filterset_class = ServicesFilter
 
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=True)
+
+
+class SuspendServiceListView(BaseListView):
+    model = Service
+    template_name = "services/suspend_list.html"
+    context_object_name = "services"
+    filterset_class = ServicesFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=False)
 
 class ServiceCreateView(BaseCreateView):
     model = Service

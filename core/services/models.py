@@ -18,7 +18,7 @@ class Service(models.Model):
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    is_active = models.BooleanField(default = True)
     therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
     recommendations = models.TextField(blank=True)  # توصیه ها
     # suggested_prescription = 0
