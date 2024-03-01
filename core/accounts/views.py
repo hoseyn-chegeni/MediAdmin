@@ -10,6 +10,10 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -68,3 +72,15 @@ class ProfileView(BaseDetailView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+
+
+
+
+class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'accounts/change_password.html'  # Your template for the change password form
+    success_url = reverse_lazy('profile')  # URL to redirect to after successfully changing password
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
