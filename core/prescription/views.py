@@ -65,7 +65,6 @@ class PrescriptionUpdateView(BaseUpdateView):
 
 class PrescriptionDeleteView(BaseDeleteView):
     model = Prescription
-    template_name = "prescription/delete.html"
     app_name = "prescription"
     url_name = "list"
 

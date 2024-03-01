@@ -42,7 +42,6 @@ class ConsumableUpdateView(BaseUpdateView):
 
 class ConsumableDeleteView(BaseDeleteView):
     model = Consumable
-    template_name = "asset/delete.html"
     app_name = "asset"
     url_name = Supplier
 
@@ -93,7 +92,6 @@ class ConsumableCategoryUpdateView(BaseUpdateView):
 
 class ConsumableCategoryDeleteView(BaseDeleteView):
     model = ConsumableCategory
-    template_name = "asset/category/delete.html"
     app_name = "asset"
     url_name = "category_list"
 
@@ -136,6 +134,5 @@ class SupplierUpdateView(BaseUpdateView):
 
 class SupplierDeleteView(BaseDeleteView):
     model = Supplier
-    template_name = "asset/supplier/delete.html"
     app_name = "asset"
     url_name = "supplier_list"

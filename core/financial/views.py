@@ -51,6 +51,5 @@ class FinancialUpdateView(BaseUpdateView):
 
 class FinancialDeleteView(BaseDeleteView):
     model = Financial
-    template_name = "financial/delete.html"
     app_name = "financial"
     url_name = "list"

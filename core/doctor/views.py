@@ -26,6 +26,7 @@ class DoctorListView(BaseListView):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)
 
+
 class SuspendDoctorListView(BaseListView):
     model = Doctor
     template_name = "doctor/suspend_list.html"
@@ -94,6 +95,5 @@ class DoctorUpdateView(BaseUpdateView):
 
 class DoctorDeleteView(BaseDeleteView):
     model = Doctor
-    template_name = "doctor/delete.html"
     app_name = "doctor"
     url_name = "list"

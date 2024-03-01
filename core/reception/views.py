@@ -78,7 +78,6 @@ class ReceptionUpdateView(BaseUpdateView):
 
 class ReceptionDeleteView(BaseDeleteView):
     model = Reception
-    template_name = "reception/delete.html"
     app_name = "reception"
     url_name = "list"
 

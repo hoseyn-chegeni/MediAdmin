@@ -35,6 +35,7 @@ class BaseUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class BaseDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "delete.html"
     app_name = ""
     url_name = ""
 

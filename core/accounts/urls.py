@@ -7,7 +7,7 @@ from .views import (
     UserDeleteView,
     UserLogoutView,
     ProfileView,
-    ChangePasswordView, 
+    ChangePasswordView,
     SuspendUserListView,
 )
 

@@ -37,7 +37,7 @@ class InsuranceDetailView(BaseDetailView):
         insurance = self.get_object()
         context = super().get_context_data(**kwargs)
         context["clients"] = Client.objects.filter(insurance_id=insurance.id)
-        context['service'] = InsuranceService.objects.filter(insurance_id = insurance.id)
+        context["service"] = InsuranceService.objects.filter(insurance_id=insurance.id)
         return context
 
 
@@ -51,7 +51,6 @@ class InsuranceUpdateView(BaseUpdateView):
 
 class InsuranceDeleteView(BaseDeleteView):
     model = Insurance
-    template_name = "insurance/delete.html"
     app_name = "insurance"
     url_name = "list"
 
@@ -88,6 +87,5 @@ class ServiceInsuranceDetailView(BaseDetailView):
 
 class ServiceInsuranceDeleteView(BaseDeleteView):
     model = InsuranceService
-    template_name = "service_insurance/delete.html"
     app_name = "insurance"
     url_name = "list"

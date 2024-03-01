@@ -38,7 +38,6 @@ class SuspendUserListView(BaseListView):
         return qs.filter(is_active=False)
 
 
-
 class UserDetailView(BaseDetailView):
     model = User
     template_name = "accounts/detail.html"
@@ -63,9 +62,8 @@ class UserUpdateView(BaseUpdateView):
 
 class UserDeleteView(BaseDeleteView):
     model = User
-    template_name = "accounts/delete.html"
     app_name = "accounts"
-    url_name = "list"
+    url_name = "user_list"
 
 
 class UserLogoutView(LogoutView):
@@ -73,11 +71,10 @@ class UserLogoutView(LogoutView):
         return reverse("two_factor:login")
 
 
-
 class ProfileView(BaseDetailView):
     model = User
-    template_name = 'accounts/profile.html'
-    context_object_name = 'profile'
+    template_name = "accounts/profile.html"
+    context_object_name = "profile"
 
     def get_object(self, queryset=None):
         # Assuming UserProfile is associated with User model through a OneToOneField named 'user'
@@ -85,17 +82,19 @@ class ProfileView(BaseDetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
+        context["user"] = self.request.user
         return context
 
 
-
-
 class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
-    template_name = 'accounts/change_password.html'  # Your template for the change password form
-    success_url = reverse_lazy('profile')  # URL to redirect to after successfully changing password
+    template_name = (
+        "accounts/change_password.html"  # Your template for the change password form
+    )
+    success_url = reverse_lazy(
+        "profile"
+    )  # URL to redirect to after successfully changing password
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs["user"] = self.request.user
         return kwargs

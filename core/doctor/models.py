@@ -19,5 +19,6 @@ class Doctor(models.Model):
     image = models.ImageField(
         upload_to="images/", blank=True, null=True
     )  # Image field for the Doctor
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

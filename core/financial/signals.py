@@ -20,8 +20,8 @@ def create_financial(sender, instance, created, **kwargs):
                     invoice_number=f"INV-{instance.pk}",  # You can customize how the invoice number is generated
                     payment_status="UNPAID",  # Default payment status
                     payment_received_date=None,  # No payment received initially
-                    valid_insurance = True,
-                    insurance_range = i.percentage
+                    valid_insurance=True,
+                    insurance_range=i.percentage,
                 )
     else:
         Financial.objects.create(
@@ -30,4 +30,3 @@ def create_financial(sender, instance, created, **kwargs):
             payment_status="UNPAID",  # Default payment status
             payment_received_date=None,  # No payment received initially
         )
-        

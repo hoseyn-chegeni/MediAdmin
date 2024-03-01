@@ -34,6 +34,7 @@ class SuspendServiceListView(BaseListView):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=False)
 
+
 class ServiceCreateView(BaseCreateView):
     model = Service
     fields = "__all__"
@@ -56,7 +57,7 @@ class ServiceDetailView(BaseDetailView):
         context["reception"] = reception
         context["num_reception"] = reception.count()
 
-        context['insurance'] = InsuranceService.objects.filter(service_id = service.id)
+        context["insurance"] = InsuranceService.objects.filter(service_id=service.id)
 
         return context
 
@@ -71,7 +72,6 @@ class ServiceUpdateView(BaseUpdateView):
 
 class ServiceLDeleteView(BaseDeleteView):
     model = Service
-    template_name = "services/delete.html"
     app_name = "services"
     url_name = "list"
 
@@ -96,6 +96,5 @@ class ServiceConsumableCreateView(BaseCreateView):
 
 class ServiceConsumableDeleteView(BaseDeleteView):
     model = ServiceConsumable
-    template_name = "services/consumable_delete.html"
     app_name = "services"
     url_name = "list"
