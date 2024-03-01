@@ -10,7 +10,6 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,6 +21,22 @@ class UserListView(BaseListView):
     template_name = "accounts/list.html"
     context_object_name = "users"
     filterset_class = UserFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=True)
+
+
+class SuspendUserListView(BaseListView):
+    model = User
+    template_name = "accounts/suspend_list.html"
+    context_object_name = "users"
+    filterset_class = UserFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_active=False)
+
 
 
 class UserDetailView(BaseDetailView):
@@ -35,7 +50,7 @@ class UserCreateView(BaseCreateView):
     form_class = CustomUserCreationForm
     template_name = "accounts/create.html"
     app_name = "accounts"
-    url_name = "detail"
+    url_name = "user_detail"
 
 
 class UserUpdateView(BaseUpdateView):
