@@ -22,6 +22,17 @@ class ClientListView(BaseListView):
     context_object_name = "clients"
     filterset_class = ClientFilters
 
+class VipClientListView (BaseListView):
+    model = Client
+    template_name = "client/vip_list.html"
+    context_object_name = "clients"
+    filterset_class = ClientFilters
+
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_vip=True)
+
+
 
 class ClientCreateView(BaseCreateView):
     model = Client
