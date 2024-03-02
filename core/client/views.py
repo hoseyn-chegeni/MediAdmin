@@ -29,6 +29,7 @@ class ClientListView(BaseListView):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_vip=False)
 
+
 class VipClientListView(BaseListView):
     model = Client
     template_name = "client/vip_list.html"
@@ -123,7 +124,6 @@ class EditHealthHistoryView(BaseUpdateView):
     url_name = "detail"
 
 
-
 class VipButtonView(View):
     def get(self, request, pk):
         client = Client.objects.get(pk=pk)
@@ -131,8 +131,8 @@ class VipButtonView(View):
             client.is_vip = True
             client.save()
         return HttpResponseRedirect(reverse_lazy("client:list"))
-    
-    
+
+
 class RemoveVipButtonView(View):
     def get(self, request, pk):
         client = Client.objects.filter(pk=pk).first()

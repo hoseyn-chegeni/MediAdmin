@@ -7,7 +7,7 @@ from .views import (
     DoctorDetailView,
     SuspendDoctorListView,
     SuspendDoctorView,
-    ReactiveDoctorView
+    ReactiveDoctorView,
 )
 
 app_name = "doctor"

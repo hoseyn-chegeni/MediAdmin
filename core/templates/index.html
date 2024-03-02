@@ -16,3 +16,23 @@ Welcome {{user}} <br>
 <a href="{% url 'asset:supplier_list'%}">Supplier list</a> <br>
 <a href="{% url 'accounts:logout'%}">Logout</a>
 {%endblock%}
+
+
+
+
+
+
+<a href="{% url 'accounts:user_create' %}">Create User</a><br>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in users%}
+    {{i.id}}.{{i.email}},
+        <a href="{% url 'accounts:user_detail' i.pk %}">Details</a>,
+        <a href="{% url 'accounts:user_update' i.pk %}">Update</a>,
+        <a href="{% url 'accounts:user_delete' i.pk %}">Delete</a>,
+        <a href="{% url 'accounts:suspend' i.pk %}">Suspend</a>,
+        <br>
+{% endfor %}

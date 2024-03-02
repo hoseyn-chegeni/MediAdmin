@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse_lazy
 
+
 # Create your views here.
 class DoctorListView(BaseListView):
     model = Doctor
@@ -101,25 +102,22 @@ class DoctorDeleteView(BaseDeleteView):
     app_name = "doctor"
     url_name = "list"
 
+
 class SuspendDoctorView(View):
     def get(self, request, pk):
         doctor = Doctor.objects.get(pk=pk)
         if doctor:
             doctor.is_active = False
-            messages.success(
-                self.request, f"Doctor suspended successfully!"
-            )
+            messages.success(self.request, f"Doctor suspended successfully!")
             doctor.save()
         return HttpResponseRedirect(reverse_lazy("doctor:list"))
-    
-    
+
+
 class ReactiveDoctorView(View):
     def get(self, request, pk):
         doctor = Doctor.objects.filter(pk=pk).first()
         if doctor:
             doctor.is_active = True
-            messages.success(
-                self.request, f"Doctor Reactive successfully!"
-            )
+            messages.success(self.request, f"Doctor Reactive successfully!")
             doctor.save()
         return HttpResponseRedirect(reverse_lazy("doctor:suspend_list"))

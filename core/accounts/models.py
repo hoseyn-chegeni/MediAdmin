@@ -18,7 +18,7 @@ class User(AbstractUser):
     )
     address = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to="images", default="images/default.jpeg", blank=True, null=True
+        upload_to="images", default="images/default.png", blank=True, null=True
     )
     login_attempts = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

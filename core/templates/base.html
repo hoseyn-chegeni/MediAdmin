@@ -1,5 +1,5 @@
 <!DOCTYPE html>  
-<html lang="en">  
+<html lang="en" dir="rtl" lang="fa">  
 <head>  
     <meta charset="UTF-8">  
     <title>{% block title%}{%endblock%}</title>  
@@ -12,6 +12,9 @@
    
     <style>
 
+    body {
+                font-family: 'Arial', sans-serif; /* Change 'Arial' to your desired font */
+            }
 
     .bd-placeholder-img {
         font-size: 1.125rem;
@@ -92,7 +95,8 @@
 
     </style>
 
-    <link href="{% static 'navbars.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+
 </head>  
 <body>  
 

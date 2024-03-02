@@ -17,6 +17,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
+
 # Create your views here.
 class UserListView(BaseListView):
     model = User
@@ -112,8 +113,8 @@ class SuspendUserView(View):
             )
             user.save()
         return HttpResponseRedirect(reverse_lazy("accounts:user_list"))
-    
-    
+
+
 class ReactiveUserView(View):
     def get(self, request, pk):
         user = User.objects.filter(pk=pk).first()

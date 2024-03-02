@@ -89,8 +89,8 @@ class SuspendServiceView(View):
             )
             service.save()
         return HttpResponseRedirect(reverse_lazy("services:list"))
-    
-    
+
+
 class ReactiveServiceView(View):
     def get(self, request, pk):
         service = Service.objects.filter(pk=pk).first()
@@ -125,6 +125,3 @@ class ServiceConsumableDeleteView(BaseDeleteView):
     model = ServiceConsumable
     app_name = "services"
     url_name = "list"
-
-
-

@@ -9,7 +9,7 @@ from .views import (
     ServiceConsumableDeleteView,
     SuspendServiceListView,
     SuspendServiceView,
-    ReactiveServiceView
+    ReactiveServiceView,
 )
 
 app_name = "services"
