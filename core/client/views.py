@@ -25,6 +25,9 @@ class ClientListView(BaseListView):
     context_object_name = "clients"
     filterset_class = ClientFilters
 
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs)
+        return qs.filter(is_vip=False)
 
 class VipClientListView(BaseListView):
     model = Client
