@@ -81,25 +81,25 @@ class ServiceLDeleteView(BaseDeleteView):
 
 class SuspendServiceView(View):
     def get(self, request, pk):
-        user = Service.objects.get(pk=pk)
-        if user:
-            user.is_active = False
+        service = Service.objects.get(pk=pk)
+        if service:
+            service.is_active = False
             messages.success(
-                self.request, f"Service Suspended '{user.name}' successfully!"
+                self.request, f"Service Suspended '{service.name}' successfully!"
             )
-            user.save()
+            service.save()
         return HttpResponseRedirect(reverse_lazy("services:list"))
     
     
 class ReactiveServiceView(View):
     def get(self, request, pk):
-        user = Service.objects.filter(pk=pk).first()
-        if user:
-            user.is_active = True
+        service = Service.objects.filter(pk=pk).first()
+        if service:
+            service.is_active = True
             messages.success(
-                self.request, f"Service Reactive '{user.name}' successfully!"
+                self.request, f"Service Reactive '{service.name}' successfully!"
             )
-            user.save()
+            service.save()
         return HttpResponseRedirect(reverse_lazy("services:suspend_list"))
 
 
