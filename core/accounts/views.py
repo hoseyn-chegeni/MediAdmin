@@ -13,7 +13,9 @@ from base.views import (
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.views import View
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 # Create your views here.
 class UserListView(BaseListView):
@@ -98,3 +100,27 @@ class ChangePasswordView(LoginRequiredMixin, PasswordChangeView):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
         return kwargs
+
+
+class SuspendUserView(View):
+    def get(self, request, pk):
+        user = User.objects.get(pk=pk)
+        if user:
+            user.is_active = False
+            messages.success(
+                self.request, f"User Suspended '{user.email}' successfully!"
+            )
+            user.save()
+        return HttpResponseRedirect(reverse_lazy("accounts:user_list"))
+    
+    
+class ReactiveUserView(View):
+    def get(self, request, pk):
+        user = User.objects.filter(pk=pk).first()
+        if user:
+            user.is_active = True
+            messages.success(
+                self.request, f"User Reactive '{user.email}' successfully!"
+            )
+            user.save()
+        return HttpResponseRedirect(reverse_lazy("accounts:suspend_user_list"))

@@ -1,9 +1,24 @@
-<a href="{% url 'accounts:user_create' %}">Create User</a><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Suspend List</title>
+</head>
+<body>
+    <a href="{% url 'accounts:user_create' %}">Create User</a><br>
 <form action="" method="get">
     {%csrf_token%}
     {{filter.form.as_p}}
     <input type="submit">
 </form>
 {%for i in users%}
-    {{i.id}}.{{i.email}},<a href="{% url 'accounts:user_detail' i.pk %}">Details</a>,<a href="{% url 'accounts:user_update' i.pk %}">Update</a> ,<a href="{% url 'accounts:user_delete' i.pk %}">Delete</a><br>
+    {{i.id}}.{{i.email}},
+    <a href="{% url 'accounts:user_detail' i.pk %}">Details</a>,
+    <a href="{% url 'accounts:user_update' i.pk %}">Update</a>,
+    <a href="{% url 'accounts:user_delete' i.pk %}">Delete</a>,
+    <a href="{% url 'accounts:reactive' i.pk %}">ReActive</a>,
+    <br>
 {% endfor %}
+</body>
+</html>
