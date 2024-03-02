@@ -10,6 +10,9 @@ from reception.models import Reception
 from .filters import ServicesFilter
 from django.urls import reverse_lazy
 from insurance.models import InsuranceService
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.views import View
 
 
 # Create your views here.
@@ -76,6 +79,30 @@ class ServiceLDeleteView(BaseDeleteView):
     url_name = "list"
 
 
+class SuspendServiceView(View):
+    def get(self, request, pk):
+        user = Service.objects.get(pk=pk)
+        if user:
+            user.is_active = False
+            messages.success(
+                self.request, f"Service Suspended '{user.name}' successfully!"
+            )
+            user.save()
+        return HttpResponseRedirect(reverse_lazy("services:list"))
+    
+    
+class ReactiveServiceView(View):
+    def get(self, request, pk):
+        user = Service.objects.filter(pk=pk).first()
+        if user:
+            user.is_active = True
+            messages.success(
+                self.request, f"Service Reactive '{user.name}' successfully!"
+            )
+            user.save()
+        return HttpResponseRedirect(reverse_lazy("services:suspend_list"))
+
+
 # ServiceConsumable Views here.
 class ServiceConsumableCreateView(BaseCreateView):
     model = ServiceConsumable
@@ -98,3 +125,6 @@ class ServiceConsumableDeleteView(BaseDeleteView):
     model = ServiceConsumable
     app_name = "services"
     url_name = "list"
+
+
+

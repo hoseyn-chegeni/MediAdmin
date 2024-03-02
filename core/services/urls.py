@@ -8,6 +8,8 @@ from .views import (
     ServiceConsumableCreateView,
     ServiceConsumableDeleteView,
     SuspendServiceListView,
+    SuspendServiceView,
+    ReactiveServiceView
 )
 
 app_name = "services"
@@ -29,4 +31,6 @@ urlpatterns = [
         ServiceConsumableDeleteView.as_view(),
         name="service_consumable_delete",
     ),
+    path("suspend/<int:pk>/", SuspendServiceView.as_view(), name="suspend"),
+    path("reactive/<int:pk>/", ReactiveServiceView.as_view(), name="reactive"),
 ]
