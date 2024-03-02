@@ -13,6 +13,9 @@ from reception.models import Reception
 from prescription.models import Prescription
 from financial.models import Financial
 from django.db.models import Sum
+from django.views import View
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 
 # Create your views here.
@@ -115,3 +118,22 @@ class EditHealthHistoryView(BaseUpdateView):
     ]
     app_name = "client"
     url_name = "detail"
+
+
+
+class VipButtonView(View):
+    def get(self, request, pk):
+        client = Client.objects.get(pk=pk)
+        if client:
+            client.is_vip = True
+            client.save()
+        return HttpResponseRedirect(reverse_lazy("client:list"))
+    
+    
+class RemoveVipButtonView(View):
+    def get(self, request, pk):
+        client = Client.objects.filter(pk=pk).first()
+        if client:
+            client.is_vip = False
+            client.save()
+        return HttpResponseRedirect(reverse_lazy("client:vip_list"))

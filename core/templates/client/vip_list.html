@@ -10,6 +10,8 @@
       <a href="{% url 'client:detail' i.pk %}">Details</a>,
       <a href="{% url 'client:update' i.pk %}">Edit Personal Information</a>,
       <a href="{% url 'client:edit_health_history' i.pk %}">Edit Health History</a>,
-      <a href="{% url 'client:delete' i.pk %}">Delete</a>
+      <a href="{% url 'client:delete' i.pk %}">Delete</a>,
+      <a href="{% url 'client:remove_vip' i.pk %}">Remove VIP</a>,
+
   </p>
 {% endfor %}
