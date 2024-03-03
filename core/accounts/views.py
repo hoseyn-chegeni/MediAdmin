@@ -19,7 +19,6 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 
 
-
 # Create your views here.
 class UserListView(BaseListView):
     model = User
@@ -91,18 +90,20 @@ class ProfileView(BaseDetailView):
         return context
 
 
-class ChangePasswordView(LoginRequiredMixin,SuccessMessageMixin, PasswordChangeView):
-    success_message = 'Password Successfully Changed'
+class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    success_message = "Password Successfully Changed"
     template_name = (
         "accounts/change_password.html"  # Your template for the change password form
     )
     success_url = reverse_lazy(
         "accounts:profile"
     )  # URL to redirect to after successfully changing password
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
         return kwargs
+
     def get_success_message(self, cleaned_data):
         return self.success_message
 
