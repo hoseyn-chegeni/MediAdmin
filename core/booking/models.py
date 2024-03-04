@@ -1,7 +1,9 @@
+from typing import Iterable
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -15,6 +17,7 @@ def validate_max_appointments_per_day(value):
     existing_count = Appointment.objects.filter(date=value).count()
     if existing_count >= 3:
         raise ValidationError("Only three appointments are allowed per day.")
+
 
     
 class Appointment(models.Model):
