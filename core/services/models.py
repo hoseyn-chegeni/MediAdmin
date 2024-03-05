@@ -35,10 +35,16 @@ class Service(models.Model):
     recommendations = models.TextField(blank=True)  # توصیه ها
     # suggested_prescription = 0
     appointment_per_day = models.PositiveIntegerField(default=3)
-    off_day = models.PositiveSmallIntegerField(choices=DAYS_OF_WEEK, default = 4)
+    off_days = models.ManyToManyField('OffDay', blank=True)
 
     def __str__(self):
         return self.name
+
+class OffDay(models.Model):
+    day_of_week = models.PositiveSmallIntegerField(choices=DAYS_OF_WEEK)
+
+    def __str__(self):
+        return DAYS_OF_WEEK[self.day_of_week][1]
 
 
 class ServiceConsumable(models.Model):
