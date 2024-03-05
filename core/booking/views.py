@@ -31,8 +31,9 @@ class AppointmentCreateView(BaseCreateView):
 
         service = form.cleaned_data['service']
         date = form.cleaned_data['date']
+        appointment_per_day = form.instance.service.appointment_per_day
         appointments_count = Appointment.objects.filter(service=service, date=date).count()
-        if appointments_count >= 3:
+        if appointments_count >= appointment_per_day:
             form.add_error('service', "This service already has maximum appointments for this date.")
             return self.form_invalid(form)
 
