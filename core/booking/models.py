@@ -17,7 +17,9 @@ def validate_max_appointments_per_day(value):
 
 class Appointment(models.Model):
     service = models.ForeignKey("services.Service", on_delete=models.CASCADE)
-    client = models.ForeignKey("client.Client", on_delete=models.CASCADE)
+    client = models.ForeignKey("client.Client", on_delete=models.CASCADE, blank = True, null = True)
+    national_code = models.CharField(max_length = 100, blank = True, null = True)
+    name = models.CharField(max_length = 100, blank = True, null = True)
     date = models.DateField()
 
     def __str__(self):
