@@ -1,6 +1,7 @@
 {%extends 'base.html'%}
 {% block content%}
 Welcome {{user}} <br>
+<a href="{% url 'booking:list'%}"> Appointment list</a> <br>
 <a href="{% url 'accounts:user_list'%}"> user list</a> <br>
 <a href="{% url 'client:list'%}"> Client list</a> <br>
 <a href="{% url 'doctor:list'%}"> Doctor list</a> <br>
@@ -20,7 +21,6 @@ Welcome {{user}} <br>
 <br>
 <br>
 <br>
-<a href="{% url 'booking:create'%}">book</a>
 
 {%endblock%}
 

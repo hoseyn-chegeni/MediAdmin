@@ -22,7 +22,7 @@ class Service(models.Model):
     therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
     recommendations = models.TextField(blank=True)  # توصیه ها
     # suggested_prescription = 0
-    appointment_per_day = models.PositiveIntegerField(default = 3)
+    appointment_per_day = models.PositiveIntegerField(default=3)
 
     def __str__(self):
         return self.name

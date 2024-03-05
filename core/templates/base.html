@@ -209,6 +209,7 @@
             </li>        
 
 
+
             <li class="nav-item dropdown">            
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               مدیریت بیماران
@@ -226,6 +227,30 @@
             </ul>
           </li>      
 
+          <li class="nav-item dropdown">            
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            نوبت دهی
+          </a>
+          <ul class="dropdown-menu">
+          </li>
+            <li><a class="dropdown-item" href="{% url 'booking:list' %}">لیست نوبت های ثبت شده</a></li>
+            <li>
+            <hr class="dropdown-divider">
+          </li>
+            <li><a class="dropdown-item" href="{% url 'booking:create' %}">ایجاد نوبت جدید</a></li>
+            <hr class="dropdown-divider">
+          </li>
+            <li><a class="dropdown-item" href="#">لیست نوبت های ثبت شده امروز</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+              <li><a class="dropdown-item" href="#">لیست نوبت های ثبت شده هفته</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+                <li><a class="dropdown-item" href="#">لیست نوبت های ثبت شده ماه</a></li>
+          </ul>
+        </li>    
 
           <li class="nav-item dropdown">            
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
