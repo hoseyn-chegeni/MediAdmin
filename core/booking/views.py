@@ -89,5 +89,10 @@ class AppointmentCreateView(BaseCreateView):
             if appointment_date.weekday() == off_day.day_of_week:
                 form.add_error("date", "Appointments cannot be scheduled on this day, (OFF).")
                 return self.form_invalid(form)
+            
+
+        if appointment_date < datetime.now().date():
+            form.add_error("date", "Appointments cannot be scheduled for past dates.")
+            return self.form_invalid(form)
 
         return super().form_valid(form)
