@@ -2,6 +2,18 @@ from django.db import models
 
 
 # Create your models here.
+
+DAYS_OF_WEEK = (
+    (0, 'Monday'),
+    (1, 'Tuesday'),
+    (2, 'Wednesday'),
+    (3, 'Thursday'),
+    (4, 'Friday'),
+    (5, 'Saturday'),
+    (6, 'Sunday'),
+
+)
+
 class Service(models.Model):
     name = models.CharField(max_length=255)
     doctor = models.ForeignKey(
@@ -23,6 +35,7 @@ class Service(models.Model):
     recommendations = models.TextField(blank=True)  # توصیه ها
     # suggested_prescription = 0
     appointment_per_day = models.PositiveIntegerField(default=3)
+    off_day = models.PositiveSmallIntegerField(choices=DAYS_OF_WEEK, default = 4)
 
     def __str__(self):
         return self.name

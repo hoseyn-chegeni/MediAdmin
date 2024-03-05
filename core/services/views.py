@@ -74,7 +74,7 @@ class ServiceUpdateView(BaseUpdateView):
 
 class  ServiceAppointmentConfigView(BaseUpdateView):
     model = Service
-    fields = ['appointment_per_day',]
+    fields = ['appointment_per_day','off_day']
     template_name = "services/appointment_config.html"
     app_name = "services"
     url_name = "detail"

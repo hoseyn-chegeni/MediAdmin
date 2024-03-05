@@ -78,5 +78,13 @@ class AppointmentCreateView(BaseCreateView):
                 "This service already has maximum appointments for this date.",
             )
             return self.form_invalid(form)
+        
+
+        off_day = form.instance.service.off_day
+        appointment_date = form.cleaned_data["date"]
+        if appointment_date.weekday() == off_day:
+            form.add_error("date", "Appointments cannot be scheduled on this day, (OFF).")
+            return self.form_invalid(form)
+
 
         return super().form_valid(form)
