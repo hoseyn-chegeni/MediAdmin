@@ -10,6 +10,8 @@
       <a href="{% url 'services:update' i.pk %}">update</a>,
       <a href="{% url 'services:delete' i.pk %}">Delete</a>,
       <a href="{% url 'services:suspend' i.pk %}">Suspend</a>,
+      <a href="{% url 'services:appointment_config' i.pk %}">Appointment Config</a>,
+
 
     </p>
 {% endfor %}
