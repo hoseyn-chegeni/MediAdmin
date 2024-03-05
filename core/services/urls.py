@@ -21,7 +21,11 @@ urlpatterns = [
     path("detail/<int:pk>/", ServiceDetailView.as_view(), name="detail"),
     path("create/", ServiceCreateView.as_view(), name="create"),
     path("update/<int:pk>/", ServiceUpdateView.as_view(), name="update"),
-    path("appointment_config/<int:pk>/", ServiceAppointmentConfigView.as_view(), name="appointment_config"),
+    path(
+        "appointment_config/<int:pk>/",
+        ServiceAppointmentConfigView.as_view(),
+        name="appointment_config",
+    ),
     path("delete/<int:pk>/", ServiceLDeleteView.as_view(), name="delete"),
     path(
         "create_service_consumable/<int:pk>/",

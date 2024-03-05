@@ -72,13 +72,13 @@ class ServiceUpdateView(BaseUpdateView):
     app_name = "services"
     url_name = "detail"
 
-class  ServiceAppointmentConfigView(BaseUpdateView):
+
+class ServiceAppointmentConfigView(BaseUpdateView):
     model = Service
-    fields = ['appointment_per_day','off_days']
+    fields = ["appointment_per_day", "off_days"]
     template_name = "services/appointment_config.html"
     app_name = "services"
     url_name = "detail"
-
 
 
 class ServiceLDeleteView(BaseDeleteView):
