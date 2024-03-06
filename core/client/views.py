@@ -28,7 +28,10 @@ class ClientListView(BaseListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_vip=False)
-
+    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 class VipClientListView(BaseListView):
     model = Client
@@ -47,6 +50,8 @@ class ClientCreateView(BaseCreateView):
     template_name = "client/create.html"
     app_name = "client"
     url_name = "detail"
+
+    
 
 
 class ClientDetailView(BaseDetailView):
