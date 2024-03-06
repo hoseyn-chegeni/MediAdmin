@@ -61,7 +61,7 @@ class UserUpdateView(BaseUpdateView):
     fields = ("first_name", "last_name")
     template_name = "accounts/update.html"
     app_name = "accounts"
-    url_name = "detail"
+    url_name = "user_detail"
 
 
 class UserDeleteView(BaseDeleteView):
