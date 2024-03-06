@@ -42,7 +42,7 @@ class Client(models.Model):
     )
     is_vip = models.BooleanField(default=False)
     image = models.ImageField(
-        upload_to="images/", blank=True, null=True
+        upload_to="images", default="images/default.png", blank=True, null=True
     )  # Image field for the client
 
     @property

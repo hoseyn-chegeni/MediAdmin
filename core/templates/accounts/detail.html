@@ -18,7 +18,7 @@
             <h5 class="my-3">{{user.last_name}}{{user.first_name}}</h5>
             <p class="text-muted mb-1">{{user.email}}</p>
             <div class="d-flex justify-content-center mb-2">
-              <a href="{% url 'accounts:user_update' user.id %}" class="btn btn-primary">تغییر</a>
+              <a href="{% url 'accounts:user_update' user.id %}" class="btn btn-primary">ویرایش</a>
               {% if user.is_active%}
               
               <a href="{% url 'accounts:suspend' user.id %}" class="btn btn-outline-primary ms-1">تعلیق</a>

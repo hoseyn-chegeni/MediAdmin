@@ -1,58 +1,259 @@
-<p> Case id: {{client.case_id}}</p>
-<p> Name: {{client.first_name}} {{client.last_name}}</p>
-<p> Father's Name: {{client.fathers_name}}</p>
-<p> National id: {{client.national_id}}</p>
-<p>  Age: {{client.age}}</p>
+{%extends 'base.html' %}
+{% block title %}{{client}}{% endblock %}
 
-<p> <a href="{% url 'client:edit_health_history' client.id%}">Edit Health History and Treatment</a></p>
+{% block content%}
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+      </div>
+    </div>
 
-<h1>Reception History</h1>
-{% if not reception_history %}
-    <p>No reception</p>
-{% else %}
-    {% for i in reception_history %}
-        {{ i.id }}:{{ i.created_at }}:{{i.service}}
-            <a href="{% url 'reception:detail' i.id %}">Detail</a>
-            <a href="{% url 'reception:update' i.id %}">Update</a>
-            <a href="{% url 'reception:delete' i.id %}">Delete</a> <br>
-    {% endfor %}
-{% endif %}
-<a href="{% url 'reception:reception_create_using_profile' client.id %}">Add New Reception</a>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{client.image.url}}" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">{{client.last_name}}{{client.first_name}}</h5>
+            <p class="text-muted mb-1">{{client.national_id}}</p>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{% url 'reception:reception_create_using_profile' client.id %}" class="btn btn-primary">ثبت پذیرش</a>
+              <a href="{% url 'client:update' client.id %}" class="btn btn-outline-primary ms-1">ویرایش</a>
+              <a href="{% url 'client:edit_health_history' client.id %}" class="btn btn-outline-primary ms-1">ویرایش سوابق بیماری</a>
+
+              <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" class="btn btn-outline-primary ms-1" >حذف</a>
+            </div>
+          </div>
+        </div>
+
+      <div class="card mb-4 mb-lg-0">
+        <div class="card-body p-1">
+          <ul class="list-group list-group-flush rounded-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p> تعداد فاکتور های صادر شده: {{num_financial_instances}}</p>
+          </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p> مجموع پرداخت: {{total_amount_sum}}</p>
+          </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p> پذیرش ها: {{num_reception}}</p>
+          </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p> نسخه ها: {{num_prescriptions}}</p>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">نام:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{client.first_name}} {{client.last_name}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">شماره پرونده:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{client.case_id}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">نام پدر:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{client.fathers_name}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">تاریخ تولد:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{client.date_of_birth}}</p>
+              </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">شماره تماس:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.phone_number}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">آدرس:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.address}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">وضعیت تاهل:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.marital_status}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">emergency_contact_name:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.emergency_contact_name}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">emergency_contact_number:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.emergency_contact_number}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">سابقه جراحی:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.surgeries}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">حساسیت:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.allergies}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">سوابق درمان:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.medical_history}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">سوابق دارویی:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.medications}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">استعمال دخانیات:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.smoker}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">بیماری:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{client.disease}}</p>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پذیرش</p>
+                {% for i in reception_history %}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
+                {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">فاکتور های صادر شده</p>
+                {% for i in financial_instances %}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
+              {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
-<!-- Display prescriptions -->
-<h2>Prescriptions:</h2>
-<ul>
-{% for i in prescriptions %}
-    <li>{{ i }}   
-         <a href="{% url 'prescription:detail' i.id %}">Detail</a>
-        <a href="{% url 'prescription:update' i.id %}">Update</a>
-        <a href="{% url 'prescription:delete' i.id %}">Delete</a> <br>  </li>
-{% empty %}
-    <li>No prescriptions found.</li>
-{% endfor %}
+<!-- DELETE MODALS -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       کاربر یه طور کامل از سیستم پاک شود؟
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'client:delete' pk=client.pk %}" class="btn">تایید</a>
+    </div>
+    </div>
+  </div>
+</div>
 
 
-</ul>
-
-
-<h2>Financial Instances</h2>
-<ul>
-    {% for financial_instance in financial_instances %}
-        <li>
-            <strong>Invoice Number:</strong> {{ financial_instance.invoice_number }}<br>
-            <strong>Date Issued:</strong> {{ financial_instance.date_issued }}<br>
-            <strong>Total Amount:</strong> {{ financial_instance.total_amount }}<br>
-            <!-- Add other financial instance details as needed -->
-        </li>
-    {% empty %}
-    <li>No Financial instance  found.</li>
-    {% endfor %}
-    <p>--------------</p>
-    <p>Financial Instance:{{num_financial_instances}}</p>
-   <p>Total Amount:{{total_amount_sum}}</p>
-   <p>Reception: {{num_reception}}</p>
-   <p>Prescription: {{num_prescriptions}}</p>
-
-</ul>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
