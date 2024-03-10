@@ -64,25 +64,19 @@ class ClientDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
 
         # Get reception history for the client
-        reception_history = Reception.objects.filter(client_id=client.id)
-        context["reception_history"] = reception_history
-        context["num_reception"] = reception_history.count()
+        context["reception_history"] = Reception.objects.filter(client_id=client.id).order_by('-created_at')[:5]
+        context["num_reception"] = Reception.objects.filter(client_id=client.id).count()
 
         # Get all prescriptions associated with the receptions
-        prescriptions = Prescription.objects.filter(reception__client_id=client.id)
-        context["prescriptions"] = prescriptions
-        context["num_prescriptions"] = prescriptions.count()
+        context["num_prescriptions"] = Prescription.objects.filter(reception__client_id=client.id).count()
 
-        context["financial_instances"] = Financial.objects.filter(
-            reception__client=client
-        )
-        context["num_financial_instances"] = Financial.objects.filter(
-            reception__client=client
-        ).count()
-        context["total_amount_sum"] = Financial.objects.filter(
-            reception__client=client
-        ).aggregate(Sum("total_amount"))["total_amount__sum"]
+        context["financial_instances"] = Financial.objects.filter(reception__client=client).order_by('-created_at')[:5]
+        context["num_financial_instances"] = Financial.objects.filter(reception__client=client).count()
 
+
+        total_amount_sum = Financial.objects.filter(reception__client=client).aggregate(Sum("total_amount"))["total_amount__sum"]
+        rounded_total_amount_sum = round(total_amount_sum, 1)
+        context["total_amount_sum"] = rounded_total_amount_sum
         return context
 
 
