@@ -8,4 +8,5 @@ def update_last_reception_date(sender, instance, created, **kwargs):
         client = instance.client
         client.number_of_receptions += 1
         client.last_reception_date = instance.date
+        client.last_reception_reason = f'{instance.service}/ {instance.reason}'
         client.save()
