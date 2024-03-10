@@ -1,0 +1,13 @@
+<!-- client_receptions.html -->
+{% extends 'base.html' %}
+{% block title %}Client financial{% endblock %}
+
+{% block content %}
+  <h1>Client financial</h1>
+  <ul>
+    {% for i in object_list %}
+      <li>{{ i }}</li>
+      <!-- Add other reception details here -->
+    {% endfor %}
+  </ul>
+{% endblock %}

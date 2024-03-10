@@ -9,6 +9,8 @@ from .views import (
     VipClientListView,
     VipButtonView,
     RemoveVipButtonView,
+    ClientReceptionsListView,
+    ClientFinancialInstancesListView,
 )
 
 app_name = "client"
@@ -27,4 +29,7 @@ urlpatterns = [
     path("delete/<int:pk>/", ClientDeleteView.as_view(), name="delete"),
     path("vip/<int:pk>/", VipButtonView.as_view(), name="vip"),
     path("remove_vip/<int:pk>/", RemoveVipButtonView.as_view(), name="remove_vip"),
+    path('client/<int:pk>/receptions/', ClientReceptionsListView.as_view(), name='client-receptions'),
+    path('client/<int:pk>/financial/', ClientFinancialInstancesListView.as_view(), name='client-financial'),
+
 ]

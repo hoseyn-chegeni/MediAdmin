@@ -1,0 +1,13 @@
+<!-- client_receptions.html -->
+{% extends 'base.html' %}
+{% block title %}Client Receptions{% endblock %}
+
+{% block content %}
+  <h1>Client Receptions</h1>
+  <ul>
+    {% for reception in object_list %}
+      <li>{{ reception }}</li>
+      <!-- Add other reception details here -->
+    {% endfor %}
+  </ul>
+{% endblock %}

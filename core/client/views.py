@@ -15,7 +15,7 @@ from financial.models import Financial
 from django.db.models import Sum
 from django.views import View
 from django.http import HttpResponseRedirect
-from django.contrib import messages
+
 
 
 # Create your views here.
@@ -145,3 +145,20 @@ class RemoveVipButtonView(View):
             client.is_vip = False
             client.save()
         return HttpResponseRedirect(reverse_lazy("client:vip_list"))
+
+
+class ClientReceptionsListView(BaseListView):
+    model = Reception
+    template_name = 'client/client_receptions.html'
+
+    def get_queryset(self):
+        client_id = self.kwargs['pk']
+        return Reception.objects.filter(client_id=client_id)
+    
+class ClientFinancialInstancesListView(BaseListView):
+    model = Financial
+    template_name = 'client/client_financial.html'
+
+    def get_queryset(self):
+        client_id = self.kwargs['pk']
+        return Financial.objects.filter(reception__client_id=client_id)

@@ -207,6 +207,7 @@
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
+                <p><a href="{% url 'client:client-receptions' client.id %}">تاریخچه تمامی پذیرش های بیمار</a></p>
               </div>
             </div>
           </div>
@@ -219,7 +220,7 @@
               {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-
+                <p><a href="{% url 'client:client-financial' client.id %}">تاریخچه تمامی پرداخت های بیمار</a></p>
               </div>
             </div>
           </div>
