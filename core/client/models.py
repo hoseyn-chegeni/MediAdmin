@@ -44,6 +44,7 @@ class Client(models.Model):
     image = models.ImageField(
         upload_to="images", default="images/default.png", blank=True, null=True
     )  # Image field for the client
+    number_of_receptions = models.PositiveIntegerField(default = 0)
 
     @property
     def age(self):
