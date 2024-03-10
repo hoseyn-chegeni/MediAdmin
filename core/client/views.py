@@ -150,6 +150,14 @@ class ClientReceptionsListView(BaseListView):
         client_id = self.kwargs['pk']
         return Reception.objects.filter(client_id=client_id)
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get reception history for the client
+        context["client"] = Client.objects.get(id=self.kwargs['pk'])
+
+        return context
+    
 class ClientFinancialInstancesListView(BaseListView):
     model = Financial
     template_name = 'client/client_financial.html'
@@ -157,3 +165,9 @@ class ClientFinancialInstancesListView(BaseListView):
     def get_queryset(self):
         client_id = self.kwargs['pk']
         return Financial.objects.filter(reception__client_id=client_id)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get reception history for the client
+        context["client"] = Client.objects.get(id=self.kwargs['pk'])
