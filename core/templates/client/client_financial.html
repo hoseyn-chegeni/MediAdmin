@@ -3,11 +3,15 @@
 {% block title %}Client financial{% endblock %}
 
 {% block content %}
+<form method="get">
+  {{ filter.form.as_p }}
+  <button type="submit">Apply Filters</button>
+</form>
+
   <h1>Client financial</h1>
   <ul>
-    {% for i in object_list %}
-      <li>{{ i }}</li>
-      <!-- Add other reception details here -->
+    {% for i in financial %}
+      <li>{{ i }} , <a href="{% url 'financial:detail' i.id%}">Detail</a></li>
     {% endfor %}
   </ul>
 {% endblock %}
