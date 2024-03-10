@@ -7,7 +7,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Client
-from .filters import ClientFilters
+from .filters import ClientFilters, ReceptionFilter
 from django.urls import reverse_lazy
 from reception.models import Reception
 from prescription.models import Prescription
@@ -144,7 +144,8 @@ class RemoveVipButtonView(View):
 class ClientReceptionsListView(BaseListView):
     model = Reception
     template_name = 'client/client_receptions.html'
-
+    filterset_class = ReceptionFilter
+    
     def get_queryset(self):
         client_id = self.kwargs['pk']
         return Reception.objects.filter(client_id=client_id)

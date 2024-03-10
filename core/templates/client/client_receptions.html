@@ -3,6 +3,12 @@
 {% block title %}Client Receptions{% endblock %}
 
 {% block content %}
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Apply Filters</button>
+  </form>
+
+  
   <h1>Client Receptions</h1>
   <ul>
     {% for reception in object_list %}
