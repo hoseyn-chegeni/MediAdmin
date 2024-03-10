@@ -76,22 +76,21 @@
 </ul>
 
 
-<h2>Financial Instances</h2>
-<ul>
-    {% for financial_instance in financial_instances %}
-        <li>
-            <strong>Invoice Number:</strong> {{ financial_instance.invoice_number }}<br>
-            <strong>Date Issued:</strong> {{ financial_instance.date_issued }}<br>
-            <strong>Total Amount:</strong> {{ financial_instance.total_amount }}<br>
-            <!-- Add other financial instance details as needed -->
-        </li>
-    {% empty %}
-    <li>No Financial instance  found.</li>
-    {% endfor %}
-    <p>--------------</p>
-    <p>Financial Instance:{{num_financial_instances}}</p>
-   <p>Total Amount:{{total_amount_sum}}</p>
-   <p>Reception: {{num_reception}}</p>
-   <p>Prescription: {{num_prescriptions}}</p>
+<a href="{% url 'client:create' %}">ایجاد بیمار جدید</a><br>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in clients%}
+  <p>  
+      {{i.id}}.{{i.first_name}} {{i.last_name}},
+      <a href="{% url 'client:detail' i.pk %}">Details</a>,
+      <a href="{% url 'client:update' i.pk %}">Edit Personal Information</a>,
+      <a href="{% url 'client:edit_health_history' i.pk %}">Edit Health History</a>,
+      <a href="{% url 'client:delete' i.pk %}">Delete</a>,
+      <a href="{% url 'client:vip' i.pk %}">Go Vip</a>,
 
-</ul>
+
+  </p>
+{% endfor %}
