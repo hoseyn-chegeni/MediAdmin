@@ -6,7 +6,6 @@ from .views import (
     ClientDetailView,
     EditPersonalInfoView,
     EditHealthHistoryView,
-    VipClientListView,
     VipButtonView,
     RemoveVipButtonView,
     ClientReceptionsListView,
@@ -17,7 +16,6 @@ app_name = "client"
 
 urlpatterns = [
     path("list/", ClientListView.as_view(), name="list"),
-    path("vip_ist/", VipClientListView.as_view(), name="vip_list"),
     path("detail/<int:pk>/", ClientDetailView.as_view(), name="detail"),
     path("create/", ClientCreateView.as_view(), name="create"),
     path("update/<int:pk>/", EditPersonalInfoView.as_view(), name="update"),

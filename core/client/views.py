@@ -25,23 +25,6 @@ class ClientListView(BaseListView):
     context_object_name = "clients"
     filterset_class = ClientFilters
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_vip=False)
-    
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
-
-class VipClientListView(BaseListView):
-    model = Client
-    template_name = "client/vip_list.html"
-    context_object_name = "clients"
-    filterset_class = ClientFilters
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_vip=True)
 
 
 class ClientCreateView(BaseCreateView):
@@ -51,7 +34,9 @@ class ClientCreateView(BaseCreateView):
     app_name = "client"
     url_name = "detail"
 
-    
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class ClientDetailView(BaseDetailView):
@@ -75,8 +60,7 @@ class ClientDetailView(BaseDetailView):
 
 
         total_amount_sum = Financial.objects.filter(reception__client=client).aggregate(Sum("total_amount"))["total_amount__sum"]
-        rounded_total_amount_sum = round(total_amount_sum, 1)
-        context["total_amount_sum"] = rounded_total_amount_sum
+        context["total_amount_sum"] = total_amount_sum
         return context
 
 
