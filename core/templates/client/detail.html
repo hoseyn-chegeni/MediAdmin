@@ -203,7 +203,7 @@
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پذیرش</p>
                 {% for i in reception_history %}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'reception:detail' i.id %}">Detail</a></p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'reception:detail' i.id %}">جزییات</a></p>
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
@@ -216,7 +216,7 @@
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">فاکتور های صادر شده</p>
                 {% for i in financial_instances %}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'financial:detail' i.id %}">Detail</a> </p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'financial:detail' i.id %}">جزییات</a> </p>
               {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
@@ -243,7 +243,7 @@
         </button>
       </div>
       <div class="modal-body">
-       کاربر یه طور کامل از سیستم پاک شود؟
+       بیمار یه طور کامل از سیستم پاک شود؟
       </div>
       <div class="modal-footer">
         <a class="btn btn-primary" href="{% url 'client:delete' pk=client.pk %}" class="btn">تایید</a>

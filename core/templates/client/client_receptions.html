@@ -12,7 +12,7 @@
   <h1>{{client}} Receptions</h1>
   <ul>
     {% for reception in object_list %}
-      <li>{{ reception }}</li>
+      <li>{{ reception }} <a href="{% url 'reception:detail' reception.id%}">Detail</a></li>
       <!-- Add other reception details here -->
     {% endfor %}
   </ul>
