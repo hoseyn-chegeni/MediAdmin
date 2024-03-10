@@ -24,6 +24,7 @@ class Reception(models.Model):
         ("UNPAID", "Unpaid"),
     )
     payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES)
+    date = models.DateField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -33,8 +34,3 @@ class Reception(models.Model):
     def __str__(self):
         return f"Reception for {self.client.first_name} {self.client.last_name}"
     
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Check if this is a new reception
-            self.client.number_of_receptions += 1  # Increment number_of_receptions
-            self.client.save()  # Save the client object
-        super().save(*args, **kwargs)
