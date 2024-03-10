@@ -50,15 +50,7 @@
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">نام:</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{client.first_name}} {{client.last_name}}</p>
-              </div>
-            </div>
-            <hr>
+
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">شماره پرونده:</p>
@@ -67,6 +59,17 @@
                 <p class="text-muted mb-0">{{client.case_id}}</p>
               </div>
             </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">نام:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{client.first_name}} {{client.last_name}}</p>
+              </div>
+            </div>
+
+           
             <hr>
             <div class="row">
               <div class="col-sm-3">
@@ -116,6 +119,21 @@
                 </div>
               </div>
               <hr>
+ 
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0"> vip:</p>
+                </div>
+                <div class="col-sm-9">
+                  {%if client.is_vip%}
+                  <p class="text-muted mb-0">بله٫  <a href="#" data-toggle="modal" data-target="#removevipModal" >خارج ساختن از حالت بیمار ویژه</a></p>
+                  {%else%}
+                  <p class="text-muted mb-0">خیر,  <a href="#" data-toggle="modal" data-target="#vipModal" >عضویت در بیماران ویژه</a></p>
+                {%endif%}
+                </div>
+              </div>
+              <hr>
+
 
               <div class="row">
                 <div class="col-sm-3">
@@ -251,6 +269,50 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- VIP MODALS -->
+<div class="modal fade" id="vipModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تایید </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      بیمار وارد لیست بیماران ویژه شود؟
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'client:vip' pk=client.pk %}" class="btn">تایید</a>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- REMOVE VIP MODALS -->
+<div class="modal fade" id="removevipModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تایید </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      بیمار از لیست بیماران ویژه خارج شود؟
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'client:remove_vip' pk=client.pk %}" class="btn">تایید</a>
+    </div>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->

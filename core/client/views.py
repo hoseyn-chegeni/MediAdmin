@@ -8,14 +8,15 @@ from base.views import (
 )
 from .models import Client
 from .filters import ClientFilters, ReceptionFilter, FinancialFilter
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from reception.models import Reception
 from prescription.models import Prescription
 from financial.models import Financial
 from django.db.models import Sum
 from django.views import View
 from django.http import HttpResponseRedirect
-
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 # Create your views here.
@@ -107,22 +108,31 @@ class EditHealthHistoryView(BaseUpdateView):
     url_name = "detail"
 
 
-class VipButtonView(View):
+class VipButtonView(SuccessMessageMixin, View):
+    success_message = "تغییر وضغیت بیمار به حالت ویژه موفقیت آمیز بود"
+
     def get(self, request, pk):
         client = Client.objects.get(pk=pk)
         if client:
             client.is_vip = True
             client.save()
-        return HttpResponseRedirect(reverse_lazy("client:list"))
-
+            messages.success(self.request, self.success_message)
+        # Construct the URL for the client detail page
+        client_detail_url = reverse("client:detail", kwargs={"pk": pk})
+        return HttpResponseRedirect(client_detail_url)
 
 class RemoveVipButtonView(View):
+    success_message = "بیمار از حالت بیماران ویژه خارج شد"
+
     def get(self, request, pk):
-        client = Client.objects.filter(pk=pk).first()
+        client = Client.objects.get(pk=pk)
         if client:
             client.is_vip = False
             client.save()
-        return HttpResponseRedirect(reverse_lazy("client:vip_list"))
+            messages.success(self.request, self.success_message)
+        # Construct the URL for the client detail page
+        client_detail_url = reverse("client:detail", kwargs={"pk": pk})
+        return HttpResponseRedirect(client_detail_url)
 
 
 class ClientReceptionsListView(BaseListView):
