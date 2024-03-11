@@ -10,17 +10,11 @@
     <p><a href="{% url 'reception:create'%}">Add Recetpion</a></p>
     <h1>Reception List</h1>
 
-    <!-- Filter Form -->
-    <form method="get">
-        <label for="id_date_range">Filter by Date:</label>
-        <select name="date_range" id="id_date_range">
-            <option value="">All</option>
-            <option value="this_day">This Day</option>
-            <option value="this_week">This Week</option>
-            <option value="this_month">This Month</option>
-        </select>
-        <button type="submit">Apply Filter</button>
-    </form>
+  <!-- Filter form -->
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Apply Filters</button>
+  </form>
 
     <!-- Reception Entries -->
     <ul>
