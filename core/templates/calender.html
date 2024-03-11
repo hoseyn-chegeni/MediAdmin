@@ -36,6 +36,42 @@
 
 
 
+<!-- reception/list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reception List</title>
+</head>
+<body>
+    <p><a href="{% url 'reception:create'%}">Add Recetpion</a></p>
+    <h1>Reception List</h1>
+
+  <!-- Filter form -->
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Apply Filters</button>
+  </form>
+
+    <!-- Reception Entries -->
+    <ul>
+        {% for reception in reception %}
+            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }} - {{reception.service}}.
+                 <a href="{% url 'reception:detail' reception.id %}">Detail</a>
+                 <a href="{% url 'reception:update' reception.id %}">Update</a>
+                 <a href="{% url 'reception:delete' reception.id %}">Delete</a>
+
+                </li>
+        {% empty %}
+            <li>No reception entries found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+
 
 <p> Case id: {{client.case_id}}</p>
 <p> Name: {{client.first_name}} {{client.last_name}}</p>

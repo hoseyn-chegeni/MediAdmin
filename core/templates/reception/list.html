@@ -1,33 +1,155 @@
-<!-- reception/list.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reception List</title>
-</head>
-<body>
-    <p><a href="{% url 'reception:create'%}">Add Recetpion</a></p>
-    <h1>Reception List</h1>
+{% extends 'base.html'%}
+{% block title %} لیست پذیرش ها{% endblock %}
 
-  <!-- Filter form -->
-  <form method="get">
-    {{ filter.form.as_p }}
-    <button type="submit">Apply Filters</button>
-  </form>
+{%block content%}
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">لیست پذیرش ها</h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="case_id" class="form-label">شماره پرونده بیمار</label>
+                        <input  class="form-control" type="text" name="case_id" step="any" id="case_id"value="{{ request.GET.case_id }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="national_id" class="form-label">کدملی بیمار</label>
+                        <input  class="form-control" type="text" name="national_id" step="any" id="national_id" value="{{ request.GET.national_id }}" >
+                      </div>
 
-    <!-- Reception Entries -->
-    <ul>
-        {% for reception in reception %}
-            <li>{{ reception.client.first_name }} {{ reception.client.last_name }} - {{ reception.created_at }} - {{reception.service}}.
-                 <a href="{% url 'reception:detail' reception.id %}">Detail</a>
-                 <a href="{% url 'reception:update' reception.id %}">Update</a>
-                 <a href="{% url 'reception:delete' reception.id %}">Delete</a>
+                      <div class="col-sm-6">
+                        <label for="name" class="form-label">نام و نام خانوادگی بیمار</label>
+                        <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                      </div>
 
-                </li>
-        {% empty %}
-            <li>No reception entries found.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+
+                      <div class="col-sm-6">
+                        <label for="service">سرویس ارایه شده</label>
+                        <select class="form-select" name="service" id="service">
+                          <option value="" selected>---------</option>
+                          {% for i in form.service.field.queryset %}
+                            <option value="{{ i.id }}">{{ i.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+          
+          
+                      <div class="col-sm-6">
+                        <label for="date" class="form-label">تاریخ</label>
+                        <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="date_range">محدوده زمانی</label>
+                        <select class="form-select" name="date_range" id="date_range">
+                          <option value="" selected>---------</option>
+                          <option value="today">امروز</option>
+                          <option value="this_week">هفته گذشته</option>
+                          <option value="this_month">ماه گذشته</option>
+                        </select>
+                      </div>
+
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+                    </form>
+
+                    <div class="mb-4">
+                    <a href="{% url 'reception:create' %}" class="btn btn-success me-2">ایجاد پذیرش جدید</a>
+                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    </div>
+
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col">شماره پذیرش</th>
+                        <th scope="col">شماره پرونده بیمار</th>
+                        <th scope="col">نام بیمار</th>
+                        <th scope="col">کدملی</th>
+                        <th scope="col">سرویس</th>
+                        <th scope="col"> نام پزشک معالجه کننده</th>
+                        <th scope="col">شماره فاکتور</th>
+                        <th scope="col">اکشن ها</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in reception%}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{i.id}}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{i.client.case_id}}</span>
+                        </td>
+                        <td class="align-middle">
+                            <span>{{i.client.first_name}} {{i.client.last_name}}</span>
+                          </td>
+
+                          <td class="align-middle">
+                            <span>{{i.client.national_id}}</span>
+                          </td>
+
+
+                          <td class="align-middle">
+                            <span>{{i.service}}</span>
+                          </td>
+
+
+                          <td class="align-middle">
+                            <span>{{i.service.doctor}}</span>
+                          </td>
+
+                          <td class="align-middle">
+                            <span>{{i.financial.id}}</span>
+                          </td>
+
+
+                        <td class="align-middle">
+                            <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'reception:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      </tbody>
+                  </table>
+    
+      
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}
