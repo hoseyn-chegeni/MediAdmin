@@ -40,7 +40,6 @@ class Financial(models.Model):
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
 
-
     def save(self, *args, **kwargs):
         # If the financial instance is being created for the first time
         if not self.pk:

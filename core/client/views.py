@@ -8,7 +8,7 @@ from base.views import (
 )
 from .models import Client
 from .filters import ClientFilters, ReceptionFilter, FinancialFilter
-from django.urls import reverse_lazy,reverse
+from django.urls import reverse_lazy, reverse
 from reception.models import Reception
 from prescription.models import Prescription
 from financial.models import Financial
@@ -25,7 +25,6 @@ class ClientListView(BaseListView):
     template_name = "client/list.html"
     context_object_name = "clients"
     filterset_class = ClientFilters
-
 
 
 class ClientCreateView(BaseCreateView):
@@ -50,17 +49,26 @@ class ClientDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
 
         # Get reception history for the client
-        context["reception_history"] = Reception.objects.filter(client_id=client.id).order_by('-created_at')[:5]
+        context["reception_history"] = Reception.objects.filter(
+            client_id=client.id
+        ).order_by("-created_at")[:5]
         context["num_reception"] = Reception.objects.filter(client_id=client.id).count()
 
         # Get all prescriptions associated with the receptions
-        context["num_prescriptions"] = Prescription.objects.filter(reception__client_id=client.id).count()
+        context["num_prescriptions"] = Prescription.objects.filter(
+            reception__client_id=client.id
+        ).count()
 
-        context["financial_instances"] = Financial.objects.filter(reception__client=client).order_by('-created_at')[:5]
-        context["num_financial_instances"] = Financial.objects.filter(reception__client=client).count()
+        context["financial_instances"] = Financial.objects.filter(
+            reception__client=client
+        ).order_by("-created_at")[:5]
+        context["num_financial_instances"] = Financial.objects.filter(
+            reception__client=client
+        ).count()
 
-
-        total_amount_sum = Financial.objects.filter(reception__client=client).aggregate(Sum("total_amount"))["total_amount__sum"]
+        total_amount_sum = Financial.objects.filter(reception__client=client).aggregate(
+            Sum("total_amount")
+        )["total_amount__sum"]
         context["total_amount_sum"] = total_amount_sum
         return context
 
@@ -121,6 +129,7 @@ class VipButtonView(SuccessMessageMixin, View):
         client_detail_url = reverse("client:detail", kwargs={"pk": pk})
         return HttpResponseRedirect(client_detail_url)
 
+
 class RemoveVipButtonView(View):
     success_message = "بیمار از حالت بیماران ویژه خارج شد"
 
@@ -137,32 +146,32 @@ class RemoveVipButtonView(View):
 
 class ClientReceptionsListView(BaseListView):
     model = Reception
-    template_name = 'client/client_receptions.html'
+    template_name = "client/client_receptions.html"
     filterset_class = ReceptionFilter
-    
+
     def get_queryset(self):
-        client_id = self.kwargs['pk']
+        client_id = self.kwargs["pk"]
         return Reception.objects.filter(client_id=client_id)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # Get reception history for the client
-        context["client"] = Client.objects.get(id=self.kwargs['pk'])
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
 
         return context
-    
+
+
 class ClientFinancialInstancesListView(BaseListView):
     model = Financial
-    template_name = 'client/client_financial.html'
+    template_name = "client/client_financial.html"
     filterset_class = FinancialFilter
 
-
     def get_queryset(self):
-        client_id = self.kwargs['pk']
+        client_id = self.kwargs["pk"]
         return Financial.objects.filter(reception__client_id=client_id)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["client"] = Client.objects.get(id=self.kwargs['pk'])
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context

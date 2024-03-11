@@ -44,9 +44,10 @@ class Client(models.Model):
     image = models.ImageField(
         upload_to="images", default="images/default.png", blank=True, null=True
     )  # Image field for the client
-    number_of_receptions = models.PositiveIntegerField(blank = True, null= True,default = 0)
-    last_reception_date = models.DateField(blank = True, null = True)
-    last_reception_reason = models.CharField(blank = True, null = True, max_length=255)
+    number_of_receptions = models.PositiveIntegerField(blank=True, null=True, default=0)
+    last_reception_date = models.DateField(blank=True, null=True)
+    last_reception_reason = models.CharField(blank=True, null=True, max_length=255)
+
     @property
     def age(self):
         today = date.today()

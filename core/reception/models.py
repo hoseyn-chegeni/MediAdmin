@@ -33,4 +33,3 @@ class Reception(models.Model):
 
     def __str__(self):
         return f"Reception for {self.client.first_name} {self.client.last_name}"
-    
