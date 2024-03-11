@@ -1,19 +1,99 @@
-<!-- client_receptions.html -->
 {% extends 'base.html' %}
-{% block title %}Client Receptions{% endblock %}
+
+{% block title %}تاریخچه پذیرش {{client}}{% endblock %}
 
 {% block content %}
-<form method="get">
-    {{ filter.form.as_p }}
-    <button type="submit">Apply Filters</button>
-  </form>
+<div class="py-5 text-center">
+  <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+  <h2>تاریخچه پذیرش {{client}}</h2>
+</div>
 
-  
-  <h1>{{client}} Receptions</h1>
-  <ul>
-    {% for reception in object_list %}
-      <li>{{ reception }} <a href="{% url 'reception:detail' reception.id%}">Detail</a></li>
-      <!-- Add other reception details here -->
-    {% endfor %}
-  </ul>
+
+<div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="col-md-12 col-xl-10">
+    <div class="card mask-custom">
+      <div class="card-body p-4 text-white">
+        <form class="table text-white mb-0" method="get">
+          {%csrf_token%}
+          
+          <div class="row g-3">
+
+
+
+            <div class="col-sm-6">
+              <label for="service">سرویس ارایه شده</label>
+              <select class="form-select" name="service" id="service">
+                <option value="" selected>---------</option>
+                {% for i in form.service.field.queryset %}
+                  <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+
+            <div class="col-sm-6">
+              <label for="date" class="form-label">تاریخ</label>
+              <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+            </div>
+
+            <div class="col-sm-6">
+              <label for="date_range">محدوده زمانی</label>
+              <select class="form-select" name="date_range" id="date_range">
+                <option value="" selected>---------</option>
+                <option value="today">امروز</option>
+                <option value="this_week">هفته گذشته</option>
+                <option value="this_month">ماه گذشته</option>
+              </select>
+            </div>
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+          </form>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">شماره پذیرش</th>
+      <th scope="col">سرویس</th>
+      <th scope="col">پزشک معالجه کننده</th>
+      <th scope="col">وضعیت پرداخت</th>
+      <th scope="col">تاریخ پذیرش</th>
+      <th scope="col">اکشن</th>
+    </tr>
+  </thead>
+  <tbody>
+      {%for i in object_list%}
+    <tr class="fw-normal">
+      <td class="align-middle">
+        <span>{{i.id}}</span>
+      </td>
+      <td class="align-middle">
+          <span>{{i.service}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.service.doctor}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.payment_status}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.date}}</span>
+        </td>
+        <td class="align-middle">
+          <span>
+            <a href="{% url 'reception:detail' i.id %}" class="btn btn-outline-success btn-sm">جزییات</a>
+        </span>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 {% endblock %}
