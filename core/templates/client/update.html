@@ -1,15 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Client</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}ویرایش پروفایل {{object}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2> ویرایش پروفایل {{object}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="case_id" class="form-label">شماره پرونده</label>
+                      <input type="text" class="form-control" id="case_id" placeholder="" value="{{object.case_id}}" name="case_id" >
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="first_name" class="form-label">نام</label>
+                        <input type="text" class="form-control" id="first_name" placeholder="" value="{{object.first_name}}" name="first_name" >
+                      </div>
+  
+                      <div class="col-sm-6">
+                        <label for="last_name" class="last_name-label">نام خانوادگی</label>
+                        <input type="text" class="form-control" id="last_name" placeholder="" value="{{object.last_name}}" name="last_name" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="national_id" class="national_id-label">کد ملی</label>
+                        <input type="text" class="form-control" id="national_id" placeholder="" value="{{object.national_id}}" name="national_id" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="fathers_name" class="fathers_name-label">نام پدر</label>
+                        <input type="text" class="form-control" id="fathers_name" placeholder="" value="{{object.fathers_name}}" name="fathers_name" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="date_of_birth" class="date_of_birth-label">تاریخ تولد</label>
+                        <input type="text" class="form-control" id="date_of_birth" placeholder="" value="{{object.date_of_birth}}" name="date_of_birth" >
+                      </div>
+
+                      <div class="col-sm-6">
+                      <label  for="id_gender">جنسیت:</label>
+                      <select  class="form-select" name="gender" required="" id="id_gender">
+                        {% if object.gender == "M" %}
+                        <option value="M" selected>مرد</option>
+                        <option value="F">زن</option>
+                        {% else %}
+                        <option value="M" >مرد</option>
+                        <option value="F" selected>زن</option>
+                        {% endif %}
+                      </select>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="phone_number" class="phone_number-label">شماره تماس </label>
+                        <input type="text" class="form-control" id="phone_number" placeholder="" value="{{object.phone_number}}" name="phone_number" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="address" class="address-label">آدرس منزل</label>
+                        <input type="text" class="form-control" id="address" placeholder="" value="{{object.address}}" name="address" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label  for="id_gender">وضعیت تاهل:</label>
+                        <select  class="form-select" name="marital_status" required="" id="marital_status">
+                            {% if object.marital_status == 'S' %}
+                          <option value="S" selected>مجرد</option>
+                          <option value="M">متاهل</option>
+                          {%else%}
+                          <option value="">---------</option>
+                          <option value="S" >مجرد</option>
+                          <option value="M" selected>متاهل</option>
+                            {%endif%}
+                        </select>
+                        </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="emergency_contact_name" class="emergency_contact_name-label">emergency_contact_name</label>
+                        <input type="text" class="form-control" id="emergency_contact_name" placeholder="" value="{{object.emergency_contact_name}}" name="emergency_contact_name" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="emergency_contact_number" class="emergency_contact_number-label">emergency_contact_number</label>
+                        <input type="text" class="form-control" id="emergency_contact_number" placeholder="" value="{{object.emergency_contact_number}}" name="emergency_contact_number" >
+                      </div>
+
+
+                    <div class="col-sm-6">
+                        <label for="insurance">بیمه</label>
+                        <select class="form-select" id="insurance" name="insurance">
+                            <option value="">----------</option>
+                            {% for insurance in form.fields.insurance.queryset %}
+                                {% if object.insurance == insurance%}
+                                <option value="{{ insurance.pk }}" selected>
+                                    {{ insurance.name }}
+                                </option>
+                                {%else%}
+                                <option value="{{ insurance.pk }}">
+                                    {{ insurance.name }}
+                                </option>
+                                {%endif%}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <label class="form-label" for="customFile"> تصویر بیمار</label>
+                    <input type="file" class="form-control" id="customFile" name="image" />
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}
