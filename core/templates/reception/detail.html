@@ -120,7 +120,9 @@
                     </strong>   </div>
                 <div class="card-footer">
                     <a href="{% url 'prescription:create' reception.pk %}" class="btn btn-success me-2">ایجاد نسخه</a>
+                    {%if reception.status == "WAITE"%}
                     <a href="#" data-toggle="modal" data-target="#exampleModal2"  class="btn btn-success me-2" title="Complete Reception">اتمام پذیرش</a>
+                    {%endif%}
                     <a href="{% url 'reception:update' reception.id%}" class="btn btn-success me-2">ویرایش</a>
                     <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete">حذف</a>
                 </div>
