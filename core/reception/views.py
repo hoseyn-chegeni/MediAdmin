@@ -28,6 +28,7 @@ class ReceptionCreateView(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
+        form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         return super().form_valid(form)
 
@@ -61,6 +62,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
+        form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         form.instance.client_id = self.kwargs[
             "pk"
