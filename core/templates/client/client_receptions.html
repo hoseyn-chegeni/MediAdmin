@@ -45,10 +45,13 @@
                 <option value="this_month">ماه گذشته</option>
               </select>
             </div>
-
-
             <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
           </form>
+
+          <div class="mb-4">
+            <a href="{% url 'reception:reception_create_using_profile' client.id %}" class="btn btn-success me-2">ثبت پذیرش جدید</a>
+            <a href="#" class="btn btn-success me-2">گزارشات</a>
+            </div>
 
 
 <table class="table table-bordered">
