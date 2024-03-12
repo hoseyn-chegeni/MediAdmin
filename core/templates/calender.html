@@ -32,3 +32,143 @@
 
 </body>
 </html>
+
+
+{{reception.client}} <br>
+{{reception.reason}}<br>
+{{reception.payment_type}}<br>
+<a href="{% url 'prescription:create' reception.pk %}">Add Prescription</a>,
+<a href="{% url 'reception:complete' reception.pk %}">Complete Reception</a>,
+
+
+<p>-------------</p>
+{% if financial %}
+    <h2>Financial Details</h2>
+    <p>Invoice Number: {{ financial.invoice_number }}</p>
+    <p>payment_status: {{ financial.payment_status }}</p>
+    <p>tax_rate: {{ financial.tax_rate }}</p>
+    <p>total_amount: {{ financial.total_amount }}</p>
+    <p>valid insurance {{financial.valid_insurance}}</p>
+    <p>insurance range {{financial.insurance_range}}</p>
+    <p>insurance amount: {{financial.insurance_amount}}</p>
+    <p>Final Amount: {{financial.final_amount}}</p>
+
+
+    <!-- Display other financial details as needed -->
+{% else %}
+    <p>No financial details found for this reception.</p>
+{% endif %}
+
+
+
+{% extends 'base.html' %}
+    {%block title %}پذیرش شماره {{reception.id}}{%endblock%}
+{%block content%}
+
+
+
+    <div class="container mt-4">
+        <h2>پذیرش بیمار  {{reception.client}}</h2>
+        <br>
+        <div class="card mt-4">
+            <div class="card-header">
+                اطلاعات پذیرش
+            </div>
+          <div class="card-body">
+              <p class="card-text"><strong>شماره پذیرش:</strong>{{reception.id}}</p>
+              <hr>
+              <p class="card-text"><strong>بیمار:</strong>{{reception.client}}</p>
+              <hr>
+              <p class="card-text"><strong>سرویس ارایه شده:</strong>{{reception.service}}</p>
+              <hr>
+              <p class="card-text"><strong>علت مراجعه: </strong>{{reception.reason}}</p>
+              <hr>
+              <p class="card-text"><strong>پزشک معالج: </strong>{{reception.service.doctor}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ مراجعه: </strong>{{reception.date}}</p>
+              <hr>
+              <p class="card-text"><strong>ایجاد کننده در سیستم: </strong>{{reception.created_by}}</p>
+              <hr>
+              <p class="card-text"><strong>وضعیت: </strong>{{reception.status}}</p>
+              <hr>
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="mb-4">
+          <a href="{% url 'prescription:create' reception.pk %}" class="btn btn-success me-2">ایجاد نسخه</a>
+          <a href="#" data-toggle="modal" data-target="#exampleModal2"  class="btn btn-success me-2" title="Complete Reception" >اتمام پذیرش</a>
+          <a href="{% url 'reception:update' reception.id%}" class="btn btn-success me-2">ویرایش</a>
+          <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+</div>
+</div>
+
+
+<div class="card mt-4">
+  <div class="card-header">
+      اطلاعات فاکتور
+  </div>
+  <div class="card-body">
+              <div class="card-body">
+                <p class="card-text"><strong>شماره فاکتور:</strong> {{ financial.invoice_number }}</p>
+                <hr>
+                <p class="card-text"><strong>وضعیت پرداخت:</strong> {{ financial.payment_status  }}</p>
+                <hr>
+                <p class="card-text"><strong>مالیات:</strong> {{ financial.tax_rate }}</p>   
+                <hr>
+                <p class="card-text"><strong>درصد تحت پوشش بیمه:</strong> % {{financial.insurance_range}} </p>     
+                <hr>
+                <p class="card-text"><strong>مبلغ تحت پوشش بیمه:</strong> {{ financial.insurance_amount }}</p>    
+                <hr>
+                <p class="card-text"><strong>مبلغ کل:</strong> {{ financial.total_amount }}</p>   
+                 <hr>
+                 <p class="card-text"><strong>مبلغ نهایی:</strong> {{ financial.final_amount }}</p>   
+          </div>
+  </div>
+</div>
+
+
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                این پذیرش به طور کل از سیستم حذف خواهد شد
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'reception:delete' pk=reception.pk %}" class="btn">تایید</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSIGNEE MODALS -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">اتمام پذیرش</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              اتمام پذیرش انجام شود ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'reception:complete' reception.pk %}" class="btn">تایید</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
