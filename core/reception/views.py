@@ -101,7 +101,13 @@ class CompleteReceptionView(BaseUpdateView):
 
 class ReceptionUpdateView(BaseUpdateView):
     model = Reception
-    fields = "__all__"
+    fields = [
+        'client',
+        'service',
+        'reason',
+        'payment_type',
+        'payment_status',
+    ]
     template_name = "reception/update.html"
     app_name = "reception"
     url_name = "detail"

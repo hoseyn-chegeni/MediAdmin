@@ -1,15 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Reception</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}ویرایش پذیرش شماره {{object}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ویرایش پذیرش شماره {{object.id}} </h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="reason" class="form-label">علت مراجعه</label>
+                      <input type="text" class="form-control" id="reason" placeholder="" value="{{object.reason}}" name="reason" >
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label  for="payment_type">نوع پرداخت:</label>
+                        <select  class="form-select" name="payment_type" required="" id="payment_type">
+                            <option value="" selected="">---------</option>
+                          {%if object.payment_type == "CASH"%}
+                          <option value="CASH" selected>نقد</option>
+                          <option value="CARD">کارت</option>
+                          <option value="OTHER">روش های دیگر</option>
+                          {%endif%}
+
+                          {%if object.payment_type == "CARD"%}
+                          <option value="CASH" >نقد</option>
+                          <option value="CARD" selected>کارت</option>
+                          <option value="OTHER">روش های دیگر</option>
+                          {%endif%}
+
+                          {%if object.payment_type == "OTHER"%}
+                          <option value="CASH" >نقد</option>
+                          <option value="CARD">کارت</option>
+                          <option value="OTHER" selected>روش های دیگر</option>
+                          {%endif%}
+
+                        </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label  for="payment_status">وضعیت پرداخت:</label>
+                            <select  class="form-select" name="payment_status" required="" id="payment_status">
+                              <option value="" selected="">---------</option>
+                              {% if object.payment_status == "PAID" %}
+                              <option value="PAID" selected>پرداخت شده</option>
+                              <option value="UNPAID">پرداخت نشده</option>
+                              <option value="PENDING">Pending</option>
+                              {%endif %}
+
+                              {% if object.payment_status == "UNPAID" %}
+                              <option value="PAID">پرداخت شده</option>
+                              <option value="UNPAID" selected>پرداخت نشده</option>
+                              <option value="PENDING">Pending</option>
+                              {%endif %}
+
+                              {% if object.payment_status == "PENDING" %}
+                              <option value="PAID">پرداخت شده</option>
+                              <option value="UNPAID">پرداخت نشده</option>
+                              <option value="PENDING" selected>Pending</option>
+                              {%endif %}
+                            </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label  for="client"> بیمار:</label>
+                                <select  class="form-select" name="client" required="" id="client">
+                                  <option value="" selected="">---------</option>
+                                {% for i in form.client.field.queryset%}
+                                {% if object.client == i %}
+                                  <option value="{{i.id}}" selected>{{i}}</option>
+                                  {% else%}
+                                  <option value="{{i.id}}" >{{i}}</option>
+                                  {%endif %}
+                                  {%endfor%}
+                                </select>
+                                </div>
+    
+                                <div class="col-sm-6">
+                                    <label  for="service"> سرویس:</label>
+                                    <select  class="form-select" name="service" required="" id="service">
+                                      <option value="" selected="">---------</option>
+                                    {% for i in form.service.field.queryset%}
+                                    {%if object.service == i %}
+                                      <option value="{{i.id}}" selected>{{i}}</option>
+                                      {%else%}
+                                      <option value="{{i.id}}" >{{i}}</option>
+                                      {%endif%}
+
+                                      {%endfor%}
+                                    </select>
+                                    </div>
+
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}
