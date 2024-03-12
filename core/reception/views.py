@@ -9,7 +9,7 @@ from .models import Reception
 from .filters import ReceptionFilter
 from django.views.generic import ListView
 from django.urls import reverse_lazy
-
+from client.models import Client
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -68,6 +68,11 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
             "pk"
         ]  # Assuming client's pk is passed in the URL
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
+        return context
 
 class ReceptionDeleteView(BaseDeleteView):
     model = Reception
