@@ -69,15 +69,6 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         ]  # Assuming client's pk is passed in the URL
         return super().form_valid(form)
 
-
-class ReceptionUpdateView(BaseUpdateView):
-    model = Reception
-    fields = "__all__"
-    template_name = "reception/update.html"
-    app_name = "reception"
-    url_name = "detail"
-
-
 class ReceptionDeleteView(BaseDeleteView):
     model = Reception
     app_name = "reception"
