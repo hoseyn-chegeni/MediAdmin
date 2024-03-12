@@ -10,6 +10,11 @@ from .filters import ReceptionFilter
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 from client.models import Client
+from django.views import View
+from django.http import HttpResponseRedirect
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+from django.urls import reverse
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -90,18 +95,21 @@ class WaitingListView(ListView):
         return qs.filter(status="WAITE")
 
 
-class CompleteReceptionView(BaseUpdateView):
-    model = Reception
-    fields = ["status"]
-    template_name = "reception/complete.html"
 
-    def get_success_url(self):
-        return reverse_lazy("reception:waiting_list")
 
-    def form_valid(self, form):
-        # Set the client for the reception
-        form.instance.status = "DONE"
-        return super().form_valid(form)
+
+class CompleteReceptionView(SuccessMessageMixin,View):
+    success_message = "اتمام پذیرش انجام شد."
+
+    def get(self, request, pk):
+        reception = Reception.objects.get(pk=pk)
+        if reception:
+            reception.status = 'DONE'
+            reception.save()
+            messages.success(self.request, self.success_message)
+        # Construct the URL for the client detail page
+        reception_detail_url = reverse("reception:detail", kwargs={"pk": pk})
+        return HttpResponseRedirect(reception_detail_url)
 
 
 class ReceptionUpdateView(BaseUpdateView):
