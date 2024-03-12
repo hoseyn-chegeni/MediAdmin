@@ -97,3 +97,11 @@ class CompleteReceptionView(BaseUpdateView):
         # Set the client for the reception
         form.instance.status = "DONE"
         return super().form_valid(form)
+
+
+class ReceptionUpdateView(BaseUpdateView):
+    model = Reception
+    fields = "__all__"
+    template_name = "reception/update.html"
+    app_name = "reception"
+    url_name = "detail"
