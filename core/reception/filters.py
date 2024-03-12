@@ -1,11 +1,18 @@
 # filters.py
 from .models import Reception
-from django_filters import FilterSet, ChoiceFilter, DateFilter, CharFilter
+from django_filters import FilterSet, ChoiceFilter, DateFilter, CharFilter,ModelChoiceFilter
 from datetime import datetime, timedelta
 from django import forms
+from services.models import Service
 
 
 class ReceptionFilter(FilterSet):
+
+    service = ModelChoiceFilter(
+        queryset=Service.objects.all(),
+        label='Service',
+        field_name='service',  # Field to filter on in the Reception model
+    )
 
     # Filter by date
     date = DateFilter(

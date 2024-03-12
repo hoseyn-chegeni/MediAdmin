@@ -24,7 +24,7 @@
               <label for="service">سرویس ارایه شده</label>
               <select class="form-select" name="service" id="service">
                 <option value="" selected>---------</option>
-                {% for i in form.service.field.queryset %}
+                {% for i in filter.form.service.field.queryset %}
                   <option value="{{ i.id }}">{{ i.name }}</option>
                 {% endfor %}
               </select>
