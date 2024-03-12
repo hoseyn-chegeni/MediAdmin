@@ -5,3 +5,4 @@ Pillow
 black
 django-two-factor-auth
 phonenumbers
+python-dotenv
