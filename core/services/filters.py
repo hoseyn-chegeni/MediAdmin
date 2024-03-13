@@ -11,6 +11,8 @@ class ServicesFilter(FilterSet):
         model = Service
         fields = {
             "id": ["exact"],
+            "doctor":['exact'],
+            "category":['exact'],
         }
 
     def filter_by_name(self, queryset, name, value):
