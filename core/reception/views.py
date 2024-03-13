@@ -15,6 +15,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
+from datetime import date
+from services.models import Service
+
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -83,17 +86,6 @@ class ReceptionDeleteView(BaseDeleteView):
     model = Reception
     app_name = "reception"
     url_name = "list"
-
-
-class WaitingListView(ListView):
-    model = Reception
-    template_name = "reception/waiting_list.html"
-    context_object_name = "reception"
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(status="WAITE")
-
 
 
 

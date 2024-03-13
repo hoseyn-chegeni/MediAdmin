@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Receptions</title>
+</head>
+<body>
+    <h1>Service Receptions for Today</h1>
+    <p>Service: {{ service.name }}</p>
+    <ul>
+        {% for reception in receptions %}
+            <li>{{ reception.client.first_name }} {{ reception.client.last_name }}</li>
+            <!-- Add more reception details here -->
+        {% empty %}
+            <li>No receptions found for today.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
