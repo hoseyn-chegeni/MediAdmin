@@ -10,7 +10,7 @@
     <p>Service: {{ service.name }}</p>
     <ul>
         {% for reception in receptions %}
-            <li>{{ reception.client.first_name }} {{ reception.client.last_name }}</li>
+            <li>{{reception.reception_in_day}}......{{ reception.client.first_name }} {{ reception.client.last_name }}</li>
             <!-- Add more reception details here -->
         {% empty %}
             <li>No receptions found for today.</li>
