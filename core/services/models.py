@@ -27,11 +27,8 @@ class Service(models.Model):
     )
     duration = models.PositiveIntegerField()  # Duration in minutes
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    availability = models.BooleanField(default=True)
-    equipment_supplies = models.TextField(blank=True, null=True)
     preparation_instructions = models.TextField(blank=True, null=True)
     documentation_requirements = models.TextField(blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
@@ -58,11 +55,11 @@ class Service(models.Model):
     def appointment_count_today(self):
         today = date.today()
         return Appointment.objects.filter(service=self, date=today).count()
-    
+
     @property
     def waiting_receptions_today(self):
         today = date.today()
-        return self.reception_set.filter(date=today, status='WAITE').count()
+        return self.reception_set.filter(date=today, status="WAITE").count()
 
     def __str__(self):
         return self.name

@@ -69,7 +69,19 @@ class ServiceDetailView(BaseDetailView):
 
 class ServiceUpdateView(BaseUpdateView):
     model = Service
-    fields = "__all__"
+    fields = [
+        "name",
+        "doctor",
+        "description",
+        "category",
+        "duration",
+        "price",
+        "is_active",
+        "preparation_instructions",
+        "documentation_requirements",
+        "therapeutic_measures",
+        "recommendations",
+    ]
     template_name = "services/update.html"
     app_name = "services"
     url_name = "detail"
