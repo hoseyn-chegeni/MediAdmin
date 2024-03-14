@@ -1,5 +1,7 @@
 from django.db import models
-
+from datetime import date
+from reception.models import Reception
+from booking.models import Appointment
 
 # Create your models here.
 
@@ -20,7 +22,9 @@ class Service(models.Model):
         "doctor.Doctor", on_delete=models.SET_NULL, blank=True, null=True
     )
     description = models.TextField(blank=True, null=True)
-    category = models.ForeignKey('ServiceCategory', on_delete = models.SET_NULL, blank = True, null = True)
+    category = models.ForeignKey(
+        "ServiceCategory", on_delete=models.SET_NULL, blank=True, null=True
+    )
     duration = models.PositiveIntegerField()  # Duration in minutes
     price = models.DecimalField(max_digits=10, decimal_places=2)
     availability = models.BooleanField(default=True)
@@ -36,6 +40,24 @@ class Service(models.Model):
     # suggested_prescription = 0
     appointment_per_day = models.PositiveIntegerField(default=3)
     off_days = models.ManyToManyField("OffDay", blank=True)
+
+    @property
+    def today_reception_count(self):
+        # Get today's date
+        today = date.today()
+        # Filter receptions for today and this service
+        receptions_today = self.reception_set.filter(date=today)
+        # Count the number of receptions
+        return receptions_today.count()
+
+    @property
+    def total_reception_count(self):
+        return Reception.objects.filter(service=self).count()
+
+    @property
+    def appointment_count_today(self):
+        today = date.today()
+        return Appointment.objects.filter(service=self, date=today).count()
 
     def __str__(self):
         return self.name
@@ -62,9 +84,10 @@ class ServiceConsumable(models.Model):
     def __str__(self):
         return f"{self.service}.{self.consumable}"
 
+
 class ServiceCategory(models.Model):
-    name = models.CharField(max_length = 255)
-    description = models.TextField(blank = True, null = True)
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(

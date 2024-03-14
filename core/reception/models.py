@@ -30,10 +30,7 @@ class Reception(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-    reception_in_day = models.PositiveIntegerField(default = 0)
-
-
-
+    reception_in_day = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"Reception for {self.client.first_name} {self.client.last_name}"

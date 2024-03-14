@@ -76,11 +76,12 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
             "pk"
         ]  # Assuming client's pk is passed in the URL
         return super().form_valid(form)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
+
 
 class ReceptionDeleteView(BaseDeleteView):
     model = Reception
@@ -88,15 +89,13 @@ class ReceptionDeleteView(BaseDeleteView):
     url_name = "list"
 
 
-
-
-class CompleteReceptionView(SuccessMessageMixin,View):
+class CompleteReceptionView(SuccessMessageMixin, View):
     success_message = "اتمام پذیرش انجام شد."
 
     def get(self, request, pk):
         reception = Reception.objects.get(pk=pk)
         if reception:
-            reception.status = 'DONE'
+            reception.status = "DONE"
             reception.save()
             messages.success(self.request, self.success_message)
         # Construct the URL for the client detail page
@@ -107,11 +106,11 @@ class CompleteReceptionView(SuccessMessageMixin,View):
 class ReceptionUpdateView(BaseUpdateView):
     model = Reception
     fields = [
-        'client',
-        'service',
-        'reason',
-        'payment_type',
-        'payment_status',
+        "client",
+        "service",
+        "reason",
+        "payment_type",
+        "payment_status",
     ]
     template_name = "reception/update.html"
     app_name = "reception"

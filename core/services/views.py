@@ -13,8 +13,9 @@ from insurance.models import InsuranceService
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import View
-from datetime import date 
-from django.views.generic import ListView   
+from datetime import date
+from django.views.generic import ListView
+
 
 # Create your views here.
 class ServiceListView(BaseListView):
@@ -136,16 +137,13 @@ class ServiceConsumableDeleteView(BaseDeleteView):
     url_name = "list"
 
 
-
-
-
 class WaitingQueueView(ListView):
-    template_name = 'services/queue.html'
-    context_object_name = 'receptions'
+    template_name = "services/queue.html"
+    context_object_name = "receptions"
 
     def get_queryset(self):
         # Retrieve the service object based on the provided service_id in the URL
-        service_id = self.kwargs['service_id']
+        service_id = self.kwargs["service_id"]
         service = Service.objects.get(id=service_id)
 
         # Get today's date
@@ -153,7 +151,7 @@ class WaitingQueueView(ListView):
 
         # Filter receptions for the service for today with status 'WAITE'
         receptions_for_service_today = Reception.objects.filter(
-            service=service, date=today, status='WAITE'
+            service=service, date=today, status="WAITE"
         )
 
         return receptions_for_service_today
