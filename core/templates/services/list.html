@@ -65,9 +65,10 @@
                         <th scope="col">نام پزشک</th>
                         <th scope="col">دسته بندی</th>
                         <th scope="col">قیمت</th>
-                        <th scope="col">تعداد  پذیرش های امروز</th>
-                        <th scope="col"> تعداد کل پذیرش ها</th>
-                        <th scope="col">تعداد نوبت های رزرو شده برای امروز</th>
+                        <th scope="col">  پذیرش های امروز</th>
+                        <th scope="col">درانتظار</th>
+                        <th scope="col"> نوبت های رزرو شده برای امروز</th>
+                        <th scope="col">  کل پذیرش ها</th>
                         <th scope="col">اکشن ها</th>
 
                       </tr>
@@ -100,12 +101,18 @@
                           </td>
 
                           <td class="align-middle">
-                            <span>{{i.total_reception_count}}</span>
+                            <span>{{i.waiting_receptions_today}}</span>
                           </td>
+
 
                           <td class="align-middle">
                             <span>{{i.appointment_count_today}}</span>
                           </td>
+
+                          <td class="align-middle">
+                            <span>{{i.total_reception_count}}</span>
+                          </td>
+
 
                         <td class="align-middle">
                             <a href="{%url 'services:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>

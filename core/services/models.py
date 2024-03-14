@@ -58,6 +58,11 @@ class Service(models.Model):
     def appointment_count_today(self):
         today = date.today()
         return Appointment.objects.filter(service=self, date=today).count()
+    
+    @property
+    def waiting_receptions_today(self):
+        today = date.today()
+        return self.reception_set.filter(date=today, status='WAITE').count()
 
     def __str__(self):
         return self.name
