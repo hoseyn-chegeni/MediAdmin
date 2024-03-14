@@ -1,15 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Config</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}تنظیمات نوبت دهی سرویس {{object}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>تنظیمات نوبت دهی سرویس {{object}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                              <div class="col-sm-6">
+                                <label for="appointment_per_day" class="form-label">ظرفیت رزرو نوبت در روز</label>
+                                <input type="number" class="form-control" id="appointment_per_day" placeholder="" value="{{object.appointment_per_day}}" name="appointment_per_day" >
+                              </div>
+
+
+
+                              <div class="col-sm-6">
+                                <label  for="off_days">روزهای تعطیل:</label>
+                                <select  class="form-select" name="off_days" required="" id="off_days" multiple>
+                                  <option value="" >---------</option>
+                                  {% for i in form.off_days.field.queryset%}
+                                  {% for j in object.off_days.all%}
+                                  {%if i == j %}
+                                  <option value="{{i.id}}" selected>{{i}}</option>
+                                  {%else%}
+                                  <option value="{{i.id}}">{{i}}</option>
+                                  {%endif%}
+                                  {%endfor%}
+                                  {%endfor%}
+                                </select>
+                                </div>
+
+
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}
