@@ -1,20 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Receptions</title>
-</head>
-<body>
-    <h1>Service Receptions for Today</h1>
-    <p>Service: {{ service.name }}</p>
-    <ul>
-        {% for reception in receptions %}
-            <li>{{reception.reception_in_day}}......{{ reception.client.first_name }} {{ reception.client.last_name }}</li>
-            <!-- Add more reception details here -->
-        {% empty %}
-            <li>No receptions found for today.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html'%}
+{% block title %}صف انتظار سرویس {{service}}{% endblock %}
+
+{%block content%}
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">صف انتظار سرویس {{service}}</h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="case_id" class="form-label">شماره پرونده بیمار</label>
+                        <input  class="form-control" type="text" name="case_id" step="any" id="case_id"value="{{ request.GET.case_id }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="national_id" class="form-label">کدملی بیمار</label>
+                        <input  class="form-control" type="text" name="national_id" step="any" id="national_id" value="{{ request.GET.national_id }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="name" class="form-label">نام و نام خانوادگی بیمار</label>
+                        <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                      </div>
+
+
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+                    </form>
+
+
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col">شماره پذیرش</th>
+                        <th scope="col">شماره پرونده بیمار</th>
+                        <th scope="col">نام بیمار</th>
+                        <th scope="col">کدملی</th>
+                        <th scope="col">شماره فاکتور</th>
+                        <th scope="col">اکشن ها</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in receptions%}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{i.id}}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{i.client.case_id}}</span>
+                        </td>
+                        <td class="align-middle">
+                            <span>{{i.client.first_name}} {{i.client.last_name}}</span>
+                          </td>
+
+                          <td class="align-middle">
+                            <span>{{i.client.national_id}}</span>
+                          </td>
+
+
+
+                          <td class="align-middle">
+                            <span>{{i.financial.id}}</span>
+                          </td>
+
+
+                        <td class="align-middle">
+                            <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+                            <a href="{%url 'reception:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      </tbody>
+                  </table>
+    
+      
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+
+{%endblock%}

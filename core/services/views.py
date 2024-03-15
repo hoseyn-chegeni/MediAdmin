@@ -157,13 +157,16 @@ class WaitingQueueView(ListView):
         # Retrieve the service object based on the provided service_id in the URL
         service_id = self.kwargs["service_id"]
         service = Service.objects.get(id=service_id)
-
         # Get today's date
         today = date.today()
-
         # Filter receptions for the service for today with status 'WAITE'
         receptions_for_service_today = Reception.objects.filter(
             service=service, date=today, status="WAITE"
         )
-
         return receptions_for_service_today
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["service"] = Service.objects.get(id=self.kwargs["service_id"])
+        return context
