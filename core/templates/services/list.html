@@ -119,8 +119,6 @@
                             <a href="{%url 'services:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
                             <a href="{% url 'services:appointment_config' i.pk %}" data-mdb-toggle="tooltip" title="Appointment Config"><i class="fas fa-cog" ></i></a>
                             <a href="{% url 'services:queue' i.pk %}" data-mdb-toggle="tooltip" title="Waiting Queue"><i class="fas fa-list" ></i></a>
-                            <a href="{% url 'services:service_consumable_create' i.pk %}" data-mdb-toggle="tooltip" title="Add Consumable"><i class="fas fa-pills"></i></a>
-
                         </td>
                       </tr>
                       {%endfor%}
