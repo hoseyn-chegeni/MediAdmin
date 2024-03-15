@@ -1,7 +1,8 @@
 from django_filters import FilterSet
 from .models import Service
-from django_filters import  FilterSet,CharFilter
+from django_filters import FilterSet, CharFilter
 from reception.models import Reception
+
 
 class ServicesFilter(FilterSet):
 
@@ -13,7 +14,6 @@ class ServicesFilter(FilterSet):
             "category": ["exact"],
             "name": ["exact"],
         }
-
 
 
 class QueueFilter(FilterSet):
@@ -38,4 +38,4 @@ class QueueFilter(FilterSet):
 
     class Meta:
         model = Reception
-        fields = ["id","case_id", "national_id", "name"]
+        fields = ["id", "case_id", "national_id", "name"]

@@ -104,11 +104,9 @@ class SuspendServiceView(View):
         service = Service.objects.get(pk=pk)
         if service:
             service.is_active = False
-            messages.success(
-                self.request, f"سرویس {service.name} غیرفعال شد!"
-            )
+            messages.success(self.request, f"سرویس {service.name} غیرفعال شد!")
             service.save()
-        return HttpResponseRedirect(reverse_lazy("services:list"))
+        return HttpResponseRedirect(reverse_lazy("services:detail",  kwargs={"pk": service.pk}))
 
 
 class ReactiveServiceView(View):
@@ -116,11 +114,9 @@ class ReactiveServiceView(View):
         service = Service.objects.filter(pk=pk).first()
         if service:
             service.is_active = True
-            messages.success(
-                self.request, f"سرویس {service.name} مجددا فعال شد !"
-            )
+            messages.success(self.request, f"سرویس {service.name} مجددا فعال شد !")
             service.save()
-        return HttpResponseRedirect(reverse_lazy("services:suspend_list"))
+        return HttpResponseRedirect(reverse_lazy("services:detail",  kwargs={"pk": service.pk}))
 
 
 # ServiceConsumable Views here.
@@ -152,7 +148,6 @@ class WaitingQueueView(BaseListView):
     context_object_name = "receptions"
     filterset_class = QueueFilter
 
-
     def get_queryset(self):
         # Retrieve the service object based on the provided service_id in the URL
         service_id = self.kwargs["service_id"]
@@ -164,7 +159,6 @@ class WaitingQueueView(BaseListView):
             service=service, date=today, status="WAITE"
         )
         return receptions_for_service_today
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

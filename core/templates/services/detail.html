@@ -82,7 +82,7 @@
                    مواد مصرفی
             </strong>  </div>
                 {%for i in consumable%}
-                    {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">Remove</a><br>
+                    {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">حذف آیتم</a><br>
                 {% empty %}
                 <p>مواد مصرفی به سرویس اختصاص داده نشده است </p>
                 {% endfor %}
@@ -166,7 +166,7 @@
       </div>
 
         <!-- REACTIVE MODALS -->
-        <div class="modal fade" id="suspendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="reactiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
