@@ -50,7 +50,6 @@ class ServiceCreateView(BaseCreateView):
 class ServiceDetailView(BaseDetailView):
     model = Service
     template_name = "services/detail.html"
-    context_object_name = "services"
 
     def get_context_data(self, **kwargs):
         service = self.get_object()

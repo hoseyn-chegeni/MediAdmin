@@ -32,24 +32,36 @@
 
 </body>
 </html>
+{{services.id}}::{{services.name}}
+<p>---------------------------</p>
+{%for i in consumable%}
+    {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">Remove</a><br>
+{%endfor%}
+<a href="{% url 'services:service_consumable_create' services.id %}">Add consumable</a>
 
 
-<a href="{% url 'services:create' %}">Add Service</a><br>
-<form action="" method="get">
-    {%csrf_token%}
-    {{filter.form.as_p}}
-    <input type="submit">
-</form>
-{%for i in services%}
-  <p>  {{i.id}}.{{i.name}},
-      <a href="{% url 'services:detail' i.pk %}">Details</a>,
-      <a href="{% url 'services:update' i.pk %}">update</a>,
-      <a href="{% url 'services:delete' i.pk %}">Delete</a>,
-      <a href="{% url 'services:suspend' i.pk %}">Suspend</a>,
-      <a href="{% url 'services:appointment_config' i.pk %}">Appointment Config</a>,
-      <a href="{% url 'services:queue' i.pk %}">Waiting Queue</a>,
+<h2>Reception</h2>
+<ul>
+    {% for i in reception %}
+        <li>
+                {{ i }} <a href="{% url 'reception:detail' i.id %}">Detail</a><br>
+            <!-- Add other financial instance details as needed -->
+        </li>
+    {% empty %}
+    <li>No Reception instance  found.</li>
+    {% endfor %}
+</ul>
+<p>Receptions: {{num_reception}}</p>
 
 
-
-    </p>
-{% endfor %}
+<h2>Valid Insurance</h2>
+<ul>
+    {% for i in insurance %}
+        <li>
+                {{ i.insurance }}:{{i.percentage}} <br>
+            <!-- Add other financial instance details as needed -->
+        </li>
+    {% empty %}
+    <li>No Reception instance  found.</li>
+    {% endfor %}
+</ul>

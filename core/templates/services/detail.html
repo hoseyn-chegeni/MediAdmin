@@ -1,33 +1,192 @@
-{{services.id}}::{{services.name}}
-<p>---------------------------</p>
-{%for i in consumable%}
-    {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">Remove</a><br>
-{%endfor%}
-<a href="{% url 'services:service_consumable_create' services.id %}">Add consumable</a>
+{% extends 'base.html' %}
+    {%block title %}جزییات سرویس {{object}}{%endblock%}
+{%block content%}
 
 
-<h2>Reception</h2>
-<ul>
-    {% for i in reception %}
-        <li>
-                {{ i }} <a href="{% url 'reception:detail' i.id %}">Detail</a><br>
-            <!-- Add other financial instance details as needed -->
-        </li>
-    {% empty %}
-    <li>No Reception instance  found.</li>
-    {% endfor %}
-</ul>
-<p>Receptions: {{num_reception}}</p>
+
+<div class="container mt-4">
+    <h2>جزییات سرویس {{ object }}</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                     اطلاعات سرویس
+             </strong>  </div>
+              <p class="card-text"><strong>شماره سرویس:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong>نام سرویس:</strong>{{object.name}}</p>
+              <hr>
+              <p class="card-text"><strong>توضیحات:</strong>{{object.description}}</p>
+              <hr>
+              <p class="card-text"><strong>دسته بندی: </strong>{{object.category}}</p>
+              <hr>
+              <p class="card-text"><strong>پزشک: </strong>{{object.doctor}}</p>
+              <hr>
+              <p class="card-text"><strong>مدت زمان: </strong>{{object.duration}}</p>
+              <hr>
+              <p class="card-text"><strong>هزینه سرویس: </strong>{{object.price}}</p>
+              <hr>
+              <p class="card-text"><strong>دستورالعمل آماده سازی: </strong>{{object.preparation_instructions}}</p>
+              <hr>
+              <p class="card-text"><strong>ملزومات مستندسازی: </strong>{{object.documentation_requirements}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ ایجاد: </strong>{{object.created_at}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>%{{object.updated_at}}</p>
+              <hr>
+              <p class="card-text"><strong>فعال: </strong>{{object.is_active}}</p>
+              <hr>
+              <p class="card-text"><strong>اقدامات درمانی: </strong>{{object.therapeutic_measures}}</p>
+              <hr>
+              <p class="card-text"><strong>ظرفیت نوبت دهی در روز: </strong>{{object.appointment_per_day}}</p>
+              <hr>
+              <p class="card-text"><strong>تعداد پذیرش امروز: </strong>{{object.today_reception_count}}</p>
+              <hr>
+              <p class="card-text"><strong>تعداد  نوبت های رزرو شده برای امروز: </strong>{{object.appointment_count_today}}</p>
+              <hr>
+              <p class="card-text"><strong>تعداد افراد در صف انتظار: </strong>{{object.waiting_receptions_today}}</p>
+              <!-- Add other task details as needed -->
+          </div>
+          </div>
+        </div>
 
 
-<h2>Valid Insurance</h2>
-<ul>
-    {% for i in insurance %}
-        <li>
-                {{ i.insurance }}:{{i.percentage}} <br>
-            <!-- Add other financial instance details as needed -->
-        </li>
-    {% empty %}
-    <li>No Reception instance  found.</li>
-    {% endfor %}
-</ul>
+
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+                <div class="card-header"><strong>
+                     روزهای تعطیل سرویس
+                </strong>  </div>
+
+                {%for i in object.off_days.all%}
+                    <p>{{i}}</p>
+                    <hr>
+                {% empty %}
+                <p>روز تعطیل یافت نشد</p>
+                {% endfor %}
+        </div>
+      </div>  
+    </div>
+
+      
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+            <div class="card-header"><strong>
+                   مواد مصرفی
+            </strong>  </div>
+                {%for i in consumable%}
+                    {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">Remove</a><br>
+                {% empty %}
+                <p>مواد مصرفی به سرویس اختصاص داده نشده است </p>
+                {% endfor %}
+        </div>
+      </div>   
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-body">
+            
+            <div class="card-header"><strong>
+                 لیست بیمه های پوشش دهنده
+            </strong>  </div>
+            <div class="card-text">
+            {%for i in insurance%}
+                {{i.insurance}}: %{{i.percentage}}
+            {% empty %}
+            <p>بیمه برای همه افراد آزاد در نظر گرفته میشود</p>
+            {% endfor %}
+    </div>
+  </div>    
+</div>
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+            <a href="{% url 'services:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+            <a href="{% url 'services:appointment_config' object.id%}" class="btn btn-success me-2">تنظیمات نوبت دهی</a>
+            <a href="{% url 'services:service_consumable_create' object.id%}" class="btn btn-success me-2">افزودن مواد مصرفی</a>
+            <a href="{% url 'services:queue' object.id%}" class="btn btn-success me-2">صف انتظار سرویس</a>
+
+            {% if object.is_active == True%}
+            <a href="#" data-toggle="modal" data-target="#suspendModal"  class="btn btn-success me-2" title="suspend" >تعلیق سرویس</a>
+            {%else%}
+            <a href="#" data-toggle="modal" data-target="#reactiveModal"  class="btn btn-success me-2" title="reactive" >فعال سازی مجدد</a>
+            {%endif%}
+            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+
+
+
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              از حذف این سروس مطمین هستید ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'services:delete' pk=object.pk %}" class="btn">حذف</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUSPEND MODALS -->
+      <div class="modal fade" id="suspendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید تعلیق سرورس</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              آیا از غیرفعال سازی سرورس مطمین هستید؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'services:suspend' pk=object.pk %}" class="btn">تایید</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- REACTIVE MODALS -->
+        <div class="modal fade" id="suspendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تایید تعلیق سرورس</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    آیا از فعال سازی مجدد سرورس مطمین هستید؟
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" href="{% url 'services:reactive' pk=object.pk %}" class="btn">تایید</a>
+                </div>
+                </div>
+            </div>
+            </div>
+</div>
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
