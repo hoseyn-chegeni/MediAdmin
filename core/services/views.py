@@ -105,7 +105,7 @@ class SuspendServiceView(View):
         if service:
             service.is_active = False
             messages.success(
-                self.request, f"Service Suspended '{service.name}' successfully!"
+                self.request, f"سرویس {service.name} غیرفعال شد!"
             )
             service.save()
         return HttpResponseRedirect(reverse_lazy("services:list"))
@@ -117,7 +117,7 @@ class ReactiveServiceView(View):
         if service:
             service.is_active = True
             messages.success(
-                self.request, f"Service Reactive '{service.name}' successfully!"
+                self.request, f"سرویس {service.name} مجددا فعال شد !"
             )
             service.save()
         return HttpResponseRedirect(reverse_lazy("services:suspend_list"))
