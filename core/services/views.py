@@ -7,14 +7,13 @@ from base.views import (
 )
 from .models import Service, ServiceConsumable
 from reception.models import Reception
-from .filters import ServicesFilter
+from .filters import ServicesFilter, QueueFilter
 from django.urls import reverse_lazy
 from insurance.models import InsuranceService
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import View
 from datetime import date
-from django.views.generic import ListView
 
 
 # Create your views here.
@@ -149,9 +148,11 @@ class ServiceConsumableDeleteView(BaseDeleteView):
     url_name = "list"
 
 
-class WaitingQueueView(ListView):
+class WaitingQueueView(BaseListView):
     template_name = "services/queue.html"
     context_object_name = "receptions"
+    filterset_class = QueueFilter
+
 
     def get_queryset(self):
         # Retrieve the service object based on the provided service_id in the URL

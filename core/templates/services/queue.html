@@ -16,6 +16,12 @@
                   <form class="table text-white mb-0" method="get">
                     {%csrf_token%}
                     <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="id" class="form-label">شماره  پذیرش</label>
+                            <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+                          </div>
+
+
                       <div class="col-sm-6">
                         <label for="case_id" class="form-label">شماره پرونده بیمار</label>
                         <input  class="form-control" type="text" name="case_id" step="any" id="case_id"value="{{ request.GET.case_id }}" >
