@@ -7,7 +7,7 @@ from base.views import (
 )
 from .models import Service, ServiceConsumable, ServiceCategory
 from reception.models import Reception
-from .filters import ServicesFilter, QueueFilter
+from .filters import ServicesFilter, QueueFilter, ServiceCategoryFilter
 from django.urls import reverse_lazy
 from insurance.models import InsuranceService
 from django.http import HttpResponseRedirect
@@ -49,6 +49,7 @@ class ServiceCreateView(BaseCreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+
 
 class ServiceDetailView(BaseDetailView):
     model = Service
@@ -109,7 +110,9 @@ class SuspendServiceView(View):
             service.is_active = False
             messages.success(self.request, f"سرویس {service.name} غیرفعال شد!")
             service.save()
-        return HttpResponseRedirect(reverse_lazy("services:detail",  kwargs={"pk": service.pk}))
+        return HttpResponseRedirect(
+            reverse_lazy("services:detail", kwargs={"pk": service.pk})
+        )
 
 
 class ReactiveServiceView(View):
@@ -119,7 +122,9 @@ class ReactiveServiceView(View):
             service.is_active = True
             messages.success(self.request, f"سرویس {service.name} مجددا فعال شد !")
             service.save()
-        return HttpResponseRedirect(reverse_lazy("services:detail",  kwargs={"pk": service.pk}))
+        return HttpResponseRedirect(
+            reverse_lazy("services:detail", kwargs={"pk": service.pk})
+        )
 
 
 # ServiceConsumable Views here.
@@ -169,4 +174,58 @@ class WaitingQueueView(BaseListView):
         return context
 
 
+# SERVICE CATEGORY VIEWS.
+class ServiceCategoryListView(BaseListView):
+    model = ServiceCategory
+    template_name = "services/category/list.html"
+    context_object_name = "category"
+    filterset_class = ServiceCategoryFilter
 
+
+class ServiceCategoryCreateView(BaseCreateView):
+    model = ServiceCategory
+    fields = [
+        'name',
+        'description',
+        'is_active',
+    ]
+    template_name = "services/category/create.html"
+    app_name = "services"
+    url_name = "category_detail"
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class ServiceCategoryDetailView(BaseDetailView):
+    model = ServiceCategory
+    template_name = "services/category/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        service_category = self.get_object()
+        services = service_category.service_set.all()
+        context['services'] = services
+        
+        doctors = set([service.doctor for service in services if service.doctor])
+        context['doctors'] = doctors
+
+        return context
+
+class ServiceCategoryUpdateView(BaseUpdateView):
+    model = ServiceCategory
+    fields = [
+        'name',
+        'description',
+        'is_active',
+    ]
+    template_name = "services/category/update.html"
+    app_name = "services"
+    url_name = "category_detail"
+
+
+class ServiceCategoryDeleteView(BaseDeleteView):
+    model = ServiceCategory
+    app_name = "services"
+    url_name = "category_list"

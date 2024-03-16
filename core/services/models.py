@@ -31,7 +31,9 @@ class Service(models.Model):
     documentation_requirements = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
     is_active = models.BooleanField(default=True)
     therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
     recommendations = models.TextField(blank=True)  # توصیه ها
@@ -91,12 +93,41 @@ class ServiceConsumable(models.Model):
 class ServiceCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    is_active = models.BooleanField(default = True)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
 
+    @property
+    def number_of_services(self):
+        return self.service_set.count()  
+    
+    @property
+    def total_receptions(self):
+        total = 0
+        for service in self.service_set.all():
+            total += service.total_reception_count
+        return total
+    
+    @property
+    def receptions_today(self):
+        today = date.today()
+        total = 0
+        for service in self.service_set.all():
+            total += service.reception_set.filter(date=today).count()
+        return total
+
+    @property
+    def number_of_appointments(self):
+        today = date.today()
+        # Get all services related to this category
+        services = self.service_set.all()
+        # Count appointments for all related services
+        appointments_count = Appointment.objects.filter(service__in=services, date = today).count()
+        return appointments_count
+    
+
     def __str__(self):
-        return self.name
+        return f'{self.name}'

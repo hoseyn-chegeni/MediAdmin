@@ -12,6 +12,11 @@ from .views import (
     ReactiveServiceView,
     ServiceAppointmentConfigView,
     WaitingQueueView,
+    ServiceCategoryCreateView,
+    ServiceCategoryDeleteView,
+    ServiceCategoryDetailView,
+    ServiceCategoryListView,
+    ServiceCategoryUpdateView,
 )
 
 app_name = "services"
@@ -44,5 +49,25 @@ urlpatterns = [
         "services/<int:service_id>/receptions/",
         WaitingQueueView.as_view(),
         name="queue",
+    ),
+    # SERVICE CATEGORY URLS.
+    path("category_list/", ServiceCategoryListView.as_view(), name="category_list"),
+    path(
+        "category_detail/<int:pk>/",
+        ServiceCategoryDetailView.as_view(),
+        name="category_detail",
+    ),
+    path(
+        "category_create/", ServiceCategoryCreateView.as_view(), name="category_create"
+    ),
+    path(
+        "category_update/<int:pk>/",
+        ServiceCategoryUpdateView.as_view(),
+        name="category_update",
+    ),
+    path(
+        "category_delete/<int:pk>/",
+        ServiceCategoryDeleteView.as_view(),
+        name="category_delete",
     ),
 ]
