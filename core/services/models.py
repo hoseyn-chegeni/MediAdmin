@@ -102,15 +102,15 @@ class ServiceCategory(models.Model):
 
     @property
     def number_of_services(self):
-        return self.service_set.count()  
-    
+        return self.service_set.count()
+
     @property
     def total_receptions(self):
         total = 0
         for service in self.service_set.all():
             total += service.total_reception_count
         return total
-    
+
     @property
     def receptions_today(self):
         today = date.today()
@@ -125,9 +125,10 @@ class ServiceCategory(models.Model):
         # Get all services related to this category
         services = self.service_set.all()
         # Count appointments for all related services
-        appointments_count = Appointment.objects.filter(service__in=services, date = today).count()
+        appointments_count = Appointment.objects.filter(
+            service__in=services, date=today
+        ).count()
         return appointments_count
-    
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"

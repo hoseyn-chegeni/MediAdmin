@@ -185,9 +185,9 @@ class ServiceCategoryListView(BaseListView):
 class ServiceCategoryCreateView(BaseCreateView):
     model = ServiceCategory
     fields = [
-        'name',
-        'description',
-        'is_active',
+        "name",
+        "description",
+        "is_active",
     ]
     template_name = "services/category/create.html"
     app_name = "services"
@@ -206,19 +206,20 @@ class ServiceCategoryDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
         service_category = self.get_object()
         services = service_category.service_set.all()
-        context['services'] = services
-        
+        context["services"] = services
+
         doctors = set([service.doctor for service in services if service.doctor])
-        context['doctors'] = doctors
+        context["doctors"] = doctors
 
         return context
+
 
 class ServiceCategoryUpdateView(BaseUpdateView):
     model = ServiceCategory
     fields = [
-        'name',
-        'description',
-        'is_active',
+        "name",
+        "description",
+        "is_active",
     ]
     template_name = "services/category/update.html"
     app_name = "services"
@@ -229,3 +230,31 @@ class ServiceCategoryDeleteView(BaseDeleteView):
     model = ServiceCategory
     app_name = "services"
     url_name = "category_list"
+
+
+class SuspendServiceCategoryView(View):
+    def get(self, request, pk):
+        category = ServiceCategory.objects.get(pk=pk)
+        if category:
+            category.is_active = False
+            messages.success(
+                self.request, f"دسته بندی سرویس {category.name} غیرفعال شد!"
+            )
+            category.save()
+        return HttpResponseRedirect(
+            reverse_lazy("services:category_detail", kwargs={"pk": category.pk})
+        )
+
+
+class ReactiveServiceCategoryView(View):
+    def get(self, request, pk):
+        category = ServiceCategory.objects.filter(pk=pk).first()
+        if category:
+            category.is_active = True
+            messages.success(
+                self.request, f"دسته بندی سرویس {category.name} مجددا فعال شد !"
+            )
+            category.save()
+        return HttpResponseRedirect(
+            reverse_lazy("services:category_detail", kwargs={"pk": category.pk})
+        )

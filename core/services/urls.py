@@ -17,6 +17,8 @@ from .views import (
     ServiceCategoryDetailView,
     ServiceCategoryListView,
     ServiceCategoryUpdateView,
+    SuspendServiceCategoryView,
+    ReactiveServiceCategoryView,
 )
 
 app_name = "services"
@@ -69,5 +71,15 @@ urlpatterns = [
         "category_delete/<int:pk>/",
         ServiceCategoryDeleteView.as_view(),
         name="category_delete",
+    ),
+    path(
+        "category_suspend/<int:pk>/",
+        SuspendServiceCategoryView.as_view(),
+        name="category_suspend",
+    ),
+    path(
+        "category_reactive/<int:pk>/",
+        ReactiveServiceCategoryView.as_view(),
+        name="category_reactive",
     ),
 ]
