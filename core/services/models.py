@@ -31,6 +31,7 @@ class Service(models.Model):
     documentation_requirements = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
     recommendations = models.TextField(blank=True)  # توصیه ها
@@ -90,6 +91,7 @@ class ServiceConsumable(models.Model):
 class ServiceCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default = True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
