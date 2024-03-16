@@ -84,6 +84,7 @@ class OfficeExpenses(models.Model):
     description = models.TextField(blank=True, null=True)
     is_approved = models.BooleanField(default=False)
     approved_by = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, blank=True, null=True, related_name='approved_expenses')
+    attachment = models.FileField(upload_to='attachments/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.date} - {self.subject}"
