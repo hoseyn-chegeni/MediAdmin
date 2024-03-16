@@ -1,10 +1,155 @@
-<form action="" method="get">
-    {%csrf_token%}
-    {{filter.form.as_p}}
-    <input type="submit">
-</form>
-{%for i in office_expenses%}
-  <p>  {{i.id}}.{{i}},
+{% extends 'base.html'%}
+{% block title %}لیست هزینه های مطب{% endblock %}
 
-    </p>
-{% endfor %}
+{%block content%}
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">لیست هزینه های مطب</h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="id" class="form-label">ID</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label  for="user">کاربر</label>
+                        <select  class="form-select" name="user"  id="user">
+                          <option value="" selected="">---------</option>
+                          {% for i in filter.form.user.field.queryset %}
+                          <option value="{{ i.id }}">{{ i.email }}</option>
+                        {%endfor%}
+                        </select>
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <label for="date" class="form-label">تاریخ</label>
+                            <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                          </div>
+
+                      <div class="col-sm-6">
+                        <label for="date_range">محدوده زمانی</label>
+                        <select class="form-select" name="date_range" id="date_range">
+                          <option value="" selected>---------</option>
+                          <option value="today">امروز</option>
+                          <option value="this_week">هفته گذشته</option>
+                          <option value="this_month">ماه گذشته</option>
+                        </select>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="subject" class="form-label">موضوع</label>
+                        <input  class="form-control" type="text" name="subject" step="any" id="subject" value="{{ request.GET.subject }}" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="recipient_name" class="form-label">نام دریافت کننده</label>
+                        <input  class="form-control" type="text" name="recipient_name" step="any" id="recipient_name" value="{{ request.GET.recipient_name }}" >
+                      </div>
+
+
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+                    </form>
+
+                    <div class="mb-4">
+                    <a href="{% url 'financial:office_expenses_create' %}" class="btn btn-success me-2">ایجاد رسید جدید </a>
+                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    </div>
+
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col">شماره رسید</th>
+                        <th scope="col">موضوع</th>
+                        <th scope="col">کاربر</th>
+                        <th scope="col">تاریخ</th>
+                        <th scope="col">نام دریافت کننده</th>
+                        <th scope="col">اکشن ها</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in office_expenses%}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{i.id}}</span>
+                        </th>
+                        <td class="align-middle">
+                          <span>{{i.subject}}</span>
+                        </td>
+                        <td class="align-middle">
+                            <span>{{i.user}}</span>
+                          </td>
+
+                          <td class="align-middle">
+                            <span>{{i.date}}</span>
+                          </td>
+
+
+                          <td class="align-middle">
+                            <span>{{i.recipient_name}}</span>
+                          </td>
+
+
+                        <td class="align-middle">
+                            <a href="{%url 'financial:office_expenses_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                            <a href="{%url 'financial:office_expenses_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      </tbody>
+                  </table>
+
+            
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">Previous</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+                        </li>
+                
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">Next</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+{%endblock%}
