@@ -6,8 +6,8 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Financial
-from .filters import FinancialFilter
+from .models import Financial, OfficeExpenses
+from .filters import FinancialFilter, OfficeExpensesFilter
 
 
 # Create your views here.
@@ -53,3 +53,61 @@ class FinancialDeleteView(BaseDeleteView):
     model = Financial
     app_name = "financial"
     url_name = "list"
+
+
+# OFFICE EXPENSES VIEWS HERE.
+class OfficeExpensesListView(BaseListView):
+    model = OfficeExpenses
+    template_name = "financial/office_expenses/list.html"
+    filterset_class = OfficeExpensesFilter
+    context_object_name = 'office_expenses'
+
+
+class OfficeExpensesCreateView(BaseCreateView):
+    model = OfficeExpenses
+    fields = [
+        "user",
+        "date",
+        "subject",
+        "amount",
+        "recipient_name",
+        "payment_method",
+        "description",
+        "attachment",
+    ]
+    template_name = "financial/office_expenses/create.html"
+    app_name = "financial"
+    url_name = "office_expenses_detail"
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class OfficeExpensesDetailView(BaseDetailView):
+    model = OfficeExpenses
+    template_name = "financial/office_expenses/detail.html"
+
+
+class OfficeExpensesUpdateView(BaseUpdateView):
+    model = OfficeExpenses
+    template_name = "financial/office_expenses/update.html"
+    fields = [
+        "user",
+        "date",
+        "subject",
+        "amount",
+        "recipient_name",
+        "payment_method",
+        "description",
+        "attachment",
+    ]
+
+    app_name = "financial"
+    url_name = "office_expenses_detail"
+
+
+class OfficeExpensesDeleteView(BaseDeleteView):
+    model = OfficeExpenses
+    app_name = "financial"
+    url_name = "office_expenses_list"
