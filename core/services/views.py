@@ -5,7 +5,7 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Service, ServiceConsumable
+from .models import Service, ServiceConsumable, ServiceCategory
 from reception.models import Reception
 from .filters import ServicesFilter, QueueFilter
 from django.urls import reverse_lazy
@@ -46,6 +46,9 @@ class ServiceCreateView(BaseCreateView):
     app_name = "services"
     url_name = "detail"
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 class ServiceDetailView(BaseDetailView):
     model = Service
@@ -164,3 +167,6 @@ class WaitingQueueView(BaseListView):
         context = super().get_context_data(**kwargs)
         context["service"] = Service.objects.get(id=self.kwargs["service_id"])
         return context
+
+
+
