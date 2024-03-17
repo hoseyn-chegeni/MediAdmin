@@ -3,7 +3,8 @@ from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
 from django.urls import reverse_lazy
-
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 class BaseListView(LoginRequiredMixin, FilterView):
@@ -16,7 +17,8 @@ class BaseListView(LoginRequiredMixin, FilterView):
         return user_selected_value
 
 
-class BaseCreateView(LoginRequiredMixin, CreateView):
+class BaseCreateView(LoginRequiredMixin,SuccessMessageMixin, CreateView):
+    success_message = ''
     app_name = ""
     url_name = ""
 
@@ -24,21 +26,23 @@ class BaseCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy(
             f"{self.app_name}:{self.url_name}", kwargs={"pk": self.object.pk}
         )
-
+    
+    def get_success_message(self, cleaned_data):
+        return "با موفقیت افزوده شد"
 
 class BaseDetailView(LoginRequiredMixin, DetailView):
     pass
 
 
-class BaseUpdateView(LoginRequiredMixin, UpdateView):
+class BaseUpdateView(LoginRequiredMixin,SuccessMessageMixin, UpdateView):
     app_name = ""
     url_name = ""
-
     def get_success_url(self):
         return reverse_lazy(
             f"{self.app_name}:{self.url_name}", kwargs={"pk": self.object.pk}
         )
-
+    def get_success_message(self, cleaned_data):
+        return "با موفقیت ویرایش شد"
 
 class BaseDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "delete.html"
