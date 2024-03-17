@@ -141,3 +141,24 @@ class ServiceCategory(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+
+class Package(models.Model):
+    name = models.CharField(max_length=255)
+    services = models.ManyToManyField(Service)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    preparation_instructions = models.TextField(blank=True, null=True)
+    duration = models.PositiveIntegerField()  # Duration in minutes
+    therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
+    recommendations = models.TextField(blank=True)  # توصیه ها
+    description = models.TextField(blank=True, null=True)
+
+
+    def __str__(self):
+        return self.name
