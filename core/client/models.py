@@ -4,7 +4,7 @@ from datetime import date
 
 # Create your models here.
 class Client(models.Model):
-    case_id = models.CharField(max_length=100)
+    case_id = models.CharField(max_length=100, blank = True, null = True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     fathers_name = models.CharField(max_length=100)

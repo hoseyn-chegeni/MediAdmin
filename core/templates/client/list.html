@@ -17,12 +17,12 @@
                     {%csrf_token%}
                     <div class="row g-3">
                       <div class="col-sm-6">
-                        <label for="id_id" class="form-label">Id</label>
+                        <label for="id_id" class="form-label">شماره پرونده</label>
                         <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
                       </div>
           
                       <div class="col-sm-6">
-                        <label for="case_id" class="form-label">شماره پرونده</label>
+                        <label for="case_id" class="form-label">شماره پرونده دستی</label>
                         <input  class="form-control" type="text" name="case_id" step="any" id="case_id" value="{{ request.GET.case_id }}" >
                       </div>
 
@@ -56,8 +56,9 @@
 
                   <table class="table text-white mb-0">
                     <thead>
-                      <tr>
-                        <th scope="col">شماره پرونده</th>
+                      <tr>                        
+                        <th scope="col">شماره پرونده </th>
+                        <th scope="col">شماره پرونده دستی</th>
                         <th scope="col">نام</th>
                         <th scope="col">کدملی</th>
                         <th scope="col">تعداد دفعات مراجعه</th>
@@ -70,6 +71,9 @@
                     <tbody>
                         {%for i in clients%}
                       <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{i.id}}</span>
+                        </th>
                         <th>
                           <span class="ms-2">{{i.case_id}}</span>
                         </th>
