@@ -14,7 +14,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views import View
 from datetime import date
-
+from client.models import Client
 
 # Create your views here.
 class ServiceListView(BaseListView):
@@ -65,8 +65,13 @@ class ServiceDetailView(BaseDetailView):
         context["num_reception"] = reception.count()
 
         context["insurance"] = InsuranceService.objects.filter(service_id=service.id)
+        
+        client_ids = service.reception_set.all().values_list('client', flat=True).distinct()
+        clients = Client.objects.filter(id__in=client_ids)  # Get Client objects using the IDs
+        context['clients'] = clients
 
         return context
+
 
 
 class ServiceUpdateView(BaseUpdateView):

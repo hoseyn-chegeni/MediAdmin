@@ -63,6 +63,15 @@ class Service(models.Model):
     def waiting_receptions_today(self):
         today = date.today()
         return self.reception_set.filter(date=today, status="WAITE").count()
+    
+    @property
+    def client_count(self):
+        # Retrieve the IDs of clients who have used this service
+        client_ids = self.reception_set.all().values_list('client', flat=True).distinct()
+        # Count the number of unique client IDs
+        return len(client_ids)
+
+
 
     def __str__(self):
         return self.name
