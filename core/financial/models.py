@@ -85,14 +85,6 @@ class OfficeExpenses(models.Model):
     recipient_name = models.CharField(max_length=255)
     payment_method = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    is_approved = models.BooleanField(default=False)
-    approved_by = models.ForeignKey(
-        "accounts.User",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="approved_expenses",
-    )
     attachment = models.FileField(upload_to="attachments/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
