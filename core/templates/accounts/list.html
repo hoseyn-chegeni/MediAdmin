@@ -20,7 +20,12 @@
                         <label for="id_id" class="form-label">Id</label>
                         <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
                       </div>
-          
+
+                      <div class="col-sm-6">
+                        <label for="national_id" class="form-label">کدملی</label>
+                        <input  class="form-control" type="number" name="national_id" step="any" id="national_id"value="{{ request.GET.national_id }}" >
+                      </div>
+
                       <div class="col-sm-6">
                         <label for="email" class="form-label">ایمیل</label>
                         <input  class="form-control" type="text" name="email" step="any" id="email" value="{{ request.GET.email }}" >
@@ -43,6 +48,7 @@
                       <tr>
                         <th scope="col">نام</th>
                         <th scope="col">ایمیل</th>
+                        <th scope="col">کدملی</th>
                         <th scope="col">آخرین ورود</th>
                         <th scope="col">اکشن ها</th>
                       </tr>
@@ -57,6 +63,9 @@
                         </th>
                         <td class="align-middle">
                           <span>{{i.email}}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{i.national_id}}</span>
                         </td>
                         <td class="align-middle">
                             <span>{{i.last_login}}</span>

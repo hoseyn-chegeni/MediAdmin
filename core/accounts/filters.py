@@ -11,8 +11,8 @@ class UserFilter(FilterSet):
         model = User
         fields = {
             "id": ["exact"],
-            "email": ["exact", "icontains"],  # You can add multiple lookup types here
-            # Add other fields if needed
+            "email": ["exact", "icontains"],
+            "national_id":['exact'],
         }
 
     def filter_by_name(self, queryset, name, value):
