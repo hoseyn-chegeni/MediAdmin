@@ -19,6 +19,11 @@ from .views import (
     ServiceCategoryUpdateView,
     SuspendServiceCategoryView,
     ReactiveServiceCategoryView,
+    PackageCreateView,
+    PackageDeleteView,
+    PackageDetailView,
+    PackageListView,
+    PackageUpdateView,
 )
 
 app_name = "services"
@@ -81,5 +86,17 @@ urlpatterns = [
         "category_reactive/<int:pk>/",
         ReactiveServiceCategoryView.as_view(),
         name="category_reactive",
+    ),
+    # PACKAGE URLS.
+    path("package_list/", PackageListView.as_view(), name="package_list"),
+    path(
+        "package_detail/<int:pk>/", PackageDetailView.as_view(), name="package_detail"
+    ),
+    path("package_create/", PackageCreateView.as_view(), name="package_create"),
+    path(
+        "package_update/<int:pk>/", PackageUpdateView.as_view(), name="package_update"
+    ),
+    path(
+        "package_delete/<int:pk>/", PackageDeleteView.as_view(), name="package_delete"
     ),
 ]

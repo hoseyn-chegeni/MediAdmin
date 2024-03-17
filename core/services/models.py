@@ -143,7 +143,6 @@ class ServiceCategory(models.Model):
         return f"{self.name}"
 
 
-
 class Package(models.Model):
     name = models.CharField(max_length=255)
     services = models.ManyToManyField(Service)
@@ -158,7 +157,6 @@ class Package(models.Model):
     therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
     recommendations = models.TextField(blank=True)  # توصیه ها
     description = models.TextField(blank=True, null=True)
-
 
     def __str__(self):
         return self.name

@@ -5,9 +5,9 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Service, ServiceConsumable, ServiceCategory
+from .models import Service, ServiceConsumable, ServiceCategory, Package
 from reception.models import Reception
-from .filters import ServicesFilter, QueueFilter, ServiceCategoryFilter
+from .filters import ServicesFilter, QueueFilter, ServiceCategoryFilter, PackageFilter
 from django.urls import reverse_lazy
 from insurance.models import InsuranceService
 from django.http import HttpResponseRedirect
@@ -267,3 +267,38 @@ class ReactiveServiceCategoryView(View):
         return HttpResponseRedirect(
             reverse_lazy("services:category_detail", kwargs={"pk": category.pk})
         )
+
+
+# PACKAGE VIEWS HERE.
+class PackageListView(BaseListView):
+    model = Package
+    template_name = "package/list.html"
+    context_object_name = "package"
+    filterset_class = PackageFilter
+
+
+class PackageCreateView(BaseCreateView):
+    model = Package
+    fields = "__all__"
+    template_name = "package/create.html"
+    app_name = "services"
+    url_name = "package_detail"
+
+
+class PackageDetailView(BaseDetailView):
+    model = Package
+    template_name = "package/detail.html"
+
+
+class PackageUpdateView(BaseUpdateView):
+    model = Package
+    template_name = "package/update.html"
+    fields = "__all__"
+    app_name = "services"
+    url_name = "package_detail"
+
+
+class PackageDeleteView(BaseDeleteView):
+    model = Package
+    app_name = "services"
+    url_name = "package_list"

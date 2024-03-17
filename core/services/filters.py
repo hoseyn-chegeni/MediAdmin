@@ -1,5 +1,5 @@
 from django_filters import FilterSet
-from .models import Service, ServiceCategory
+from .models import Service, ServiceCategory, Package
 from django_filters import FilterSet, CharFilter
 from reception.models import Reception
 
@@ -45,6 +45,17 @@ class ServiceCategoryFilter(FilterSet):
 
     class Meta:
         model = ServiceCategory
+        fields = {
+            "id": ["exact"],
+            "name": ["exact"],
+        }
+
+
+
+class PackageFilter(FilterSet):
+
+    class Meta:
+        model = Package
         fields = {
             "id": ["exact"],
             "name": ["exact"],
