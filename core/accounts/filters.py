@@ -12,7 +12,7 @@ class UserFilter(FilterSet):
         fields = {
             "id": ["exact"],
             "email": ["exact", "icontains"],
-            "national_id":['exact'],
+            "national_id": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):

@@ -1,5 +1,5 @@
 import django_filters
-from django_filters import FilterSet ,DateFilter, ChoiceFilter
+from django_filters import FilterSet, DateFilter, ChoiceFilter
 from .models import Financial
 from .models import OfficeExpenses
 from django import forms
@@ -15,8 +15,6 @@ class FinancialFilter(FilterSet):
         }
 
 
-
-
 class OfficeExpensesFilter(django_filters.FilterSet):
     date = DateFilter(
         field_name="date",
@@ -24,20 +22,19 @@ class OfficeExpensesFilter(django_filters.FilterSet):
         method="filter_by_date",
         widget=forms.DateInput(attrs={"type": "date"}),
     )
-    subject = django_filters.CharFilter(lookup_expr='icontains')
-    recipient_name = django_filters.CharFilter(lookup_expr='icontains')
-    id = django_filters.NumberFilter(field_name='id')
+    subject = django_filters.CharFilter(lookup_expr="icontains")
+    recipient_name = django_filters.CharFilter(lookup_expr="icontains")
+    id = django_filters.NumberFilter(field_name="id")
 
     date_range = ChoiceFilter(
-            label="Date Range",
-            method="filter_by_date_range",
-            choices=(
-                ("today", "Today"),
-                ("this_week", "This Week"),
-                ("this_month", "This Month"),
-            ),
-        )
-    
+        label="Date Range",
+        method="filter_by_date_range",
+        choices=(
+            ("today", "Today"),
+            ("this_week", "This Week"),
+            ("this_month", "This Month"),
+        ),
+    )
 
     def filter_by_date_range(self, queryset, name, value):
         today = datetime.now().date()
@@ -56,9 +53,9 @@ class OfficeExpensesFilter(django_filters.FilterSet):
                 created_at__date__range=[start_of_month, end_of_month]
             )
 
-
     def filter_by_date(self, queryset, name, value):
         return queryset.filter(date=value)
+
     class Meta:
         model = OfficeExpenses
-        fields = ['user', 'date', 'subject', 'recipient_name', 'id','date_range']
+        fields = ["user", "date", "subject", "recipient_name", "id", "date_range"]

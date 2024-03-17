@@ -60,7 +60,7 @@ class OfficeExpensesListView(BaseListView):
     model = OfficeExpenses
     template_name = "financial/office_expenses/list.html"
     filterset_class = OfficeExpensesFilter
-    context_object_name = 'office_expenses'
+    context_object_name = "office_expenses"
 
 
 class OfficeExpensesCreateView(BaseCreateView):

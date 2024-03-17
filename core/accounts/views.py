@@ -58,7 +58,7 @@ class UserCreateView(BaseCreateView):
 
 class UserUpdateView(BaseUpdateView):
     model = User
-    fields = '__all__'
+    fields = "__all__"
     template_name = "accounts/update.html"
     app_name = "accounts"
     url_name = "user_detail"

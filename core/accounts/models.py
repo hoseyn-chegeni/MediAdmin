@@ -13,7 +13,7 @@ class User(AbstractUser):
     date_of_birth = models.DateField(
         verbose_name="Date of Birth", blank=True, null=True
     )
-    national_id = models.CharField(max_length=100, blank = True, null = True)
+    national_id = models.CharField(max_length=100, blank=True, null=True)
     phone_number = models.CharField(
         max_length=15, verbose_name="Phone Number", blank=True, null=True
     )
