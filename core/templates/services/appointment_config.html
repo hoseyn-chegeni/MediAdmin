@@ -24,21 +24,18 @@
 
 
                               <div class="col-sm-6">
-                                <label  for="off_days">روزهای تعطیل:</label>
-                                <select  class="form-select" name="off_days" required="" id="off_days" multiple>
-                                  <option value="" >---------</option>
-                                  {% for i in form.off_days.field.queryset%}
-                                  {% for j in object.off_days.all%}
-                                  {%if i == j %}
-                                  <option value="{{i.id}}" selected>{{i}}</option>
-                                  {%else%}
-                                  <option value="{{i.id}}">{{i}}</option>
-                                  {%endif%}
-                                  {%endfor%}
-                                  {%endfor%}
+                                <label for="off_days">روزهای تعطیل:</label>
+                                <select class="form-select" name="off_days" required="" id="off_days" multiple>
+                                    <option value="">---------</option>
+                                    {% for off_day in form.off_days.field.queryset %}
+                                        {% if off_day in object.off_days.all %}
+                                            <option value="{{ off_day.id }}" selected>{{ off_day }}</option>
+                                        {% else %}
+                                            <option value="{{ off_day.id }}">{{ off_day }}</option>
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
-                                </div>
-
+                            </div>
 
 
 
