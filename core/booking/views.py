@@ -105,7 +105,6 @@ class PackageAppointmentListView(BaseListView):
     context_object_name = "appointments"
     filterset_class = 0
 
-
 class PackageAppointmentCreateView(BaseCreateView):
     model = PackageAppointment
     fields = "__all__"
