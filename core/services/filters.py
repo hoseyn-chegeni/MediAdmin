@@ -52,11 +52,14 @@ class ServiceCategoryFilter(FilterSet):
 
 
 
+
 class PackageFilter(FilterSet):
+    name = CharFilter(field_name='name', lookup_expr='exact')
 
     class Meta:
         model = Package
         fields = {
             "id": ["exact"],
-            "name": ["exact"],
+            "created_by": ["exact"],
+
         }
