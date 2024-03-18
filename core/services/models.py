@@ -160,7 +160,9 @@ class Package(models.Model):
 class ServicePackage(models.Model):
     package= models.ForeignKey('Package',on_delete = models.CASCADE)
     service = models.ForeignKey('Service',on_delete = models.CASCADE)
-    gap_with_next_service = models.PositiveIntegerField(default = 0)
+    gap_with_next_service = models.PositiveIntegerField(default = 1)
+
+
 
     def __str__(self):
         return f'{self.package} / {self.service}'
