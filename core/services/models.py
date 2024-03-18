@@ -172,3 +172,7 @@ class Package(models.Model):
                 # Add the price of the consumable to the total price
                 total_price += service_consumable.consumable.price
         return total_price
+    
+    def services_count(self):
+        services = self.services.all().count()
+        return services
