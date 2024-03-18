@@ -153,6 +153,25 @@ class Package(models.Model):
     )
     description = models.TextField(blank=True, null=True)
 
+
+    @property
+    def total_price(self):
+        # Initialize total price
+        total_price = 0
+
+        # Iterate through all services in the package
+        for service_package in self.servicepackage_set.all():
+            service = service_package.service
+
+            # Add price of the service
+            total_price += service.price
+
+            # Add price of consumables associated with the service
+            for service_consumable in service.serviceconsumable_set.all():
+                total_price += service_consumable.consumable.price
+
+        return total_price
+    
     def __str__(self):
         return self.name
 

@@ -21,7 +21,8 @@
               <hr>
               <p class="card-text"><strong>توضیحات:</strong>{{object.description}}</p>
               <hr>
-
+              <p class="card-text"><strong>هزینه:</strong>{{object.total_price}}</p>
+              <hr>
               <p class="card-text"><strong>تاریخ ایجاد: </strong>{{object.created_at}}</p>
               <hr>
               <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>%{{object.updated_at}}</p>
@@ -32,14 +33,6 @@
           </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
         <!-- Buttons to change status, priority, add comment, etc. -->
         <div class="card mb-4">
             <div class="card-body">
@@ -53,9 +46,6 @@
             {%endif%}
             <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
         </div>
-
-
-
       <!-- DELETE MODALS -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -95,7 +85,6 @@
           </div>
         </div>
       </div>
-
         <!-- REACTIVE MODALS -->
         <div class="modal fade" id="reactiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
