@@ -160,3 +160,15 @@ class Package(models.Model):
 
     def __str__(self):
         return self.name
+
+    def calculate_price(self):
+        total_price = 0
+        # Iterate over services in the package
+        for service in self.services.all():
+            # Add the price of the service to the total price
+            total_price += service.price
+            # Iterate over related consumables for the service
+            for service_consumable in service.serviceconsumable_set.all():
+                # Add the price of the consumable to the total price
+                total_price += service_consumable.consumable.price
+        return total_price
