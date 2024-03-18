@@ -172,6 +172,10 @@ class Package(models.Model):
 
         return total_price
     
+    @property
+    def service_count(self):
+        return self.servicepackage_set.count()
+
     def __str__(self):
         return self.name
 
