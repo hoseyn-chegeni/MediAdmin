@@ -61,5 +61,5 @@ class PackageFilter(FilterSet):
         fields = {
             "id": ["exact"],
             "created_by": ["exact"],
-
+            'is_active': ['exact'],
         }
