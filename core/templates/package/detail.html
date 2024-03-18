@@ -33,6 +33,26 @@
           </div>
           </div>
         </div>
+
+
+        <div class="card mb-4">
+          <div class="card-body">
+              <div class="card-text">
+              <div class="card-header"><strong>
+                  سرویس های ارایه شده پکیج
+              </strong>  </div>
+
+              {%for i in services %}
+                  <p>{{i.service.name}}, <a href="{% url 'services:detail' i.id %}">جزییات سرویس</a></p>
+                  <hr>
+              {% empty %}
+              <p>یافت نشد</p>
+              {% endfor %}
+      </div>
+    </div>  
+  </div>
+
+
         <!-- Buttons to change status, priority, add comment, etc. -->
         <div class="card mb-4">
             <div class="card-body">
