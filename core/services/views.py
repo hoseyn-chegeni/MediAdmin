@@ -289,12 +289,17 @@ class PackageCreateView(BaseCreateView):
 class PackageDetailView(BaseDetailView):
     model = Package
     template_name = "package/detail.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         package = self.get_object()
         services = package.servicepackage_set.all().select_related('service')  # Retrieve associated services
         context['services'] = services
+        doctors = set()
+        for service_package in package.servicepackage_set.all():
+            doctors.add(service_package.service.doctor)
+        context['doctors'] = doctors
+
         return context
 
 class PackageUpdateView(BaseUpdateView):
