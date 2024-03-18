@@ -25,7 +25,7 @@ from .views import (
     PackageListView,
     PackageUpdateView,
     SuspendPackageView,
-    ReactivePackageView
+    ReactivePackageView,
 )
 
 app_name = "services"
@@ -101,6 +101,14 @@ urlpatterns = [
     path(
         "package_delete/<int:pk>/", PackageDeleteView.as_view(), name="package_delete"
     ),
-    path("package_suspend/<int:pk>/", SuspendPackageView.as_view(), name="package_suspend"),
-    path("package_reactive/<int:pk>/", ReactivePackageView.as_view(), name="package_reactive"),
+    path(
+        "package_suspend/<int:pk>/",
+        SuspendPackageView.as_view(),
+        name="package_suspend",
+    ),
+    path(
+        "package_reactive/<int:pk>/",
+        ReactivePackageView.as_view(),
+        name="package_reactive",
+    ),
 ]

@@ -17,6 +17,7 @@ from datetime import date
 from client.models import Client
 from doctor.models import Doctor
 
+
 # Create your views here.
 class ServiceListView(BaseListView):
     model = Service
@@ -294,13 +295,11 @@ class PackageDetailView(BaseDetailView):
         # Access the package object
         package = self.object
         # Get all the doctors associated with the services in this package
-        doctor_ids = package.services.values_list('doctor', flat=True).distinct()
+        doctor_ids = package.services.values_list("doctor", flat=True).distinct()
         # Fetch the Doctor instances
         doctors = Doctor.objects.filter(id__in=doctor_ids)
-        context['doctors'] = doctors
+        context["doctors"] = doctors
         return context
-
-
 
 
 class PackageUpdateView(BaseUpdateView):
@@ -316,14 +315,13 @@ class PackageDeleteView(BaseDeleteView):
     app_name = "services"
     url_name = "package_list"
 
+
 class SuspendPackageView(View):
     def get(self, request, pk):
         package = Package.objects.get(pk=pk)
         if package:
             package.is_active = False
-            messages.success(
-                self.request, f" پکیج {package.name} غیرفعال شد!"
-            )
+            messages.success(self.request, f" پکیج {package.name} غیرفعال شد!")
             package.save()
         return HttpResponseRedirect(
             reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
@@ -335,9 +333,7 @@ class ReactivePackageView(View):
         package = Package.objects.filter(pk=pk).first()
         if package:
             package.is_active = True
-            messages.success(
-                self.request, f"پکیج {package.name} مجددا فعال شد !"
-            )
+            messages.success(self.request, f"پکیج {package.name} مجددا فعال شد !")
             package.save()
         return HttpResponseRedirect(
             reverse_lazy("services:package_detail", kwargs={"pk": package.pk})

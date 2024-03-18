@@ -98,7 +98,36 @@ class AppointmentCreateView(BaseCreateView):
         return super().form_valid(form)
 
 
-#PACKAGE APPOINTMENT VIEWS HERE.
+# PACKAGE APPOINTMENT VIEWS HERE.
+class PackageAppointmentListView(BaseListView):
+    model = PackageAppointment
+    template_name = "booking/package/list.html"
+    context_object_name = "appointments"
+    filterset_class = 0
+
+
+class PackageAppointmentCreateView(BaseCreateView):
+    model = PackageAppointment
+    fields = "__all__"
+    template_name = "booking/package/create.html"
+    app_name = "booking"
+    url_name = "package_detail"
+
+
 class PackageAppointmentDetailViews(BaseDetailView):
     model = PackageAppointment
     template_name = "booking/package/detail.html"
+
+
+class PackageAppointmentUpdateView(BaseUpdateView):
+    model = PackageAppointment
+    fields = "__all__"
+    template_name = "booking/package/update.html"
+    app_name = "booking"
+    url_name = "package_detail"
+
+
+class PackageAppointmentDeleteView(BaseDeleteView):
+    model = PackageAppointment
+    app_name = "booking"
+    url_name = "package_list"

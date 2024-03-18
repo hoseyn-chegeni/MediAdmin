@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Service, ServiceConsumable, OffDay, ServiceCategory, Package, ServicePackage
+from .models import (
+    Service,
+    ServiceConsumable,
+    OffDay,
+    ServiceCategory,
+    Package,
+    ServicePackage,
+)
 
 # Register your models here.
 admin.site.register(Service)
