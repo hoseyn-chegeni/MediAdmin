@@ -22,3 +22,15 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"{self.service}, {self.client}, {self.date}"
+    
+class PackageAppointment (models.Model):
+    package = models.ForeignKey("services.Package", on_delete=models.CASCADE)
+    client = models.ForeignKey(
+        "client.Client", on_delete=models.CASCADE, blank=True, null=True
+    )
+    national_code = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    date = models.DateField()
+
+    def __str__(self):
+        return f"{self.package}, {self.client}, {self.date}"
