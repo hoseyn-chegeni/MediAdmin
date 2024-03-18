@@ -1,15 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add</title>
-</head>
-<body>
-    <form method="post", enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}ایجاد پکیج جدید{%endblock%}
+{%block content %} 
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ایجاد پکیج جدید</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="name" class="form-label">نام پکیج</label>
+                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label  for="services">services:</label>
+                        <select  class="form-select" name="services" required="" id="services" multiple>
+                          <option value="" selected="">---------</option>
+                          {% for i in form.services.field.queryset%}
+                          <option value="{{i.id}}">{{i}}</option>
+                          {%endfor%}
+                        </select>
+                        </div>
+
+
+
+                        <div class="col-sm-6">
+                            <label for="description" class="form-label">توضیحات</label>
+                            <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                          </div>
+      
+
+                          <div class="col-sm-6">
+                            <label  for="created_by">created_by :</label>
+                            <select  class="form-select" name="created_by" required="" id="created_by">
+                              <option value="" selected="">---------</option>
+                              {% for i in form.created_by.field.queryset%}
+                              <option value="{{i.id}}">{{i}}</option>
+                              {%endfor%}
+                            </select>
+                            </div>
+    
+                            <div class="col-sm-6">
+                                <label for="duration" class="form-label">مدت زمان</label>
+                                <input type="number" class="form-control" id="duration" placeholder="" value="{{object.duration}}" name="duration" >
+                              </div>
+                              <div class="col-sm-6">
+                                <label for="documentation_requirements" class="form-label">ملزومات مستندسازی</label>
+                                <input type="text" class="form-control" id="documentation_requirements" placeholder="" value="{{object.documentation_requirements}}" name="documentation_requirements" >
+                              </div>
+                              <div class="col-sm-6">
+                                <label for="therapeutic_measures" class="form-label">اقدامات درمانی</label>
+                                <input type="text" class="form-control" id="therapeutic_measures" placeholder="" value="{{object.therapeutic_measures}}" name="therapeutic_measures" >
+                              </div>
+                              <div class="col-sm-6">
+                                <label for="recommendations" class="form-label">توصیه ها</label>
+                                <input type="text" class="form-control" id="recommendations" placeholder="" value="{{object.recommendations}}" name="recommendations" >
+                              </div>
+                        <div class="col-sm-6">
+                            <label  for="is_active">فعال:</label>
+                            <select  class="form-select" name="is_active" required="" id="is_active">
+                              <option value="" selected="">---------</option>
+                              <option value="true">بله</option>
+                              <option value="false">خیر</option>
+                            </select>
+                            </div>
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+    </main>
+</div>
+{%endblock%}
