@@ -32,7 +32,7 @@ class Appointment(models.Model):
     def __str__(self):
         return f"{self.service}, {self.client}, {self.date}"
     
-    
+
     
 class PackageAppointment (models.Model):
     package = models.ForeignKey("services.Package", on_delete=models.CASCADE)
@@ -43,6 +43,22 @@ class PackageAppointment (models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
     status = models.CharField(max_length = 100, choices = STATUS, blank = True, null = True)
+
+
+    @property
+    def completion_percentage(self):
+        # Calculate the total number of appointments for this package
+        total_appointments = self.appointment_set.count()
+
+        # Calculate the number of appointments with a status of "done"
+        done_appointments = self.appointment_set.filter(status="DONE").count()
+
+        # Calculate the percentage
+        if total_appointments == 0:
+            return 0
+        else:
+            return (done_appointments / total_appointments) * 100
+        
 
     def __str__(self):
         return f"{self.package}, {self.client}, {self.date}"

@@ -6,7 +6,7 @@ from base.views import (
     BaseUpdateView,
     BaseListView,
 )
-from .models import Appointment
+from .models import Appointment, PackageAppointment
 from django.urls import reverse_lazy
 from datetime import datetime
 
@@ -96,3 +96,9 @@ class AppointmentCreateView(BaseCreateView):
             return self.form_invalid(form)
 
         return super().form_valid(form)
+
+
+#PACKAGE APPOINTMENT VIEWS HERE.
+class PackageAppointmentDetailViews(BaseDetailView):
+    model = PackageAppointment
+    template_name = "booking/package/detail.html"
