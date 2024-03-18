@@ -60,7 +60,24 @@
       </div>  
     </div>
 
-    
+
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+            <div class="card-header"><strong>
+                پزشکان حاضر در این پکیج
+            </strong>  </div>
+
+            {%for i in doctors%}
+                <p>{{i}}</p>
+                <hr>
+            {% empty %}
+            <p>  یافت نشد</p>
+            {% endfor %}
+    </div>
+  </div>  
+</div>
 
         <!-- Buttons to change status, priority, add comment, etc. -->
         <div class="card mb-4">
