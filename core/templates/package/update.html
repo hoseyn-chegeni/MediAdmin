@@ -19,19 +19,7 @@
                       <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
                     </div>
 
-                    <div class="col-sm-6">
-                        <label for="services">سرویس ها:</label>
-                        <select class="form-select" name="services" required="" id="services" multiple>
-                            <option value="">---------</option>
-                            {% for i in form.services.field.queryset %}
-                                {% if i in object.services.all %}
-                                    <option value="{{ i.id }}" selected>{{ i }}</option>
-                                {% else %}
-                                    <option value="{{ i.id }}">{{ i }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
+
 
 
                         <div class="col-sm-6">
@@ -40,35 +28,6 @@
                           </div>
       
 
-                          <div class="col-sm-6">
-                            <label  for="created_by">ایجاد کننده :</label>
-                            <select  class="form-select" name="created_by" required="" id="created_by">
-                              <option value="" selected="">---------</option>
-                              {% for i in form.created_by.field.queryset%}
-                              {% if i == object.created_by%}
-                              <option value="{{i.id}}"  selected>{{i}}</option>
-                              {%else%}
-                              <option value="{{i.id}}" >{{i}}</option>
-                              {% endif %}
-                              {%endfor%}
-                            </select>
-                            </div>
-    
-                            <div class="col-sm-6">
-                                <label for="duration" class="form-label">مدت زمان</label>
-                                <input type="number" class="form-control" id="duration" placeholder="" value="{{object.duration}}" name="duration" >
-                              </div>
-                              <div class="col-sm-6">
-                                <label for="documentation_requirements" class="form-label">ملزومات مستندسازی</label>
-                                <input type="text" class="form-control" id="documentation_requirements" placeholder="" value="{{object.documentation_requirements}}" name="documentation_requirements" >
-                              </div>
-                              <div class="col-sm-6">
-                                <label for="therapeutic_measures" class="form-label">اقدامات درمانی</label>
-                                <input type="text" class="form-control" id="therapeutic_measures" placeholder="" value="{{object.therapeutic_measures}}" name="therapeutic_measures" >
-                              </div>
-                              <div class="col-sm-6">
-                                <label for="recommendations" class="form-label">توصیه ها</label>
-                                <input type="text" class="form-control" id="recommendations" placeholder="" value="{{object.recommendations}}" name="recommendations" >
                               </div>
                         <div class="col-sm-6">
                             <label  for="is_active">فعال:</label>

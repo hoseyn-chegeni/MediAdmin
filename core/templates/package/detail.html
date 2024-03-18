@@ -21,19 +21,12 @@
               <hr>
               <p class="card-text"><strong>توضیحات:</strong>{{object.description}}</p>
               <hr>
-              <p class="card-text"><strong>مدت زمان: </strong>{{object.duration}}</p>
-              <hr>
-              <p class="card-text"><strong>هزینه پکیج: </strong>{{object.calculate_price}}</p>
-              <hr>
-              <p class="card-text"><strong>دستورالعمل آماده سازی: </strong>{{object.preparation_instructions}}</p>
-              <hr>
+
               <p class="card-text"><strong>تاریخ ایجاد: </strong>{{object.created_at}}</p>
               <hr>
               <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>%{{object.updated_at}}</p>
               <hr>
               <p class="card-text"><strong>فعال: </strong>{{object.is_active}}</p>
-              <hr>
-              <p class="card-text"><strong>اقدامات درمانی: </strong>{{object.therapeutic_measures}}</p>
               <hr>
               <!-- Add other task details as needed -->
           </div>
@@ -43,41 +36,9 @@
 
 
 
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="card-text">
-                <div class="card-header"><strong>
-                    سرویس های ارایه شده پکیج
-                </strong>  </div>
-
-                {%for i in object.services.all%}
-                    <p>{{i}}</p>
-                    <hr>
-                {% empty %}
-                <p>روز تعطیل یافت نشد</p>
-                {% endfor %}
-        </div>
-      </div>  
-    </div>
 
 
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="card-text">
-            <div class="card-header"><strong>
-                پزشکان حاضر در این پکیج
-            </strong>  </div>
-
-            {%for i in doctors%}
-                <p>{{i}}</p>
-                <hr>
-            {% empty %}
-            <p>  یافت نشد</p>
-            {% endfor %}
-    </div>
-  </div>  
-</div>
 
         <!-- Buttons to change status, priority, add comment, etc. -->
         <div class="card mb-4">

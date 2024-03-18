@@ -19,17 +19,6 @@
                       <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
                     </div>
 
-                    <div class="col-sm-6">
-                        <label  for="services">services:</label>
-                        <select  class="form-select" name="services" required="" id="services" multiple>
-                          <option value="" selected="">---------</option>
-                          {% for i in form.services.field.queryset%}
-                          <option value="{{i.id}}">{{i}}</option>
-                          {%endfor%}
-                        </select>
-                        </div>
-
-
 
                         <div class="col-sm-6">
                             <label for="description" class="form-label">توضیحات</label>
@@ -46,23 +35,8 @@
                               {%endfor%}
                             </select>
                             </div>
-    
-                            <div class="col-sm-6">
-                                <label for="duration" class="form-label">مدت زمان</label>
-                                <input type="number" class="form-control" id="duration" placeholder="" value="{{object.duration}}" name="duration" >
-                              </div>
-                              <div class="col-sm-6">
-                                <label for="documentation_requirements" class="form-label">ملزومات مستندسازی</label>
-                                <input type="text" class="form-control" id="documentation_requirements" placeholder="" value="{{object.documentation_requirements}}" name="documentation_requirements" >
-                              </div>
-                              <div class="col-sm-6">
-                                <label for="therapeutic_measures" class="form-label">اقدامات درمانی</label>
-                                <input type="text" class="form-control" id="therapeutic_measures" placeholder="" value="{{object.therapeutic_measures}}" name="therapeutic_measures" >
-                              </div>
-                              <div class="col-sm-6">
-                                <label for="recommendations" class="form-label">توصیه ها</label>
-                                <input type="text" class="form-control" id="recommendations" placeholder="" value="{{object.recommendations}}" name="recommendations" >
-                              </div>
+
+
                         <div class="col-sm-6">
                             <label  for="is_active">فعال:</label>
                             <select  class="form-select" name="is_active" required="" id="is_active">

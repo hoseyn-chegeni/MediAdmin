@@ -290,17 +290,6 @@ class PackageDetailView(BaseDetailView):
     model = Package
     template_name = "package/detail.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Access the package object
-        package = self.object
-        # Get all the doctors associated with the services in this package
-        doctor_ids = package.services.values_list("doctor", flat=True).distinct()
-        # Fetch the Doctor instances
-        doctors = Doctor.objects.filter(id__in=doctor_ids)
-        context["doctors"] = doctors
-        return context
-
 
 class PackageUpdateView(BaseUpdateView):
     model = Package
