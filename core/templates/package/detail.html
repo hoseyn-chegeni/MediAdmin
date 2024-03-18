@@ -112,7 +112,7 @@
               آیا از غیرفعال سازی پکیج مطمین هستید؟
             </div>
             <div class="modal-footer">
-              <a class="btn btn-primary" href="{% url 'services:suspend' pk=object.pk %}" class="btn">تایید</a>
+              <a class="btn btn-primary" href="{% url 'services:package_suspend' pk=object.pk %}" class="btn">تایید</a>
           </div>
           </div>
         </div>
@@ -132,7 +132,7 @@
                     آیا از فعال سازی مجدد پکیج مطمین هستید؟
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-primary" href="{% url 'services:reactive' pk=object.pk %}" class="btn">تایید</a>
+                    <a class="btn btn-primary" href="{% url 'services:package_reactive' pk=object.pk %}" class="btn">تایید</a>
                 </div>
                 </div>
             </div>

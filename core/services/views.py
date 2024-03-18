@@ -302,3 +302,30 @@ class PackageDeleteView(BaseDeleteView):
     model = Package
     app_name = "services"
     url_name = "package_list"
+
+class SuspendPackageView(View):
+    def get(self, request, pk):
+        package = Package.objects.get(pk=pk)
+        if package:
+            package.is_active = False
+            messages.success(
+                self.request, f" پکیج {package.name} غیرفعال شد!"
+            )
+            package.save()
+        return HttpResponseRedirect(
+            reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
+        )
+
+
+class ReactivePackageView(View):
+    def get(self, request, pk):
+        package = Package.objects.filter(pk=pk).first()
+        if package:
+            package.is_active = True
+            messages.success(
+                self.request, f"پکیج {package.name} مجددا فعال شد !"
+            )
+            package.save()
+        return HttpResponseRedirect(
+            reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
+        )
