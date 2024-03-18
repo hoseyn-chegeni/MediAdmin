@@ -24,6 +24,9 @@ def create_appointments(sender, instance, created, **kwargs):
                 client=instance.client,
                 national_code=instance.national_code,
                 name=instance.name,
-                date=appointment_date
+                date=appointment_date,
+                status = "WAITE",
+                has_package = True,
+                package = instance,
             )
             appointment_date += timedelta(days=service_package.gap_with_next_service)

@@ -3,6 +3,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
+STATUS = (
+    ("WAITE", "WAITE"),
+    ("DONE", "DONE"),
+
+)
+
 def validate_current_month(value):
     pass
 
@@ -19,9 +25,14 @@ class Appointment(models.Model):
     national_code = models.CharField(max_length=100, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
+    status = models.CharField(max_length = 100, choices = STATUS, blank = True, null = True)
+    has_package = models.BooleanField(default = False)
+    package = models.ForeignKey('PackageAppointment', on_delete = models.CASCADE, blank = True, null = True)
 
     def __str__(self):
         return f"{self.service}, {self.client}, {self.date}"
+    
+    
     
 class PackageAppointment (models.Model):
     package = models.ForeignKey("services.Package", on_delete=models.CASCADE)
@@ -31,6 +42,7 @@ class PackageAppointment (models.Model):
     national_code = models.CharField(max_length=100, blank=True, null=True)
     name = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
+    status = models.CharField(max_length = 100, choices = STATUS, blank = True, null = True)
 
     def __str__(self):
         return f"{self.package}, {self.client}, {self.date}"
