@@ -145,34 +145,22 @@ class ServiceCategory(models.Model):
 
 class Package(models.Model):
     name = models.CharField(max_length=255)
-    services = models.ManyToManyField(Service)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-    preparation_instructions = models.TextField(blank=True, null=True)
-    duration = models.PositiveIntegerField()  # Duration in minutes
-    therapeutic_measures = models.TextField(blank=True)  # اقدمات درمانی
-    recommendations = models.TextField(blank=True)  # توصیه ها
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
-
-    def calculate_price(self):
-        total_price = 0
-        # Iterate over services in the package
-        for service in self.services.all():
-            # Add the price of the service to the total price
-            total_price += service.price
-            # Iterate over related consumables for the service
-            for service_consumable in service.serviceconsumable_set.all():
-                # Add the price of the consumable to the total price
-                total_price += service_consumable.consumable.price
-        return total_price
     
-    def services_count(self):
-        services = self.services.all().count()
-        return services
+
+class ServicePackage(models.Model):
+    package= models.ForeignKey('Package',on_delete = models.CASCADE)
+    service = models.ForeignKey('Service',on_delete = models.CASCADE)
+    gap_with_next_service = models.PositiveIntegerField(default = 0)
+
+    def __str__(self):
+        return f'{self.package} / {self.service}'
