@@ -48,3 +48,4 @@ def generate_coupon_code(sender, instance, **kwargs):
         while Coupon.objects.filter(code=code).exists():
             code = ''.join(random.choice(chars) for _ in range(code_length))
         instance.code = code
+
