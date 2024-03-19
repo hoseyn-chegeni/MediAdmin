@@ -15,8 +15,8 @@ from django.contrib import messages
 from django.views import View
 from datetime import date
 from client.models import Client
-from django.core.exceptions import ValidationError
-
+from django.views.generic import FormView
+from .forms import ServiceSelectionForm
 
 
 # Create your views here.
@@ -384,3 +384,26 @@ class ServicePackageDeleteView(BaseDeleteView):
     def get_success_url(self):
         package = self.get_object().package.id 
         return reverse_lazy('services:package_detail', kwargs={'pk': package})
+    
+
+
+
+#Update Service Price
+class UpdateServicePricesView(FormView):
+    template_name = 'services/bulk_update.html'
+    form_class = ServiceSelectionForm
+    success_url = reverse_lazy('services:list')  # Change this to the appropriate success URL
+
+    def form_valid(self, form):
+        services = form.cleaned_data['services']
+        percentage_change = form.cleaned_data['percentage_change']
+        
+        for service in services:
+            # Calculate the new price based on the percentage change
+            new_price = service.price * (1 + percentage_change / 100)
+            # Update the service price
+            service.price = new_price
+            service.save()
+
+        messages.success(self.request, 'افزایش فیمت با موفقیت انجام شد')
+        return super().form_valid(form)
