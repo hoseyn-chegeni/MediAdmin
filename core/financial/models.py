@@ -1,5 +1,6 @@
 from django.db import models
 from decimal import Decimal
+from datetime import date
 
 
 # Create your models here.
@@ -41,30 +42,48 @@ class Financial(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
+    coupon = models.ForeignKey("Coupon", on_delete=models.SET_NULL, blank=True, null=True)
+
 
     def save(self, *args, **kwargs):
-        # If the financial instance is being created for the first time
         if not self.pk:
-            # Calculate service price and consumable prices
-            self.service_price = self.reception.service.price
-            self.consumable_price = sum(
-                sc.consumable.price
-                for sc in self.reception.service.serviceconsumable_set.all()
-            )
-            total_amount_before_tax = self.service_price + self.consumable_price
-            total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
-            self.tax = total_amount_after_tax - total_amount_before_tax
-            total_amount_with_insurance = total_amount_after_tax - (
-                total_amount_after_tax
-                * (Decimal(str(self.insurance_range)) / Decimal(100))
-            )
-            self.total_amount = total_amount_after_tax
-            self.insurance_amount = total_amount_after_tax - total_amount_with_insurance
-            self.final_amount = total_amount_with_insurance
-        # Check if service price or consumable price has been modified
-        if "service_price" in kwargs.get(
-            "update_fields", []
-        ) or "consumable_price" in kwargs.get("update_fields", []):
+            if self.coupon and self.coupon.valid_from <= date.today() <= self.coupon.valid_to:
+                # Apply discount based on coupon amount
+                self.discount = self.coupon.amount
+                # Calculate service price and consumable prices
+                self.service_price = self.reception.service.price
+                self.consumable_price = sum(
+                    sc.consumable.price
+                    for sc in self.reception.service.serviceconsumable_set.all()
+                )
+                total_amount_before_tax = self.service_price + self.consumable_price
+                total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
+                self.tax = total_amount_after_tax - total_amount_before_tax
+                total_amount_with_insurance = total_amount_after_tax - (
+                    total_amount_after_tax
+                    * (Decimal(str(self.insurance_range)) / Decimal(100))
+                )
+                self.total_amount = total_amount_after_tax
+                self.insurance_amount = total_amount_after_tax - total_amount_with_insurance
+                self.final_amount = total_amount_with_insurance - self.coupon.amount
+            else:
+                self.service_price = self.reception.service.price
+                self.consumable_price = sum(
+                    sc.consumable.price
+                    for sc in self.reception.service.serviceconsumable_set.all()
+                )
+                total_amount_before_tax = self.service_price + self.consumable_price
+                total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
+                self.tax = total_amount_after_tax - total_amount_before_tax
+                total_amount_with_insurance = total_amount_after_tax - (
+                    total_amount_after_tax
+                    * (Decimal(str(self.insurance_range)) / Decimal(100))
+                )
+                self.total_amount = total_amount_after_tax
+                self.insurance_amount = total_amount_after_tax - total_amount_with_insurance
+                self.final_amount = total_amount_with_insurance
+
+        if "service_price" in kwargs.get("update_fields", []) or "consumable_price" in kwargs.get("update_fields", []):
             # Recalculate total amount including tax
             total_amount_before_tax = self.service_price + self.consumable_price
             total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
@@ -108,4 +127,4 @@ class Coupon(models.Model):
     valid_to = models.DateField()
 
     def __str__(self):
-        return self.code
+        return self.name
