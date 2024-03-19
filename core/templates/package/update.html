@@ -10,7 +10,7 @@
 
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3">اطلاعات</h4>
-          <form class="needs-validation" method="post">
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="row g-3">
                 <div class="row g-3">
@@ -46,6 +46,28 @@
                               {%endif%}
                             </select>
                             </div>
+                            
+                            <div class="col-sm-6">
+                              <label class="form-label">تصویر:</label>
+                              {% if object.image %}
+                                  <img src="{{ object.image.url }}" alt="{{ object.name }}" style="max-width: 100px; max-height: 100px;">
+                              {% else %}
+                                  <p>No image uploaded</p>
+                              {% endif %}
+                              <input type="file" class="form-control" id="customFile" name="image" />
+                          </div>
+
+                            <div class="col-sm-6">
+                              <label class="form-label">پیوست:</label>
+                              {% if object.attachment %}
+                                  <p>{{ object.attachment.name }}</p>
+                                  <a href="{{ object.attachment.url }}">Download Attachment</a>
+                              {% else %}
+                                  <p>No attachment uploaded</p>
+                              {% endif %}
+                              <input type="file" class="form-control" id="customFile" name="attachment" />
+                          </div>
+
             <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
           </form>
         </div>

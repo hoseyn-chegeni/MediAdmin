@@ -153,6 +153,8 @@ class Package(models.Model):
     )
     description = models.TextField(blank=True, null=True)
     preparation_instructions = models.TextField(blank = True, null = True)
+    image = models.ImageField(upload_to="images", blank=True, null=True)
+    attachment = models.FileField(upload_to='attachments', blank= True, null= True)
 
     @property
     def total_price(self):

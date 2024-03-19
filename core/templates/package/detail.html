@@ -31,8 +31,18 @@
               <hr>
               <p class="card-text"><strong>فعال: </strong>{{object.is_active}}</p>
               <hr>
-              <p class="card-text"><strong>دستورالعمل های آماده سازی: </strong>{{object.preparation_instructions}}</p>
-              <hr>
+              <p class="card-text"><strong>دستورالعمل های آماده سازی: </strong>{{ object.preparation_instructions }}</p>
+              {% if object.image %}
+                  <hr>
+                  <p class="card-text"><strong>تصویر:</strong></p>
+                  <img src="{{ object.image.url }}" alt="Image">
+              {% endif %}
+              {% if object.attachment %}
+                  <hr>
+                  <p class="card-text"><strong>پیوست:</strong></p>
+                  <a href="{{ object.attachment.url }}">دانلود پیوست</a>
+              {% endif %}
+ 
               <!-- Add other task details as needed -->
           </div>
           </div>
