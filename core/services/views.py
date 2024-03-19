@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.views import View
 from datetime import date
 from client.models import Client
+from django.core.exceptions import ValidationError
 
 
 
@@ -351,10 +352,17 @@ class ServicePackageCreateView(BaseCreateView):
         package_id = self.kwargs['pk']
         package = Package.objects.get(pk=package_id)
         form.instance.package = package
+
+        # Validate the gap_with_next_service field
+        gap_with_next_service = form.cleaned_data.get('gap_with_next_service')
+        if gap_with_next_service is not None and gap_with_next_service <= 0:
+            form.add_error('gap_with_next_service', "فاصله زمانی با سرویس بعدی باید یک عدد صحیح مثبت باشد.")
+            return self.form_invalid(form)
         return super().form_valid(form)
     
     def get_success_url(self):
         return reverse_lazy('services:package_detail', kwargs={"pk": self.kwargs['pk']})
+
     
 
 class ServicePackageUpdateView(BaseUpdateView):
