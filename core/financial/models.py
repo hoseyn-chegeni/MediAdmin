@@ -97,3 +97,15 @@ class OfficeExpenses(models.Model):
 
     def __str__(self):
         return f"{self.date} - {self.subject}"
+
+
+
+class Coupon(models.Model):
+    name = models.CharField(max_length = 255)
+    code = models.CharField(max_length=20, unique=True, blank = True, null = True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    valid_from = models.DateField()
+    valid_to = models.DateField()
+
+    def __str__(self):
+        return self.code

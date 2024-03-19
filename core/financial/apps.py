@@ -7,4 +7,4 @@ class FinancialConfig(AppConfig):
 
     def ready(self):
         # Import the signal handler function
-        from .signals import create_financial
+        from .signals import create_financial, generate_coupon_code
