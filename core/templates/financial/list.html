@@ -6,7 +6,7 @@
 </form>
 {%for i in financial%}
   <p>  {{i.id}}.{{i.reception}},
-      <a href="{% url 'financial:detail' i.pk %}">Details</a>,
+      <a href="{% url 'financial:detail' i.pk %}" target="_blank">Details</a>,
       <a href="{% url 'financial:update' i.pk %}">update</a>,
       <a href="{% url 'financial:delete' i.pk %}">Delete</a>
     </p>

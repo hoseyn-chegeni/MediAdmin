@@ -1,10 +1,210 @@
-<h2>Financial Details</h2>
-<p>Invoice Number: {{ financial.invoice_number }}</p>
-<p>payment_status: {{ financial.payment_status }}</p>
-<p>tax_rate: {{ financial.tax_rate }}</p>
-<p>total_amount: {{ financial.total_amount }}</p>
-<p>valid insurance {{financial.valid_insurance}}</p>
-<p>insurance amount: {{financial.insurance_amount}}</p>
-<p>Final Amount: {{financial.final_amount}}</p>
-<p>for Reception: {{financial.reception}}</p>
-<p>date : {{financial.created_at}}</p>
+
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="author" content="CodeHim">
+      <title>صورتحساب {{object.id}}</title>
+      <!-- Style CSS -->
+      {%load static%}
+
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+
+      <!-- Demo CSS (No need to include it into your project) -->
+      <link rel="stylesheet" href="./css/demo.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+   </head>
+   <body>
+     
+      <!--$%adsense%$-->
+      <main class="cd__main">
+         <!-- Start DEMO HTML (Use the following code into your project)-->
+         <div class="container invoice">
+  <div class="invoice-header">
+    <div class="row">
+      <div class="col-xs-8">
+        <h1>صورتحساب <small>اعتباری</small></h1>
+        <h4 class="text-muted">شماره: {{object.id}} | تاریخ: {{object.created_at.date}}</h4>
+      </div>
+      <div class="col-xs-4">
+        <div class="media">
+          <div class="media-left">
+            <img class="media-object logo" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"/>
+          </div>
+          <ul class="media-body list-unstyled">
+            <li><strong>مدیکال طب</strong></li>
+            <li>نرم افزار جامع مدیریت مطب</li>
+            <li>info@acme.com</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="invoice-body">
+    <div class="row">
+      <div class="col-xs-5">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">اطلاعات مطب</h3>
+          </div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dt>کلینیک ایرانیان </dt>
+              <dd><strong>نام</strong></dd>
+              <dt>زیبایی</dt>
+              <dd>زمینه فعالیت</dd>
+              <dt>عباس آباد٫ میرعماد</dt>
+              <dd> آدرس </dd>
+              <dt>1544</dt>
+              <dd>شماره تماس</dd>
+              <dt>mainl@acme.com</dt>
+              <dd>ایمیل</dd>
+              <dt>123456789</dt>
+              <dd class="mono">فکس</dd>
+              <dt>همه روزه ۸ صبح تا ۸ شب</dt>
+              <dd>ساعت فعالیت</dd>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">اطلاعات بیمار</h3>
+          </div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dt>{{client}}</dt>
+              <dd>نام</dd>
+              <dt>{{client.id}}</dt>
+              <dd>شماره پرونده</dd>
+              <dt>{{client.national_id}}</dt>
+              <dd>کدملی</dd>
+              <dt>{{object.reception.reason}}</dt>
+              <dd>علت مراجعه</dd>
+              <dt>{{object.reception.service.doctor}}</dt>
+              <dd>پزشک معالج</dd>
+              <dt>{{object.reception.id}}</dt>
+              <dd class="mono">شماره پذیرش</dd>
+              <dt>&nbsp;</dt>
+              <dd>&nbsp;</dd>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">سرویس / خدمات </h3>
+      </div>
+      <table class="table table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th class="text-center colfix">سرویس</th>
+            <th class="text-center colfix">قیمت واحد</th>
+            <th class="text-center colfix">مواد مصرفی</th>
+            <th class="text-center colfix">مالیات</th>
+            <th class="text-center colfix">تخفیف</th>
+            <th class="text-center colfix">بیمه</th>
+            <th class="text-center colfix">مبلغ کل</th>
+            <th class="text-center colfix">مبلغ نهایی</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+                <p>   {{object.reception.service}} </p>
+            </td>
+            <td class="text-right">
+              <span class="mono">{{object.service_price}} ریال</span>
+              <br>
+              <small class="text-muted">پیش از مالیات</small>
+            </td>
+            <td class="text-right">
+              <span class="mono">{{object.consumable_price}} ریال</span>
+            </td>
+            <td class="text-right">
+              <span class="mono">{{object.tax}} ریال</span>
+              <br>
+              <small class="text-muted mono">9 درصد</small>
+            </td>
+            <td class="text-right">
+              <span class="mono">{{object.discount}} ریال</span>
+
+            </td>
+            <td class="text-right">
+              <strong class="mono">{{object.insurance_range}} ریال</strong>
+            </td>
+            <td class="text-right">
+                <strong class="mono">{{object.total_amount}} ریال</strong>
+              </td>
+              <td class="text-right">
+                <strong class="mono">{{object.final_amount}} ریال</strong>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel panel-default">
+      <table class="table table-bordered table-condensed">
+        <thead>
+          <tr>
+            <td class="text-center col-xs-1">مبلغ کل</td>
+            <td class="text-center col-xs-1">تخفیف</td>
+            <td class="text-center col-xs-1">مالیت</td>
+            <td class="text-center col-xs-1">بیمه</td>
+            <td class="text-center col-xs-1">مبلغ نهایی</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="text-center rowtotal mono">{{object.total_amount}} ریال</th>
+            <th class="text-center rowtotal mono">{{object.discount}} ریال</th>
+            <th class="text-center rowtotal mono">{{object.tax}} ریال</th>
+            <th class="text-center rowtotal mono">{{object.insurance_range}} ریال</th>
+            <th class="text-center rowtotal mono">{{object.final_amount}} ریال</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-xs-7">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <i>یادداشت</i>
+            <hr style="margin:3px 0 5px" /> از اینکه خدمات ما را انتخاب کردید متشکریم.
+            <br/> امیدواریم به زودی دوباره شما را ببینیم
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-5">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">نحوه پرداخت</h3>
+          </div>
+          <div class="panel-body">
+            <p>برای راحتی بیشتر شما عزیران، می توانید مبلغ نهایی را به یکی از حساب های بانکی های ما واریز کنید</p>
+            <ul class="list-unstyled">
+              <li>بانک ملی - حسین چگنی<span class="mono"> MO123456789456123 </span></li>
+              <li>بانک سامان - سپیده باقری<span class="mono"> MO123456789456123 </span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="invoice-footer">
+
+    <strong>~MEDICAL TEB~</strong>
+  </div>
+</div>
+         <!-- END EDMO HTML (Happy Coding!)-->
+      </main>
+      <footer class="cd__credit">Author: Christos Georgiou - Distributed By: <a title="Free web design code & scripts" href="https://www.codehim.com?source=demo-page" target="_blank">CodeHim</a></footer>
+      
+      <!-- Script JS -->
+      <!--$%analytics%$-->
+   </body>
+</html>

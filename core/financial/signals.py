@@ -10,11 +10,11 @@ def create_financial(sender, instance, created, **kwargs):
     if created:
         client_insurance = instance.client.insurance
         service = instance.service
-        service_insurance_services = InsuranceService.objects.filter(service=service)
+        service_insurance_services = InsuranceService.objects.filter(service_id=service.id)
 
-        if service_insurance_services:
+        if service_insurance_services.exists():
             for i in service_insurance_services:
-                if i.id == client_insurance.id:
+                if i.insurance == client_insurance:
                     Financial.objects.create(
                         reception=instance,
                         invoice_number=f"INV-{instance.pk}",  # You can customize how the invoice number is generated
@@ -23,6 +23,7 @@ def create_financial(sender, instance, created, **kwargs):
                         valid_insurance=True,
                         insurance_range=i.percentage,
                     )
+                    break
         else:
             Financial.objects.create(
                 reception=instance,
