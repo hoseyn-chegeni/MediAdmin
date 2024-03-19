@@ -152,7 +152,7 @@ class Package(models.Model):
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
     description = models.TextField(blank=True, null=True)
-
+    preparation_instructions = models.TextField(blank = True, null = True)
 
     @property
     def total_price(self):

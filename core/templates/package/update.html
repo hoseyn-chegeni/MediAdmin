@@ -27,8 +27,12 @@
                             <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
                           </div>
       
+                          <div class="col-sm-6">
+                            <label for="preparation_instructions" class="form-label">دستورالعمل های آماده سازی</label>
+                            <input type="text" class="form-control" id="preparation_instructions" placeholder="" value="{{object.preparation_instructions}}" name="preparation_instructions" >
+                          </div>
 
-                              </div>
+
                         <div class="col-sm-6">
                             <label  for="is_active">فعال:</label>
                             <select  class="form-select" name="is_active" required="" id="is_active">
@@ -42,7 +46,7 @@
                               {%endif%}
                             </select>
                             </div>
-            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
           </form>
         </div>
       </div>
