@@ -179,7 +179,7 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
-
+# Package Steps
 class ServicePackage(models.Model):
     package = models.ForeignKey("Package", on_delete=models.CASCADE)
     service = models.ForeignKey("Service", on_delete=models.CASCADE)

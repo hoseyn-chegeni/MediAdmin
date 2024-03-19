@@ -5,7 +5,7 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Service, ServiceConsumable, ServiceCategory, Package
+from .models import Service, ServiceConsumable, ServiceCategory, Package, ServicePackage
 from reception.models import Reception
 from .filters import ServicesFilter, QueueFilter, ServiceCategoryFilter, PackageFilter
 from django.urls import reverse_lazy
@@ -15,7 +15,7 @@ from django.contrib import messages
 from django.views import View
 from datetime import date
 from client.models import Client
-from doctor.models import Doctor
+
 
 
 # Create your views here.
@@ -338,3 +338,41 @@ class ReactivePackageView(View):
         return HttpResponseRedirect(
             reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
         )
+
+#Package Steps Here. 
+class ServicePackageCreateView(BaseCreateView):
+    model = ServicePackage
+    fields = ['service', 'gap_with_next_service']
+    template_name = 'package/steps/create.html' 
+
+
+    def form_valid(self, form):
+        # Get the package object from the URL parameter
+        package_id = self.kwargs['pk']
+        package = Package.objects.get(pk=package_id)
+        form.instance.package = package
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('services:package_detail', kwargs={"pk": self.kwargs['pk']})
+    
+
+class ServicePackageUpdateView(BaseUpdateView):
+    model = ServicePackage
+    fields = ["gap_with_next_service",]
+    template_name = 'package/steps/update.html'
+
+
+    def get_success_url(self):
+        # Redirect to the package detail page after updating the service
+        package = self.get_object().package.id  # Assuming Service has a ForeignKey to Package
+        return reverse_lazy('services:package_detail', kwargs={'pk': package})
+
+
+
+class ServicePackageDeleteView(BaseDeleteView):
+    model = ServicePackage
+
+    def get_success_url(self):
+        package = self.get_object().package.id 
+        return reverse_lazy('services:package_detail', kwargs={'pk': package})

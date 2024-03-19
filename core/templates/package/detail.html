@@ -45,13 +45,17 @@
               </strong>  </div>
 
               {%for i in services %}
-                  <p>{{i.service.name}}, <a href="{% url 'services:detail' i.service.id %}">جزییات سرویس</a></p>
+                  <p>{{i.service.name}},
+                     <a href="{% url 'services:detail' i.service.id %}">جزییات سرویس</a>, 
+                    <a href="{% url 'services:update_service_package' i.id%}">ویرایش</a>,
+                    <a href="{% url 'services:delete_service_from_package' i.id%}">حذف</a> </p>
                   <hr>
               {% empty %}
               <p>یافت نشد</p>
               {% endfor %}
       </div>
     </div>  
+    <p><a href="{% url 'services:add_service_to_package' object.id %}">Add Steps</a></p>
   </div>
 
   <div class="card mb-4">
