@@ -16,6 +16,11 @@ from .views import (
     SupplierDetailView,
     SupplierListView,
     SupplierUpdateView,
+    EquipmentCreateView,
+    EquipmentDeleteView,
+    EquipmentDetailView,
+    EquipmentListView,
+    EquipmentUpdateView,
 )
 
 app_name = "asset"
@@ -75,4 +80,10 @@ urlpatterns = [
         SupplierDeleteView.as_view(),
         name="supplier_delete",
     ),
+    #EQUIPMENT URLS.
+    path("equipment/list/", EquipmentListView.as_view(), name="equipment_list"),
+    path("equipment/detail/<int:pk>/", EquipmentDetailView.as_view(), name="equipment_detail"),
+    path("equipment/create/", EquipmentCreateView.as_view(), name="equipment_create"),
+    path("equipment/update/<int:pk>/", EquipmentUpdateView.as_view(), name="equipment_update"),
+    path("equipment/delete/<int:pk>/", EquipmentDeleteView.as_view(), name="equipment_delete"),
 ]

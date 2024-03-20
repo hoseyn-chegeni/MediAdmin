@@ -76,7 +76,8 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
-class MedicalEquipment(models.Model):
+
+class Equipment(models.Model):
     name = models.CharField(max_length=100)
     manufacturer = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
@@ -86,9 +87,7 @@ class MedicalEquipment(models.Model):
     location = models.CharField(max_length=100)
     is_available = models.BooleanField(default=True)
     description = models.TextField(blank=True, null=True)
-    last_maintenance_date = models.DateField(blank=True, null=True)  #بازدید دوره ای
-
+    last_maintenance_date = models.DateField(blank=True, null=True)  # بازدید دوره ای
 
     def __str__(self):
         return self.name
-

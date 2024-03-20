@@ -6,7 +6,7 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Consumable, ConsumableCategory, Supplier
+from .models import Consumable, ConsumableCategory, Supplier, Equipment
 from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
 
 
@@ -136,3 +136,38 @@ class SupplierDeleteView(BaseDeleteView):
     model = Supplier
     app_name = "asset"
     url_name = "supplier_list"
+
+
+# Medical Equipment Views Here.
+class EquipmentListView(BaseListView):
+    model = Equipment
+    template_name = "asset/equipment/list.html"
+    context_object_name = "equipment"
+    filterset_class = 0
+
+
+class EquipmentDetailView(BaseDetailView):
+    model = Equipment
+    template_name = "asset/equipment/detail.html"
+
+
+class EquipmentCreateView(BaseCreateView):
+    model = Equipment
+    fields = "__all__"
+    template_name = "asset/equipment/create.html"
+    app_name = "asset"
+    url_name = "equipment_detail"
+
+
+class EquipmentUpdateView(BaseUpdateView):
+    model = Equipment
+    fields = "__all__"
+    template_name = "asset/equipment/update.html"
+    app_name = "asset"
+    url_name = "equipment_detail"
+
+
+class EquipmentDeleteView(BaseDeleteView):
+    model = Equipment
+    app_name = "asset"
+    url_name = "equipment_list"
