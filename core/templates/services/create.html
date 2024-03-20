@@ -101,8 +101,15 @@
                                 </select>
                                 </div>
 
-
-
+                                <div class="col-sm-6">
+                                  <label  for="doctor">پزشک:</label>
+                                  <select  class="form-select" name="doctor" required="" id="doctor" multiple>
+                                    <option value="" selected="">---------</option>
+                                    {% for i in form.medical_equipment.field.queryset%}
+                                    <option value="{{i.id}}">{{i}}</option>
+                                    {%endfor%}
+                                  </select>
+                                  </div>
                         <div class="col-sm-6">
                             <label  for="is_active">فعال:</label>
                             <select  class="form-select" name="is_active" required="" id="is_active">

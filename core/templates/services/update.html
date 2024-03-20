@@ -93,7 +93,19 @@
                               </div>
 
       
-
+                              <div class="col-sm-6">
+                                <label for="medical_equipment">تجهیزات پزشکی:</label>
+                                <select class="form-select" name="medical_equipment"  id="medical_equipment" multiple>
+                                    {% for equipment in form.fields.medical_equipment.queryset %}
+                                        {% if equipment in object.medical_equipment.all %}
+                                            <option value="{{ equipment.id }}" selected>{{ equipment.name }}</option>
+                                        {% else %}
+                                            <option value="{{ equipment.id }}">{{ equipment.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
 
 
                         <div class="col-sm-6">

@@ -40,6 +40,7 @@ class Service(models.Model):
     # suggested_prescription = 0
     appointment_per_day = models.PositiveIntegerField(default=3)
     off_days = models.ManyToManyField("OffDay", blank=True)
+    medical_equipment = models.ManyToManyField('asset.Equipment', blank= True)
 
     @property
     def today_reception_count(self):

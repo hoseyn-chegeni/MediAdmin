@@ -94,6 +94,7 @@ class ServiceUpdateView(BaseUpdateView):
         "documentation_requirements",
         "therapeutic_measures",
         "recommendations",
+        "medical_equipment",
     ]
     template_name = "services/update.html"
     app_name = "services"

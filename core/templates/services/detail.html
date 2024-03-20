@@ -92,6 +92,23 @@
       
       <div class="card mb-4">
         <div class="card-body">
+            <div class="card-text">
+            <div class="card-header"><strong>
+                  تجهیزات پزشکی
+            </strong>  </div>
+                {%for i in object.medical_equipment.all%}
+                    {{i}}: <a href="{% url 'asset:equipment_detail' i.id %}">جزییات</a> <br>
+                    <hr>
+                {% empty %}
+                <p> تجهیزات پزشکی به سرویس اختصاص داده نشده است </p>
+                {% endfor %}
+        </div>
+      </div>   
+      </div>
+
+
+      <div class="card mb-4">
+        <div class="card-body">
             
             <div class="card-header"><strong>
                  لیست بیمه های پوشش دهنده
