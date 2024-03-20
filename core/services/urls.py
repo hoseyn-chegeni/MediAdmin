@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import (
-
     ServiceCreateView,
     ServiceDetailView,
     ServiceLDeleteView,
@@ -117,13 +116,25 @@ urlpatterns = [
         name="package_reactive",
     ),
     # PACKAGE STEPS URLS.
-    path('package/<int:pk>/add_service/', ServicePackageCreateView.as_view(), name='add_service_to_package'),
-    path('package/<int:pk>/update_service/', ServicePackageUpdateView.as_view(), name='update_service_package'),
-    path('package/<int:pk>/delete_service/', ServicePackageDeleteView.as_view(), name='delete_service_from_package'),
-
-
-    #Update Service Price
-    path('update-service-prices/', UpdateServicePricesView.as_view(), name='update_service_prices'),
-
+    path(
+        "package/<int:pk>/add_service/",
+        ServicePackageCreateView.as_view(),
+        name="add_service_to_package",
+    ),
+    path(
+        "package/<int:pk>/update_service/",
+        ServicePackageUpdateView.as_view(),
+        name="update_service_package",
+    ),
+    path(
+        "package/<int:pk>/delete_service/",
+        ServicePackageDeleteView.as_view(),
+        name="delete_service_from_package",
+    ),
+    # Update Service Price
+    path(
+        "update-service-prices/",
+        UpdateServicePricesView.as_view(),
+        name="update_service_prices",
+    ),
 ]
-

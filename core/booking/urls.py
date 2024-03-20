@@ -20,7 +20,6 @@ urlpatterns = [
     path("create/", AppointmentCreateView.as_view(), name="create"),
     path("update/<int:pk>/", AppointmentUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", AppointmentDeleteView.as_view(), name="delete"),
-    
     # PACKAGE APPOINTMENT URLS.
     path("package_list/", PackageAppointmentListView.as_view(), name="package_list"),
     path(

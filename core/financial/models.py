@@ -42,12 +42,17 @@ class Financial(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-    coupon = models.ForeignKey("Coupon", on_delete=models.SET_NULL, blank=True, null=True)
-
+    coupon = models.ForeignKey(
+        "Coupon", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            if self.coupon and self.coupon.amount and self.coupon.valid_from <= date.today() <= self.coupon.valid_to:
+            if (
+                self.coupon
+                and self.coupon.amount
+                and self.coupon.valid_from <= date.today() <= self.coupon.valid_to
+            ):
                 # Apply discount based on coupon amount
                 self.discount = self.coupon.amount
                 # Calculate service price and consumable prices
@@ -64,10 +69,16 @@ class Financial(models.Model):
                     * (Decimal(str(self.insurance_range)) / Decimal(100))
                 )
                 self.total_amount = total_amount_after_tax
-                self.insurance_amount = total_amount_after_tax - total_amount_with_insurance
+                self.insurance_amount = (
+                    total_amount_after_tax - total_amount_with_insurance
+                )
                 self.final_amount = total_amount_with_insurance - self.coupon.amount
-            elif self.coupon and self.coupon.percentage  and  self.coupon.valid_from <= date.today() <= self.coupon.valid_to:
-                           # Apply discount based on coupon amount
+            elif (
+                self.coupon
+                and self.coupon.percentage
+                and self.coupon.valid_from <= date.today() <= self.coupon.valid_to
+            ):
+                # Apply discount based on coupon amount
                 self.discount = self.coupon.percentage
                 # Calculate service price and consumable prices
                 self.service_price = self.reception.service.price
@@ -83,8 +94,13 @@ class Financial(models.Model):
                     * (Decimal(str(self.insurance_range)) / Decimal(100))
                 )
                 self.total_amount = total_amount_after_tax
-                self.insurance_amount = total_amount_after_tax - total_amount_with_insurance
-                self.final_amount =total_amount_with_insurance -  (total_amount_with_insurance  * (Decimal(str(self.discount)) / Decimal(100)))
+                self.insurance_amount = (
+                    total_amount_after_tax - total_amount_with_insurance
+                )
+                self.final_amount = total_amount_with_insurance - (
+                    total_amount_with_insurance
+                    * (Decimal(str(self.discount)) / Decimal(100))
+                )
             else:
                 self.service_price = self.reception.service.price
                 self.consumable_price = sum(
@@ -99,10 +115,14 @@ class Financial(models.Model):
                     * (Decimal(str(self.insurance_range)) / Decimal(100))
                 )
                 self.total_amount = total_amount_after_tax
-                self.insurance_amount = total_amount_after_tax - total_amount_with_insurance
+                self.insurance_amount = (
+                    total_amount_after_tax - total_amount_with_insurance
+                )
                 self.final_amount = total_amount_with_insurance
 
-        if "service_price" in kwargs.get("update_fields", []) or "consumable_price" in kwargs.get("update_fields", []):
+        if "service_price" in kwargs.get(
+            "update_fields", []
+        ) or "consumable_price" in kwargs.get("update_fields", []):
             # Recalculate total amount including tax
             total_amount_before_tax = self.service_price + self.consumable_price
             total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
@@ -137,15 +157,15 @@ class OfficeExpenses(models.Model):
         return f"{self.date} - {self.subject}"
 
 
-
-class Coupon(models.Model): #BASED ON AMOUNT
-    name = models.CharField(max_length = 255)
-    code = models.CharField(max_length=20, unique=True, blank = True, null = True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, blank = True, null = True)
-    percentage = models.DecimalField(max_digits=5, decimal_places=2, blank = True, null = True)
+class Coupon(models.Model):  # BASED ON AMOUNT
+    name = models.CharField(max_length=255)
+    code = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    percentage = models.DecimalField(
+        max_digits=5, decimal_places=2, blank=True, null=True
+    )
     valid_from = models.DateField()
     valid_to = models.DateField()
 
     def __str__(self):
         return self.name
-

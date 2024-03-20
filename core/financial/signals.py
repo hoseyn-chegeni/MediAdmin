@@ -8,12 +8,15 @@ from reception.models import Reception
 from insurance.models import InsuranceService
 from .models import Coupon
 
+
 @receiver(post_save, sender=Reception)
 def create_financial(sender, instance, created, **kwargs):
     if created:
         client_insurance = instance.client.insurance
         service = instance.service
-        service_insurance_services = InsuranceService.objects.filter(service_id=service.id)
+        service_insurance_services = InsuranceService.objects.filter(
+            service_id=service.id
+        )
 
         if service_insurance_services.exists():
             for i in service_insurance_services:
@@ -36,16 +39,14 @@ def create_financial(sender, instance, created, **kwargs):
             )
 
 
-
 @receiver(pre_save, sender=Coupon)
 def generate_coupon_code(sender, instance, **kwargs):
     if not instance.code:
         # Generate a random code
         code_length = 8
         chars = string.ascii_uppercase + string.digits
-        code = ''.join(random.choice(chars) for _ in range(code_length))
+        code = "".join(random.choice(chars) for _ in range(code_length))
         # Check if the generated code already exists
         while Coupon.objects.filter(code=code).exists():
-            code = ''.join(random.choice(chars) for _ in range(code_length))
+            code = "".join(random.choice(chars) for _ in range(code_length))
         instance.code = code
-

@@ -294,14 +294,17 @@ class PackageDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         package = self.get_object()
-        services = package.servicepackage_set.all().select_related('service')  # Retrieve associated services
-        context['services'] = services
+        services = package.servicepackage_set.all().select_related(
+            "service"
+        )  # Retrieve associated services
+        context["services"] = services
         doctors = set()
         for service_package in package.servicepackage_set.all():
             doctors.add(service_package.service.doctor)
-        context['doctors'] = doctors
+        context["doctors"] = doctors
 
         return context
+
 
 class PackageUpdateView(BaseUpdateView):
     model = Package
@@ -340,64 +343,68 @@ class ReactivePackageView(View):
             reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
         )
 
-#Package Steps Here. 
+
+# Package Steps Here.
 class ServicePackageCreateView(BaseCreateView):
     model = ServicePackage
-    fields = ['service', 'gap_with_next_service']
-    template_name = 'package/steps/create.html' 
-
+    fields = ["service", "gap_with_next_service"]
+    template_name = "package/steps/create.html"
 
     def form_valid(self, form):
         # Get the package object from the URL parameter
-        package_id = self.kwargs['pk']
+        package_id = self.kwargs["pk"]
         package = Package.objects.get(pk=package_id)
         form.instance.package = package
 
         # Validate the gap_with_next_service field
-        gap_with_next_service = form.cleaned_data.get('gap_with_next_service')
+        gap_with_next_service = form.cleaned_data.get("gap_with_next_service")
         if gap_with_next_service is not None and gap_with_next_service <= 0:
-            form.add_error('gap_with_next_service', "فاصله زمانی با سرویس بعدی باید یک عدد صحیح مثبت باشد.")
+            form.add_error(
+                "gap_with_next_service",
+                "فاصله زمانی با سرویس بعدی باید یک عدد صحیح مثبت باشد.",
+            )
             return self.form_invalid(form)
         return super().form_valid(form)
-    
-    def get_success_url(self):
-        return reverse_lazy('services:package_detail', kwargs={"pk": self.kwargs['pk']})
 
-    
+    def get_success_url(self):
+        return reverse_lazy("services:package_detail", kwargs={"pk": self.kwargs["pk"]})
+
 
 class ServicePackageUpdateView(BaseUpdateView):
     model = ServicePackage
-    fields = ["gap_with_next_service",]
-    template_name = 'package/steps/update.html'
-
+    fields = [
+        "gap_with_next_service",
+    ]
+    template_name = "package/steps/update.html"
 
     def get_success_url(self):
         # Redirect to the package detail page after updating the service
-        package = self.get_object().package.id  # Assuming Service has a ForeignKey to Package
-        return reverse_lazy('services:package_detail', kwargs={'pk': package})
-
+        package = (
+            self.get_object().package.id
+        )  # Assuming Service has a ForeignKey to Package
+        return reverse_lazy("services:package_detail", kwargs={"pk": package})
 
 
 class ServicePackageDeleteView(BaseDeleteView):
     model = ServicePackage
 
     def get_success_url(self):
-        package = self.get_object().package.id 
-        return reverse_lazy('services:package_detail', kwargs={'pk': package})
-    
+        package = self.get_object().package.id
+        return reverse_lazy("services:package_detail", kwargs={"pk": package})
 
 
-
-#Update Service Price
+# Update Service Price
 class UpdateServicePricesView(FormView):
-    template_name = 'services/bulk_update.html'
+    template_name = "services/bulk_update.html"
     form_class = ServiceSelectionForm
-    success_url = reverse_lazy('services:list')  # Change this to the appropriate success URL
+    success_url = reverse_lazy(
+        "services:list"
+    )  # Change this to the appropriate success URL
 
     def form_valid(self, form):
-        services = form.cleaned_data['services']
-        percentage_change = form.cleaned_data['percentage_change']
-        
+        services = form.cleaned_data["services"]
+        percentage_change = form.cleaned_data["percentage_change"]
+
         for service in services:
             # Calculate the new price based on the percentage change
             new_price = service.price * (1 + percentage_change / 100)
@@ -405,5 +412,5 @@ class UpdateServicePricesView(FormView):
             service.price = new_price
             service.save()
 
-        messages.success(self.request, 'افزایش فیمت با موفقیت انجام شد')
+        messages.success(self.request, "افزایش فیمت با موفقیت انجام شد")
         return super().form_valid(form)

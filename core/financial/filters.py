@@ -6,7 +6,6 @@ from django import forms
 from datetime import datetime, timedelta
 
 
-
 class FinancialFilter(django_filters.FilterSet):
     created_at = django_filters.DateFilter(
         field_name="created_at",
@@ -25,8 +24,12 @@ class FinancialFilter(django_filters.FilterSet):
     )
     id = django_filters.NumberFilter(field_name="id", lookup_expr="exact")
     invoice_number = django_filters.CharFilter(lookup_expr="icontains")
-    reception_id = django_filters.NumberFilter(field_name="reception_id", lookup_expr="exact")
-    coupon = django_filters.CharFilter(field_name="coupon__name", lookup_expr="icontains")
+    reception_id = django_filters.NumberFilter(
+        field_name="reception_id", lookup_expr="exact"
+    )
+    coupon = django_filters.CharFilter(
+        field_name="coupon__name", lookup_expr="icontains"
+    )
     client = django_filters.CharFilter(
         field_name="reception__client__get_full_name", lookup_expr="icontains"
     )
@@ -47,15 +50,29 @@ class FinancialFilter(django_filters.FilterSet):
             return queryset.filter(created_at__date__range=[start_of_week, end_of_week])
         elif value == "this_month":
             start_of_month = today.replace(day=1)
-            end_of_month = start_of_month.replace(month=start_of_month.month + 1, day=1) - timedelta(days=1)
-            return queryset.filter(created_at__date__range=[start_of_month, end_of_month])
+            end_of_month = start_of_month.replace(
+                month=start_of_month.month + 1, day=1
+            ) - timedelta(days=1)
+            return queryset.filter(
+                created_at__date__range=[start_of_month, end_of_month]
+            )
 
     def filter_by_date(self, queryset, name, value):
         return queryset.filter(created_at__date=value)
 
     class Meta:
         model = Financial
-        fields = ["id", "invoice_number", "reception_id", "coupon", "client", "service", "doctor", "date_range",'created_at']
+        fields = [
+            "id",
+            "invoice_number",
+            "reception_id",
+            "coupon",
+            "client",
+            "service",
+            "doctor",
+            "date_range",
+            "created_at",
+        ]
 
 
 class OfficeExpensesFilter(django_filters.FilterSet):

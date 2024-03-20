@@ -152,9 +152,9 @@ class Package(models.Model):
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
     description = models.TextField(blank=True, null=True)
-    preparation_instructions = models.TextField(blank = True, null = True)
+    preparation_instructions = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="images", blank=True, null=True)
-    attachment = models.FileField(upload_to='attachments', blank= True, null= True)
+    attachment = models.FileField(upload_to="attachments", blank=True, null=True)
 
     @property
     def total_price(self):
@@ -173,13 +173,14 @@ class Package(models.Model):
                 total_price += service_consumable.consumable.price
 
         return total_price
-    
+
     @property
     def service_count(self):
         return self.servicepackage_set.count()
 
     def __str__(self):
         return self.name
+
 
 # Package Steps
 class ServicePackage(models.Model):

@@ -29,14 +29,13 @@ class FinancialCreateView(BaseCreateView):
 class FinancialDetailView(BaseDetailView):
     model = Financial
     template_name = "financial/detail.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         financial = self.get_object()
         client = financial.reception.client
-        context['client'] = client
+        context["client"] = client
         return context
-
 
 
 class FinancialUpdateView(BaseUpdateView):
