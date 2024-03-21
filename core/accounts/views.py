@@ -51,6 +51,11 @@ class UserDetailView(BaseDetailView):
     context_object_name = "user"
     permission_required = "accounts.view_user"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context["user_permissions"] = user.user_permissions.all()
+        return context
 
 class UserCreateView(BaseCreateView):
     model = User

@@ -126,14 +126,18 @@
               </div>
             </div>
           </div>
+
+
           <div class="col-md-6">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
                 <p class="mb-4"> دسترسی ها</p>
-
+              {% for i in user_permissions%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
+                {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
-
+                {%endfor%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مدیریت دسترسی ها</a></p>
               </div>
             </div>
           </div>
