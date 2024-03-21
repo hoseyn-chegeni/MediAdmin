@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django_filters.views import FilterView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -8,7 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 
 # Create your views here.
-class BaseListView(LoginRequiredMixin, FilterView):
+class BaseListView(LoginRequiredMixin,PermissionRequiredMixin, FilterView):
     def get_paginate_by(self, queryset):
         # Get the value for paginate_by dynamically (e.g., from a form input or session)
         # Example: Set paginate_by to a user-selected value stored in session
@@ -18,7 +18,7 @@ class BaseListView(LoginRequiredMixin, FilterView):
         return user_selected_value
 
 
-class BaseCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class BaseCreateView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = ""
     app_name = ""
     url_name = ""
@@ -32,11 +32,11 @@ class BaseCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return "با موفقیت افزوده شد"
 
 
-class BaseDetailView(LoginRequiredMixin, DetailView):
+class BaseDetailView(LoginRequiredMixin,PermissionRequiredMixin, DetailView):
     pass
 
 
-class BaseUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class BaseUpdateView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
     app_name = ""
     url_name = ""
 
@@ -49,7 +49,7 @@ class BaseUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return "با موفقیت ویرایش شد"
 
 
-class BaseDeleteView(LoginRequiredMixin, DeleteView):
+class BaseDeleteView(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
     template_name = "delete.html"
     app_name = ""
     url_name = ""

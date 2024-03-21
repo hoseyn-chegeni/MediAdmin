@@ -17,12 +17,14 @@ class AppointmentListView(BaseListView):
     template_name = "booking/list.html"
     context_object_name = "appointments"
     filterset_class = 0
+    permission_required = "booking.view_appointment"
 
 
 class AppointmentDetailView(BaseDetailView):
     model = Appointment
     template_name = "booking/detail.html"
     context_object_name = "appointment"
+    permission_required = "booking.view_appointment"
 
 
 class AppointmentUpdateView(BaseUpdateView):
@@ -31,12 +33,14 @@ class AppointmentUpdateView(BaseUpdateView):
     template_name = "booking/update.html"
     app_name = "booking"
     url_name = "detail"
+    permission_required = "booking.change_appointment"
 
 
 class AppointmentDeleteView(BaseDeleteView):
     model = Appointment
     app_name = "booking"
     url_name = "list"
+    permission_required = "booking.delete_appointment"
 
 
 class AppointmentCreateView(BaseCreateView):
@@ -45,6 +49,9 @@ class AppointmentCreateView(BaseCreateView):
     template_name = "booking/create.html"
     app_name = "booking"
     url_name = "detail"
+    permission_required = "booking.add_appointment"
+
+
 
     def form_valid(self, form):
         appointment_date = form.cleaned_data["date"]
@@ -104,6 +111,7 @@ class PackageAppointmentListView(BaseListView):
     template_name = "booking/package/list.html"
     context_object_name = "appointments"
     filterset_class = 0
+    permission_required = "booking.view_packageappointment"
 
 
 class PackageAppointmentCreateView(BaseCreateView):
@@ -112,11 +120,13 @@ class PackageAppointmentCreateView(BaseCreateView):
     template_name = "booking/package/create.html"
     app_name = "booking"
     url_name = "package_detail"
+    permission_required = "booking.add_packageappointment"
 
 
 class PackageAppointmentDetailViews(BaseDetailView):
     model = PackageAppointment
     template_name = "booking/package/detail.html"
+    permission_required = "booking.view_packageappointment"
 
 
 class PackageAppointmentUpdateView(BaseUpdateView):
@@ -125,9 +135,11 @@ class PackageAppointmentUpdateView(BaseUpdateView):
     template_name = "booking/package/update.html"
     app_name = "booking"
     url_name = "package_detail"
+    permission_required = "booking.change_packageappointment"
 
 
 class PackageAppointmentDeleteView(BaseDeleteView):
     model = PackageAppointment
     app_name = "booking"
     url_name = "package_list"
+    permission_required = "booking.delete_packageappointment"

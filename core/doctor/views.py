@@ -25,6 +25,8 @@ class DoctorListView(BaseListView):
     template_name = "doctor/list.html"
     context_object_name = "doctor"
     filterset_class = DoctorFilter
+    permission_required = "doctor.view_doctor"
+
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -36,6 +38,7 @@ class SuspendDoctorListView(BaseListView):
     template_name = "doctor/suspend_list.html"
     context_object_name = "doctor"
     filterset_class = DoctorFilter
+    permission_required = "doctor.view_doctor"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -46,6 +49,7 @@ class DoctorDetailView(BaseDetailView):
     model = Doctor
     template_name = "doctor/detail.html"
     context_object_name = "doctor"
+    permission_required = "doctor.view_doctor"
 
     def get_context_data(self, **kwargs):
         doctor = self.get_object()
@@ -87,6 +91,7 @@ class DoctorCreateView(BaseCreateView):
     template_name = "doctor/create.html"
     app_name = "doctor"
     url_name = "detail"
+    permission_required = "doctor.add_doctor"
 
 
 class DoctorUpdateView(BaseUpdateView):
@@ -95,12 +100,14 @@ class DoctorUpdateView(BaseUpdateView):
     template_name = "doctor/update.html"
     app_name = "doctor"
     url_name = "detail"
+    permission_required = "doctor.change_doctor"
 
 
 class DoctorDeleteView(BaseDeleteView):
     model = Doctor
     app_name = "doctor"
     url_name = "list"
+    permission_required = "doctor.delete_doctor"
 
 
 class SuspendDoctorView(View):

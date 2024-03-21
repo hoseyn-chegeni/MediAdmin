@@ -25,6 +25,8 @@ class UserListView(BaseListView):
     template_name = "accounts/list.html"
     context_object_name = "users"
     filterset_class = UserFilter
+    permission_required = "accounts.view_user"
+
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -36,6 +38,7 @@ class SuspendUserListView(BaseListView):
     template_name = "accounts/suspend_list.html"
     context_object_name = "users"
     filterset_class = UserFilter
+    permission_required = "accounts.view_user"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -46,6 +49,7 @@ class UserDetailView(BaseDetailView):
     model = User
     template_name = "accounts/detail.html"
     context_object_name = "user"
+    permission_required = "accounts.view_user"
 
 
 class UserCreateView(BaseCreateView):
@@ -54,6 +58,7 @@ class UserCreateView(BaseCreateView):
     template_name = "accounts/create.html"
     app_name = "accounts"
     url_name = "user_detail"
+    permission_required = "accounts.add_user"
 
 
 class UserUpdateView(BaseUpdateView):
@@ -62,12 +67,14 @@ class UserUpdateView(BaseUpdateView):
     template_name = "accounts/update.html"
     app_name = "accounts"
     url_name = "user_detail"
+    permission_required = "accounts.change_user"
 
 
 class UserDeleteView(BaseDeleteView):
     model = User
     app_name = "accounts"
     url_name = "user_list"
+    permission_required = "accounts.delete_user"
 
 
 class UserLogoutView(LogoutView):
@@ -79,6 +86,8 @@ class ProfileView(BaseDetailView):
     model = User
     template_name = "accounts/profile.html"
     context_object_name = "profile"
+    permission_required = "accounts.view_user"
+
 
     def get_object(self, queryset=None):
         # Assuming UserProfile is associated with User model through a OneToOneField named 'user'

@@ -16,6 +16,7 @@ class FinancialListView(BaseListView):
     template_name = "financial/list.html"
     context_object_name = "financial"
     filterset_class = FinancialFilter
+    permission_required = "financial.view_financial"
 
 
 class FinancialCreateView(BaseCreateView):
@@ -24,11 +25,13 @@ class FinancialCreateView(BaseCreateView):
     template_name = "financial/create.html"
     app_name = "financial"
     url_name = "detail"
+    permission_required = "financial.add_financial"
 
 
 class FinancialDetailView(BaseDetailView):
     model = Financial
     template_name = "financial/detail.html"
+    permission_required = "financial.view_financial"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,6 +47,7 @@ class FinancialUpdateView(BaseUpdateView):
     template_name = "financial/update.html"
     app_name = "financial"
     url_name = "detail"
+    permission_required = "financial.change_financial"
 
     def form_valid(self, form):
         financial = form.save(commit=False)
@@ -59,6 +63,7 @@ class FinancialDeleteView(BaseDeleteView):
     model = Financial
     app_name = "financial"
     url_name = "list"
+    permission_required = "financial.delete_financial"
 
 
 # OFFICE EXPENSES VIEWS HERE.
@@ -67,6 +72,7 @@ class OfficeExpensesListView(BaseListView):
     template_name = "financial/office_expenses/list.html"
     filterset_class = OfficeExpensesFilter
     context_object_name = "office_expenses"
+    permission_required = "financial.view_officeexpenses"
 
 
 class OfficeExpensesCreateView(BaseCreateView):
@@ -84,6 +90,7 @@ class OfficeExpensesCreateView(BaseCreateView):
     template_name = "financial/office_expenses/create.html"
     app_name = "financial"
     url_name = "office_expenses_detail"
+    permission_required = "financial.add_officeexpenses"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -93,6 +100,7 @@ class OfficeExpensesCreateView(BaseCreateView):
 class OfficeExpensesDetailView(BaseDetailView):
     model = OfficeExpenses
     template_name = "financial/office_expenses/detail.html"
+    permission_required = "financial.view_officeexpenses"
 
 
 class OfficeExpensesUpdateView(BaseUpdateView):
@@ -111,9 +119,11 @@ class OfficeExpensesUpdateView(BaseUpdateView):
 
     app_name = "financial"
     url_name = "office_expenses_detail"
+    permission_required = "financial.change_officeexpenses"
 
 
 class OfficeExpensesDeleteView(BaseDeleteView):
     model = OfficeExpenses
     app_name = "financial"
     url_name = "office_expenses_list"
+    permission_required = "financial.delete_officeexpenses"

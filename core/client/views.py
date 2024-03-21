@@ -25,6 +25,7 @@ class ClientListView(BaseListView):
     template_name = "client/list.html"
     context_object_name = "clients"
     filterset_class = ClientFilters
+    permission_required = "client.view_client"
 
 
 class ClientCreateView(BaseCreateView):
@@ -33,6 +34,7 @@ class ClientCreateView(BaseCreateView):
     template_name = "client/create.html"
     app_name = "client"
     url_name = "detail"
+    permission_required = "client.add_client"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -43,6 +45,7 @@ class ClientDetailView(BaseDetailView):
     model = Client
     template_name = "client/detail.html"
     context_object_name = "client"
+    permission_required = "client.view_client"
 
     def get_context_data(self, **kwargs):
         client = self.get_object()
@@ -77,6 +80,7 @@ class ClientDeleteView(BaseDeleteView):
     model = Client
     app_name = "client"
     url_name = "list"
+    permission_required = "client.delete_client"
 
 
 class EditPersonalInfoView(BaseUpdateView):
@@ -99,6 +103,7 @@ class EditPersonalInfoView(BaseUpdateView):
     template_name = "client/update.html"
     app_name = "client"
     url_name = "detail"
+    permission_required = "client.change_client"
 
 
 class EditHealthHistoryView(BaseUpdateView):
@@ -114,6 +119,7 @@ class EditHealthHistoryView(BaseUpdateView):
     ]
     app_name = "client"
     url_name = "detail"
+    permission_required = "client.change_client"
 
 
 class VipButtonView(SuccessMessageMixin, View):
@@ -148,6 +154,7 @@ class ClientReceptionsListView(BaseListView):
     model = Reception
     template_name = "client/client_receptions.html"
     filterset_class = ReceptionFilter
+    permission_required = "client.view_client"
 
     def get_queryset(self):
         client_id = self.kwargs["pk"]
@@ -166,6 +173,7 @@ class ClientFinancialInstancesListView(BaseListView):
     model = Financial
     template_name = "client/client_financial.html"
     filterset_class = FinancialFilter
+    permission_required = "client.view_client"
 
     def get_queryset(self):
         client_id = self.kwargs["pk"]

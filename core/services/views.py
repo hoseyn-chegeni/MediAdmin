@@ -25,6 +25,7 @@ class ServiceListView(BaseListView):
     template_name = "services/list.html"
     context_object_name = "services"
     filterset_class = ServicesFilter
+    permission_required = "services.view_service"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -36,6 +37,7 @@ class SuspendServiceListView(BaseListView):
     template_name = "services/suspend_list.html"
     context_object_name = "services"
     filterset_class = ServicesFilter
+    permission_required = "services.view_service"
 
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
@@ -48,6 +50,7 @@ class ServiceCreateView(BaseCreateView):
     template_name = "services/create.html"
     app_name = "services"
     url_name = "detail"
+    permission_required = "services.add_service"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -57,6 +60,7 @@ class ServiceCreateView(BaseCreateView):
 class ServiceDetailView(BaseDetailView):
     model = Service
     template_name = "services/detail.html"
+    permission_required = "services.view_service"
 
     def get_context_data(self, **kwargs):
         service = self.get_object()
@@ -99,6 +103,7 @@ class ServiceUpdateView(BaseUpdateView):
     template_name = "services/update.html"
     app_name = "services"
     url_name = "detail"
+    permission_required = "services.change_service"
 
 
 class ServiceAppointmentConfigView(BaseUpdateView):
@@ -107,12 +112,14 @@ class ServiceAppointmentConfigView(BaseUpdateView):
     template_name = "services/appointment_config.html"
     app_name = "services"
     url_name = "detail"
+    permission_required = "services.change_service"
 
 
 class ServiceLDeleteView(BaseDeleteView):
     model = Service
     app_name = "services"
     url_name = "list"
+    permission_required = "services.delete_service"
 
 
 class SuspendServiceView(View):
@@ -148,6 +155,7 @@ class ServiceConsumableCreateView(BaseCreateView):
         "note",
     ]
     template_name = "services/consumable_create.html"
+    permission_required = "services.view_serviceconsumable"
 
     def form_valid(self, form):
         form.instance.service = Service.objects.get(id=self.kwargs["pk"])
@@ -161,12 +169,15 @@ class ServiceConsumableDeleteView(BaseDeleteView):
     model = ServiceConsumable
     app_name = "services"
     url_name = "list"
+    permission_required = "services.delete_serviceconsumable"
 
 
 class WaitingQueueView(BaseListView):
+    model = Reception
     template_name = "services/queue.html"
     context_object_name = "receptions"
     filterset_class = QueueFilter
+    permission_required = "reception.view_reception"
 
     def get_queryset(self):
         # Retrieve the service object based on the provided service_id in the URL
@@ -192,6 +203,7 @@ class ServiceCategoryListView(BaseListView):
     template_name = "services/category/list.html"
     context_object_name = "category"
     filterset_class = ServiceCategoryFilter
+    permission_required = "services.view_servicecategory"
 
 
 class ServiceCategoryCreateView(BaseCreateView):
@@ -204,6 +216,7 @@ class ServiceCategoryCreateView(BaseCreateView):
     template_name = "services/category/create.html"
     app_name = "services"
     url_name = "category_detail"
+    permission_required = "services.add_servicecategory"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -213,6 +226,7 @@ class ServiceCategoryCreateView(BaseCreateView):
 class ServiceCategoryDetailView(BaseDetailView):
     model = ServiceCategory
     template_name = "services/category/detail.html"
+    permission_required = "services.view_servicecategory"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -236,12 +250,14 @@ class ServiceCategoryUpdateView(BaseUpdateView):
     template_name = "services/category/update.html"
     app_name = "services"
     url_name = "category_detail"
+    permission_required = "services.change_servicecategory"
 
 
 class ServiceCategoryDeleteView(BaseDeleteView):
     model = ServiceCategory
     app_name = "services"
     url_name = "category_list"
+    permission_required = "services.delete_servicecategory"
 
 
 class SuspendServiceCategoryView(View):
@@ -278,6 +294,7 @@ class PackageListView(BaseListView):
     template_name = "package/list.html"
     context_object_name = "package"
     filterset_class = PackageFilter
+    permission_required = "services.view_package"
 
 
 class PackageCreateView(BaseCreateView):
@@ -286,11 +303,13 @@ class PackageCreateView(BaseCreateView):
     template_name = "package/create.html"
     app_name = "services"
     url_name = "package_detail"
+    permission_required = "services.add_package"
 
 
 class PackageDetailView(BaseDetailView):
     model = Package
     template_name = "package/detail.html"
+    permission_required = "services.view_package"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -313,12 +332,14 @@ class PackageUpdateView(BaseUpdateView):
     fields = "__all__"
     app_name = "services"
     url_name = "package_detail"
+    permission_required = "services.change_package"
 
 
 class PackageDeleteView(BaseDeleteView):
     model = Package
     app_name = "services"
     url_name = "package_list"
+    permission_required = "services.delete_package"
 
 
 class SuspendPackageView(View):
@@ -350,6 +371,7 @@ class ServicePackageCreateView(BaseCreateView):
     model = ServicePackage
     fields = ["service", "gap_with_next_service"]
     template_name = "package/steps/create.html"
+    permission_required = "services.view_servicepackage"
 
     def form_valid(self, form):
         # Get the package object from the URL parameter
@@ -377,6 +399,7 @@ class ServicePackageUpdateView(BaseUpdateView):
         "gap_with_next_service",
     ]
     template_name = "package/steps/update.html"
+    permission_required = "services.change_servicepackage"
 
     def get_success_url(self):
         # Redirect to the package detail page after updating the service
@@ -388,6 +411,7 @@ class ServicePackageUpdateView(BaseUpdateView):
 
 class ServicePackageDeleteView(BaseDeleteView):
     model = ServicePackage
+    permission_required = "services.delete_servicepackage"
 
     def get_success_url(self):
         package = self.get_object().package.id

@@ -24,6 +24,7 @@ class ReceptionListView(BaseListView):
     template_name = "reception/list.html"
     context_object_name = "reception"
     filterset_class = ReceptionFilter
+    permission_required = "reception.view_reception"
 
 
 class ReceptionCreateView(BaseCreateView):
@@ -32,6 +33,7 @@ class ReceptionCreateView(BaseCreateView):
     template_name = "reception/create.html"
     app_name = "reception"
     url_name = "detail"
+    permission_required = "reception.add_reception"
 
     def form_valid(self, form):
         # Set the client for the reception
@@ -44,6 +46,7 @@ class ReceptionDetailView(BaseDetailView):
     model = Reception
     template_name = "reception/detail.html"
     context_object_name = "reception"
+    permission_required = "reception.view_reception"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,6 +61,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
     template_name = "reception/create_profile.html"
     app_name = "reception"
     url_name = "detail"
+    permission_required = "reception.add_reception"
 
     def get_initial(self):
         initial = super().get_initial()
@@ -86,6 +90,7 @@ class ReceptionDeleteView(BaseDeleteView):
     model = Reception
     app_name = "reception"
     url_name = "list"
+    permission_required = "reception.delete_reception"
 
 
 class CompleteReceptionView(SuccessMessageMixin, View):
@@ -114,3 +119,4 @@ class ReceptionUpdateView(BaseUpdateView):
     template_name = "reception/update.html"
     app_name = "reception"
     url_name = "detail"
+    permission_required = "reception.change_reception"

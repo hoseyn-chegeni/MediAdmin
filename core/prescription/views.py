@@ -18,6 +18,7 @@ class PrescriptionListView(BaseListView):
     template_name = "prescription/list.html"
     context_object_name = "prescription"
     filterset_class = PrescriptionFilter
+    permission_required = "prescription.view_prescription"
 
 
 class PrescriptionCreateView(BaseCreateView):
@@ -30,6 +31,7 @@ class PrescriptionCreateView(BaseCreateView):
     template_name = "prescription/create.html"
     app_name = "prescription"
     url_name = "detail"
+    permission_required = "prescription.add_prescription"
 
     def get_initial(self):
         initial = super().get_initial()
@@ -47,12 +49,14 @@ class PrescriptionCreateWithoutPkView(BaseCreateView):
     template_name = "prescription/create.html"
     app_name = "prescription"
     url_name = "detail"
+    permission_required = "prescription.add_prescription"
 
 
 class PrescriptionDetailView(BaseDetailView):
     model = Prescription
     template_name = "prescription/detail.html"
     context_object_name = "prescription"
+    permission_required = "prescription.view_prescription"
 
 
 class PrescriptionUpdateView(BaseUpdateView):
@@ -61,12 +65,14 @@ class PrescriptionUpdateView(BaseUpdateView):
     template_name = "prescription/update.html"
     app_name = "prescription"
     url_name = "detail"
+    permission_required = "prescription.change_prescription"
 
 
 class PrescriptionDeleteView(BaseDeleteView):
     model = Prescription
     app_name = "prescription"
     url_name = "list"
+    permission_required = "prescription.delete_prescription"
 
 
 # Prescription Header Views here.
@@ -76,6 +82,7 @@ class PrescriptionHeaderCreateView(BaseCreateView):
     template_name = "prescription/create.html"
     app_name = "doctor"
     url_name = "detail"
+    permission_required = "prescription.add_prescriptionheader"
 
     def get_initial(self):
         initial = super().get_initial()
@@ -101,6 +108,7 @@ class PrescriptionHeaderUpdateView(BaseUpdateView):
     template_name = "prescription/update.html"
     app_name = "doctor"
     url_name = "detail"
+    permission_required = "prescription.update_prescriptionheader"
 
     def get_success_url(self):
         return reverse_lazy(
