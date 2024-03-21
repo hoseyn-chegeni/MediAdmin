@@ -23,19 +23,22 @@ def create_financial(sender, instance, created, **kwargs):
                 if i.insurance == client_insurance:
                     Financial.objects.create(
                         reception=instance,
-                        invoice_number=f"INV-{instance.pk}",  # You can customize how the invoice number is generated
-                        payment_status="UNPAID",  # Default payment status
-                        payment_received_date=None,  # No payment received initially
+                        invoice_number=f"INV-{instance.pk}", 
+                        payment_status="UNPAID",
+                        payment_received_date=None, 
                         valid_insurance=True,
                         insurance_range=i.percentage,
+                        attachment = instance.invoice_attachment
                     )
                     break
         else:
             Financial.objects.create(
                 reception=instance,
-                invoice_number=f"INV-{instance.pk}",  # You can customize how the invoice number is generated
-                payment_status="UNPAID",  # Default payment status
-                payment_received_date=None,  # No payment received initially
+                invoice_number=f"INV-{instance.pk}",
+                payment_status="UNPAID",
+                payment_received_date=None,
+                attachment = instance.invoice_attachment
+
             )
 
 
