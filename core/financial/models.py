@@ -45,7 +45,7 @@ class Financial(models.Model):
     coupon = models.ForeignKey(
         "Coupon", on_delete=models.SET_NULL, blank=True, null=True
     )
-
+    attachment = models.FileField(upload_to="attachments/", blank=True, null=True)
     def save(self, *args, **kwargs):
         if not self.pk:
             if (
