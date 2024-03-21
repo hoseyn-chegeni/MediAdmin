@@ -15,8 +15,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
-from datetime import date
-from services.models import Service
+
 
 
 # Create your views here.
@@ -29,7 +28,7 @@ class ReceptionListView(BaseListView):
 
 class ReceptionCreateView(BaseCreateView):
     model = Reception
-    fields = ["reason", "payment_type", "payment_status", "client", "service"]
+    fields = ["reason", "payment_type", "payment_status", "client", "service","invoice_attachment",]
     template_name = "reception/create.html"
     app_name = "reception"
     url_name = "detail"
