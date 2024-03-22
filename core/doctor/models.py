@@ -17,7 +17,7 @@ class Doctor(models.Model):
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
     image = models.ImageField(
-        upload_to="images/", blank=True, null=True
+        upload_to="images", default="images/default.png", blank=True, null=True
     )
 
     @property

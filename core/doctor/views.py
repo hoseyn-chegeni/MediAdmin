@@ -17,6 +17,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.db.models import Count
 
 
 # Create your views here.
@@ -37,33 +38,31 @@ class DoctorDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         doctor = self.get_object()
         context = super().get_context_data(**kwargs)
-        services = Service.objects.filter(doctor_id=doctor.id)
-        context["service"] = services
-        context["num_service"] = services.count()
 
-        financial_instances = Financial.objects.filter(
-            reception__service__doctor=doctor
-        )
-        context["financial_instances"] = financial_instances
-        context["num_financial_instances"] = financial_instances.count()
-        context["total_amount_sum"] = Financial.objects.filter(
-            reception__service__doctor=doctor
-        ).aggregate(Sum("total_amount"))["total_amount__sum"]
+        context["service"] =Service.objects.filter(doctor_id=doctor.id).order_by("-created_at")[:5]
+        context["num_service"] = Service.objects.filter(doctor_id=doctor.id).count()
 
-        receptions = Reception.objects.filter(service__doctor=doctor)
-        context["receptions"] = receptions
-        context["num_receptions"] = receptions.count()
+
+        context["receptions"] = Reception.objects.filter(service__doctor=doctor).order_by("-created_at")[:5]
+        context["num_receptions"] = Reception.objects.filter(service__doctor=doctor).count()
 
         # Try to get the prescription header for the doctor
-        prescription_header = PrescriptionHeader.objects.filter(
-            doctor_id=doctor.id
-        ).first()
-
-        # Check if a prescription header exists
+        prescription_header = PrescriptionHeader.objects.filter(doctor_id=doctor.id).first()
         if prescription_header is not None:
             context["prescription"] = prescription_header
         else:
             context["prescription"] = None
+
+        # Calculate total wage of the doctor
+        total_wage = Financial.objects.filter(doctor=doctor).aggregate(Sum('doctors_wage'))['doctors_wage__sum'] or 0
+        context['total_wage'] = total_wage
+
+        service_with_most_receptions = doctor.service_set.annotate(
+            reception_count=Count('reception')
+        ).order_by('-reception_count').first()
+
+        context['service_with_most_receptions'] = service_with_most_receptions
+        return context
 
         return context
 

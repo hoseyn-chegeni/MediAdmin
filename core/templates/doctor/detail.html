@@ -1,42 +1,191 @@
-{{doctor.first_name}} {{doctor.last_name}}
-<p>-----------</p>
-{% if prescription %}
-<a href="{% url 'prescription:header_update' prescription.id %}">Update prescription header</a>
-{% else %}
-    <a href="{% url 'prescription:header_create' doctor.pk %}">Add prescription header</a>
-{% endif %}
-<p>-----------</p>
-<p>Service</p>
-<ul>
-{%for i in service%}
-   <li> {{i}}</li>
-{%empty%}
-<li> No Service Found</li>
- {%endfor%}
-</ul>
+{%extends 'base.html' %}
+{% block title %}دکتر {{object}}{% endblock %}
 
-<p>-----------</p>
-<p>Financial Instance</p>   
-<ul>
-{%for i in financial_instances%}
-<li> {{i}}</li>
-{%empty%}
-<li> No financial Instance found </li>
- {%endfor%}
-</ul>
+{% block content%}
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="{{object.image.url}}" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3" dir="rtl">{{object.last_name}} {{object.first_name}}</h5>
+            <p class="text-muted mb-1">{{object.email}}</p>
+            <p class="text-muted mb-1">{{object.phone_number}}</p>
+            <br>
+            <div class="d-flex justify-content-center mb-2">
+              <a href="#" class="btn btn-primary">ثبت سرویس </a>
+              <a href="{% url 'doctor:update' object.id %}" class="btn btn-outline-primary ms-1">ویرایش</a>
+              {% if prescription %}
+                <a href="{% url 'prescription:header_update' prescription.id %}" class="btn btn-outline-primary ms-1">ویرایش سرنسخه</a>
+                {% else %}
+                    <a href="{% url 'prescription:header_create' doctor.pk %}" class="btn btn-outline-primary ms-1">افزودن سرنسخه</a>
+                {% endif %}
+              <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" class="btn btn-outline-primary ms-1" >حذف</a>
+            </div>
+          </div>
+        </div>
+
+      <div class="card mb-4 mb-lg-0">
+        <div class="card-body p-1">
+          <ul class="list-group list-group-flush rounded-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد سرویس ها: {{num_service}}</p>
+          </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>مجموع درآمد : {{total_wage}}</p>
+          </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد پذیرش ها: {{num_receptions}}</p>
+          </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p> بیشترین پذیرش یک سرویس:{{service_with_most_receptions}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
 
-<p>-----------</p>
-<p>Reception</p>
-<ul>
-{%for i in receptions%}
-<li> {{i}}</li>
-{%empty%}
-<li>No Reception found</li>
- {%endfor%}
-</ul>
-<p>---------------------------</p>
-<p>services: {{num_service}}</p>
-<p>reception: {{num_receptions}}</p>
-<p>Financial instances: {{num_financial_instances}}</p>
-<p>Total Amount: {{total_amount_sum}}</p>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">شماره سیستمی:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{object.id}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">تخصص:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{object.specialization}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">شماره نظام پزشکی:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{object.registration_number}}</p>
+              </div>
+            </div>         
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">فعال:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{object.is_active}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">تاریخ ایجاد:</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0">{{object.created_at}}</p>
+              </div>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">تاریخ آخرین ویرایش:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{object.updated_at}}</p>
+                </div>
+              </div>
+              <hr>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">ایجاد کننده:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{object.created_by}}</p>
+                </div>
+              </div>
+              </div>
+             </div>
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پذیرش</p>
+                {% for i in receptions %}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'reception:detail' i.id %}">جزییات</a></p>
+                {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+                <p><a href="#">تاریخچه تمامی پذیرش های پزشک</a></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">سرویس های ارایه شده
+                </p>
+                {% for i in service %}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'services:detail' i.id %}">جزییات</a> </p>
+              {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+                <p><a href="#">لیست تمام سرویس های ارایه شده </a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- DELETE MODALS -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       پزشک {{object}} یه طور کامل از سیستم پاک شود؟
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'doctor:delete' pk=object.pk %}" class="btn">تایید</a>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}

@@ -35,6 +35,7 @@ def create_financial(sender, instance, created, **kwargs):
                         attachment = instance.invoice_attachment,
                         doctors_wage = wage,
                         revenue = revenue,
+                        doctor = instance.service.doctor
                     )
                     break
         else:
@@ -46,6 +47,8 @@ def create_financial(sender, instance, created, **kwargs):
                 attachment = instance.invoice_attachment,
                 doctors_wage = wage,
                 revenue = revenue,
+                doctor = instance.service.doctor
+
             )
 
 

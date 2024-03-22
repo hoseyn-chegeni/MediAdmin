@@ -1,0 +1,10 @@
+
+
+
+
+
+{% if prescription %}
+<a href="{% url 'prescription:header_update' prescription.id %}">Update prescription header</a>
+{% else %}
+    <a href="{% url 'prescription:header_create' doctor.pk %}">Add prescription header</a>
+{% endif %}
