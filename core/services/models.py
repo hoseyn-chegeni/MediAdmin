@@ -21,6 +21,7 @@ class Service(models.Model):
     doctor = models.ForeignKey(
         "doctor.Doctor", on_delete=models.SET_NULL, blank=True, null=True
     )
+    doctors_wage_percentage = models.PositiveIntegerField(default = 0)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(
         "ServiceCategory", on_delete=models.SET_NULL, blank=True, null=True
