@@ -92,14 +92,14 @@ class DoctorCreateView(BaseCreateView):
     app_name = "doctor"
     url_name = "detail"
     permission_required = "doctor.add_doctor"
-    
+
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
 class DoctorUpdateView(BaseUpdateView):
     model = Doctor
-    fields = "__all__"
+    fields = ['first_name','last_name','email','phone_number','address','specialization','registration_number','image']
     template_name = "doctor/update.html"
     app_name = "doctor"
     url_name = "detail"
