@@ -18,8 +18,20 @@ class Doctor(models.Model):
     )
     image = models.ImageField(
         upload_to="images/", blank=True, null=True
-    )  # Image field for the Doctor
+    )
 
+    @property
+    def services(self):
+        return self.service_set.all().count()
+
+    @property
+    def total_reception_count(self):
+        total_count = 0
+        for service in self.service_set.all():
+            total_count += service.total_reception_count
+        return total_count
+
+    
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
