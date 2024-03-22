@@ -7,11 +7,15 @@ from .models import Financial
 from reception.models import Reception
 from insurance.models import InsuranceService
 from .models import Coupon
+from decimal import Decimal
 
 
 @receiver(post_save, sender=Reception)
 def create_financial(sender, instance, created, **kwargs):
     if created:
+
+        wage = instance.service.price * (Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100))
+        revenue = instance.service.price - wage
         client_insurance = instance.client.insurance
         service = instance.service
         service_insurance_services = InsuranceService.objects.filter(
@@ -28,7 +32,9 @@ def create_financial(sender, instance, created, **kwargs):
                         payment_received_date=None, 
                         valid_insurance=True,
                         insurance_range=i.percentage,
-                        attachment = instance.invoice_attachment
+                        attachment = instance.invoice_attachment,
+                        doctors_wage = wage,
+                        revenue = revenue,
                     )
                     break
         else:
@@ -37,8 +43,9 @@ def create_financial(sender, instance, created, **kwargs):
                 invoice_number=f"INV-{instance.pk}",
                 payment_status="UNPAID",
                 payment_received_date=None,
-                attachment = instance.invoice_attachment
-
+                attachment = instance.invoice_attachment,
+                doctors_wage = wage,
+                revenue = revenue,
             )
 
 
