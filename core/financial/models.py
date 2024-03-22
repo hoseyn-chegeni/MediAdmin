@@ -20,6 +20,7 @@ class Financial(models.Model):
     payment_status = models.CharField(max_length=20,choices=(("PAID", "Paid"),("UNPAID", "Unpaid"),("PARTIAL", "Partial Payment"),),default="UNPAID",)
     payment_received_date = models.DateField(blank=True, null=True)
     tax_rate = Decimal("0.09")
+    doctor = models.ForeignKey('doctor.Doctor', on_delete = models.SET_NULL, blank = True, null = True)
     doctors_wage = models.PositiveIntegerField(default = 0)
     revenue = models.PositiveIntegerField(default = 0)
     created_at = models.DateTimeField(auto_now_add=True)
