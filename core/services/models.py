@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from reception.models import Reception
 from booking.models import Appointment
+from django.core.validators import MaxValueValidator
 
 # Create your models here.
 
@@ -21,7 +22,7 @@ class Service(models.Model):
     doctor = models.ForeignKey(
         "doctor.Doctor", on_delete=models.SET_NULL, blank=True, null=True
     )
-    doctors_wage_percentage = models.PositiveIntegerField(default = 0)
+    doctors_wage_percentage = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(
         "ServiceCategory", on_delete=models.SET_NULL, blank=True, null=True
