@@ -13,38 +13,19 @@ class Financial(models.Model):
     discount = models.PositiveIntegerField(default=0)
     insurance_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     date_issued = models.DateField(auto_now_add=True)
-    service_price = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
-    consumable_price = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
-    total_amount = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
-    final_amount = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
-    payment_status = models.CharField(
-        max_length=20,
-        choices=(
-            ("PAID", "Paid"),
-            ("UNPAID", "Unpaid"),
-            ("PARTIAL", "Partial Payment"),
-        ),
-        default="UNPAID",
-    )
+    service_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    consumable_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    final_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    payment_status = models.CharField(max_length=20,choices=(("PAID", "Paid"),("UNPAID", "Unpaid"),("PARTIAL", "Partial Payment"),),default="UNPAID",)
     payment_received_date = models.DateField(blank=True, null=True)
     tax_rate = Decimal("0.09")
-
+    doctors_wage = models.PositiveIntegerField(default = 0)
+    revenue = models.PositiveIntegerField(default = 0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(
-        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    coupon = models.ForeignKey(
-        "Coupon", on_delete=models.SET_NULL, blank=True, null=True
-    )
+    created_by = models.ForeignKey("accounts.User", on_delete=models.SET_NULL, blank=True, null=True)
+    coupon = models.ForeignKey("Coupon", on_delete=models.SET_NULL, blank=True, null=True)
     attachment = models.FileField(upload_to="attachments/", blank=True, null=True)
     def save(self, *args, **kwargs):
         if not self.pk:
