@@ -154,7 +154,7 @@
               {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-                <p><a href="#">لیست تمام سرویس های ارایه شده </a></p>
+                <p><a href="{%url 'doctor:services' object.id%}">لیست تمام سرویس های ارایه شده </a></p>
               </div>
             </div>
           </div>

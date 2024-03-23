@@ -19,6 +19,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.db.models import Count
 from reception.filters import ReceptionFilter
+from services.filters import ServicesFilter
 
 # Create your views here.
 class DoctorListView(BaseListView):
@@ -126,6 +127,23 @@ class DoctorReceptionHistoryListView(BaseListView):
     def get_queryset(self):
         doctor_id = self.kwargs["pk"]
         return Reception.objects.filter(service__doctor_id=doctor_id) 
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])
+        return context
+    
+
+class DoctorServicesListView(BaseListView):
+    model = Service
+    context_object_name = 'services'
+    template_name = 'doctor/service.html'
+    permission_required = 'doctor.view_doctor'
+    filterset_class = ServicesFilter
+
+    def get_queryset(self):
+        doctor_id = self.kwargs["pk"]
+        return Service.objects.filter(doctor_id=doctor_id) 
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

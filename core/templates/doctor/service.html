@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% block title %}لیست سرویس ها{% endblock %}
+{% block title %} سرویس های دکتر {{doctor}} {% endblock %}
 
 {%block content%}
     <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
@@ -7,7 +7,7 @@
           <div class="text-center pt-3 pb-2">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
               alt="Check" width="60">
-            <h2 class="my-4">لیست سرویس ها</h2>
+            <h2 class="my-4">لیست سرویس های دکتر {{doctor}}</h2>
           </div>
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-12 col-xl-10">
@@ -27,18 +27,6 @@
                       </div>
 
                       <div class="col-sm-6">
-                        <label for="service">نام پزشک</label>
-                        <select class="form-select" name="service" id="service">
-                          <option value="" selected>---------</option>
-                          {% for i in filter.form.doctor.field.queryset %}
-                            <option value="{{ i.id }}">{{ i }}</option>
-                          {% endfor %}
-                        </select>
-                      </div>
-          
-
-                      
-                      <div class="col-sm-6">
                         <label for="service">دسته بندی سرویس ها</label>
                         <select class="form-select" name="service" id="service">
                           <option value="" selected>---------</option>
@@ -53,10 +41,8 @@
                     </form>
 
                     <div class="mb-4">
-                    <a href="{% url 'services:create' %}" class="btn btn-success me-2">ایجاد سرویس جدید</a>
+                    <a href="{% url 'services:create' %}" class="btn btn-success me-2">ایجاد سرویس جدید برای دکتر {{doctor}}</a>
                     <a href="#" class="btn btn-success me-2">گزارشات</a>
-                    <a href="{% url 'services:update_service_prices' %}"class="btn btn-success me-2">افزایش قیمت دسته ای سرویس ها</a>
-
                     </div>
 
                   <table class="table text-white mb-0">
@@ -64,7 +50,6 @@
                       <tr>
                         <th scope="col">شماره سرویس</th>
                         <th scope="col">نام سرویس</th>
-                        <th scope="col">نام پزشک</th>
                         <th scope="col">دسته بندی</th>
                         <th scope="col">قیمت</th>
                         <th scope="col">  پذیرش های امروز</th>
@@ -85,10 +70,6 @@
                         <td class="align-middle">
                           <span>{{i.name}}</span>
                         </td>
-                        <td class="align-middle">
-                            <span>{{i.doctor}}</span>
-                          </td>
-
                           <td class="align-middle">
                             <span>{{i.category}}</span>
                           </td>
@@ -171,4 +152,5 @@
           </div>
         </div>
       </section>
+
 {%endblock%}
