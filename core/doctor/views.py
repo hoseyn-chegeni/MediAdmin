@@ -100,9 +100,9 @@ class SuspendDoctorView(View):
         doctor = Doctor.objects.get(pk=pk)
         if doctor:
             doctor.is_active = False
-            messages.success(self.request, f"Doctor suspended successfully!")
+            messages.success(self.request, f"پزشک {doctor.get_full_name()} غیرفعال شد")
             doctor.save()
-        return HttpResponseRedirect(reverse_lazy("doctor:list"))
+        return HttpResponseRedirect(reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk}))
 
 
 class ReactiveDoctorView(View):
@@ -110,6 +110,7 @@ class ReactiveDoctorView(View):
         doctor = Doctor.objects.filter(pk=pk).first()
         if doctor:
             doctor.is_active = True
-            messages.success(self.request, f"Doctor Reactive successfully!")
+            messages.success(self.request, f"پزشک {doctor.get_full_name()} مجددا فعال شد ")
             doctor.save()
-        return HttpResponseRedirect(reverse_lazy("doctor:suspend_list"))
+        return HttpResponseRedirect(reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk}))
+

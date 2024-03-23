@@ -84,10 +84,16 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">فعال:</p>
+                <p class="mb-0">وضعیت:</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{object.is_active}}</p>
+                {% if object.is_active%}
+                <p class="text-muted mb-0">فعال <a href="#" data-toggle="modal" data-target="#SuspendModal"  title="Delete" class="btn btn-outline-primary ms-1" >غیرفعال سازی </a>
+                </p>
+                {%else%}
+                <p class="text-muted mb-0">غیرفعال <a href="#" data-toggle="modal" data-target="#ReactiveModal"  title="Delete" class="btn btn-outline-primary ms-1" >فعال سازی مجدد</a>
+                </p>
+              {%endif%}
               </div>
             </div>
             <hr>
@@ -175,6 +181,48 @@
       </div>
       <div class="modal-footer">
         <a class="btn btn-primary" href="{% url 'doctor:delete' pk=object.pk %}" class="btn">تایید</a>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SUSPEND MODALS -->
+<div class="modal fade" id="SuspendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تایید غیرفعال سازی </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      آیا از تغییر وضعیت پزشک به غیرفعال مطمین هستید؟
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'doctor:suspend' pk=object.pk %}" class="btn">تایید</a>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- REACTIVE MODALS -->
+<div class="modal fade" id="ReactiveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">تایید </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        آیا از فعال سازی مجدد پزشک مطمین هستید؟
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="{% url 'doctor:reactive' pk=object.pk %}" class="btn">تایید</a>
     </div>
     </div>
   </div>
