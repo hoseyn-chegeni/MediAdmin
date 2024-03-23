@@ -9,11 +9,11 @@ class DoctorFilter(FilterSet):
     class Meta:
         model = Doctor
         fields = {
-            'id': ['exact'],
-            'email': ['icontains'],
-            'specialization': ['icontains'],
-            'registration_number': ['exact'],
-            'is_active': ['exact'],
+            "id": ["exact"],
+            "email": ["icontains"],
+            "specialization": ["icontains"],
+            "registration_number": ["exact"],
+            "is_active": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):

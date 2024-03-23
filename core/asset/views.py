@@ -19,7 +19,6 @@ class ConsumableListView(BaseListView):
     permission_required = "asset.view_consumable"
 
 
-
 class ConsumableDetailView(BaseDetailView):
     model = Consumable
     template_name = "asset/detail.html"
@@ -116,12 +115,12 @@ class SupplierListView(BaseListView):
     filterset_class = SupplierFilter
     permission_required = "asset.view_supplier"
 
+
 class SupplierDetailView(BaseDetailView):
     model = Supplier
     template_name = "asset/supplier/detail.html"
     context_object_name = "supplier"
     permission_required = "asset.view_supplier"
-
 
     def get_context_data(self, **kwargs):
         supplier = self.get_object()

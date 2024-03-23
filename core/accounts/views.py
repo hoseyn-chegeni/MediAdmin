@@ -27,7 +27,6 @@ class UserListView(BaseListView):
     filterset_class = UserFilter
     permission_required = "accounts.view_user"
 
-
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(is_active=True)
@@ -56,6 +55,7 @@ class UserDetailView(BaseDetailView):
         user = self.get_object()
         context["user_permissions"] = user.user_permissions.all()
         return context
+
 
 class UserCreateView(BaseCreateView):
     model = User
@@ -92,7 +92,6 @@ class ProfileView(BaseDetailView):
     template_name = "accounts/profile.html"
     context_object_name = "profile"
     permission_required = "accounts.view_user"
-
 
     def get_object(self, queryset=None):
         # Assuming UserProfile is associated with User model through a OneToOneField named 'user'

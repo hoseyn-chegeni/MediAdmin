@@ -17,7 +17,6 @@ from django.contrib import messages
 from django.urls import reverse
 
 
-
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -29,7 +28,14 @@ class ReceptionListView(BaseListView):
 
 class ReceptionCreateView(BaseCreateView):
     model = Reception
-    fields = ["reason", "payment_type", "payment_status", "client", "service","invoice_attachment",]
+    fields = [
+        "reason",
+        "payment_type",
+        "payment_status",
+        "client",
+        "service",
+        "invoice_attachment",
+    ]
     template_name = "reception/create.html"
     app_name = "reception"
     url_name = "detail"

@@ -31,7 +31,6 @@ class Doctor(models.Model):
             total_count += service.total_reception_count
         return total_count
 
-    
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 

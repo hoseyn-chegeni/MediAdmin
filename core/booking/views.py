@@ -51,8 +51,6 @@ class AppointmentCreateView(BaseCreateView):
     url_name = "detail"
     permission_required = "booking.add_appointment"
 
-
-
     def form_valid(self, form):
         appointment_date = form.cleaned_data["date"]
         current_month = datetime.now().month

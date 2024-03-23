@@ -21,6 +21,7 @@ from django.db.models import Count
 from reception.filters import ReceptionFilter
 from services.filters import ServicesFilter
 
+
 # Create your views here.
 class DoctorListView(BaseListView):
     model = Doctor
@@ -40,29 +41,43 @@ class DoctorDetailView(BaseDetailView):
         doctor = self.get_object()
         context = super().get_context_data(**kwargs)
 
-        context["service"] =Service.objects.filter(doctor_id=doctor.id).order_by("-created_at")[:5]
+        context["service"] = Service.objects.filter(doctor_id=doctor.id).order_by(
+            "-created_at"
+        )[:5]
         context["num_service"] = Service.objects.filter(doctor_id=doctor.id).count()
 
-
-        context["receptions"] = Reception.objects.filter(service__doctor=doctor).order_by("-created_at")[:5]
-        context["num_receptions"] = Reception.objects.filter(service__doctor=doctor).count()
+        context["receptions"] = Reception.objects.filter(
+            service__doctor=doctor
+        ).order_by("-created_at")[:5]
+        context["num_receptions"] = Reception.objects.filter(
+            service__doctor=doctor
+        ).count()
 
         # Try to get the prescription header for the doctor
-        prescription_header = PrescriptionHeader.objects.filter(doctor_id=doctor.id).first()
+        prescription_header = PrescriptionHeader.objects.filter(
+            doctor_id=doctor.id
+        ).first()
         if prescription_header is not None:
             context["prescription"] = prescription_header
         else:
             context["prescription"] = None
 
         # Calculate total wage of the doctor
-        total_wage = Financial.objects.filter(doctor=doctor).aggregate(Sum('doctors_wage'))['doctors_wage__sum'] or 0
-        context['total_wage'] = total_wage
+        total_wage = (
+            Financial.objects.filter(doctor=doctor).aggregate(Sum("doctors_wage"))[
+                "doctors_wage__sum"
+            ]
+            or 0
+        )
+        context["total_wage"] = total_wage
 
-        service_with_most_receptions = doctor.service_set.annotate(
-            reception_count=Count('reception')
-        ).order_by('-reception_count').first()
+        service_with_most_receptions = (
+            doctor.service_set.annotate(reception_count=Count("reception"))
+            .order_by("-reception_count")
+            .first()
+        )
 
-        context['service_with_most_receptions'] = service_with_most_receptions
+        context["service_with_most_receptions"] = service_with_most_receptions
         return context
 
         return context
@@ -80,9 +95,19 @@ class DoctorCreateView(BaseCreateView):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
+
 class DoctorUpdateView(BaseUpdateView):
     model = Doctor
-    fields = ['first_name','last_name','email','phone_number','address','specialization','registration_number','image']
+    fields = [
+        "first_name",
+        "last_name",
+        "email",
+        "phone_number",
+        "address",
+        "specialization",
+        "registration_number",
+        "image",
+    ]
     template_name = "doctor/update.html"
     app_name = "doctor"
     url_name = "detail"
@@ -103,7 +128,9 @@ class SuspendDoctorView(View):
             doctor.is_active = False
             messages.success(self.request, f"پزشک {doctor.get_full_name()} غیرفعال شد")
             doctor.save()
-        return HttpResponseRedirect(reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk}))
+        return HttpResponseRedirect(
+            reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk})
+        )
 
 
 class ReactiveDoctorView(View):
@@ -111,40 +138,43 @@ class ReactiveDoctorView(View):
         doctor = Doctor.objects.filter(pk=pk).first()
         if doctor:
             doctor.is_active = True
-            messages.success(self.request, f"پزشک {doctor.get_full_name()} مجددا فعال شد ")
+            messages.success(
+                self.request, f"پزشک {doctor.get_full_name()} مجددا فعال شد "
+            )
             doctor.save()
-        return HttpResponseRedirect(reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk}))
-
+        return HttpResponseRedirect(
+            reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk})
+        )
 
 
 class DoctorReceptionHistoryListView(BaseListView):
     model = Reception
-    context_object_name = 'reception'
-    template_name = 'doctor/reception_history.html'
-    permission_required = 'doctor.view_doctor'
+    context_object_name = "reception"
+    template_name = "doctor/reception_history.html"
+    permission_required = "doctor.view_doctor"
     filterset_class = ReceptionFilter
 
     def get_queryset(self):
         doctor_id = self.kwargs["pk"]
-        return Reception.objects.filter(service__doctor_id=doctor_id) 
-    
+        return Reception.objects.filter(service__doctor_id=doctor_id)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])
         return context
-    
+
 
 class DoctorServicesListView(BaseListView):
     model = Service
-    context_object_name = 'services'
-    template_name = 'doctor/service.html'
-    permission_required = 'doctor.view_doctor'
+    context_object_name = "services"
+    template_name = "doctor/service.html"
+    permission_required = "doctor.view_doctor"
     filterset_class = ServicesFilter
 
     def get_queryset(self):
         doctor_id = self.kwargs["pk"]
-        return Service.objects.filter(doctor_id=doctor_id) 
-    
+        return Service.objects.filter(doctor_id=doctor_id)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])

@@ -14,7 +14,9 @@ from decimal import Decimal
 def create_financial(sender, instance, created, **kwargs):
     if created:
 
-        wage = instance.service.price * (Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100))
+        wage = instance.service.price * (
+            Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100)
+        )
         revenue = instance.service.price - wage
         client_insurance = instance.client.insurance
         service = instance.service
@@ -27,15 +29,15 @@ def create_financial(sender, instance, created, **kwargs):
                 if i.insurance == client_insurance:
                     Financial.objects.create(
                         reception=instance,
-                        invoice_number=f"INV-{instance.pk}", 
+                        invoice_number=f"INV-{instance.pk}",
                         payment_status="UNPAID",
-                        payment_received_date=None, 
+                        payment_received_date=None,
                         valid_insurance=True,
                         insurance_range=i.percentage,
-                        attachment = instance.invoice_attachment,
-                        doctors_wage = wage,
-                        revenue = revenue,
-                        doctor = instance.service.doctor
+                        attachment=instance.invoice_attachment,
+                        doctors_wage=wage,
+                        revenue=revenue,
+                        doctor=instance.service.doctor,
                     )
                     break
         else:
@@ -44,11 +46,10 @@ def create_financial(sender, instance, created, **kwargs):
                 invoice_number=f"INV-{instance.pk}",
                 payment_status="UNPAID",
                 payment_received_date=None,
-                attachment = instance.invoice_attachment,
-                doctors_wage = wage,
-                revenue = revenue,
-                doctor = instance.service.doctor
-
+                attachment=instance.invoice_attachment,
+                doctors_wage=wage,
+                revenue=revenue,
+                doctor=instance.service.doctor,
             )
 
 

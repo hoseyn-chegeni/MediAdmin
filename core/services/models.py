@@ -22,7 +22,9 @@ class Service(models.Model):
     doctor = models.ForeignKey(
         "doctor.Doctor", on_delete=models.SET_NULL, blank=True, null=True
     )
-    doctors_wage_percentage = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(100)])
+    doctors_wage_percentage = models.PositiveIntegerField(
+        default=0, validators=[MaxValueValidator(100)]
+    )
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(
         "ServiceCategory", on_delete=models.SET_NULL, blank=True, null=True
@@ -42,7 +44,7 @@ class Service(models.Model):
     # suggested_prescription = 0
     appointment_per_day = models.PositiveIntegerField(default=3)
     off_days = models.ManyToManyField("OffDay", blank=True)
-    medical_equipment = models.ManyToManyField('asset.Equipment', blank= True)
+    medical_equipment = models.ManyToManyField("asset.Equipment", blank=True)
 
     @property
     def today_reception_count(self):

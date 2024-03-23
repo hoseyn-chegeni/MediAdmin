@@ -8,7 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 
 # Create your views here.
-class BaseListView(LoginRequiredMixin,PermissionRequiredMixin, FilterView):
+class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
     def get_paginate_by(self, queryset):
         # Get the value for paginate_by dynamically (e.g., from a form input or session)
         # Example: Set paginate_by to a user-selected value stored in session
@@ -18,7 +18,9 @@ class BaseListView(LoginRequiredMixin,PermissionRequiredMixin, FilterView):
         return user_selected_value
 
 
-class BaseCreateView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+class BaseCreateView(
+    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView
+):
     success_message = ""
     app_name = ""
     url_name = ""
@@ -32,11 +34,13 @@ class BaseCreateView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageM
         return "با موفقیت افزوده شد"
 
 
-class BaseDetailView(LoginRequiredMixin,PermissionRequiredMixin, DetailView):
+class BaseDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     pass
 
 
-class BaseUpdateView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
+class BaseUpdateView(
+    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, UpdateView
+):
     app_name = ""
     url_name = ""
 
@@ -49,7 +53,7 @@ class BaseUpdateView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageM
         return "با موفقیت ویرایش شد"
 
 
-class BaseDeleteView(LoginRequiredMixin,PermissionRequiredMixin, DeleteView):
+class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "delete.html"
     app_name = ""
     url_name = ""
