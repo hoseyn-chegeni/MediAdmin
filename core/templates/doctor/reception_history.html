@@ -74,6 +74,7 @@
                         <th scope="col">نام بیمار</th>
                         <th scope="col">کدملی</th>
                         <th scope="col">سرویس</th>
+                        <th scope="col">وضعیت پذیرش</th>
                         <th scope="col">شماره فاکتور</th>
                         <th scope="col">اکشن ها</th>
 
@@ -101,6 +102,10 @@
                             <span>{{i.service}}</span>
                           </td>
 
+                          <td class="align-middle">
+                            <span>{{i.status}}</span>
+                          </td>
+
 
 
                           <td class="align-middle">
@@ -111,7 +116,6 @@
                         <td class="align-middle">
                             <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
                             <a href="{%url 'reception:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
-                            <a href="{% url 'prescription:create' i.id %}" data-mdb-toggle="tooltip" title="افزودن نسخه"><i class="fas fa-prescription"></i></a>
 
                         </td>
                       </tr>
