@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% block title %} لیست پذیرش ها{% endblock %}
+{% block title %}تاریخچه پذیرش های دکتر {{doctor}}{% endblock %}
 
 {%block content%}
     <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
@@ -7,7 +7,7 @@
           <div class="text-center pt-3 pb-2">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
               alt="Check" width="60">
-            <h2 class="my-4">لیست پذیرش ها</h2>
+            <h2 class="my-4">تاریخچه پذیرش های دکتر {{doctor}}</h2>
           </div>
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-12 col-xl-10">
@@ -63,7 +63,6 @@
                     </form>
 
                     <div class="mb-4">
-                    <a href="{% url 'reception:create' %}" class="btn btn-success me-2">ایجاد پذیرش جدید</a>
                     <a href="#" class="btn btn-success me-2">گزارشات</a>
                     </div>
 
@@ -75,7 +74,6 @@
                         <th scope="col">نام بیمار</th>
                         <th scope="col">کدملی</th>
                         <th scope="col">سرویس</th>
-                        <th scope="col"> نام پزشک معالجه کننده</th>
                         <th scope="col">شماره فاکتور</th>
                         <th scope="col">اکشن ها</th>
 
@@ -104,9 +102,6 @@
                           </td>
 
 
-                          <td class="align-middle">
-                            <span>{{i.service.doctor}}</span>
-                          </td>
 
                           <td class="align-middle">
                             <span>{{i.financial.id}}</span>

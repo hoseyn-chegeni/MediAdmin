@@ -7,6 +7,7 @@ from .views import (
     DoctorDetailView,
     SuspendDoctorView,
     ReactiveDoctorView,
+    DoctorReceptionHistoryListView,
 )
 
 app_name = "doctor"
@@ -19,4 +20,5 @@ urlpatterns = [
     path("doctor/delete/<int:pk>/", DoctorDeleteView.as_view(), name="delete"),
     path("suspend/<int:pk>/", SuspendDoctorView.as_view(), name="suspend"),
     path("reactive/<int:pk>/", ReactiveDoctorView.as_view(), name="reactive"),
+    path('reception-history/<int:pk>/', DoctorReceptionHistoryListView.as_view(), name='reception_history'),
 ]

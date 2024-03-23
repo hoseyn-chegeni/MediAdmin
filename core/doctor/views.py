@@ -18,7 +18,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.db.models import Count
-
+from reception.filters import ReceptionFilter
 
 # Create your views here.
 class DoctorListView(BaseListView):
@@ -114,3 +114,20 @@ class ReactiveDoctorView(View):
             doctor.save()
         return HttpResponseRedirect(reverse_lazy("doctor:detail", kwargs={"pk": doctor.pk}))
 
+
+
+class DoctorReceptionHistoryListView(BaseListView):
+    model = Reception
+    context_object_name = 'reception'
+    template_name = 'doctor/reception_history.html'
+    permission_required = 'doctor.view_doctor'
+    filterset_class = ReceptionFilter
+
+    def get_queryset(self):
+        doctor_id = self.kwargs["pk"]
+        return Reception.objects.filter(service__doctor_id=doctor_id) 
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])
+        return context

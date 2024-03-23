@@ -139,7 +139,7 @@
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-                <p><a href="#">تاریخچه تمامی پذیرش های پزشک</a></p>
+                <p><a href="{% url 'doctor:reception_history' object.id %}">تاریخچه تمامی پذیرش های پزشک</a></p>
               </div>
             </div>
           </div>
