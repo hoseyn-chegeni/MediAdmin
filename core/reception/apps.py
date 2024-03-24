@@ -6,4 +6,4 @@ class ReceptionConfig(AppConfig):
     name = "reception"
 
     def ready(self):
-        from .signals import update_last_reception_date, update_reception_number
+        from .signals import update_last_reception_date, update_reception_number, send_sms
