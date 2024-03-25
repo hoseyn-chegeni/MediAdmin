@@ -2,7 +2,6 @@
 {% block title %}{{client}}{% endblock %}
 
 {% block content%}
-<section style="background-color: #eee;">
   <div class="container py-5">
     <div class="row">
       <div class="col">
@@ -41,6 +40,10 @@
           </li>
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
               <p> نسخه ها: {{num_prescriptions}}</p>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>پیامک های ارسال شده:  {{sms_count}}</p>
+            </li>
           </ul>
         </div>
       </div>
@@ -134,9 +137,9 @@
                 </div>
                 <div class="col-sm-9">
                   {%if client.is_vip%}
-                  <p class="text-muted mb-0">بله٫  <a href="#" data-toggle="modal" data-target="#removevipModal" >خارج ساختن از حالت بیمار ویژه</a></p>
+                  <p class="text-muted mb-0">بله٫  <a href="#" data-toggle="modal" data-target="#removevipModal" class="btn btn-outline-primary ms-1">خارج ساختن از حالت بیمار ویژه</a></p>
                   {%else%}
-                  <p class="text-muted mb-0">خیر,  <a href="#" data-toggle="modal" data-target="#vipModal" >عضویت در بیماران ویژه</a></p>
+                  <p class="text-muted mb-0">خیر,  <a href="#" data-toggle="modal" data-target="#vipModal" class="btn btn-outline-primary ms-1">عضویت در بیماران ویژه</a></p>
                 {%endif%}
                 </div>
               </div>
@@ -224,12 +227,12 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-lg-4">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پذیرش</p>
                 {% for i in reception_history %}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'reception:detail' i.id %}">جزییات</a></p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i.id}}- {{i.reason}},<a href="{% url 'reception:detail' i.id %}">جزییات</a></p>
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
@@ -237,16 +240,31 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+
+          <div class="col-lg-4">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">فاکتور های صادر شده</p>
                 {% for i in financial_instances %}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}, <a href="{% url 'financial:detail' i.id %}">جزییات</a> </p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i.invoice_number}}, <a href="{% url 'financial:detail' i.id %}">جزییات</a> </p>
               {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
                 <p><a href="{% url 'client:client-financial' client.id %}">تاریخچه تمامی پرداخت های بیمار</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پیامک های ارسال شده</p>
+                {% for i in sms %}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i.subject}}-{{i.status}}, <a href="#">جزییات</a> </p>
+              {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+                <p><a href="#">تاریخچه تمام پیامک های ارسال شده به بیمار</a></p>
               </div>
             </div>
           </div>
