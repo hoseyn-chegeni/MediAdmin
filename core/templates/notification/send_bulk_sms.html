@@ -1,0 +1,14 @@
+<!-- sms/send_bulk_sms.html -->
+{% extends 'base.html' %}
+{% block title %} Send Bulk SMS {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Send Bulk SMS</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+{% endblock %}

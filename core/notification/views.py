@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from base.views import BaseListView, BaseDetailView,BaseDeleteView
 from logs.models import ClientSMSLog
-from .forms import SMSSendForm
+from .forms import SMSSendForm, BulkSMSSendForm
 from logs.models import ClientSMSLog
 from kavenegar import *
 from os import getenv
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from client.models import Client
+import re
 
 
 # Create your views here.
@@ -69,5 +70,53 @@ class SMSSendView(FormView):
             message_body=message,
             status="Field",
             response=e,
+            )
+        return super().form_valid(form)
+    
+
+
+
+
+class BulkSMSSendView(FormView):
+    template_name = 'notification/send_bulk_sms.html'
+    form_class = BulkSMSSendForm
+    success_url = reverse_lazy('notification:sms_list')
+
+    def form_valid(self, form):
+        try:
+            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
+            clients = []
+            for i in form.cleaned_data['clients']:
+                clients.append(str(i.phone_number))
+            message = form.cleaned_data['message']
+            sender = "2000500666"  # optional
+            for client in clients:
+                params = {
+                    "sender": sender,
+                    "receptor": clients,
+                    "message": message,
+                }
+                response = api.sms_send(params)
+                for i in clients:
+                    ClientSMSLog.objects.create(
+                        client=clients,
+                        sender_number=sender,
+                        receiver_number=i.phone_number,
+                        subject="اطلاع رسانی پذیرش",
+                        message_body=message,
+                        status=response["status"],
+                        response=response,
+                    )
+        except (APIException, HTTPException) as e:
+            print(e)
+            for i in form.cleaned_data['clients']:
+                ClientSMSLog.objects.create(
+                    client=i,
+                    sender_number=sender,
+                    receiver_number=i.phone_number,
+                    subject="اطلاع رسانی پذیرش",
+                    message_body=message,
+                    status="Field",
+                    response=e,
             )
         return super().form_valid(form)
