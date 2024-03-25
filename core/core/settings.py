@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "prescription",
     "financial",
     "booking",
+    "logs",
 ]
 
 MIDDLEWARE = [
