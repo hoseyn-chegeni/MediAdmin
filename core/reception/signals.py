@@ -4,6 +4,7 @@ from .models import Reception
 from datetime import date
 from kavenegar import *
 from os import getenv
+from logs.models import ClientSMSLog
 
 @receiver(post_save, sender=Reception)
 def update_last_reception_date(sender, instance, created, **kwargs):
@@ -38,7 +39,35 @@ def send_sms(sender, instance, created, **kwargs):
             } 
             response = api.sms_send(params)
             print(response)
+            ClientSMSLog.objects.create(
+                client = instance.client,
+                sender_number = params['sender'],
+                receiver_number = params['receptor'],
+                subject = 'اطلاع رسانی پذیرش',
+                message_body = params['message'],
+                status = response['status'],
+                response = response,
+            )
+
         except APIException as e: 
             print(e)
+            ClientSMSLog.objects.create(
+                client = instance.client,
+                sender_number = params['sender'],
+                receiver_number = params['receptor'],
+                subject = 'اطلاع رسانی پذیرش',
+                message_body = params['message'],
+                status = 'Field',
+                response = e,
+            )
         except HTTPException as e: 
             print(e)
+            ClientSMSLog.objects.create(
+                client = instance.client,
+                sender_number = params['sender'],
+                receiver_number = params['receptor'],
+                subject = 'اطلاع رسانی پذیرش',
+                message_body = params['message'],
+                status = 'Field',
+                response = e,
+            )
