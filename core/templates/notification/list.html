@@ -1,0 +1,11 @@
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in sms%}
+  <p>  {{i.id}}.{{i.client}},
+      <a href="{% url 'notification:sms_detail' i.pk %}">Details</a>,
+      <a href="{% url 'notification:sms_delete' i.pk %}">Delete</a>
+    </p>
+{% endfor %}
