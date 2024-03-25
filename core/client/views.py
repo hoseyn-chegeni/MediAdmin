@@ -19,6 +19,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from logs.models import ClientSMSLog
 
+
 # Create your views here.
 class ClientListView(BaseListView):
     model = Client
@@ -74,8 +75,10 @@ class ClientDetailView(BaseDetailView):
         )["total_amount__sum"]
         context["total_amount_sum"] = total_amount_sum
 
-        context['sms'] = ClientSMSLog.objects.filter(client_id = client.id).order_by("-created_at")[:5]
-        context['sms_count'] = ClientSMSLog.objects.filter(client_id = client.id).count()
+        context["sms"] = ClientSMSLog.objects.filter(client_id=client.id).order_by(
+            "-created_at"
+        )[:5]
+        context["sms_count"] = ClientSMSLog.objects.filter(client_id=client.id).count()
         return context
 
 

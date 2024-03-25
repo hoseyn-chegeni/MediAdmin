@@ -37,7 +37,7 @@ urlpatterns = (
         path("prescription/", include("prescription.urls")),
         path("financial/", include("financial.urls")),
         path("booking/", include("booking.urls")),
-        path("logs/", include("logs.urls")),
+        path("notification/", include("notification.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

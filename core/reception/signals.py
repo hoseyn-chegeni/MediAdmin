@@ -33,56 +33,56 @@ def update_reception_number(sender, instance, created, **kwargs):
 def send_sms(sender, instance, created, **kwargs):
     if created:
         try:
-            api = KavenegarAPI(getenv('KAVENEGAR_API_KEY'))
+            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
             params = {
-                'sender': '2000500666',#optional
-                'receptor': '09356822312',#multiple mobile number, split by comma
-                'message': 'همراه گرامی سرکار خانم  سپیده باقری نوبت شما برای سرویس بوتاکس  دکتر چگنی در تاریخ ۱۴۰۳/۰۱/۱۵ ثبت گردید لطفا در تاریخ اعلام شده در مطب حضور داشته باشید',
-            } 
+                "sender": "2000500666",  # optional
+                "receptor": "09356822312",  # multiple mobile number, split by comma
+                "message": "همراه گرامی سرکار خانم  سپیده باقری نوبت شما برای سرویس بوتاکس  دکتر چگنی در تاریخ ۱۴۰۳/۰۱/۱۵ ثبت گردید لطفا در تاریخ اعلام شده در مطب حضور داشته باشید",
+            }
             response = api.sms_send(params)
             print(response)
             ClientSMSLog.objects.create(
-                client = instance.client,
-                sender_number = params['sender'],
-                receiver_number = params['receptor'],
-                subject = 'اطلاع رسانی پذیرش',
-                message_body = params['message'],
-                status = response['status'],
-                response = response,
+                client=instance.client,
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی پذیرش",
+                message_body=params["message"],
+                status=response["status"],
+                response=response,
             )
 
-        except APIException as e: 
+        except APIException as e:
             print(e)
-            response_text = str(e)  
-            matched_numbers = re.findall(r'\[([\d]+)\]', response_text)
+            response_text = str(e)
+            matched_numbers = re.findall(r"\[([\d]+)\]", response_text)
             if matched_numbers:
-                extracted_number = matched_numbers[0]  
+                extracted_number = matched_numbers[0]
             else:
-                extracted_number = None  
+                extracted_number = None
             ClientSMSLog.objects.create(
                 client=instance.client,
-                sender_number=params['sender'],
-                receiver_number=params['receptor'],
-                subject='اطلاع رسانی پذیرش',
-                message_body=params['message'],
-                status='Field',
-                response=extracted_number, 
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی پذیرش",
+                message_body=params["message"],
+                status="Field",
+                response=extracted_number,
             )
-        except HTTPException as e: 
+        except HTTPException as e:
             print(e)
-            response_text = str(e)  
-            matched_numbers = re.findall(r'\[([\d]+)\]', response_text)
+            response_text = str(e)
+            matched_numbers = re.findall(r"\[([\d]+)\]", response_text)
             if matched_numbers:
-                extracted_number = matched_numbers[0]  
+                extracted_number = matched_numbers[0]
             else:
-                extracted_number = None  
+                extracted_number = None
 
             ClientSMSLog.objects.create(
                 client=instance.client,
-                sender_number=params['sender'],
-                receiver_number=params['receptor'],
-                subject='اطلاع رسانی پذیرش',
-                message_body=params['message'],
-                status='Field',
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی پذیرش",
+                message_body=params["message"],
+                status="Field",
                 response=extracted_number,
             )

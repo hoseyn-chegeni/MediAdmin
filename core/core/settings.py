@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "financial",
     "booking",
     "logs",
+    "notification",
 ]
 
 MIDDLEWARE = [
