@@ -50,25 +50,7 @@ def send_sms(sender, instance, created, **kwargs):
                 status=response["status"],
                 response=response,
             )
-
-        except APIException as e:
-            print(e)
-            response_text = str(e)
-            matched_numbers = re.findall(r"\[([\d]+)\]", response_text)
-            if matched_numbers:
-                extracted_number = matched_numbers[0]
-            else:
-                extracted_number = None
-            ClientSMSLog.objects.create(
-                client=instance.client,
-                sender_number=params["sender"],
-                receiver_number=params["receptor"],
-                subject="اطلاع رسانی پذیرش",
-                message_body=params["message"],
-                status="Field",
-                response=extracted_number,
-            )
-        except HTTPException as e:
+        except (APIException, HTTPException) as e:
             print(e)
             response_text = str(e)
             matched_numbers = re.findall(r"\[([\d]+)\]", response_text)

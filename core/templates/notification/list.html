@@ -1,4 +1,3 @@
-<a href="{%url 'notification:send_sms'%}"> send sms</a>
 <form action="" method="get">
     {%csrf_token%}
     {{filter.form.as_p}}
@@ -7,6 +6,6 @@
 {%for i in sms%}
   <p>  {{i.id}}.{{i.client}},
       <a href="{% url 'notification:sms_detail' i.pk %}">Details</a>,
-      <a href="{% url 'notification:sms_delete' i.pk %}">Delete</a>
+      <a href="{% url 'notification:sms_delete' i.pk %}">Delete</a>,
     </p>
 {% endfor %}

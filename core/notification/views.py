@@ -7,6 +7,8 @@ from kavenegar import *
 from os import getenv
 from django.views.generic import FormView
 from django.urls import reverse_lazy
+from client.models import Client
+
 
 # Create your views here.
 class ClientSMSListView(BaseListView):
@@ -40,7 +42,7 @@ class SMSSendView(FormView):
     def form_valid(self, form):
         try:
             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
-            client = form.cleaned_data['client']
+            client = Client.objects.get(id = self.kwargs['pk'])
             message = form.cleaned_data['message']
             params = {
                 "sender": "2000500666",  # optional

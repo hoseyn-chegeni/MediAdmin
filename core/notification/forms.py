@@ -6,4 +6,4 @@ class SMSSendForm(forms.ModelForm):
 
     class Meta:
         model = ClientSMSLog
-        fields = ['client', 'message']
+        fields = ['subject','message',]
