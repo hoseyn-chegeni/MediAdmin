@@ -8,6 +8,7 @@ from kavenegar import *
 from os import getenv
 from logs.models import ClientSMSLog
 
+
 @receiver(post_save, sender=PackageAppointment)
 def create_appointments(sender, instance, created, **kwargs):
     if created:
@@ -38,8 +39,8 @@ def create_appointments(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Appointment)
-def send_sms(sender, instance, created, **kwargs):
-    if created:
+def send_appointment_creation_info(sender, instance, created, **kwargs):
+    if created and instance.has_package == False:
         try:
             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
             params = {
@@ -65,6 +66,40 @@ def send_sms(sender, instance, created, **kwargs):
                 sender_number=params["sender"],
                 receiver_number=params["receptor"],
                 subject="اطلاع رسانی نوبت دهی",
+                message_body=params["message"],
+                status="Field",
+                response=e,
+            )
+
+
+@receiver(post_save, sender=PackageAppointment)
+def send_appointment_creation_info(sender, instance, created, **kwargs):
+    if created:
+        try:
+            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
+            params = {
+                "sender": "2000500666",  # optional
+                "receptor": f"{instance.client.phone_number}",  # multiple mobile number, split by comma
+                "message": f"{instance.client.get_full_name()} عزیز نوبت شما برای پکیچ  {instance.package} برای تاریخ {instance.date} ایجاد شد لطفا در تاریخ اعلام شده در مطب حضور داشته باشید.",
+            }
+            response = api.sms_send(params)
+            print(response)
+            ClientSMSLog.objects.create(
+                client=instance.client,
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی نوبت دهی پکیج",
+                message_body=params["message"],
+                status=response["status"],
+                response=response,
+            )
+        except (APIException, HTTPException) as e:
+            print(e)
+            ClientSMSLog.objects.create(
+                client=instance.client,
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی نوبت دهی پکیح",
                 message_body=params["message"],
                 status="Field",
                 response=e,
