@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -55,4 +55,6 @@ class AssignPermissionsView(BaseUpdateView):
     template_name = "permission/assign.html"
     permission_required = "auth.change_user"
     app_name = "accounts"
-    url_name = "detail"
+    url_name = "user_detail"
+
+
