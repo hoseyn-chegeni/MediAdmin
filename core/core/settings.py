@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "booking",
     "logs",
     "notification",
+    "permissions",
 ]
 
 MIDDLEWARE = [
