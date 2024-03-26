@@ -26,37 +26,3 @@ def update_reception_number(sender, instance, created, **kwargs):
         ).count()
         instance.reception_in_day = reception_number
         instance.save()
-
-
-@receiver(post_save, sender=Reception)
-def send_sms(sender, instance, created, **kwargs):
-    if created:
-        try:
-            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
-            params = {
-                "sender": "2000500666",  # optional
-                "receptor": "09356822312",  # multiple mobile number, split by comma
-                "message": "همراه گرامی سرکار خانم  سپیده باقری نوبت شما برای سرویس بوتاکس  دکتر چگنی در تاریخ ۱۴۰۳/۰۱/۱۵ ثبت گردید لطفا در تاریخ اعلام شده در مطب حضور داشته باشید",
-            }
-            response = api.sms_send(params)
-            print(response)
-            ClientSMSLog.objects.create(
-                client=instance.client,
-                sender_number=params["sender"],
-                receiver_number=params["receptor"],
-                subject="اطلاع رسانی پذیرش",
-                message_body=params["message"],
-                status=response["status"],
-                response=response,
-            )
-        except (APIException, HTTPException) as e:
-            print(e)
-            ClientSMSLog.objects.create(
-                client=instance.client,
-                sender_number=params["sender"],
-                receiver_number=params["receptor"],
-                subject="اطلاع رسانی پذیرش",
-                message_body=params["message"],
-                status="Field",
-                response=e,
-            )

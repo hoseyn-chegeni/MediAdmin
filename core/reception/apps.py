@@ -9,5 +9,4 @@ class ReceptionConfig(AppConfig):
         from .signals import (
             update_last_reception_date,
             update_reception_number,
-            send_sms,
         )
