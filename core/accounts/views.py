@@ -67,9 +67,9 @@ class UserDetailView(BaseDetailView):
         receive_sms = UserSMSLog.objects.filter(user_id=user.id)
         sent_sms = ClientSMSLog.objects.filter(created_by_id = user.id)
         context["user_permissions"] = user.user_permissions.all()
-        context['receive_sms'] = receive_sms
+        context['receive_sms'] = receive_sms.order_by('-created_at')[:5]
         context["receive_sms_count"] = receive_sms.count()
-        context['sent_sms'] = sent_sms
+        context['sent_sms'] = sent_sms.order_by('-created_at')[:5]
         context['sent_sms_count'] = sent_sms.count()
         context['clients'] = Client.objects.filter(created_by_id = user.id).count()
         context['receptions'] = Reception.objects.filter(created_by_id = user.id).count()
