@@ -14,8 +14,8 @@ def send_sms_after_create_account(sender, instance, created, **kwargs):
             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
             params = {
                 "sender": "2000500666",  # optional
-                "receptor": User.phone_number,  # multiple mobile number, split by comma
-                "message": f"{instance.get_full_name} عزیز حساب کاربری شما با موفقیت در تاریخ {instance.created_at.date} ایجاد شد.",
+                "receptor": instance.phone_number,  # multiple mobile number, split by comma
+                "message": f"{instance.get_full_name()} عزیز حساب کاربری شما با موفقیت در تاریخ {instance.created_at.date()} ایجاد شد.",
             }
             response = api.sms_send(params)
             print(response)
