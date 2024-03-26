@@ -39,7 +39,7 @@ def create_appointments(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Appointment)
-def send_appointment_creation_info(sender, instance, created, **kwargs):
+def send_service_appointment_creation_info(sender, instance, created, **kwargs):
     if created and instance.has_package == False:
         try:
             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
@@ -73,7 +73,7 @@ def send_appointment_creation_info(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=PackageAppointment)
-def send_appointment_creation_info(sender, instance, created, **kwargs):
+def send_package_appointment_creation_info(sender, instance, created, **kwargs):
     if created:
         try:
             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
