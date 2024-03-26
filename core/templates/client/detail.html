@@ -45,6 +45,9 @@
             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
               <p>پیامک های ارسال شده:  {{sms_count}}</p>
             </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد نوبت های رزور شده:  {{appointment_count}}</p>
+            </li>
           </ul>
         </div>
       </div>
@@ -228,8 +231,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4">
-            <div class="card mb-4 mb-md-0">
+          <div class="col-md-6">
+            <div class="card mt-4">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پذیرش</p>
                 {% for i in reception_history %}
@@ -242,8 +245,9 @@
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <div class="card mb-4 mb-md-0">
+
+          <div class="col-md-6">
+            <div class="card mt-4">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">فاکتور های صادر شده</p>
                 {% for i in financial_instances %}
@@ -256,8 +260,23 @@
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <div class="card mb-4 mb-md-0">
+
+          <div class="col-md-6">
+            <div class="card mt-4">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه نوبت ها   </p>
+                {% for i in appointment %}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i.service}} / {{i.date}}, <a href="{% url 'booking:detail' i.id %}">جزییات</a> </p>
+              {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+                <p><a href="#">لیست تمام نوبت های ثیت شده</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card mt-4">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پیامک های ارسال شده</p>
                 {% for i in sms %}

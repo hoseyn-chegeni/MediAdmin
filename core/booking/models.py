@@ -8,15 +8,6 @@ STATUS = (
     ("DONE", "DONE"),
 )
 
-
-def validate_current_month(value):
-    pass
-
-
-def validate_max_appointments_per_day(value):
-    pass
-
-
 class Appointment(models.Model):
     service = models.ForeignKey("services.Service", on_delete=models.CASCADE)
     client = models.ForeignKey(
@@ -64,3 +55,14 @@ class PackageAppointment(models.Model):
 
     def __str__(self):
         return f"{self.package}, {self.client}, {self.date}"
+
+
+
+
+
+def validate_current_month(value):
+    pass
+
+
+def validate_max_appointments_per_day(value):
+    pass
