@@ -1,7 +1,14 @@
 from django.urls import path
-from .views import PermissionsCreateView,PermissionsDeleteView,PermissionsDetailView,PermissionsListView,PermissionsUpdateView,AssignPermissionsView
+from .views import (
+    PermissionsCreateView,
+    PermissionsDeleteView,
+    PermissionsDetailView,
+    PermissionsListView,
+    PermissionsUpdateView,
+    AssignPermissionsView,
+)
 
-app_name = 'permissions'
+app_name = "permissions"
 
 urlpatterns = [
     path("list/", PermissionsListView.as_view(), name="list"),

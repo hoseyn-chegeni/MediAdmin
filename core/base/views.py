@@ -34,8 +34,8 @@ class BaseCreateView(
 
     def get_success_message(self, cleaned_data):
         return "با موفقیت افزوده شد"
-    
-    def form_valid(self, form) :
+
+    def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 

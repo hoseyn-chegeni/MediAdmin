@@ -69,23 +69,29 @@ class UserDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         receive_sms = UserSMSLog.objects.filter(user_id=user.id)
-        sent_sms = ClientSMSLog.objects.filter(created_by_id = user.id)
+        sent_sms = ClientSMSLog.objects.filter(created_by_id=user.id)
         context["user_permissions"] = user.user_permissions.all()
-        context['receive_sms'] = receive_sms.order_by('-created_at')[:5]
+        context["receive_sms"] = receive_sms.order_by("-created_at")[:5]
         context["receive_sms_count"] = receive_sms.count()
-        context['sent_sms'] = sent_sms.order_by('-created_at')[:5]
-        context['sent_sms_count'] = sent_sms.count()
-        context['clients'] = Client.objects.filter(created_by_id = user.id).count()
-        context['receptions'] = Reception.objects.filter(created_by_id = user.id).count()
-        context['appointments'] = Appointment.objects.filter(created_by_id = user.id).count()
-        context['user_count'] = User.objects.filter(created_by_id = user.id).count()
-        context['consumable'] = Consumable.objects.filter(created_by_id = user.id).count()
-        context['supplier'] = Supplier.objects.filter(created_by_id = user.id).count()
-        context['office_expenses'] = OfficeExpenses.objects.filter(created_by_id = user.id).count()
-        context['doctor'] = Doctor.objects.filter(created_by_id = user.id).count()
-        context['insurance'] = Insurance.objects.filter(created_by_id = user.id).count()
-        context['prescription'] = Prescription.objects.filter(created_by_id = user.id).count()
-        context['service'] = Service.objects.filter(created_by_id = user.id).count()
+        context["sent_sms"] = sent_sms.order_by("-created_at")[:5]
+        context["sent_sms_count"] = sent_sms.count()
+        context["clients"] = Client.objects.filter(created_by_id=user.id).count()
+        context["receptions"] = Reception.objects.filter(created_by_id=user.id).count()
+        context["appointments"] = Appointment.objects.filter(
+            created_by_id=user.id
+        ).count()
+        context["user_count"] = User.objects.filter(created_by_id=user.id).count()
+        context["consumable"] = Consumable.objects.filter(created_by_id=user.id).count()
+        context["supplier"] = Supplier.objects.filter(created_by_id=user.id).count()
+        context["office_expenses"] = OfficeExpenses.objects.filter(
+            created_by_id=user.id
+        ).count()
+        context["doctor"] = Doctor.objects.filter(created_by_id=user.id).count()
+        context["insurance"] = Insurance.objects.filter(created_by_id=user.id).count()
+        context["prescription"] = Prescription.objects.filter(
+            created_by_id=user.id
+        ).count()
+        context["service"] = Service.objects.filter(created_by_id=user.id).count()
         return context
 
 
@@ -96,6 +102,7 @@ class UserCreateView(BaseCreateView):
     app_name = "accounts"
     url_name = "user_detail"
     permission_required = "accounts.add_user"
+
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
@@ -180,31 +187,29 @@ class ReactiveUserView(View):
         return HttpResponseRedirect(reverse_lazy("accounts:suspend_user_list"))
 
 
-
 class UserActionsView(BaseDetailView):
     model = User
-    template_name = 'accounts/actions.html'
-    context_object_name = 'user'
+    template_name = "accounts/actions.html"
+    context_object_name = "user"
     permission_required = "accounts.view_user"
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         clients = Client.objects.filter(created_by_id=user.id)
         services = Service.objects.filter(created_by_id=user.id)
-        reception = Reception.objects.filter(created_by_id = user.id)
-        appointment = Appointment.objects.filter(created_by_id = user.id)
+        reception = Reception.objects.filter(created_by_id=user.id)
+        appointment = Appointment.objects.filter(created_by_id=user.id)
         # Combine the querysets of clients and services
         action_list = sorted(
-            chain(clients, services, reception,appointment),
-            key=attrgetter('created_at'),
+            chain(clients, services, reception, appointment),
+            key=attrgetter("created_at"),
             reverse=True,
         )
-        
+
         # Add model names to each instance in the action_list
         for obj in action_list:
             obj.model_name = obj._meta.verbose_name.title()
 
-        context['actions'] = action_list
+        context["actions"] = action_list
         return context

@@ -20,6 +20,7 @@ from django.contrib import messages
 from logs.models import ClientSMSLog
 from booking.models import Appointment
 
+
 # Create your views here.
 class ClientListView(BaseListView):
     model = Client
@@ -79,9 +80,9 @@ class ClientDetailView(BaseDetailView):
             "-created_at"
         )[:5]
         context["sms_count"] = ClientSMSLog.objects.filter(client_id=client.id).count()
-        appointment = Appointment.objects.filter(client_id = client.id)
-        context['appointment'] = appointment.order_by('-created_at')[:5]
-        context['appointment_count'] = appointment.count()
+        appointment = Appointment.objects.filter(client_id=client.id)
+        context["appointment"] = appointment.order_by("-created_at")[:5]
+        context["appointment_count"] = appointment.count()
         return context
 
 
