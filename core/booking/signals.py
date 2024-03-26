@@ -3,7 +3,10 @@ from django.dispatch import receiver
 from .models import PackageAppointment, Appointment
 from services.models import ServicePackage
 from django.utils.timezone import timedelta
-
+from .models import Appointment
+from kavenegar import *
+from os import getenv
+from logs.models import ClientSMSLog
 
 @receiver(post_save, sender=PackageAppointment)
 def create_appointments(sender, instance, created, **kwargs):
@@ -30,3 +33,39 @@ def create_appointments(sender, instance, created, **kwargs):
                 package=instance,
             )
             appointment_date += timedelta(days=service_package.gap_with_next_service)
+
+
+
+
+@receiver(post_save, sender=Appointment)
+def send_sms(sender, instance, created, **kwargs):
+    if created:
+        try:
+            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
+            params = {
+                "sender": "2000500666",  # optional
+                "receptor": f"{instance.client.phone_number}",  # multiple mobile number, split by comma
+                "message": f"{instance.client.get_full_name()} عزیز نوبت شما برای سرویس  {instance.service} برای تاریخ {instance.date} ایجاد شد لطفا در تاریخ اعلام شده در مطب حضور داشته باشید.",
+            }
+            response = api.sms_send(params)
+            print(response)
+            ClientSMSLog.objects.create(
+                client=instance.client,
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی نوبت دهی",
+                message_body=params["message"],
+                status=response["status"],
+                response=response,
+            )
+        except (APIException, HTTPException) as e:
+            print(e)
+            ClientSMSLog.objects.create(
+                client=instance.client,
+                sender_number=params["sender"],
+                receiver_number=params["receptor"],
+                subject="اطلاع رسانی نوبت دهی",
+                message_body=params["message"],
+                status="Field",
+                response=e,
+            )
