@@ -24,7 +24,7 @@
             {%else%}
             <a href="{% url 'accounts:reactive' user.id %}" class="btn btn-outline-primary ms-1">فعال سازی مجدد</a>
             {%endif%}
-
+            <a href="{% url 'accounts:actions' user.id %}" class="btn btn-outline-primary ms-1">لیست اکشن ها</a>
               <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" class="btn btn-outline-primary ms-1" >حذف</a>
             </div>
           </div>

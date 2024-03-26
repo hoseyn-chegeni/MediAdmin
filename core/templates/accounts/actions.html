@@ -1,0 +1,16 @@
+<!-- client_service_list.html -->
+
+{% extends 'base.html' %}
+{% block title %}Action list for {{user}}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Client and Service List</h1>
+    <ul>
+        {% for i in actions %}
+            {{i}}, {{i.model_name}} <br>
+
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

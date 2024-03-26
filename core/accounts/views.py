@@ -29,6 +29,10 @@ from doctor.models import Doctor
 from insurance.models import Insurance
 from prescription.models import Prescription
 from services.models import Service
+from django.views.generic import ListView
+from itertools import chain
+from operator import attrgetter
+
 
 # Create your views here.
 class UserListView(BaseListView):
@@ -174,3 +178,33 @@ class ReactiveUserView(View):
             )
             user.save()
         return HttpResponseRedirect(reverse_lazy("accounts:suspend_user_list"))
+
+
+
+class UserActionsView(BaseDetailView):
+    model = User
+    template_name = 'accounts/actions.html'
+    context_object_name = 'user'
+    permission_required = "accounts.view_user"
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        clients = Client.objects.filter(created_by_id=user.id)
+        services = Service.objects.filter(created_by_id=user.id)
+        reception = Reception.objects.filter(created_by_id = user.id)
+        appointment = Appointment.objects.filter(created_by_id = user.id)
+        # Combine the querysets of clients and services
+        action_list = sorted(
+            chain(clients, services, reception,appointment),
+            key=attrgetter('created_at'),
+            reverse=True,
+        )
+        
+        # Add model names to each instance in the action_list
+        for obj in action_list:
+            obj.model_name = obj._meta.verbose_name.title()
+
+        context['actions'] = action_list
+        return context
