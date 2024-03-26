@@ -5,7 +5,6 @@ from datetime import date
 from kavenegar import *
 from os import getenv
 from logs.models import ClientSMSLog
-import re
 
 
 @receiver(post_save, sender=Reception)
@@ -52,13 +51,6 @@ def send_sms(sender, instance, created, **kwargs):
             )
         except (APIException, HTTPException) as e:
             print(e)
-            response_text = str(e)
-            matched_numbers = re.findall(r"\[([\d]+)\]", response_text)
-            if matched_numbers:
-                extracted_number = matched_numbers[0]
-            else:
-                extracted_number = None
-
             ClientSMSLog.objects.create(
                 client=instance.client,
                 sender_number=params["sender"],
@@ -66,5 +58,5 @@ def send_sms(sender, instance, created, **kwargs):
                 subject="اطلاع رسانی پذیرش",
                 message_body=params["message"],
                 status="Field",
-                response=extracted_number,
+                response=e,
             )
