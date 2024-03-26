@@ -140,7 +140,7 @@
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مدیریت نقش ها</a></p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="{% url 'permissions:group_assign' user.id %}">مدیریت نقش ها</a></p>
               </div>
             </div>
           </div>

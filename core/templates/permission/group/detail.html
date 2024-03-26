@@ -1,0 +1,20 @@
+<!-- permission/group/detail.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Group Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>{{ group.name }}</h2>
+  <p><strong>ID:</strong> {{ group.id }}</p>
+  <p><strong>Permissions:</strong></p>
+  <ul>
+    {% for permission in group.permissions.all %}
+    <li>{{ permission.name }}</li>
+    {% empty %}
+    <li>No permissions assigned.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
