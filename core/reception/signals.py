@@ -2,9 +2,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Reception
 from datetime import date
-from kavenegar import *
-from os import getenv
-from logs.models import ClientSMSLog
 
 
 @receiver(post_save, sender=Reception)

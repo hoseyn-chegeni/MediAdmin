@@ -4,5 +4,6 @@ from django.apps import AppConfig
 class AccountsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "accounts"
+
     def ready(self):
-        from .signals  import send_sms_after_create_account
+        from .signals import send_sms_after_create_account

@@ -6,7 +6,6 @@ from logs.models import UserSMSLog
 from .models import User
 
 
-
 @receiver(post_save, sender=User)
 def send_sms_after_create_account(sender, instance, created, **kwargs):
     if created:
@@ -37,5 +36,5 @@ def send_sms_after_create_account(sender, instance, created, **kwargs):
                 subject="اطلاع رسانی ایجاد حساب کاربری",
                 message_body=params["message"],
                 status="Field",
-                response= e,
+                response=e,
             )

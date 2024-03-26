@@ -15,6 +15,7 @@ class ClientSMSLog(models.Model):
     def __str__(self):
         return f"پیامک {self.subject} به {self.client}"
 
+
 class UserSMSLog(models.Model):
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     sender_number = models.CharField(max_length=20)

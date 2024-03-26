@@ -36,8 +36,6 @@ def create_appointments(sender, instance, created, **kwargs):
             appointment_date += timedelta(days=service_package.gap_with_next_service)
 
 
-
-
 @receiver(post_save, sender=Appointment)
 def send_service_appointment_creation_info(sender, instance, created, **kwargs):
     if created and instance.has_package == False:
