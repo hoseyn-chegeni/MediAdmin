@@ -9,7 +9,6 @@ from base.views import (
 from .models import Consumable, ConsumableCategory, Supplier, Equipment
 from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
 
-
 # Create your views here.
 class ConsumableListView(BaseListView):
     model = Consumable
@@ -33,6 +32,7 @@ class ConsumableCreateView(BaseCreateView):
     app_name = "asset"
     url_name = "detail"
     permission_required = "asset.add_consumable"
+
 
 
 class ConsumableUpdateView(BaseUpdateView):

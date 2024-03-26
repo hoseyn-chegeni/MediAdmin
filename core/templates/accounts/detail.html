@@ -33,16 +33,42 @@
           <div class="card-body p-0">
             <ul class="list-group list-group-flush rounded-3">
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <p> Created : 0</p>
-            </li>
+              <p> تعداد دفعات لاگین : {{user.login_attempts}}</p>
+              </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <p> Assigned Task: 0</p>
-            </li>
+              <p>تعداد پیامک های ارسال شده به کاربر: {{receive_sms}}</p>
+              </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <p> Created Incident: 0</p>
-            </li>
+              <p>تعداد پیامک های دریافت شده توسط کاربر: {{sent_sms}}</p>
+              </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <p> Assigned Incident: 0</p>
+              <p>تعداد بیماران ثبت شده : {{clients}}</p> </li>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد پذیرش های ایجاد شده : {{receptions}}</p> </li>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد نوبت های ثبت شده : {{appointments}}</p> </li>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد کاربران ثیت شده: {{user_count}}</p> </li>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد مواد مصرفی رجیستر شده: {{consumable}}</p> </li>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <p>تعداد تامین کنندگان ثبت شده: {{supplier}}</p> </li>
+                </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد رسید های هزینه مطب ثیت شده: {{office_expenses}}</p> </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد پزشکان ایجاد شده در سامانه: {{doctor}}</p> </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد بیمه های ایجاد شده: {{insurance}}</p> </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>تعداد نسخه های ثبت شده: {{prescription}}</p> </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+              <p>     تعداد سرویس های ثبت شده: {{service}}</p> </li>
             </ul>
           </div>
         </div>
@@ -100,20 +126,12 @@
                 <p class="text-muted mb-0">{{user.last_login}}</p>
               </div>
             </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">تعداد دفعات ورود</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{user.login_attempts}}</p>
-              </div>
-            </div>
+           
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
+            <div class="card mt-4">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">نقش ها</p>
                 {% for i in user.groups.all %}
@@ -128,9 +146,37 @@
 
 
           <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
+            <div class="card mt-4">
               <div class="card-body">
-                <p class="mb-4"> دسترسی ها</p>
+                <p class="mb-4"> <span class="text-primary font-italic me-1">دسترسی ها</p>
+              {% for i in user_permissions%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
+                {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مدیریت دسترسی ها</a></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="card mt-4">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پیامک  ها</p>
+              {% for i in user_permissions%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
+                {%empty%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
+                {%endfor%}
+                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مدیریت دسترسی ها</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card mt-4">
+              <div class="card-body">
+                <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پیامک های ارسال شده توسط کاربر</p>
               {% for i in user_permissions%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
                 {%empty%}

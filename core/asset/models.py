@@ -72,6 +72,9 @@ class Supplier(models.Model):
     address = models.TextField()
     city = models.CharField(max_length=50)
     notes = models.TextField(blank=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     def __str__(self):
         return self.name

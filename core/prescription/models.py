@@ -8,6 +8,10 @@ class Prescription(models.Model):
     diagnosis = models.TextField()
     medication = models.TextField()
     instructions = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True)
+
 
     def __str__(self):
         return f"Prescription for {self.reception.client} by Dr. {self.reception.service.doctor}"

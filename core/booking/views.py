@@ -99,7 +99,7 @@ class AppointmentCreateView(BaseCreateView):
         if appointment_date < datetime.now().date():
             form.add_error("date", "Appointments cannot be scheduled for past dates.")
             return self.form_invalid(form)
-
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
 

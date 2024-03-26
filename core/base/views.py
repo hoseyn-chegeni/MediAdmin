@@ -1,3 +1,5 @@
+from django.forms import BaseForm
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -32,6 +34,10 @@ class BaseCreateView(
 
     def get_success_message(self, cleaned_data):
         return "با موفقیت افزوده شد"
+    
+    def form_valid(self, form) :
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class BaseDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

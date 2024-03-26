@@ -30,7 +30,7 @@ class Appointment(models.Model):
     package = models.ForeignKey(
         "PackageAppointment", on_delete=models.CASCADE, blank=True, null=True
     )
-
+    created_by = models.ForeignKey('accounts.User', on_delete = models.SET_NULL, blank = True, null = True)
     def __str__(self):
         return f"{self.service}, {self.client}, {self.date}"
 

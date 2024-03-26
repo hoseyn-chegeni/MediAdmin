@@ -24,6 +24,7 @@ class User(AbstractUser):
     login_attempts = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey('User', on_delete = models.SET_NULL, blank = True, null = True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

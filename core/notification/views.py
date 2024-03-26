@@ -54,10 +54,11 @@ class SMSSendView(FormView):
                 client=client,
                 sender_number=params["sender"],
                 receiver_number=params["receptor"],
-                subject="اطلاع رسانی پذیرش",
+                subject= form.instance.subject,
                 message_body=message,
                 status=response["status"],
                 response=response,
+                created_by = self.request.user
             )
         except (APIException, HTTPException) as e:
             # Handle exceptions
@@ -65,10 +66,12 @@ class SMSSendView(FormView):
                 client=client,
                 sender_number=params["sender"],
                 receiver_number=params["receptor"],
-                subject="اطلاع رسانی پذیرش",
+                subject=form.instance.subject,
                 message_body=message,
                 status="Field",
                 response=e,
+                created_by = self.request.user
+
             )
         return super().form_valid(form)
 
