@@ -32,13 +32,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-sm-6">
                                 <label for="email" class="form-label">ایمیل<span class="text-body-secondary"></span></label>
                                 <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email" required>
-                                <div class="invalid-feedback">
-                                    Please enter a valid email address for shipping updates.
-                                </div>
                             </div>
+
+                            <div class="col-sm-6">
+                                <label for="phone_number" class="phone_number-label">شماره تماس</label>
+                                <input type="text" class="form-control" id="phone_number" placeholder="" value="{{object.phone_number}}" name="phone_number" >
+                              </div>
 
                             <div class="row g-3">
                                 <div class="col-sm-6">
