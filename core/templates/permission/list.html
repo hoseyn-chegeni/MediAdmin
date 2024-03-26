@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERMISSIONS</title>
+</head>
+<body>
+    <button><a href="{%url 'permissions:create'%}">Add New Permission</a></button><br>
+    {%for i in permission%}
+   {{i.id}}. {{i.name}} <a href="{%url 'permissions:detail' i.id%}">Detail</a>,<a href="{%url 'permissions:update' i.id%}">Update</a>,<a href="{%url 'permissions:delete' i.id%}">Delete</a><br>
+    {%endfor%}
+</body>
+</html>
