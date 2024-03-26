@@ -64,9 +64,13 @@ class UserDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
+        receive_sms = UserSMSLog.objects.filter(user_id=user.id)
+        sent_sms = ClientSMSLog.objects.filter(created_by_id = user.id)
         context["user_permissions"] = user.user_permissions.all()
-        context["receive_sms"] = UserSMSLog.objects.filter(user_id=user.id).count()
-        context['sent_sms'] = ClientSMSLog.objects.filter(created_by_id = user.id).count()
+        context['receive_sms'] = receive_sms
+        context["receive_sms_count"] = receive_sms.count()
+        context['sent_sms'] = sent_sms
+        context['sent_sms_count'] = sent_sms.count()
         context['clients'] = Client.objects.filter(created_by_id = user.id).count()
         context['receptions'] = Reception.objects.filter(created_by_id = user.id).count()
         context['appointments'] = Appointment.objects.filter(created_by_id = user.id).count()

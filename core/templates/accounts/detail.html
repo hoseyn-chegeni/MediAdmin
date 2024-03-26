@@ -36,10 +36,10 @@
               <p> تعداد دفعات لاگین : {{user.login_attempts}}</p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-              <p>تعداد پیامک های ارسال شده به کاربر: {{receive_sms}}</p>
+              <p>تعداد پیامک های ارسال شده به کاربر: {{receive_sms_count}}</p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-              <p>تعداد پیامک های دریافت شده توسط کاربر: {{sent_sms}}</p>
+              <p>تعداد پیامک های دریافت شده توسط کاربر: {{sent_sms_count}}</p>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
               <p>تعداد بیماران ثبت شده : {{clients}}</p> </li>
@@ -163,12 +163,12 @@
             <div class="card mt-4">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پیامک  ها</p>
-              {% for i in user_permissions%}
+              {% for i in receive_sms%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مدیریت دسترسی ها</a></p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#"></a>مشاهده تاریخچه کامل پیامک ها</p>
               </div>
             </div>
           </div>
@@ -177,12 +177,12 @@
             <div class="card mt-4">
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه پیامک های ارسال شده توسط کاربر</p>
-              {% for i in user_permissions%}
+              {% for i in sent_sms%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">{{i}}</p>
                 {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مدیریت دسترسی ها</a></p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">  <a href="#">مشاهده تاریخچه کامل پیامک های ارسال شده </a></p>
               </div>
             </div>
           </div>
