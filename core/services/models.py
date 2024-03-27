@@ -81,6 +81,13 @@ class Service(models.Model):
     def __str__(self):
         return self.name
 
+class ServiceSpecification(models.Model):
+    attribute_key = models.CharField(max_length = 100)
+    attribute_value = models.CharField(max_length = 500)
+    service = models.ForeignKey('services.Service',on_delete= models.DO_NOTHING)
+    
+    def __str__(self):
+        return self.service.name
 
 class OffDay(models.Model):
     day_of_week = models.PositiveSmallIntegerField(choices=DAYS_OF_WEEK)
