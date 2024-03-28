@@ -1,15 +1,35 @@
-version: "3.9"
-
+version: '3.8'
 
 services:
-  backend:
-    build: .
-    container_name: backend
-    command: python3 manage.py runserver 0.0.0.0:8000
+  redis:
+    container_name: redis
+    image: redis:7.0.11-alpine
+
+  
+  django:
+    container_name: django
+    build:
+      context: ./core
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./core:/app
+      - ./core:/usr/src/app
     ports:
-      - "8000:8000"
+      - 8000:8000
+
+    depends_on:
+      - redis
+
+  celery:
+    container_name: celery
+    build:
+      context: ./core
+    command: celery --app=core worker -l INFO 
+    volumes:
+      - ./core:/usr/src/app
+    depends_on:
+      - redis
+
+
 
 
   smtp4dev:
