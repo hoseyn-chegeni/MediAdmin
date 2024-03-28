@@ -10,10 +10,8 @@ coreschema==0.0.4
 cryptography==41.0.4
 defusedxml==0.7.1
 Django==5.0
-django-appointment==3.3.2
 django-axes==6.1.1
 django-booking==0.7.2
-django-bootstrap-v5==1.0.11
 django-countries==7.5.1
 django-crispy-forms==2.1
 django-db-logger==0.1.12
