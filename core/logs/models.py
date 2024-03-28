@@ -35,6 +35,7 @@ class UserSMSLog(models.Model):
 
 class UserActionLog(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True)
+    instance = models.CharField(max_length = 100, blank = True, null  = True)
     event_type = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
     action = models.CharField(max_length=255)
@@ -43,4 +44,4 @@ class UserActionLog(models.Model):
     is_success = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.event_type} on {self.table_name} at {self.timestamp}"
+        return f"{self.event_type} {self.timestamp}"
