@@ -31,3 +31,16 @@ class UserSMSLog(models.Model):
 
     def __str__(self):
         return f"پیامک {self.subject} به {self.user}"
+    
+
+class UserActionLog(models.Model):
+    user = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True)
+    event_type = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    action = models.CharField(max_length=255)
+    record_id = models.PositiveIntegerField()
+    additional_info = models.TextField(blank=True, null=True)
+    is_success = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.event_type} on {self.table_name} at {self.timestamp}"

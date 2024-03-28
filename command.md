@@ -4,4 +4,4 @@
 
 docker-compose exec backend sh -c ''
 
-docker exec -it backend /bin/bash
+docker exec -it django /bin/sh
