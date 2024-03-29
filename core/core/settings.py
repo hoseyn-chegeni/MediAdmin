@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Iran"
 
 USE_I18N = True
 
@@ -161,7 +161,7 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "two_factor:login"
 LOGIN_REDIRECT_URL = "index:index"
 
-TIME_ZONE = "Iran"
+
 
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
