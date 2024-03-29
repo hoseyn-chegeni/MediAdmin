@@ -29,7 +29,6 @@ from doctor.models import Doctor
 from insurance.models import Insurance
 from prescription.models import Prescription
 from services.models import Service
-from django.views.generic import ListView
 from itertools import chain
 from operator import attrgetter
 
@@ -225,6 +224,22 @@ class UserSMSListView(BaseListView):
     def get_queryset(self):
         user_id = self.kwargs["pk"]
         return UserSMSLog.objects.filter(user_id=user_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = User.objects.get(id=self.kwargs["pk"])
+        return context
+
+
+class UserSentSMSListView(BaseListView):
+    model = ClientSMSLog
+    template_name = "accounts/user_sent_sms_log.html"
+    filterset_class = 0
+    permission_required = "accounts.view_user"
+
+    def get_queryset(self):
+        user_id = self.kwargs["pk"]
+        return ClientSMSLog.objects.filter(created_by_id=user_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

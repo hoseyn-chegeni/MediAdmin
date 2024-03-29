@@ -12,7 +12,8 @@ from .views import (
     SuspendUserView,
     ReactiveUserView,
     UserActionsView,
-    UserSMSListView
+    UserSMSListView,
+    UserSentSMSListView,
 )
 
 app_name = "accounts"
@@ -34,5 +35,10 @@ urlpatterns = [
         "user/<int:pk>/sms_log/",
         UserSMSListView.as_view(),
         name="user-sms_log",
+    ),
+    path(
+        "user/<int:pk>/sent_sms_log/",
+        UserSentSMSListView.as_view(),
+        name="user_sent_sms_log",
     ),
 ]
