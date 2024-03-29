@@ -26,7 +26,6 @@ def send_sms_after_create_account(sender, instance, created, **kwargs):
                 message_body=params["message"],
                 status=response["status"],
                 response=response,
-
             )
         except (APIException, HTTPException) as e:
             print(e)

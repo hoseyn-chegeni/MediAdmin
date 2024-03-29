@@ -23,7 +23,6 @@ class UserFilter(FilterSet):
         )
 
 
-
 class UserSentSMSFilter(FilterSet):
     # Filter by service
 
@@ -40,7 +39,10 @@ class UserSentSMSFilter(FilterSet):
 
     class Meta:
         model = ClientSMSLog
-        fields = ["subject", "date",]
+        fields = [
+            "subject",
+            "date",
+        ]
 
 
 class UserSMSFilter(FilterSet):
@@ -59,6 +61,7 @@ class UserSMSFilter(FilterSet):
 
     class Meta:
         model = UserSMSLog
-        fields = ["subject", "date",]
-
-
+        fields = [
+            "subject",
+            "date",
+        ]

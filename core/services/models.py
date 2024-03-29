@@ -81,13 +81,15 @@ class Service(models.Model):
     def __str__(self):
         return self.name
 
+
 class ServiceSpecification(models.Model):
-    attribute_key = models.CharField(max_length = 100)
-    attribute_value = models.CharField(max_length = 500)
-    service = models.ForeignKey('services.Service',on_delete= models.DO_NOTHING)
-    
+    attribute_key = models.CharField(max_length=100)
+    attribute_value = models.CharField(max_length=500)
+    service = models.ForeignKey("services.Service", on_delete=models.DO_NOTHING)
+
     def __str__(self):
         return self.service.name
+
 
 class OffDay(models.Model):
     day_of_week = models.PositiveSmallIntegerField(choices=DAYS_OF_WEEK)
@@ -167,6 +169,7 @@ class Package(models.Model):
     preparation_instructions = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="images", blank=True, null=True)
     attachment = models.FileField(upload_to="attachments", blank=True, null=True)
+    prepayment = models.PositiveIntegerField(default=0)
 
     @property
     def total_price(self):

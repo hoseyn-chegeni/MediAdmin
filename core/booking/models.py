@@ -41,6 +41,7 @@ class PackageAppointment(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
     status = models.CharField(max_length=100, choices=STATUS, blank=True, null=True)
+    prepayment = models.PositiveIntegerField(default=0)
 
     @property
     def completion_percentage(self):
@@ -55,6 +56,11 @@ class PackageAppointment(models.Model):
             return 0
         else:
             return (done_appointments / total_appointments) * 100
+
+    @property
+    def final_price(self):
+        # Calculate the final price by subtracting prepayment from total_price
+        return self.package.total_price - self.prepayment
 
     def __str__(self):
         return f"{self.package}, {self.client}, {self.date}"

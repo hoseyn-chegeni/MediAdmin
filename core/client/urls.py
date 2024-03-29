@@ -44,7 +44,7 @@ urlpatterns = [
         ClientAppointmentListView.as_view(),
         name="client-appointment",
     ),
-        path(
+    path(
         "client/<int:pk>/sms_log/",
         ClientSMSListView.as_view(),
         name="client-sms_log",

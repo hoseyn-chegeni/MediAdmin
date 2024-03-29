@@ -2,7 +2,7 @@ from .models import User
 from django.urls import reverse_lazy, reverse
 from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LogoutView
-from .filters import UserFilter,UserSentSMSFilter, UserSMSFilter
+from .filters import UserFilter, UserSentSMSFilter, UserSMSFilter
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -210,7 +210,6 @@ class UserActionsView(BaseDetailView):
 
         context["actions"] = action_list
         return context
-
 
 
 class UserSMSListView(BaseListView):

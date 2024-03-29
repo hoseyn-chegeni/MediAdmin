@@ -9,6 +9,7 @@ from django import forms
 from booking.models import Appointment
 from logs.models import ClientSMSLog
 
+
 class ClientFilters(FilterSet):
     name = django_filters.CharFilter(method="filter_by_name")
 
@@ -119,7 +120,6 @@ class FinancialFilter(FilterSet):
         fields = ["date", "date_range"]
 
 
-
 class ClientAppointmentFilter(FilterSet):
     # Filter by service
 
@@ -136,8 +136,10 @@ class ClientAppointmentFilter(FilterSet):
 
     class Meta:
         model = Appointment
-        fields = ["service", "date",]
-
+        fields = [
+            "service",
+            "date",
+        ]
 
 
 class ClientSMSFilter(FilterSet):
@@ -156,6 +158,7 @@ class ClientSMSFilter(FilterSet):
 
     class Meta:
         model = ClientSMSLog
-        fields = ["subject", "date",]
-
-
+        fields = [
+            "subject",
+            "date",
+        ]

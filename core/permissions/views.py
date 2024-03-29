@@ -58,22 +58,21 @@ class AssignPermissionsView(BaseUpdateView):
     url_name = "user_detail"
 
 
-
-#GROUP VIEWS HERE.
+# GROUP VIEWS HERE.
 class GroupListView(ListView):
-    model =Group
+    model = Group
     template_name = "permission/group/list.html"
     context_object_name = "group"
 
 
 class GroupDetailView(BaseDetailView):
-    model =Group
+    model = Group
     template_name = "permission/group/detail.html"
     permission_required = "auth.view_group"
 
 
 class GroupCreateView(BaseCreateView):
-    model =Group
+    model = Group
     template_name = "permission/group/create.html"
     permission_required = "auth.add_group"
     fields = "__all__"
@@ -82,7 +81,7 @@ class GroupCreateView(BaseCreateView):
 
 
 class GroupUpdateView(BaseUpdateView):
-    model =Group
+    model = Group
     template_name = "permission/group/update.html"
     permission_required = "permission.change_permission"
     fields = "__all__"
@@ -91,7 +90,7 @@ class GroupUpdateView(BaseUpdateView):
 
 
 class GroupDeleteView(BaseDeleteView):
-    model =Group
+    model = Group
     permission_required = "auth.delete_group"
     app_name = "permissions"
     url_name = "group_list"

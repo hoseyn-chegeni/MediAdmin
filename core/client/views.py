@@ -7,7 +7,13 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Client
-from .filters import ClientFilters, ReceptionFilter, FinancialFilter,ClientAppointmentFilter, ClientSMSFilter
+from .filters import (
+    ClientFilters,
+    ReceptionFilter,
+    FinancialFilter,
+    ClientAppointmentFilter,
+    ClientSMSFilter,
+)
 from django.urls import reverse_lazy, reverse
 from reception.models import Reception
 from prescription.models import Prescription
@@ -213,7 +219,7 @@ class ClientAppointmentListView(BaseListView):
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
 
         return context
-    
+
 
 class ClientSMSListView(BaseListView):
     model = ClientSMSLog

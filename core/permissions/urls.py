@@ -23,7 +23,7 @@ urlpatterns = [
     path("update/<int:pk>/", PermissionsUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", PermissionsDeleteView.as_view(), name="delete"),
     path("assign/<int:pk>/", AssignPermissionsView.as_view(), name="assign"),
-    #GROUP URLS HERE. 
+    # GROUP URLS HERE.
     path("group/list/", GroupListView.as_view(), name="group_list"),
     path("group/detail/<int:pk>/", GroupDetailView.as_view(), name="group_detail"),
     path("group/create/", GroupCreateView.as_view(), name="group_create"),
