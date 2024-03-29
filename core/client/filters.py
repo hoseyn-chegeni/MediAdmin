@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 from reception.models import Reception
 from services.models import Service
 from django import forms
-
+from booking.models import Appointment
+from logs.models import ClientSMSLog
 
 class ClientFilters(FilterSet):
     name = django_filters.CharFilter(method="filter_by_name")
@@ -134,5 +135,27 @@ class ClientAppointmentFilter(FilterSet):
         return queryset.filter(date=value)
 
     class Meta:
-        model = Reception
+        model = Appointment
         fields = ["service", "date",]
+
+
+
+class ClientSMSFilter(FilterSet):
+    # Filter by service
+
+    # Filter by date
+    date = DateFilter(
+        field_name="created_at",
+        label="Date (yyyy-mm-dd)",
+        method="filter_by_date",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+
+    def filter_by_date(self, queryset, name, value):
+        return queryset.filter(created_at__date=value)
+
+    class Meta:
+        model = ClientSMSLog
+        fields = ["subject", "date",]
+
+

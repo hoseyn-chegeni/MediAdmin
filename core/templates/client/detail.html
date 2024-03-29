@@ -284,7 +284,7 @@
               {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}
-                <p><a href="#">تاریخچه تمام پیامک های ارسال شده به بیمار</a></p>
+                <p><a href="{% url 'client:client-sms_log' client.id %}">تاریخچه تمام پیامک های ارسال شده به بیمار</a></p>
               </div>
             </div>
           </div>

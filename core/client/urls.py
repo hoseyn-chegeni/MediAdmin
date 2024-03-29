@@ -10,7 +10,8 @@ from .views import (
     RemoveVipButtonView,
     ClientReceptionsListView,
     ClientFinancialInstancesListView,
-    ClientAppointmentListView
+    ClientAppointmentListView,
+    ClientSMSListView,
 )
 
 app_name = "client"
@@ -42,5 +43,10 @@ urlpatterns = [
         "client/<int:pk>/appointment/",
         ClientAppointmentListView.as_view(),
         name="client-appointment",
+    ),
+        path(
+        "client/<int:pk>/sms_log/",
+        ClientSMSListView.as_view(),
+        name="client-sms_log",
     ),
 ]
