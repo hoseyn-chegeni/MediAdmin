@@ -1,10 +1,8 @@
-from django.forms import BaseForm
-from django.http.response import HttpResponse
 from .models import User
 from django.urls import reverse_lazy, reverse
-from .froms import CustomUserCreationForm
+from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LogoutView
-from .filters import UserFilter
+from .filters import UserFilter,UserSentSMSFilter, UserSMSFilter
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -218,7 +216,7 @@ class UserActionsView(BaseDetailView):
 class UserSMSListView(BaseListView):
     model = UserSMSLog
     template_name = "accounts/user_sms_log.html"
-    filterset_class = 0
+    filterset_class = UserSMSFilter
     permission_required = "accounts.view_user"
 
     def get_queryset(self):
@@ -234,7 +232,7 @@ class UserSMSListView(BaseListView):
 class UserSentSMSListView(BaseListView):
     model = ClientSMSLog
     template_name = "accounts/user_sent_sms_log.html"
-    filterset_class = 0
+    filterset_class = UserSentSMSFilter
     permission_required = "accounts.view_user"
 
     def get_queryset(self):
