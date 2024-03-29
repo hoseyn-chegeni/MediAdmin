@@ -7,7 +7,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Client
-from .filters import ClientFilters, ReceptionFilter, FinancialFilter
+from .filters import ClientFilters, ReceptionFilter, FinancialFilter,ClientAppointmentFilter
 from django.urls import reverse_lazy, reverse
 from reception.models import Reception
 from prescription.models import Prescription
@@ -192,4 +192,23 @@ class ClientFinancialInstancesListView(BaseListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
+        return context
+
+
+class ClientAppointmentListView(BaseListView):
+    model = Appointment
+    template_name = "client/client_appointment.html"
+    filterset_class = ClientAppointmentFilter
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        client_id = self.kwargs["pk"]
+        return Appointment.objects.filter(client_id=client_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get reception history for the client
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
+
         return context

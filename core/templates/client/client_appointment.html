@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}تاریخچه نوبت های رزرو شده {{client}}{% endblock %}
+
+{% block content %}
+<div class="py-5 text-center">
+  <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+  <h2>تاریخچه نوبت های رزرو شده {{client}}</h2>
+</div>
+
+
+<div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="col-md-12 col-xl-10">
+    <div class="card mask-custom">
+      <div class="card-body p-4 text-white">
+        <form class="table text-white mb-0" method="get">
+          {%csrf_token%}
+          
+          <div class="row g-3">
+
+
+
+            <div class="col-sm-6">
+              <label for="service">سرویس ارایه شده</label>
+              <select class="form-select" name="service" id="service">
+                <option value="" selected>---------</option>
+                {% for i in filter.form.service.field.queryset %}
+                  <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+
+            <div class="col-sm-6">
+              <label for="date" class="form-label">تاریخ</label>
+              <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+            </div>
+
+           
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+          </form>
+
+          <div class="mb-4">
+            <a href="{% url 'reception:reception_create_using_profile' client.id %}" class="btn btn-success me-2">رزرو نوبت جدید برای {{client}}</a>
+            <a href="#" class="btn btn-success me-2">گزارشات</a>
+            </div>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">شماره نوب دهی</th>
+      <th scope="col">سرویس</th>
+      <th scope="col">پزشک معالجه کننده</th>
+      <th scope="col">وضعیت</th>
+      <th scope="col">نام پکیح</th>
+      <th scope="col">تاریخ</th>
+      <th scope="col">اکشن</th>
+    </tr>
+  </thead>
+  <tbody>
+      {%for i in object_list%}
+    <tr class="fw-normal">
+      <td class="align-middle">
+        <span>{{i.id}}</span>
+      </td>
+      <td class="align-middle">
+          <span>{{i.service}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.service.doctor}}</span>
+        </td>
+        <td class="align-middle">
+            <span>{{i.status}}</span>
+          </td>
+        <td class="align-middle" >
+          <span>{{i.package}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.date}}</span>
+        </td>
+        <td class="align-middle">
+          <span>
+            <a href="{% url 'booking:detail' i.id %}" class="btn btn-outline-success btn-sm">جزییات</a>
+        </span>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

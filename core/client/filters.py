@@ -116,3 +116,23 @@ class FinancialFilter(FilterSet):
     class Meta:
         model = Reception
         fields = ["date", "date_range"]
+
+
+
+class ClientAppointmentFilter(FilterSet):
+    # Filter by service
+
+    # Filter by date
+    date = DateFilter(
+        field_name="created_at",
+        label="Date (yyyy-mm-dd)",
+        method="filter_by_date",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+
+    def filter_by_date(self, queryset, name, value):
+        return queryset.filter(date=value)
+
+    class Meta:
+        model = Reception
+        fields = ["service", "date",]
