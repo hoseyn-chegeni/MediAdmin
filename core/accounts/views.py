@@ -213,3 +213,20 @@ class UserActionsView(BaseDetailView):
 
         context["actions"] = action_list
         return context
+
+
+
+class UserSMSListView(BaseListView):
+    model = UserSMSLog
+    template_name = "accounts/user_sms_log.html"
+    filterset_class = 0
+    permission_required = "accounts.view_user"
+
+    def get_queryset(self):
+        user_id = self.kwargs["pk"]
+        return UserSMSLog.objects.filter(user_id=user_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = User.objects.get(id=self.kwargs["pk"])
+        return context

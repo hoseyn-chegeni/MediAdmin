@@ -12,6 +12,7 @@ from .views import (
     SuspendUserView,
     ReactiveUserView,
     UserActionsView,
+    UserSMSListView
 )
 
 app_name = "accounts"
@@ -29,4 +30,9 @@ urlpatterns = [
     path("suspend/<int:pk>/", SuspendUserView.as_view(), name="suspend"),
     path("reactive/<int:pk>/", ReactiveUserView.as_view(), name="reactive"),
     path("actions/<int:pk>/", UserActionsView.as_view(), name="actions"),
+    path(
+        "user/<int:pk>/sms_log/",
+        UserSMSListView.as_view(),
+        name="user-sms_log",
+    ),
 ]
