@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "logs",
     "notification",
     "permissions",
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -164,5 +165,13 @@ LOGIN_REDIRECT_URL = "index:index"
 
 
 
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://redis:6379/0")
+CELERY_BROKER_URL = ("redis://redis:6379/1")
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'send_appointment_reminder':{
+        'task':'booking.tasks.send_sms_reminders',
+        'schedule': crontab(hour=12, minute=40),
+    }
+}
