@@ -9,6 +9,7 @@ from base.views import (
 from .models import Appointment, PackageAppointment
 from django.urls import reverse_lazy
 from datetime import datetime
+from .filters import AppointmentFilter
 
 
 # Create your views here.
@@ -16,7 +17,7 @@ class AppointmentListView(BaseListView):
     model = Appointment
     template_name = "booking/list.html"
     context_object_name = "appointments"
-    filterset_class = 0
+    filterset_class = AppointmentFilter
     permission_required = "booking.view_appointment"
 
 
