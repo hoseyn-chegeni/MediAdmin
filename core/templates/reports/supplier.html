@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% block title %}گزارشات مواد مصرفی{% endblock %}
+{% block title %}گزارشات  تامین کنندگان{% endblock %}
 
 {%block content%}
     <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
@@ -7,13 +7,13 @@
           <div class="text-center pt-3 pb-2">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
               alt="Check" width="60">
-            <h2 class="my-4">گزارشات مواد مصرفی</h2>
+            <h2 class="my-4">گزارشات تامین کنندگان</h2>
           </div>
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-12 col-xl-10">
               <div class="card mask-custom">
                 <div class="card-body p-4 text-white">
-                  <form class="table text-white mb-0" method="get" action="{% url 'reports:export_consumable_excel'%}">
+                  <form class="table text-white mb-0" method="get" action="{% url 'reports:export_supplier_excel'%}">
                     {%csrf_token%}
                     <div class="row g-3">
                       <div class="col-sm-6">
@@ -32,7 +32,7 @@
 
                 </nav>
                 </div>
-              </div
+              </div>
       
             </div>
           </div>
