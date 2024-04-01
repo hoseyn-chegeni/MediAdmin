@@ -7,7 +7,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Consumable, ConsumableCategory, Supplier, Equipment
-from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
+from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter, EquipmentFilter
 
 
 # Create your views here.
@@ -159,7 +159,7 @@ class EquipmentListView(BaseListView):
     model = Equipment
     template_name = "asset/equipment/list.html"
     context_object_name = "equipment"
-    filterset_class = 0
+    filterset_class = EquipmentFilter
     permission_required = "asset.view_equipment"
 
 
