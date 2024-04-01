@@ -12,6 +12,9 @@ from booking.models import Appointment, PackageAppointment
 from booking.filters import AppointmentFilter, PackageAppointmentFilter
 from client.models import Client
 from client.filters import ClientFilters
+from doctor.models import Doctor
+from doctor.filters import DoctorFilter
+
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -225,6 +228,36 @@ class ExportClientExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="client_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+class DoctorReportsView(BaseListView):
+    model = Doctor
+    template_name = "reports/doctor.html"
+    filterset_class = DoctorFilter
+    permission_required = "doctor.view_doctor"
+    
+
+class ExportDoctorExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        doctor_filter = DoctorFilter(request.GET, queryset=Doctor.objects.all())
+        filtered_doctor = doctor_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_doctor.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="doctor_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)
