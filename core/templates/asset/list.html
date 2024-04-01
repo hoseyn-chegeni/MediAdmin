@@ -4,6 +4,7 @@
     {{filter.form.as_p}}
     <input type="submit">
 </form>
+<a href="{% url 'reports:consumable_reports' %}">reports</a>
 {%for i in consumable%}
     {{i.id}}.{{i.name}},
     <a href="{% url 'asset:detail' i.pk %}">Details</a>,
