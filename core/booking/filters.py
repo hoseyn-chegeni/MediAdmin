@@ -1,5 +1,5 @@
 from django_filters import FilterSet
-from .models import Appointment
+from .models import Appointment, PackageAppointment
 
 
 class AppointmentFilter(FilterSet):
@@ -9,5 +9,17 @@ class AppointmentFilter(FilterSet):
         fields = {
             "id": ["exact"],
             "service": ["exact"],
+            "client": ["exact"],
+        }
+
+
+
+class PackageAppointmentFilter(FilterSet):
+
+    class Meta:
+        model = PackageAppointment
+        fields = {
+            "id": ["exact"],
+            "package": ["exact"],
             "client": ["exact"],
         }
