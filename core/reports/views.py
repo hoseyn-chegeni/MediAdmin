@@ -10,6 +10,16 @@ from asset.models import Consumable
 from base.views import BaseListView
 
 # Create your views here.
+class UserReportsView(BaseListView):
+    model = User
+    template_name = "reports/user_reports.html"
+    context_object_name = "users"
+    filterset_class = UserFilter
+    permission_required = "accounts.view_user"
+
+
+
+
 class ExportUsersExcelView(View):
     def get(self, request):
         # Get filtered users based on request parameters
