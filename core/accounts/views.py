@@ -31,7 +31,6 @@ from itertools import chain
 from operator import attrgetter
 from django.http import HttpResponse
 import pandas as pd
-from django.views.generic import TemplateView
 
 # Create your views here.
 class UserListView(BaseListView):
