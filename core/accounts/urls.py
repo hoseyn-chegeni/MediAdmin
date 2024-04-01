@@ -14,6 +14,8 @@ from .views import (
     UserActionsView,
     UserSMSListView,
     UserSentSMSListView,
+    ExportUsersExcelView,
+    ReportsView,
 )
 
 app_name = "accounts"
@@ -41,4 +43,7 @@ urlpatterns = [
         UserSentSMSListView.as_view(),
         name="user_sent_sms_log",
     ),
+    path('reports/', ReportsView.as_view(), name='reports'),
+    path('export-users-excel/', ExportUsersExcelView.as_view(), name='export_users_excel'),
+
 ]

@@ -13,7 +13,7 @@
             <div class="col-md-12 col-xl-10">
               <div class="card mask-custom">
                 <div class="card-body p-4 text-white">
-                  <form class="table text-white mb-0" method="get">
+                  <form class="table text-white mb-0" method="get" >
                     {%csrf_token%}
                     <div class="row g-3">
                       <div class="col-sm-6">
@@ -40,7 +40,7 @@
                     </form>
                     <div class="mb-4">
                       <a href="{% url 'accounts:user_create' %}" class="btn btn-success me-2"> افزودن کاربر جدید</a>
-                      <a href="#" class="btn btn-success me-2">گزارشات</a>
+                      <a href="{% url 'accounts:reports'%}" class="btn btn-success me-2">گزارشات</a>
                       </div>
   
                   <table class="table text-white mb-0">
