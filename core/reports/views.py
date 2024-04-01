@@ -10,7 +10,8 @@ from asset.models import Consumable,Supplier, Equipment
 from base.views import BaseListView
 from booking.models import Appointment, PackageAppointment
 from booking.filters import AppointmentFilter, PackageAppointmentFilter
-
+from client.models import Client
+from client.filters import ClientFilters
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -194,6 +195,36 @@ class ExportPackageAppointmentExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="package_appointment_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+class ClientReportsView(BaseListView):
+    model = Client
+    template_name = "reports/client.html"
+    filterset_class = ClientFilters
+    permission_required = "client.view_client"
+    
+
+class ExportClientExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        client_filter = ClientFilters(request.GET, queryset=Client.objects.all())
+        filtered_client = client_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_client.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="client_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)

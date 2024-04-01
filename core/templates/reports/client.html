@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+{% block title %}گزارشات بیماران{% endblock %}
+
+{%block content%}
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">گزارشات بیماران</h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get" action="{% url 'reports:export_client_excel'%}">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="id_id" class="form-label">شماره پرونده</label>
+                            <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+                          </div>
+              
+                          <div class="col-sm-6">
+                            <label for="case_id" class="form-label">شماره پرونده دستی</label>
+                            <input  class="form-control" type="text" name="case_id" step="any" id="case_id" value="{{ request.GET.case_id }}" >
+                          </div>
+    
+                          <div class="col-sm-6">
+                            <label for="national_id" class="form-label">کد ملی</label>
+                            <input  class="form-control" type="text" name="national_id" step="any" id="national_id" value="{{ request.GET.national_id }}" >
+                          </div>
+    
+                          <div class="col-sm-6">
+                            <label for="name" class="form-label">نام</label>
+                            <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                          </div>
+    
+                          <div class="col-sm-6">
+                            <label  for="is_vip">VIP</label>
+                            <select  class="form-select" name="is_vip"  id="is_vip">
+                              <option value="" selected="">---------</option>
+                              <option value="true">بله</option>
+                              <option value="false">خیر</option>
+                            </select>
+                            </div>
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">دانلود فایل گزارش</button>
+                    </form>
+
+
+                </nav>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}

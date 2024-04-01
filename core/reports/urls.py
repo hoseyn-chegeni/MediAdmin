@@ -11,7 +11,9 @@ from .views import (
         ExportAppointmentExcelView,
         AppointmentReportsView,
         PackageAppointmentReportsView,
-        ExportPackageAppointmentExcelView
+        ExportPackageAppointmentExcelView,
+        ClientReportsView,
+        ExportClientExcelView
 )
 
 app_name = 'reports'
@@ -34,4 +36,7 @@ urlpatterns = [
 
         path('package_appointment_reports/', PackageAppointmentReportsView.as_view(), name='package_appointment_reports'),
         path('export-package_appointment-excel/', ExportPackageAppointmentExcelView.as_view(), name='export_package_appointment_excel'),
+
+        path('client_reports/', ClientReportsView.as_view(), name='client_reports'),
+        path('export-client-excel/', ExportClientExcelView.as_view(), name='export_client_excel'),
 ]
