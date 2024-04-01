@@ -5,8 +5,8 @@ from accounts.models import User
 from django.shortcuts import HttpResponse
 import pandas as pd
 
-from asset.filters import ConsumableFilter, SupplierFilter
-from asset.models import Consumable,Supplier
+from asset.filters import ConsumableFilter, SupplierFilter, EquipmentFilter
+from asset.models import Consumable,Supplier, Equipment
 from base.views import BaseListView
 
 
@@ -100,6 +100,37 @@ class ExportSupplierExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="supplier_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+
+
+
+class EquipmentReportsView(BaseListView):
+    model = Supplier
+    template_name = "reports/equipment.html"
+    filterset_class = EquipmentFilter
+    permission_required = "asset.view_equipment"
+    
+
+class ExportEquipmentExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        equipment_filter = EquipmentFilter(request.GET, queryset=Equipment.objects.all())
+        filtered_equipment = equipment_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_equipment.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="equipment_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)

@@ -1,5 +1,14 @@
 from django.urls import path
-from .views import ExportUsersExcelView, ConsumableReportsView,ExportConsumableExcelView, UserReportsView, SupplierReportsView, ExportSupplierExcelView
+from .views import (
+        ExportUsersExcelView,
+        ConsumableReportsView,
+        ExportConsumableExcelView,
+        UserReportsView,
+        SupplierReportsView,
+        ExportSupplierExcelView,
+        EquipmentReportsView, 
+        ExportEquipmentExcelView
+)
 
 app_name = 'reports'
 
@@ -12,4 +21,7 @@ urlpatterns = [
 
         path('supplier_reports/', SupplierReportsView.as_view(), name='supplier_reports'),
         path('export-supplier-excel/', ExportSupplierExcelView.as_view(), name='export_supplier_excel'),
+
+        path('equipment_reports/', EquipmentReportsView.as_view(), name='equipment_reports'),
+        path('export-equipment-excel/', ExportEquipmentExcelView.as_view(), name='export_equipment_excel'),
 ]
