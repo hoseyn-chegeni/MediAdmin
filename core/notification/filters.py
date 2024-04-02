@@ -1,7 +1,5 @@
 from django_filters import FilterSet
-from  logs.models import ClientSMSLog
-
-
+from logs.models import ClientSMSLog
 
 
 class ClientSMSLogFilter(FilterSet):
@@ -11,5 +9,4 @@ class ClientSMSLogFilter(FilterSet):
             "id": ["exact"],
             "client": ["exact"],
             "subject": ["exact"],
-            }
-
+        }

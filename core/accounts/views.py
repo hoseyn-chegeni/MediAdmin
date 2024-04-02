@@ -32,6 +32,7 @@ from operator import attrgetter
 from django.http import HttpResponse
 import pandas as pd
 
+
 # Create your views here.
 class UserListView(BaseListView):
     model = User
@@ -243,4 +244,3 @@ class UserSentSMSListView(BaseListView):
         context = super().get_context_data(**kwargs)
         context["user"] = User.objects.get(id=self.kwargs["pk"])
         return context
-

@@ -14,7 +14,6 @@ from .views import (
     UserActionsView,
     UserSMSListView,
     UserSentSMSListView,
-
 )
 
 app_name = "accounts"
@@ -42,6 +41,4 @@ urlpatterns = [
         UserSentSMSListView.as_view(),
         name="user_sent_sms_log",
     ),
-
-
 ]

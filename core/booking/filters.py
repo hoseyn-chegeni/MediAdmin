@@ -13,7 +13,6 @@ class AppointmentFilter(FilterSet):
         }
 
 
-
 class PackageAppointmentFilter(FilterSet):
 
     class Meta:

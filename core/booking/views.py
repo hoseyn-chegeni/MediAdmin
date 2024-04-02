@@ -109,7 +109,7 @@ class PackageAppointmentListView(BaseListView):
     model = PackageAppointment
     template_name = "booking/package/list.html"
     context_object_name = "appointments"
-    filterset_class =PackageAppointmentFilter
+    filterset_class = PackageAppointmentFilter
     permission_required = "booking.view_packageappointment"
 
 

@@ -16,8 +16,12 @@ class InsuranceFilter(FilterSet):
             models.Q(first_name__icontains=value) | models.Q(last_name__icontains=value)
         )
 
+
 class InsuranceServiceFilter(FilterSet):
     class Meta:
         model = InsuranceService
-        fields = {"id": ["exact"], "service": ["exact"],"insurance": ["exact"],}
-
+        fields = {
+            "id": ["exact"],
+            "service": ["exact"],
+            "insurance": ["exact"],
+        }

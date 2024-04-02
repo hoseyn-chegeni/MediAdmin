@@ -32,7 +32,6 @@ class SupplierFilter(FilterSet):
         }
 
 
-
 class EquipmentFilter(FilterSet):
 
     class Meta:
