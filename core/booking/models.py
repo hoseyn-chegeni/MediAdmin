@@ -15,6 +15,7 @@ class Appointment(models.Model):
         "client.Client", on_delete=models.CASCADE, blank=True, null=True
     )
     national_code = models.CharField(max_length=100, blank=True, null=True)
+    client_name = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
     status = models.CharField(max_length=100, choices=STATUS, blank=True, null=True)
     has_package = models.BooleanField(default=False)
@@ -37,6 +38,7 @@ class PackageAppointment(models.Model):
         "client.Client", on_delete=models.CASCADE, blank=True, null=True
     )
     national_code = models.CharField(max_length=100, blank=True, null=True)
+    client_name = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
     status = models.CharField(max_length=100, choices=STATUS, blank=True, null=True)
     prepayment = models.PositiveIntegerField(default=0)
