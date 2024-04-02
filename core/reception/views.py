@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
-
+from booking.models import Appointment
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -126,3 +126,28 @@ class ReceptionUpdateView(BaseUpdateView):
     app_name = "reception"
     url_name = "detail"
     permission_required = "reception.change_reception"
+
+
+class ReceptionWithAppointmentCreateView(BaseCreateView):
+    model = Reception
+    fields = ["reason", "payment_type", "payment_status"]
+    template_name = "reception/create_with_appointment.html"
+    app_name = "reception"
+    url_name = "detail"
+    permission_required = "reception.add_reception"
+
+    def form_valid(self, form):
+        appointment = Appointment.objects.get(id = self.kwargs["pk"])
+        # Set the client for the reception
+        form.instance.created_by = self.request.user
+        form.instance.status = "WAITE"
+        form.instance.client = appointment.client
+        form.instance.service = appointment.service
+        form.instance.appointment = appointment
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        appointment = Appointment.objects.get(id = self.kwargs["pk"])
+        context["client"] = Client.objects.get(id=appointment.client.id)
+        return context

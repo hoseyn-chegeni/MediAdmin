@@ -1,0 +1,58 @@
+{%extends 'base.html' %}
+{%block title %}ایجاد پذیرش جدید برای {{client}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ایجاد پذیرش جدید برای {{client}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="reason" class="form-label">علت مراجعه</label>
+                      <input type="text" class="form-control" id="reason" placeholder="" value="{{object.reason}}" name="reason" >
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label  for="payment_type">نوع پرداخت:</label>
+                        <select  class="form-select" name="payment_type" required="" id="payment_type">
+                          <option value="" selected="">---------</option>
+                          <option value="CASH">نقد</option>
+                          <option value="CARD">کارت</option>
+                          <option value="INSURANCE">بیمه</option>
+                          <option value="OTHER">روش های دیگر</option>
+                        </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label  for="payment_status">وضعیت پرداخت:</label>
+                            <select  class="form-select" name="payment_status" required="" id="payment_status">
+                              <option value="" selected="">---------</option>
+                              <option value="PAID">پرداخت شده</option>
+                              <option value="UNPAID">پرداخت نشده</option>
+                              <option value="PENDING">Pending</option>
+                            </select>
+                            </div>
+    
+
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}
