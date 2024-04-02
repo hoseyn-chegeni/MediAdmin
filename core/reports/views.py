@@ -15,7 +15,8 @@ from doctor.models import Doctor
 from doctor.filters import DoctorFilter
 from financial.models import Financial
 from financial.filters import FinancialFilter
-
+from insurance.models import Insurance
+from insurance.filters import InsuranceFilter
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -290,6 +291,36 @@ class ExportFinancialExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="invoice_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+class InsuranceReportsView(BaseListView):
+    model = Insurance
+    template_name = "reports/insurance.html"
+    filterset_class = InsuranceFilter
+    permission_required = "insurance.view_insurance"
+    
+
+class ExportInsuranceExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        insurance_filter = InsuranceFilter(request.GET, queryset=Insurance.objects.all())
+        filtered_insurance = insurance_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_insurance.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="insurance_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)

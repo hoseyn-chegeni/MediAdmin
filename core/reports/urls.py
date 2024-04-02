@@ -18,6 +18,8 @@ from .views import (
         ExportDoctorExcelView,
         FinancialReportsView, 
         ExportFinancialExcelView,
+        InsuranceReportsView,
+        ExportInsuranceExcelView,
 )
 
 app_name = 'reports'
@@ -49,4 +51,8 @@ urlpatterns = [
 
         path('financial_reports/', FinancialReportsView.as_view(), name='financial_reports'),
         path('export-financial-excel/', ExportFinancialExcelView.as_view(), name='export_financial_excel'),
+
+        path('insurance_reports/', InsuranceReportsView.as_view(), name='insurance_reports'),
+        path('export-insurance-excel/', ExportInsuranceExcelView.as_view(), name='export_insurance_excel'),
+
 ]
