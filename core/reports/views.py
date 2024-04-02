@@ -4,7 +4,6 @@ from accounts.filters import UserFilter
 from accounts.models import User
 from django.shortcuts import HttpResponse
 import pandas as pd
-
 from asset.filters import ConsumableFilter, SupplierFilter, EquipmentFilter
 from asset.models import Consumable,Supplier, Equipment
 from base.views import BaseListView
@@ -14,6 +13,8 @@ from client.models import Client
 from client.filters import ClientFilters
 from doctor.models import Doctor
 from doctor.filters import DoctorFilter
+from financial.models import Financial
+from financial.filters import FinancialFilter
 
 
 # Create your views here.
@@ -258,6 +259,37 @@ class ExportDoctorExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="doctor_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+
+class FinancialReportsView(BaseListView):
+    model = Financial
+    template_name = "reports/financial.html"
+    filterset_class = FinancialFilter
+    permission_required = "financial.view_financial"
+    
+
+class ExportFinancialExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        financial_filter = FinancialFilter(request.GET, queryset=Financial.objects.all())
+        filtered_financial = financial_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_financial.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="invoice_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)

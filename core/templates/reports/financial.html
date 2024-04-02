@@ -1,0 +1,78 @@
+{% extends 'base.html'%}
+{% block title %}گزارشات مالی و صورتحساب ها{% endblock %}
+
+{%block content%}
+    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">گزارشات مالی و صورتحساب ها</h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get" action="{% url 'reports:export_financial_excel'%}">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="id" class="form-label">ID</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+                      </div>
+                        <div class="col-sm-6">
+                          <label for="invoice_number" class="form-label">شماره صورتحساب</label>
+                          <input  class="form-control" type="text" name="invoice_number" step="any" id="invoice_number"value="{{ request.GET.invoice_number }}" >
+                        </div>
+                          <div class="col-sm-6">
+                            <label for="reception_id" class="form-label">شماره پذیرش</label>
+                            <input  class="form-control" type="number" name="reception_id" step="any" id="reception_id"value="{{ request.GET.reception_id }}" >
+                          </div>
+                          <div class="col-sm-6">
+                            <label for="client" class="form-label">بیمار</label>
+                            <input  class="form-control" type="text" name="client" step="any" id="client"value="{{ request.GET.client }}" >
+                          </div>
+                            <div class="col-sm-6">
+                              <label for="coupon" class="form-label">عنوان تخفیف</label>
+                              <input  class="form-control" type="text" name="coupon" step="any" id="coupon"value="{{ request.GET.coupon }}" >
+                            </div>
+                              <div class="col-sm-6">
+                                <label for="service" class="form-label">نام سرویس</label>
+                                <input  class="form-control" type="text" name="service" step="any" id="service"value="{{ request.GET.service }}" >
+                              </div>
+                                <div class="col-sm-6">
+                                  <label for="doctor" class="form-label">نام پزشک</label>
+                                  <input  class="form-control" type="text" name="doctor" step="any" id="doctor"value="{{ request.GET.doctor }}" >
+                                </div>
+                        <div class="col-sm-6">
+                            <label for="date" class="form-label">تاریخ</label>
+                            <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                          </div>
+                      <div class="col-sm-6">
+                        <label for="date_range">محدوده زمانی</label>
+                        <select class="form-select" name="date_range" id="date_range">
+                          <option value="" selected>---------</option>
+                          <option value="today">امروز</option>
+                          <option value="this_week">هفته گذشته</option>
+                          <option value="this_month">ماه گذشته</option>
+                        </select>
+                      </div>
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">دانلود فایل گزارش</button>
+                    </form>
+
+
+                </nav>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}
