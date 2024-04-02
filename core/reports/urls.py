@@ -22,6 +22,8 @@ from .views import (
         ExportInsuranceExcelView,
         InsuranceServiceReportsView, 
         ExportInsuranceServiceExcelView,
+        PrescriptionReportsView, 
+        ExportPrescriptionExcelView,
 )
 
 app_name = 'reports'
@@ -43,7 +45,7 @@ urlpatterns = [
         path('export-appointment-excel/', ExportAppointmentExcelView.as_view(), name='export_appointment_excel'),
 
         path('package_appointment_reports/', PackageAppointmentReportsView.as_view(), name='package_appointment_reports'),
-        path('export-package_appointment-excel/', ExportPackageAppointmentExcelView.as_view(), name='export_package_appointment_excel'),
+        path('export-package-appointment-excel/', ExportPackageAppointmentExcelView.as_view(), name='export_package_appointment_excel'),
 
         path('client_reports/', ClientReportsView.as_view(), name='client_reports'),
         path('export-client-excel/', ExportClientExcelView.as_view(), name='export_client_excel'),
@@ -58,6 +60,8 @@ urlpatterns = [
         path('export-insurance-excel/', ExportInsuranceExcelView.as_view(), name='export_insurance_excel'),
 
         path('insurance_service_reports/', InsuranceServiceReportsView.as_view(), name='insurance_service_reports'),
-        path('export-insurance_service-excel/', ExportInsuranceServiceExcelView.as_view(), name='export_insurance_service_excel'),
+        path('export-insurance-service-excel/', ExportInsuranceServiceExcelView.as_view(), name='export_insurance_service_excel'),
 
+        path('prescription_reports/', PrescriptionReportsView.as_view(), name='prescription_reports'),
+        path('export-prescription-excel/', ExportPrescriptionExcelView.as_view(), name='export_prescription_excel'),
 ]
