@@ -26,6 +26,8 @@ from .views import (
         ExportPrescriptionExcelView,
         ReceptionReportsView,
         ExportReceptionExcelView,
+        ServiceReportsView,
+        ExportServiceExcelView,
 )
 
 app_name = 'reports'
@@ -69,5 +71,8 @@ urlpatterns = [
 
         path('reception_reports/', ReceptionReportsView.as_view(), name='reception_reports'),
         path('export-reception-excel/', ExportReceptionExcelView.as_view(), name='export_reception_excel'),
-        
+
+        path('service_reports/', ServiceReportsView.as_view(), name='service_reports'),
+        path('export-service-excel/', ExportServiceExcelView.as_view(), name='export_service_excel'),
+
 ]

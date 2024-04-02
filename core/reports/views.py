@@ -21,6 +21,8 @@ from prescription.models import Prescription
 from prescription.filters import PrescriptionFilter
 from reception.models import Reception
 from reception.filters import ReceptionFilter
+from services.models import Service
+from services.filters import ServicesFilter
 
 
 # Create your views here.
@@ -420,6 +422,37 @@ class ExportReceptionExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="reception_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+
+class ServiceReportsView(BaseListView):
+    model = Service
+    template_name = "reports/service.html"
+    filterset_class = ServicesFilter
+    permission_required = "services.view_service"
+    
+
+class ExportServiceExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        service_filter = ServicesFilter(request.GET, queryset=Service.objects.all())
+        filtered_service = service_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_service.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="service_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)
