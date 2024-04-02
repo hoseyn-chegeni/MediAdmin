@@ -41,7 +41,7 @@
 
               <div class="col-sm-6">
                 <label  for="category">دسته بندی:</label>
-                <select  class="form-select" name="category" required="" id="category">
+                <select  class="form-select" name="category"  id="category">
                   <option value="" selected="">---------</option>
                   {% for i in form.category.field.queryset%}
                   <option value="{{i.id}}">{{i}}</option>
@@ -107,8 +107,8 @@
                     </div>
 
                     <div class="col-sm-6">
-                      <label  for="doctor">پزشک:</label>
-                      <select  class="form-select" name="doctor" required="" id="doctor" multiple>
+                      <label  for="doctor">تجهیزات پزشکی:</label>
+                      <select  class="form-select" name="doctor"  id="doctor" multiple>
                         <option value="" selected="">---------</option>
                         {% for i in form.medical_equipment.field.queryset%}
                         <option value="{{i.id}}">{{i}}</option>
