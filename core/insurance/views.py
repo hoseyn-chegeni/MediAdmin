@@ -8,7 +8,7 @@ from base.views import (
 )
 from .models import Insurance, InsuranceService
 from django.urls import reverse_lazy
-from .filters import InsuranceFilter
+from .filters import InsuranceFilter, InsuranceServiceFilter
 from client.models import Client
 
 
@@ -65,7 +65,7 @@ class ServiceInsuranceListView(BaseListView):
     model = InsuranceService
     template_name = "service_insurance/list.html"
     context_object_name = "insurance"
-    filterset_class = 0
+    filterset_class = InsuranceServiceFilter
     permission_required = "insurance.view_insuranceservice"
 
 

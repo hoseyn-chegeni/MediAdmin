@@ -1,6 +1,6 @@
 import django_filters
 from django_filters import FilterSet
-from .models import Insurance
+from .models import Insurance, InsuranceService
 from django.db import models
 
 
@@ -15,3 +15,9 @@ class InsuranceFilter(FilterSet):
         return queryset.filter(
             models.Q(first_name__icontains=value) | models.Q(last_name__icontains=value)
         )
+
+class InsuranceServiceFilter(FilterSet):
+    class Meta:
+        model = InsuranceService
+        fields = {"id": ["exact"], "service": ["exact"],"insurance": ["exact"],}
+
