@@ -30,6 +30,8 @@ from .views import (
         ExportServiceExcelView,
         PackageReportsView,
         ExportPackageExcelView,
+        ClientSMSLogReportsView, 
+        ExportClientSMSLogExcelView,
 )
 
 app_name = 'reports'
@@ -79,5 +81,9 @@ urlpatterns = [
 
         path('package_reports/', PackageReportsView.as_view(), name='package_reports'),
         path('export-package-excel/', ExportPackageExcelView.as_view(), name='export_package_excel'),
+
+        path('client_sms_log_reports/', ClientSMSLogReportsView.as_view(), name='client_sms_log_reports'),
+        path('export-client_sms_log-excel/', ExportClientSMSLogExcelView.as_view(), name='export_client_sms_log_excel'),
+
 
 ]

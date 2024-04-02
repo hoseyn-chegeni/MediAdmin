@@ -23,6 +23,8 @@ from reception.models import Reception
 from reception.filters import ReceptionFilter
 from services.models import Service, Package
 from services.filters import ServicesFilter, PackageFilter
+from logs.models import ClientSMSLog
+from notification.filters import ClientSMSLogFilter
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -482,6 +484,36 @@ class ExportPackageExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="package_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+class ClientSMSLogReportsView(BaseListView):
+    model =ClientSMSLog
+    template_name = "reports/client_sms_log.html"
+    filterset_class = ClientSMSLogFilter
+    permission_required = "logs.view_clientsmslog"
+    
+
+class ExportClientSMSLogExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        client_sms_filter = ClientSMSLogFilter(request.GET, queryset = ClientSMSLog.objects.all())
+        filtered_client_sms = client_sms_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_client_sms.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="sms_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)
