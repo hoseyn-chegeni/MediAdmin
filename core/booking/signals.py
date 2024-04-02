@@ -38,7 +38,7 @@ def create_appointments(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Appointment)
 def send_service_appointment_creation_info(sender, instance, created, **kwargs):
-    if created and instance.has_package == False:
+    if created and instance.has_package == False and instance.client:
         try:
             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
             params = {
