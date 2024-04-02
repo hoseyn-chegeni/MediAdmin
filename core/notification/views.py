@@ -8,7 +8,7 @@ from os import getenv
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from client.models import Client
-import re
+from .filters import ClientSMSLogFilter
 
 
 # Create your views here.
@@ -16,7 +16,7 @@ class ClientSMSListView(BaseListView):
     model = ClientSMSLog
     template_name = "notification/list.html"
     context_object_name = "sms"
-    filterset_class = 0
+    filterset_class = ClientSMSLogFilter
     permission_required = "logs.view_ClientSMSLog"
 
 
