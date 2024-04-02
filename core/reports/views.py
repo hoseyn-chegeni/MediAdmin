@@ -21,9 +21,8 @@ from prescription.models import Prescription
 from prescription.filters import PrescriptionFilter
 from reception.models import Reception
 from reception.filters import ReceptionFilter
-from services.models import Service
-from services.filters import ServicesFilter
-
+from services.models import Service, Package
+from services.filters import ServicesFilter, PackageFilter
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -453,6 +452,36 @@ class ExportServiceExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="service_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+class PackageReportsView(BaseListView):
+    model =Package
+    template_name = "reports/package.html"
+    filterset_class = PackageFilter
+    permission_required = "services.view_package"
+    
+
+class ExportPackageExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        package_filter = PackageFilter(request.GET, queryset = Package.objects.all())
+        filtered_package = package_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_package.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="package_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)
