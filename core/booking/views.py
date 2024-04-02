@@ -10,7 +10,7 @@ from .models import Appointment, PackageAppointment
 from django.urls import reverse_lazy
 from datetime import datetime
 from .filters import AppointmentFilter, PackageAppointmentFilter
-
+from datetime import date
 
 # Create your views here.
 class AppointmentListView(BaseListView):
@@ -19,6 +19,18 @@ class AppointmentListView(BaseListView):
     context_object_name = "appointments"
     filterset_class = AppointmentFilter
     permission_required = "booking.view_appointment"
+
+class TodaysAppointmentListView(BaseListView):
+    model = Appointment
+    template_name = "booking/today_list.html"
+    context_object_name = "appointments"
+    filterset_class = AppointmentFilter
+    permission_required = "booking.view_appointment"
+
+    def get_queryset(self):
+        today_date = date.today()
+        queryset = super().get_queryset().filter(date=today_date)
+        return queryset
 
 
 class AppointmentDetailView(BaseDetailView):

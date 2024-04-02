@@ -10,12 +10,14 @@ from .views import (
     PackageAppointmentDeleteView,
     PackageAppointmentListView,
     PackageAppointmentUpdateView,
+    TodaysAppointmentListView,
 )
 
 app_name = "booking"
 
 urlpatterns = [
     path("list/", AppointmentListView.as_view(), name="list"),
+    path("today_list/", TodaysAppointmentListView.as_view(), name="today_list"),
     path("detail/<int:pk>/", AppointmentDetailView.as_view(), name="detail"),
     path("create/", AppointmentCreateView.as_view(), name="create"),
     path("update/<int:pk>/", AppointmentUpdateView.as_view(), name="update"),

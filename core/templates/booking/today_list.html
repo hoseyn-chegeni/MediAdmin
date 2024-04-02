@@ -1,0 +1,14 @@
+<h2>Today's Appointment List</h2>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in appointments%}
+  <p>  
+      {{i.id}}.{{i.client}} {{i.package}}, {{i.services}},
+      <a href="{% url 'booking:detail' i.pk %}">Details</a>,
+      <a href="{% url 'booking:update' i.pk %}">Update</a>,
+      <a href="{% url 'booking:delete' i.pk %}">Delete</a>,
+  </p>
+{% endfor %}

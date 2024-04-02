@@ -249,15 +249,7 @@
             <li><a class="dropdown-item" href="{% url 'booking:create' %}">ایجاد نوبت جدید</a></li>
             <hr class="dropdown-divider">
           </li>
-            <li><a class="dropdown-item" href="#">لیست نوبت های ثبت شده امروز</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-              <li><a class="dropdown-item" href="#">لیست نوبت های ثبت شده هفته</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-                <li><a class="dropdown-item" href="#">لیست نوبت های ثبت شده ماه</a></li>
+            <li><a class="dropdown-item" href="{% url 'booking:today_list' %}">لیست نوبت های ثبت شده امروز</a></li>
           </ul>
         </li>    
 
