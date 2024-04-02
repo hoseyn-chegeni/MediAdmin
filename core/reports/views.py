@@ -15,8 +15,9 @@ from doctor.models import Doctor
 from doctor.filters import DoctorFilter
 from financial.models import Financial
 from financial.filters import FinancialFilter
-from insurance.models import Insurance
-from insurance.filters import InsuranceFilter
+from insurance.models import Insurance, InsuranceService
+from insurance.filters import InsuranceFilter, InsuranceServiceFilter
+
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -321,6 +322,38 @@ class ExportInsuranceExcelView(View):
         # Create a response object
         response = HttpResponse(content_type='application/vnd.ms-excel')
         response['Content-Disposition'] = 'attachment; filename="insurance_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+
+
+class InsuranceServiceReportsView(BaseListView):
+    model = InsuranceService
+    template_name = "reports/insurance_service.html"
+    filterset_class = InsuranceServiceFilter
+    permission_required = "insurance.view_insuranceservice"
+    
+
+class ExportInsuranceServiceExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        insurance_service_filter = InsuranceServiceFilter(request.GET, queryset=InsuranceService.objects.all())
+        filtered_insurance_service = insurance_service_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_insurance_service.values()))
+
+        date_columns = users_df.select_dtypes(include=['datetime64[ns, Iran]']).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="insurance_service_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)
