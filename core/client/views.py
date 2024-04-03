@@ -12,7 +12,6 @@ from .filters import (
     ClientReceptionHistoryFilter,
     ClientFinancialHistoryFilter,
     ClientAppointmentFilter,
-    ClientSMSFilter,
 )
 from django.urls import reverse_lazy, reverse
 from reception.models import Reception
@@ -26,6 +25,7 @@ from django.contrib import messages
 from logs.models import ClientSMSLog
 from booking.models import Appointment
 from logs.models import ClientSMSLog
+from notification.filters import ClientSMSLogFilter
 
 
 # Create your views here.
@@ -224,7 +224,7 @@ class ClientAppointmentListView(BaseListView):
 class ClientSMSListView(BaseListView):
     model = ClientSMSLog
     template_name = "client/client_sms_log.html"
-    filterset_class = ClientSMSFilter
+    filterset_class = ClientSMSLogFilter
     permission_required = "client.view_client"
 
     def get_queryset(self):

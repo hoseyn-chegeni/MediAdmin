@@ -116,13 +116,3 @@ class ClientAppointmentFilter(FilterSet):
 
 
 
-class ClientSMSFilter(BaseFilter):
-    class Meta:
-        model = ClientSMSLog
-        fields = {
-            'id':['exact'],
-            'sender_number':['exact'],
-            'subject':['exact'],
-            'sender_number':['exact'],
-            'status':['exact'],
-        }
