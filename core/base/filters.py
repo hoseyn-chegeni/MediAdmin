@@ -1,10 +1,12 @@
-from django_filters import FilterSet, DateFilter, ChoiceFilter
+from django_filters import FilterSet, DateFilter, ChoiceFilter, CharFilter
 from datetime import datetime , timedelta
 from django import forms
 
 
 
 class BaseFilter(FilterSet):
+    created_by_email = CharFilter(field_name='created_by__email', lookup_expr='exact')
+
     date = DateFilter(
         field_name="created_at",
         label="Date (yyyy-mm-dd)",
