@@ -17,6 +17,7 @@ from django.contrib import messages
 from django.urls import reverse
 from booking.models import Appointment
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -137,7 +138,7 @@ class ReceptionWithAppointmentCreateView(BaseCreateView):
     permission_required = "reception.add_reception"
 
     def form_valid(self, form):
-        appointment = Appointment.objects.get(id = self.kwargs["pk"])
+        appointment = Appointment.objects.get(id=self.kwargs["pk"])
         # Set the client for the reception
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
@@ -148,6 +149,6 @@ class ReceptionWithAppointmentCreateView(BaseCreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        appointment = Appointment.objects.get(id = self.kwargs["pk"])
+        appointment = Appointment.objects.get(id=self.kwargs["pk"])
         context["client"] = Client.objects.get(id=appointment.client.id)
         return context

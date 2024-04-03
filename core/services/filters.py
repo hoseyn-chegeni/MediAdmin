@@ -51,7 +51,6 @@ class ServiceCategoryFilter(BaseFilter):
             "id": ["exact"],
             "name": ["exact"],
             "is_active": ["exact"],
-
         }
 
 

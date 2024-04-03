@@ -6,6 +6,7 @@ from kavenegar import KavenegarAPI, APIException, HTTPException
 from os import getenv
 from datetime import datetime
 
+
 @shared_task
 def send_sms_reminders():
     # Calculate the date for tomorrow
@@ -17,9 +18,7 @@ def send_sms_reminders():
     # Iterate over appointments and send reminders
     for appointment in appointments_tomorrow:
         try:
-            api = KavenegarAPI(
-                getenv('KAVENEGAR_API_KEY')
-            )
+            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
             message = "this is a test from celery "
             params = {
                 "sender": "2000500666",
@@ -39,10 +38,13 @@ def update_appointment_status():
 
     # Get all appointments that are one day old and have not been marked as done
     appointments_to_update = Appointment.objects.filter(
-        date__lte=one_day_ago, status__in=['WAITE',]
+        date__lte=one_day_ago,
+        status__in=[
+            "WAITE",
+        ],
     )
 
     # Update the status of each appointment to done
     for appointment in appointments_to_update:
-        appointment.status = 'عدم مراجعه'
+        appointment.status = "عدم مراجعه"
         appointment.save()

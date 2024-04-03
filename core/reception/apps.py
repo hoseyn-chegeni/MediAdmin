@@ -5,6 +5,5 @@ class ReceptionConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "reception"
 
-
     def ready(self):
-        import reception.signals 
+        import reception.signals

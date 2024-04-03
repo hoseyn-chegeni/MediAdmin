@@ -24,5 +24,9 @@ urlpatterns = [
     path("update/<int:pk>/", ReceptionUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", ReceptionDeleteView.as_view(), name="delete"),
     path("complete/<int:pk>/", CompleteReceptionView.as_view(), name="complete"),
-    path("create_with_appointment/<int:pk>", ReceptionWithAppointmentCreateView.as_view(), name="created_with_appointment"),
+    path(
+        "create_with_appointment/<int:pk>",
+        ReceptionWithAppointmentCreateView.as_view(),
+        name="created_with_appointment",
+    ),
 ]

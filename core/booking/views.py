@@ -12,6 +12,7 @@ from datetime import datetime
 from .filters import AppointmentFilter, PackageAppointmentFilter
 from datetime import date
 
+
 # Create your views here.
 class AppointmentListView(BaseListView):
     model = Appointment
@@ -19,6 +20,7 @@ class AppointmentListView(BaseListView):
     context_object_name = "appointments"
     filterset_class = AppointmentFilter
     permission_required = "booking.view_appointment"
+
 
 class TodaysAppointmentListView(BaseListView):
     model = Appointment

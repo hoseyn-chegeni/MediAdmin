@@ -4,6 +4,7 @@ from .models import Reception
 from datetime import date
 from booking.models import Appointment
 
+
 @receiver(post_save, sender=Reception)
 def update_last_reception_date(sender, instance, created, **kwargs):
     if created:
@@ -28,7 +29,6 @@ def update_reception_number(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Reception)
 def update_appointment_status(sender, instance, created, **kwargs):
     if created and instance.appointment:
-        appointment = Appointment.objects.get(id = instance.appointment.id)
-        appointment.status = 'پذیرش شده'
+        appointment = Appointment.objects.get(id=instance.appointment.id)
+        appointment.status = "پذیرش شده"
         appointment.save()
-

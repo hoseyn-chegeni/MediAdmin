@@ -177,5 +177,4 @@ CELERY_BEAT_SCHEDULE = {
         "task": "booking.tasks.update_appointment_status",
         "schedule": crontab(hour=10, minute=00),  # Runs daily at midnight
     },
-
 }

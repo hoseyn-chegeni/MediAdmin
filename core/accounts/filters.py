@@ -5,6 +5,7 @@ from logs.models import UserSMSLog, ClientSMSLog
 from django import forms
 from base.filters import BaseFilter
 
+
 class UserFilter(BaseFilter):
     name = django_filters.CharFilter(method="filter_by_name")
 
@@ -20,7 +21,6 @@ class UserFilter(BaseFilter):
         return queryset.filter(first_name__icontains=value) | queryset.filter(
             last_name__icontains=value
         )
-
 
 
 class UserSentSMSFilter(FilterSet):

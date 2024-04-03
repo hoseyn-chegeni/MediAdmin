@@ -4,8 +4,9 @@ from base.filters import BaseFilter
 from django import forms
 from datetime import datetime, timedelta
 
+
 class AppointmentFilter(FilterSet):
-    created_by_email = CharFilter(field_name='created_by__email', lookup_expr='exact')
+    created_by_email = CharFilter(field_name="created_by__email", lookup_expr="exact")
 
     date = DateFilter(
         field_name="date",
@@ -32,10 +33,9 @@ class AppointmentFilter(FilterSet):
         ),
     )
 
-
     def filter_by_date(self, queryset, name, value):
         return queryset.filter(date=value)
-    
+
     def filter_by_created_at(self, queryset, name, value):
         return queryset.filter(created_at__date=value)
 
@@ -52,10 +52,7 @@ class AppointmentFilter(FilterSet):
             end_of_month = start_of_month.replace(
                 month=start_of_month.month + 1, day=1
             ) - timedelta(days=1)
-            return queryset.filter(
-                date__range=[start_of_month, end_of_month]
-            )
-
+            return queryset.filter(date__range=[start_of_month, end_of_month])
 
     case_id = CharFilter(
         field_name="client__case_id", label="Case ID", lookup_expr="exact"
@@ -73,7 +70,6 @@ class AppointmentFilter(FilterSet):
         return queryset.filter(client__first_name__icontains=value) | queryset.filter(
             client__last_name__icontains=value
         )
-
 
     class Meta:
         model = Appointment
@@ -81,9 +77,12 @@ class AppointmentFilter(FilterSet):
             "id": ["exact"],
             "service": ["exact"],
             "national_code": ["exact"],
-            "client_name": ["exact"],   #این دو فیلد برای فیلتر بیمار هایی است که پرونده ندارند
+            "client_name": [
+                "exact"
+            ],  # این دو فیلد برای فیلتر بیمار هایی است که پرونده ندارند
         }
 
+
 ######################################################################################################
 ######################################################################################################
 ######################################################################################################
@@ -94,10 +93,10 @@ class AppointmentFilter(FilterSet):
 ######################################################################################################
 ######################################################################################################
 ######################################################################################################
-        
+
 
 class PackageAppointmentFilter(FilterSet):
-    created_by_email = CharFilter(field_name='created_by__email', lookup_expr='exact')
+    created_by_email = CharFilter(field_name="created_by__email", lookup_expr="exact")
 
     date = DateFilter(
         field_name="date",
@@ -123,7 +122,6 @@ class PackageAppointmentFilter(FilterSet):
         ),
     )
 
-
     def filter_by_created_at(self, queryset, name, value):
         return queryset.filter(created_at__date=value)
 
@@ -143,10 +141,7 @@ class PackageAppointmentFilter(FilterSet):
             end_of_month = start_of_month.replace(
                 month=start_of_month.month + 1, day=1
             ) - timedelta(days=1)
-            return queryset.filter(
-                date__range=[start_of_month, end_of_month]
-            )
-
+            return queryset.filter(date__range=[start_of_month, end_of_month])
 
     case_id = CharFilter(
         field_name="client__case_id", label="Case ID", lookup_expr="exact"
@@ -165,12 +160,13 @@ class PackageAppointmentFilter(FilterSet):
             client__last_name__icontains=value
         )
 
-
     class Meta:
         model = PackageAppointment
         fields = {
             "id": ["exact"],
             "package": ["exact"],
             "national_code": ["exact"],
-            "client_name": ["exact"],   #این دو فیلد برای فیلتر بیمار هایی است که پرونده ندارند
+            "client_name": [
+                "exact"
+            ],  # این دو فیلد برای فیلتر بیمار هایی است که پرونده ندارند
         }

@@ -34,6 +34,9 @@ class Reception(models.Model):
     invoice_attachment = models.FileField(
         upload_to="attachments/", blank=True, null=True
     )
-    appointment = models.OneToOneField('booking.Appointment', on_delete = models.SET_NULL, blank = True, null = True)
+    appointment = models.OneToOneField(
+        "booking.Appointment", on_delete=models.SET_NULL, blank=True, null=True
+    )
+
     def __str__(self):
         return f"Reception for {self.client.first_name} {self.client.last_name}"

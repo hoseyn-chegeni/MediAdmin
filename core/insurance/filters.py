@@ -14,7 +14,7 @@ class InsuranceFilter(BaseFilter):
             "id": ["exact"],
             "insurance_company": ["exact"],
             "policy_type": ["exact"],
-            "policy_number": ["exact"]
+            "policy_number": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):

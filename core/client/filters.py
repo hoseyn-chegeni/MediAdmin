@@ -8,7 +8,8 @@ from base.filters import BaseFilter
 from django import forms
 from booking.models import Appointment
 from logs.models import ClientSMSLog
-from financial.models import  Financial
+from financial.models import Financial
+
 
 class ClientFilters(BaseFilter):
     name = django_filters.CharFilter(method="filter_by_name")
@@ -20,8 +21,8 @@ class ClientFilters(BaseFilter):
             "case_id": ["exact"],
             "national_id": ["exact"],
             "is_vip": ["exact"],
-            "gender": ['exact'],
-            "insurance": ['exact'],
+            "gender": ["exact"],
+            "insurance": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):
@@ -31,7 +32,6 @@ class ClientFilters(BaseFilter):
 
 
 class ClientReceptionHistoryFilter(BaseFilter):
-
 
     class Meta:
         model = Reception
@@ -44,7 +44,6 @@ class ClientReceptionHistoryFilter(BaseFilter):
 
 class ClientFinancialHistoryFilter(BaseFilter):
 
-
     class Meta:
         model = Financial
         fields = {
@@ -52,8 +51,9 @@ class ClientFinancialHistoryFilter(BaseFilter):
             "invoice_number": ["exact"],
         }
 
+
 class ClientAppointmentFilter(FilterSet):
-    created_by_email = CharFilter(field_name='created_by__email', lookup_expr='exact')
+    created_by_email = CharFilter(field_name="created_by__email", lookup_expr="exact")
 
     date = DateFilter(
         field_name="date",
@@ -80,10 +80,9 @@ class ClientAppointmentFilter(FilterSet):
         ),
     )
 
-
     def filter_by_date(self, queryset, name, value):
         return queryset.filter(date=value)
-    
+
     def filter_by_created_at(self, queryset, name, value):
         return queryset.filter(created_at__date=value)
 
@@ -103,16 +102,13 @@ class ClientAppointmentFilter(FilterSet):
             return queryset.filter(
                 created_at__date__range=[start_of_month, end_of_month]
             )
-        
+
     class Meta:
         model = Appointment
         fields = {
-            'id':['exact'],
-            'service':['exact'],
-            'status':['exact'],
-            'package':['exact'],
-            'has_package':['exact'],
+            "id": ["exact"],
+            "service": ["exact"],
+            "status": ["exact"],
+            "package": ["exact"],
+            "has_package": ["exact"],
         }
-
-
-

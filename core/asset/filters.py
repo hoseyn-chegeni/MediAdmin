@@ -3,6 +3,7 @@ from .models import Consumable, ConsumableCategory, Supplier, Equipment
 from base.filters import BaseFilter
 from django import forms
 
+
 class ConsumableFilter(BaseFilter):
 
     class Meta:
@@ -10,9 +11,8 @@ class ConsumableFilter(BaseFilter):
         fields = {
             "id": ["exact"],
             "name": ["exact"],
-            "category": ['exact'],
-            "supplier": ['exact'],
-
+            "category": ["exact"],
+            "supplier": ["exact"],
         }
 
 
@@ -33,10 +33,10 @@ class SupplierFilter(BaseFilter):
         fields = {
             "id": ["exact"],
             "name": ["exact"],
-            "contact_person":['exact'],
-            "email":['exact'],
-            "phone_number":['exact'],
-            "city":['exact', 'icontains']
+            "contact_person": ["exact"],
+            "email": ["exact"],
+            "phone_number": ["exact"],
+            "city": ["exact", "icontains"],
         }
 
 
@@ -51,14 +51,14 @@ class EquipmentFilter(BaseFilter):
 
     def filter_by_acquisition_date(self, queryset, name, value):
         return queryset.filter(acquisition_date=value)
-    
+
     class Meta:
         model = Equipment
         fields = {
             "id": ["exact"],
             "name": ["exact"],
-            "manufacturer": ['exact'],
-            "serial_number": ['exact'],
-            "location": ['exact'],
-            "is_available": ['exact'],
+            "manufacturer": ["exact"],
+            "serial_number": ["exact"],
+            "location": ["exact"],
+            "is_available": ["exact"],
         }
