@@ -8,3 +8,4 @@ docker exec -it django /bin/sh
 
 pip install --force-reinstall app_name
 
+celery -A core beat -l info
