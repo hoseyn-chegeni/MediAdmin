@@ -37,6 +37,12 @@
                       </div>
 
                       <div class="col-sm-6">
+                        <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+                        </label>
+                        <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                      </div>
+
+                      <div class="col-sm-6">
                         <label for="date" class="form-label">تاریخ</label>
                         <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
                       </div>

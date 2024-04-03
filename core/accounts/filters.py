@@ -1,14 +1,13 @@
 import django_filters
-from django_filters import FilterSet, DateFilter, ChoiceFilter
+from django_filters import FilterSet, DateFilter, CharFilter
 from .models import User
 from logs.models import UserSMSLog, ClientSMSLog
 from django import forms
-from datetime import datetime, timedelta
 from base.filters import BaseFilter
 
 class UserFilter(BaseFilter):
     name = django_filters.CharFilter(method="filter_by_name")
-
+    created_by_email = CharFilter(field_name='created_by__email', lookup_expr='exact')
 
     class Meta:
         model = User
