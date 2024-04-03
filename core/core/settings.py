@@ -172,5 +172,10 @@ CELERY_BEAT_SCHEDULE = {
     "send_appointment_reminder": {
         "task": "booking.tasks.send_sms_reminders",
         "schedule": crontab(hour=12, minute=40),
-    }
+    },
+    "update_appointment_status": {
+        "task": "booking.tasks.update_appointment_status",
+        "schedule": crontab(hour=10, minute=00),  # Runs daily at midnight
+    },
+
 }

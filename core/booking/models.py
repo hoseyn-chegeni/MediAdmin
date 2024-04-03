@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _
 STATUS = (
     ("WAITE", "WAITE"),
     ("DONE", "DONE"),
-    ('پذیرش شده','پذیرش شده')
+    ('پذیرش شده','پذیرش شده'),
+    ('عدم مراجعه','عدم مراجعه'),
 )
 
 
