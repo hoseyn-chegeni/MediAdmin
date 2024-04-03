@@ -36,6 +36,21 @@
                         <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
                       </div>
 
+                      <div class="col-sm-6">
+                        <label for="date" class="form-label">تاریخ</label>
+                        <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                      </div>
+          
+                      <div class="col-sm-6">
+                        <label for="date_range">محدوده زمانی</label>
+                        <select class="form-select" name="date_range" id="date_range">
+                          <option value="" selected>---------</option>
+                          <option value="today">امروز</option>
+                          <option value="this_week">هفته گذشته</option>
+                          <option value="this_month">ماه گذشته</option>
+                        </select>
+                      </div>
+
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
                     <div class="mb-4">

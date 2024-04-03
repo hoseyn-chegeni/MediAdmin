@@ -1,13 +1,19 @@
 import django_filters
-from django_filters import FilterSet, DateFilter
+from django_filters import FilterSet, DateFilter, ChoiceFilter
 from .models import User
-from django.db import models
 from logs.models import UserSMSLog, ClientSMSLog
 from django import forms
+from datetime import datetime, timedelta
+from base.filters import BaseFilter
 
-
-class UserFilter(FilterSet):
+class UserFilter(BaseFilter):
     name = django_filters.CharFilter(method="filter_by_name")
+
+
+    def filter_by_name(self, queryset, name, value):
+        return queryset.filter(client__first_name__icontains=value) | queryset.filter(
+            client__last_name__icontains=value
+        )
 
     class Meta:
         model = User
@@ -17,10 +23,6 @@ class UserFilter(FilterSet):
             "national_id": ["exact"],
         }
 
-    def filter_by_name(self, queryset, name, value):
-        return queryset.filter(
-            models.Q(first_name__icontains=value) | models.Q(last_name__icontains=value)
-        )
 
 
 class UserSentSMSFilter(FilterSet):
