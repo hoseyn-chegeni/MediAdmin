@@ -9,8 +9,8 @@ from base.views import (
 from .models import Client
 from .filters import (
     ClientFilters,
-    ReceptionFilter,
-    FinancialFilter,
+    ClientReceptionHistoryFilter,
+    ClientFinancialHistoryFilter,
     ClientAppointmentFilter,
     ClientSMSFilter,
 )
@@ -167,10 +167,10 @@ class RemoveVipButtonView(View):
         return HttpResponseRedirect(client_detail_url)
 
 
-class ClientReceptionsListView(BaseListView):
+class ClientReceptionsHistoryListView(BaseListView):
     model = Reception
     template_name = "client/client_receptions.html"
-    filterset_class = ReceptionFilter
+    filterset_class = ClientReceptionHistoryFilter
     permission_required = "client.view_client"
 
     def get_queryset(self):
@@ -189,7 +189,7 @@ class ClientReceptionsListView(BaseListView):
 class ClientFinancialInstancesListView(BaseListView):
     model = Financial
     template_name = "client/client_financial.html"
-    filterset_class = FinancialFilter
+    filterset_class = ClientFinancialHistoryFilter
     permission_required = "client.view_client"
 
     def get_queryset(self):

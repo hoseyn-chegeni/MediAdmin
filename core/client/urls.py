@@ -8,7 +8,7 @@ from .views import (
     EditHealthHistoryView,
     VipButtonView,
     RemoveVipButtonView,
-    ClientReceptionsListView,
+    ClientReceptionsHistoryListView,
     ClientFinancialInstancesListView,
     ClientAppointmentListView,
     ClientSMSListView,
@@ -31,7 +31,7 @@ urlpatterns = [
     path("remove_vip/<int:pk>/", RemoveVipButtonView.as_view(), name="remove_vip"),
     path(
         "client/<int:pk>/receptions/",
-        ClientReceptionsListView.as_view(),
+        ClientReceptionsHistoryListView.as_view(),
         name="client-receptions",
     ),
     path(
