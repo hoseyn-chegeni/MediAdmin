@@ -10,11 +10,6 @@ class UserFilter(BaseFilter):
     name = django_filters.CharFilter(method="filter_by_name")
 
 
-    def filter_by_name(self, queryset, name, value):
-        return queryset.filter(client__first_name__icontains=value) | queryset.filter(
-            client__last_name__icontains=value
-        )
-
     class Meta:
         model = User
         fields = {
@@ -22,6 +17,11 @@ class UserFilter(BaseFilter):
             "email": ["exact", "icontains"],
             "national_id": ["exact"],
         }
+
+    def filter_by_name(self, queryset, name, value):
+        return queryset.filter(first_name__icontains=value) | queryset.filter(
+            last_name__icontains=value
+        )
 
 
 
