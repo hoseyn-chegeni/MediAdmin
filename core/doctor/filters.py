@@ -1,9 +1,10 @@
 from django_filters import FilterSet, CharFilter
 from .models import Doctor
 from django.db.models import Q
+from base.filters import BaseFilter
 
 
-class DoctorFilter(FilterSet):
+class DoctorFilter(BaseFilter):
     name = CharFilter(method="filter_by_name")
 
     class Meta:
@@ -14,6 +15,7 @@ class DoctorFilter(FilterSet):
             "specialization": ["icontains"],
             "registration_number": ["exact"],
             "is_active": ["exact"],
+            "phone_number": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):
