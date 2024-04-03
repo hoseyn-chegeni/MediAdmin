@@ -2,9 +2,10 @@ from django_filters import FilterSet
 from .models import Service, ServiceCategory, Package
 from django_filters import FilterSet, CharFilter
 from reception.models import Reception
+from base.filters import BaseFilter
 
 
-class ServicesFilter(FilterSet):
+class ServicesFilter(BaseFilter):
 
     class Meta:
         model = Service
@@ -13,6 +14,7 @@ class ServicesFilter(FilterSet):
             "doctor": ["exact"],
             "category": ["exact"],
             "name": ["exact"],
+            "is_active": ["exact"],
         }
 
 
@@ -41,17 +43,19 @@ class QueueFilter(FilterSet):
         fields = ["id", "case_id", "national_id", "name"]
 
 
-class ServiceCategoryFilter(FilterSet):
+class ServiceCategoryFilter(BaseFilter):
 
     class Meta:
         model = ServiceCategory
         fields = {
             "id": ["exact"],
             "name": ["exact"],
+            "is_active": ["exact"],
+
         }
 
 
-class PackageFilter(FilterSet):
+class PackageFilter(BaseFilter):
     name = CharFilter(field_name="name", lookup_expr="exact")
 
     class Meta:
