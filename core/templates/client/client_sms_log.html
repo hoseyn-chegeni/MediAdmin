@@ -18,6 +18,16 @@
           
           <div class="row g-3">
 
+            <div class="col-sm-6">
+              <label for="id" class="form-label">ID</label>
+              <input  class="form-control" type="number" name="id" step="any" id="id" value="{{ request.GET.id }}" >
+            </div>
+
+
+            <div class="col-sm-6">
+              <label for="sender_number" class="form-label">سرشماره ارسال کننده</label>
+              <input  class="form-control" type="text" name="sender_number" step="any" id="sender_number" value="{{ request.GET.sender_number }}" >
+            </div>
 
 
 
@@ -26,14 +36,39 @@
                 <input  class="form-control" type="text" name="subject" step="any" id="subject" value="{{ request.GET.subject }}" >
               </div>
   
+      
+              <div class="col-sm-6">
+                <label for="status" class="form-label">وضعیت</label>
+                <input  class="form-control" type="text" name="status" step="any" id="status" value="{{ request.GET.status }}" >
+              </div>
+          
 
 
             <div class="col-sm-6">
               <label for="date" class="form-label">تاریخ</label>
               <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
             </div>
+            <div class="col-sm-6">
+              <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+              </label>
+              <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+            </div>
 
-           
+            <div class="col-sm-6">
+              <label for="date" class="form-label">تاریخ</label>
+              <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+            </div>
+
+            <div class="col-sm-6">
+              <label for="date_range">محدوده زمانی</label>
+              <select class="form-select" name="date_range" id="date_range">
+                <option value="" selected>---------</option>
+                <option value="today">امروز</option>
+                <option value="this_week">هفته گذشته</option>
+                <option value="this_month">ماه گذشته</option>
+              </select>
+            </div>
+
             <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
           </form>
 
