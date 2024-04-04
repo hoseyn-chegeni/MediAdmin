@@ -6,7 +6,7 @@ from django import forms
 from datetime import datetime, timedelta
 
 
-class FinancialFilter(django_filters.FilterSet):
+class FinancialFilter(FilterSet):
     created_at = django_filters.DateFilter(
         field_name="created_at",
         label="Created At (yyyy-mm-dd)",
