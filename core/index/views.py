@@ -35,6 +35,7 @@ class IndexView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
         context["todays_appointment_count"] = Appointment.objects.filter(date=today_date).count()
         context["reception_count"] = Reception.objects.count()
         context["financial_count"] = Financial.objects.count()
+        context["office_expenses_count"] = OfficeExpenses.objects.count()
         context["doctor_count"] = Doctor.objects.count()
         context["service_count"] = Service.objects.count()
         context["package_count"] = Package.objects.count()
