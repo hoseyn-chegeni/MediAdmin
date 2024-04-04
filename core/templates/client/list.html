@@ -37,6 +37,11 @@
                       </div>
 
                       <div class="col-sm-6">
+                        <label for="phone_number" class="form-label">شماره تماس</label>
+                        <input  class="form-control" type="text" name="phone_number" step="any" id="phone_number" value="{{ request.GET.phone_number}}" >
+                      </div>
+
+                      <div class="col-sm-6">
                         <label  for="is_vip">VIP</label>
                         <select  class="form-select" name="is_vip"  id="is_vip">
                           <option value="" selected="">---------</option>

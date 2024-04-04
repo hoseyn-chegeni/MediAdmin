@@ -42,6 +42,12 @@
                         <input  class="form-control" type="text" name="registration_number" step="any" id="registration_number" value="{{ request.GET.registration_number}}" >
                       </div>
 
+
+                      <div class="col-sm-6">
+                        <label for="phone_number" class="form-label">شماره تماس</label>
+                        <input  class="form-control" type="text" name="phone_number" step="any" id="phone_number" value="{{ request.GET.phone_number}}" >
+                      </div>
+
                       <div class="col-sm-6">
                         <label  for="is_active">فعال</label>
                         <select  class="form-select" name="is_active"  id="is_active">
@@ -51,13 +57,36 @@
                         </select>
                         </div>
 
+                        <div class="col-sm-6">
+                          <label for="date" class="form-label">تاریخ</label>
+                          <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                        </div>
+            
+                        <div class="col-sm-6">
+                          <label for="date_range">محدوده زمانی</label>
+                          <select class="form-select" name="date_range" id="date_range">
+                            <option value="" selected>---------</option>
+                            <option value="today">امروز</option>
+                            <option value="this_week">هفته گذشته</option>
+                            <option value="this_month">ماه گذشته</option>
+                          </select>
+                        </div>
+  
+
+                        <div class="col-sm-6">
+                          <label for="created_by_email" class="form-label">ایجاد کننده</label>
+                          <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                        </div>
+
+
+
 
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
 
                     <div class="mb-4">
                     <a href="{% url 'doctor:create' %}" class="btn btn-success me-2"> افزودن پزشک جدید</a>
-                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    <a href="{% url 'reports:doctor_reports' %}" class="btn btn-success me-2">گزارشات</a>
                     </div>
 
                   <table class="table text-white mb-0">

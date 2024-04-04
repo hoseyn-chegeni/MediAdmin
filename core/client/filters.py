@@ -23,6 +23,7 @@ class ClientFilters(BaseFilter):
             "is_vip": ["exact"],
             "gender": ["exact"],
             "insurance": ["exact"],
+            "phone_number": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):
