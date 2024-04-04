@@ -45,13 +45,56 @@
                         </select>
                         </div>
 
+                        <div class="col-sm-6">
+                          <label  for="gender">جنسیت</label>
+                          <select  class="form-select" name="gender"  id="gender">
+                            <option value="" selected="">---------</option>
+                            <option value="M">مرد</option>
+                            <option value="F">زن</option>
+                          </select>
+                          </div>
+  
+
+
+                          <div class="col-sm-6">
+                            <label for="insurance">بیمه</label>
+                            <select class="form-select" name="insurance" id="insurance">
+                              <option value="" selected>---------</option>
+                              {% for i in filter.form.insurance.field.queryset %}
+                                <option value="{{ i.id }}">{{ i.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+              
+              
+                          <div class="col-sm-6">
+                            <label for="date" class="form-label">تاریخ</label>
+                            <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                          </div>
+              
+                          <div class="col-sm-6">
+                            <label for="date_range">محدوده زمانی</label>
+                            <select class="form-select" name="date_range" id="date_range">
+                              <option value="" selected>---------</option>
+                              <option value="today">امروز</option>
+                              <option value="this_week">هفته گذشته</option>
+                              <option value="this_month">ماه گذشته</option>
+                            </select>
+                          </div>
+    
+
+                          <div class="col-sm-6">
+                            <label for="created_by_email" class="form-label">ایجاد کننده</label>
+                            <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                          </div>
+
 
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
 
                     <div class="mb-4">
                     <a href="{% url 'client:create' %}" class="btn btn-success me-2"> افزودن بیمار جدید</a>
-                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    <a href="{% url 'reports:client_reports' %}" class="btn btn-success me-2">گزارشات</a>
                     </div>
 
                   <table class="table text-white mb-0">
