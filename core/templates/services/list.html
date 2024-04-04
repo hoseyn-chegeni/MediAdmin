@@ -47,6 +47,37 @@
                           {% endfor %}
                         </select>
                       </div>
+
+                      <div class="col-sm-6">
+                        <label  for="is_active">فعال</label>
+                        <select  class="form-select" name="is_active"  id="is_active">
+                          <option value="" selected="">---------</option>
+                          <option value="true">بله</option>
+                          <option value="false">خیر</option>
+                        </select>
+                        </div>
+
+
+                        <div class="col-sm-6">
+                          <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+                          </label>
+                          <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                        </div>
+  
+                        <div class="col-sm-6">
+                          <label for="date" class="form-label">تاریخ</label>
+                          <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                        </div>
+            
+                        <div class="col-sm-6">
+                          <label for="date_range">محدوده زمانی</label>
+                          <select class="form-select" name="date_range" id="date_range">
+                            <option value="" selected>---------</option>
+                            <option value="today">امروز</option>
+                            <option value="this_week">هفته گذشته</option>
+                            <option value="this_month">ماه گذشته</option>
+                          </select>
+                        </div>
           
 
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
