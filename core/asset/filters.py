@@ -44,7 +44,7 @@ class EquipmentFilter(BaseFilter):
 
     acquisition_date = DateFilter(
         field_name="acquisition_date",
-        label="Date (yyyy-mm-dd)",
+        label="acquisition_date (yyyy-mm-dd)",
         method="filter_by_acquisition_date",
         widget=forms.DateInput(attrs={"type": "date"}),
     )
