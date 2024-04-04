@@ -17,7 +17,7 @@ class AppointmentFilter(FilterSet):
 
     created_at = DateFilter(
         field_name="created_at",
-        label="Date (yyyy-mm-dd)",
+        label="created_at (yyyy-mm-dd)",
         method="filter_by_created_at",
         widget=forms.DateInput(attrs={"type": "date"}),
     )
@@ -107,7 +107,7 @@ class PackageAppointmentFilter(FilterSet):
 
     created_at = DateFilter(
         field_name="created_at",
-        label="Date (yyyy-mm-dd)",
+        label="created_at (yyyy-mm-dd)",
         method="filter_by_created_at",
         widget=forms.DateInput(attrs={"type": "date"}),
     )
