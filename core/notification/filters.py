@@ -1,6 +1,6 @@
 from django_filters import FilterSet
 from logs.models import ClientSMSLog
-from base.models import BaseFilter
+from base.filters import BaseFilter
 
 
 class ClientSMSLogFilter(BaseFilter):
