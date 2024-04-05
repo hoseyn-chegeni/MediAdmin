@@ -19,6 +19,7 @@ from asset.models import Consumable
 from kavenegar import *
 from os import getenv
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -53,29 +54,32 @@ class ReceptionCreateView(BaseCreateView):
             for i in service.serviceconsumable_set.all():
                 if i.consumable.quantity < int(i.dose):
                     form.add_error(
-                    'service', f"Not enough {i.consumable.name} available for the {service.name} service."
+                        "service",
+                        f"Not enough {i.consumable.name} available for the {service.name} service.",
                     )
                     invalid_consumable = True
                     return super().form_invalid(form)
-            if(invalid_consumable == False):
+            if invalid_consumable == False:
                 for i in service.serviceconsumable_set.all():
-                    consumable = Consumable.objects.get(id = i.consumable.id)
-                    consumable.quantity = consumable.quantity -  int(i.dose)
+                    consumable = Consumable.objects.get(id=i.consumable.id)
+                    consumable.quantity = consumable.quantity - int(i.dose)
                     consumable.save()
-                    if consumable.send_reorder_sms_to_supplier == True and consumable.quantity <= consumable.reorder_quantity and consumable.supplier:
+                    if (
+                        consumable.send_reorder_sms_to_supplier == True
+                        and consumable.quantity <= consumable.reorder_quantity
+                        and consumable.supplier
+                    ):
                         try:
                             api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
                             params = {
                                 "sender": "2000500666",  # optional
                                 "receptor": consumable.supplier.phone_number,  # multiple mobile number, split by comma
-                                "message": f' this is test for reOrder to supplier{consumable.name}',
+                                "message": f" this is test for reOrder to supplier{consumable.name}",
                             }
                             response = api.sms_send(params)
                             print(response)
                         except (APIException, HTTPException) as e:
                             print(e)
-
-
 
         return super().form_valid(form)
 
@@ -113,19 +117,18 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         # Set the client for the reception
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
-        form.instance.client_id = self.kwargs[
-            "pk"
-        ] 
+        form.instance.client_id = self.kwargs["pk"]
 
         service = form.instance.service
         for i in service.serviceconsumable_set.all():
             if i.consumable.quantity < int(i.dose):
                 form.add_error(
-                'service', f"Not enough {i.consumable.name} available for the {service.name} service."
+                    "service",
+                    f"Not enough {i.consumable.name} available for the {service.name} service.",
                 )
             else:
 
-                return self.form_invalid(form) 
+                return self.form_invalid(form)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

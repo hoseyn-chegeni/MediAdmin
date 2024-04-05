@@ -45,7 +45,7 @@ class Service(models.Model):
     appointment_per_day = models.PositiveIntegerField(default=3)
     off_days = models.ManyToManyField("OffDay", blank=True)
     medical_equipment = models.ManyToManyField("asset.Equipment", blank=True)
-    check_consumable_inventory = models.BooleanField(default = True)
+    check_consumable_inventory = models.BooleanField(default=True)
 
     @property
     def today_reception_count(self):

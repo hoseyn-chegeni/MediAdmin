@@ -15,7 +15,7 @@ class UserFilter(BaseFilter):
             "id": ["exact"],
             "email": ["exact", "icontains"],
             "national_id": ["exact"],
-            "is_active": ['exact'],
+            "is_active": ["exact"],
         }
 
     def filter_by_name(self, queryset, name, value):

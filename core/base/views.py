@@ -36,12 +36,10 @@ class BaseCreateView(
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
-    
 
 
 class BaseDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     pass
-
 
 
 class BaseUpdateView(
@@ -59,7 +57,6 @@ class BaseUpdateView(
         return "با موفقیت ویرایش شد"
 
 
-
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "delete.html"
     app_name = ""
@@ -67,5 +64,3 @@ class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy(f"{self.app_name}:{self.url_name}")
-    
-

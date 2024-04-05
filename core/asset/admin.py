@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Consumable, Supplier , Equipment
+from .models import Consumable, Supplier, Equipment
 
 # Register your models here.
 admin.site.register(Consumable)

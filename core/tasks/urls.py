@@ -1,7 +1,5 @@
 from django.urls import path
 
-app_name = 'tasks'
+app_name = "tasks"
 
-urlpatterns = [
-    
-]
+urlpatterns = []

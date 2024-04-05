@@ -46,8 +46,8 @@ class Consumable(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-    send_reorder_sms_to_supplier = models.BooleanField(default = False)
-    reorder_quantity = models.PositiveIntegerField(default = 0, blank = True, null = True)
+    send_reorder_sms_to_supplier = models.BooleanField(default=False)
+    reorder_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
         return self.name

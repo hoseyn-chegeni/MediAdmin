@@ -115,13 +115,12 @@ class AppointmentCreateView(BaseCreateView):
             form.add_error("date", "Appointments cannot be scheduled for past dates.")
             return self.form_invalid(form)
         form.instance.created_by = self.request.user
-        
-
 
         for i in service.serviceconsumable_set.all():
             if i.consumable.quantity < int(i.dose):
                 form.add_error(
-                'service', f"Not enough {i.consumable.name} available for the {service.name} service."
+                    "service",
+                    f"Not enough {i.consumable.name} available for the {service.name} service.",
                 )
                 return super().form_invalid(form)
         return super().form_valid(form)
