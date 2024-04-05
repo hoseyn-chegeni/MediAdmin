@@ -15,7 +15,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
 from booking.models import Appointment
-
+from asset.models import Consumable
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -46,12 +46,20 @@ class ReceptionCreateView(BaseCreateView):
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
+        invalid_consumable = False
         for i in service.serviceconsumable_set.all():
-            if i.consumable.quantity < 1:
+            if i.consumable.quantity < int(i.dose):
                 form.add_error(
                 'service', f"Not enough {i.consumable.name} available for the {service.name} service."
                 )
-                return self.form_invalid(form)
+                invalid_consumable = True
+                return super().form_invalid(form)
+        if(invalid_consumable == False):
+            for i in service.serviceconsumable_set.all():
+                consumable = Consumable.objects.get(id = i.consumable.id)
+                consumable.quantity = consumable.quantity -  int(i.dose)
+                consumable.save()
+
         return super().form_valid(form)
 
 
@@ -91,13 +99,15 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         form.instance.client_id = self.kwargs[
             "pk"
         ] 
-        
+
         service = form.instance.service
         for i in service.serviceconsumable_set.all():
-            if i.consumable.quantity < 1:
+            if i.consumable.quantity < int(i.dose):
                 form.add_error(
                 'service', f"Not enough {i.consumable.name} available for the {service.name} service."
                 )
+            else:
+
                 return self.form_invalid(form) 
         return super().form_valid(form)
 
