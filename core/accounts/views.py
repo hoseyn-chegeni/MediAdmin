@@ -29,9 +29,8 @@ from prescription.models import Prescription
 from services.models import Service
 from itertools import chain
 from operator import attrgetter
-from django.http import HttpResponse
 import pandas as pd
-
+from tasks.models import Task
 
 # Create your views here.
 class UserListView(BaseListView):
@@ -75,6 +74,10 @@ class UserDetailView(BaseDetailView):
             created_by_id=user.id
         ).count()
         context["service"] = Service.objects.filter(created_by_id=user.id).count()
+        context["created_task"] = Task.objects.filter(created_by_id=user.id).count()
+        context["assign_task"] = Task.objects.filter(assign_to_id=user.id).count()
+
+
         return context
 
 
