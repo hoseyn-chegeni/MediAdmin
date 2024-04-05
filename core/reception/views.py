@@ -46,19 +46,20 @@ class ReceptionCreateView(BaseCreateView):
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
-        invalid_consumable = False
-        for i in service.serviceconsumable_set.all():
-            if i.consumable.quantity < int(i.dose):
-                form.add_error(
-                'service', f"Not enough {i.consumable.name} available for the {service.name} service."
-                )
-                invalid_consumable = True
-                return super().form_invalid(form)
-        if(invalid_consumable == False):
+        if service.check_consumable_inventory == True:
+            invalid_consumable = False
             for i in service.serviceconsumable_set.all():
-                consumable = Consumable.objects.get(id = i.consumable.id)
-                consumable.quantity = consumable.quantity -  int(i.dose)
-                consumable.save()
+                if i.consumable.quantity < int(i.dose):
+                    form.add_error(
+                    'service', f"Not enough {i.consumable.name} available for the {service.name} service."
+                    )
+                    invalid_consumable = True
+                    return super().form_invalid(form)
+            if(invalid_consumable == False):
+                for i in service.serviceconsumable_set.all():
+                    consumable = Consumable.objects.get(id = i.consumable.id)
+                    consumable.quantity = consumable.quantity -  int(i.dose)
+                    consumable.save()
 
         return super().form_valid(form)
 

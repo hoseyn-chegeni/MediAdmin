@@ -53,6 +53,7 @@ class ServiceAdmin(admin.ModelAdmin):
                     "appointment_per_day",
                     "medical_equipment",
                     "off_days",
+                    "check_consumable_inventory",
                 )
             },
         ),
