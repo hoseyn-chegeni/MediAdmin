@@ -58,6 +58,19 @@
                               {% endfor %}
                             </select>
                           </div>
+
+
+
+                          <div class="col-sm-6">
+                            <label for="assign_to">assign_to</label>
+                            <select class="form-select" name="assign_to" id="assign_to">
+                              <option value="" selected>---------</option>
+                            {% for i in filter.form.assign_to.field.queryset %}     
+                                <option value="{{i.id}}">{{ i }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+              
               
               
                           <div class="col-sm-6">

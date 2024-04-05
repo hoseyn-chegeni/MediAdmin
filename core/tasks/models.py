@@ -24,6 +24,13 @@ class Task(models.Model):
     priority = models.CharField(
         max_length=100, choices=PRIORITIES_CHOICES, blank=True, null=True
     )
+    assign_to = models.ForeignKey(
+        "accounts.User",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="Assigner",
+    )
     answer = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
