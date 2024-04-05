@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from base.views import BaseListView,BaseCreateView,BaseDeleteView,BaseDetailView,BaseUpdateView
 from .models import Task
+from .filters import TaskFilter
+
 # Create your views here.
 class TaskListView(BaseListView):
     model = Task
     template_name = "tasks/list.html"
     context_object_name = "tasks"
-    filterset_class = 0
+    filterset_class = TaskFilter
     permission_required = "tasks.view_task"
 
 class TaskDetailView(BaseDetailView):
