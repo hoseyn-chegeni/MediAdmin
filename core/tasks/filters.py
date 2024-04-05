@@ -16,5 +16,3 @@ class TaskFilter(BaseFilter):
             "priority": ["exact"],
             "status": ["exact"],
         }
-
-
