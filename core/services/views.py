@@ -28,22 +28,6 @@ class ServiceListView(BaseListView):
     filterset_class = ServicesFilter
     permission_required = "services.view_service"
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_active=True)
-
-
-class SuspendServiceListView(BaseListView):
-    model = Service
-    template_name = "services/suspend_list.html"
-    context_object_name = "services"
-    filterset_class = ServicesFilter
-    permission_required = "services.view_service"
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_active=False)
-
 
 class ServiceCreateView(BaseCreateView):
     model = Service

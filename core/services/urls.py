@@ -7,7 +7,6 @@ from .views import (
     ServiceUpdateView,
     ServiceConsumableCreateView,
     ServiceConsumableDeleteView,
-    SuspendServiceListView,
     SuspendServiceView,
     ReactiveServiceView,
     ServiceAppointmentConfigView,
@@ -37,7 +36,6 @@ app_name = "services"
 
 urlpatterns = [
     path("list/", ServiceListView.as_view(), name="list"),
-    path("suspend_list/", SuspendServiceListView.as_view(), name="suspend_list"),
     path("detail/<int:pk>/", ServiceDetailView.as_view(), name="detail"),
     path("create/", ServiceCreateView.as_view(), name="create"),
     path("update/<int:pk>/", ServiceUpdateView.as_view(), name="update"),
