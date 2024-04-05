@@ -4,9 +4,9 @@
     {{filter.form.as_p}}
     <input type="submit">
 </form>
-<a href="{% url 'reports:consumable_reports' %}">reports</a>
+<a href="{% url 'reports:consumable_reports' %}">reports</a> <br>
 {%for i in consumable%}
-    {{i.id}}.{{i.name}},
+    {{i.id}}.{{i.name}},,,,,,,,,,,,,,,,QUANTITY {{i.quantity}}..........
     <a href="{% url 'asset:detail' i.pk %}">Details</a>,
     <a href="{% url 'asset:update' i.pk %}">Update</a>,
     <a href="{% url 'asset:inventory_tracking_number' i.pk %}">Update Inventory Tracking Number</a>,

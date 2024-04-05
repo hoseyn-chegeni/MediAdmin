@@ -1,8 +1,9 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from .models import Reception
 from datetime import date
 from booking.models import Appointment
+from django.core.exceptions import ValidationError
 
 
 @receiver(post_save, sender=Reception)

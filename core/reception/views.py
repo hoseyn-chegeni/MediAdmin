@@ -7,7 +7,6 @@ from base.views import (
 )
 from .models import Reception
 from .filters import ReceptionFilter
-from django.views.generic import ListView
 from django.urls import reverse_lazy
 from client.models import Client
 from django.views import View
@@ -46,6 +45,13 @@ class ReceptionCreateView(BaseCreateView):
         # Set the client for the reception
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
+        service = form.instance.service
+        for i in service.serviceconsumable_set.all():
+            if i.consumable.quantity < 1:
+                form.add_error(
+                'service', f"Not enough {i.consumable.name} available for the {service.name} service."
+                )
+                return self.form_invalid(form)
         return super().form_valid(form)
 
 
@@ -84,7 +90,15 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         form.instance.status = "WAITE"
         form.instance.client_id = self.kwargs[
             "pk"
-        ]  # Assuming client's pk is passed in the URL
+        ] 
+        
+        service = form.instance.service
+        for i in service.serviceconsumable_set.all():
+            if i.consumable.quantity < 1:
+                form.add_error(
+                'service', f"Not enough {i.consumable.name} available for the {service.name} service."
+                )
+                return self.form_invalid(form) 
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
