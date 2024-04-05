@@ -41,22 +41,6 @@ class UserListView(BaseListView):
     filterset_class = UserFilter
     permission_required = "accounts.view_user"
 
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_active=True)
-
-
-class SuspendUserListView(BaseListView):
-    model = User
-    template_name = "accounts/suspend_list.html"
-    context_object_name = "users"
-    filterset_class = UserFilter
-    permission_required = "accounts.view_user"
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(is_active=False)
-
 
 class UserDetailView(BaseDetailView):
     model = User
