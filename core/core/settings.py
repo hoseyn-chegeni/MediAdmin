@@ -66,6 +66,8 @@ INSTALLED_APPS = [
     "permissions",
     "django_celery_results",
     "reports",
+    "tasks",
+
 ]
 
 MIDDLEWARE = [
