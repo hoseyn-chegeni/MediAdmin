@@ -11,7 +11,8 @@ from .views import (
     AssignToView,
     DoneView,
     DoneNotAsPlannedView,
-    InProgressView
+    InProgressView,
+    ReOpenView,
 
 )
 
@@ -30,7 +31,6 @@ urlpatterns = [
     path("done/<int:pk>", DoneView.as_view(), name="done"),
     path("done_not_as_planned/<int:pk>", DoneNotAsPlannedView.as_view(), name="done_not_as_planned"),
     path("in_progress/<int:pk>", InProgressView.as_view(), name="in_progress"),
-
-
+     path("reopen/<int:pk>", ReOpenView.as_view(), name="reopen"),
 
 ]

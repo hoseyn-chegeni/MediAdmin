@@ -160,3 +160,17 @@ class InProgressView(LoginRequiredMixin, View):
         return HttpResponseRedirect(
             reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
         )
+    
+
+class ReOpenView(BaseUpdateView):
+    template_name = "tasks/reopen.html"
+    model = Task
+    fields = ("reopen_message",)
+    permission_required = "tasks.change_task"
+    app_name = "tasks"
+    url_name = "detail"
+
+    def form_valid(self, form):
+        form.instance.status =  "در انتظار بررسی"
+        form.instance.assign_to  = None
+        return super().form_valid(form)
