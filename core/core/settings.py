@@ -178,4 +178,8 @@ CELERY_BEAT_SCHEDULE = {
         "task": "booking.tasks.update_appointment_status",
         "schedule": crontab(hour=10, minute=00),  # Runs daily at midnight
     },
+    "check_consumable_expiration": {
+        "task": "asset.tasks.check_consumable_expiration",
+        "schedule": crontab(hour=23, minute=35),  # Runs daily at midnight
+    },
 }
