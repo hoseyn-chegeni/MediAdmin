@@ -1,8 +1,11 @@
-{{object.id}} <br>
-{{object.title}} <br>
-{{object.description}} <br>
-{{object.type}} <br>
-{{object.status}} <br>
-{{object.assign_to}} <br>
+<strong>ID:</strong> {{object.id}} <br>
+<strong>Title</strong>:{{object.title}} <br>
+<strong>Description</strong>: {{object.description}} <br>
+<strong>type</strong>: {{object.type}} <br>
+<strong>status</strong>: {{object.status}} <br>
+<strong>assign_to</strong>: {{object.assign_to}} <br>
+<strong>Answer</strong>: {{object.answer}} <br>
+
 <a href="{% url 'tasks:assign_to_me' object.id%}">assign to me</a> <br>
 <a href="{% url 'tasks:assign_to' object.id%}">assign to</a> <br>
+<a href="{% url 'tasks:done' object.id%}">Mark As Done</a> <br>

@@ -1,3 +1,5 @@
+from django.forms import BaseForm
+from django.http.response import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from base.views import (
     BaseListView,
@@ -101,3 +103,16 @@ class AssignToView(BaseUpdateView):
     permission_required = "tasks.change_task"
     app_name = "tasks"
     url_name = "detail"
+
+
+class DoneView(BaseUpdateView):
+    template_name = "tasks/done.html"
+    model = Task
+    fields = ("answer",)
+    permission_required = "tasks.change_task"
+    app_name = "tasks"
+    url_name = "detail"
+
+    def form_valid(self, form):
+        form.instance.status = "انجام شده"
+        return super().form_valid(form)
