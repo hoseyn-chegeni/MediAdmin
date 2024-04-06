@@ -101,7 +101,8 @@
                             <span>{{i.last_login}}</span>
                           </td>
                         <td class="align-middle">
-                            <a href="{%url 'accounts:user_detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'accounts:user_detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'accounts:login_as_user' i.pk %}" data-mdb-toggle="tooltip" title="Login as user"> <i class="fas fa-info-circle"></i></a>
                           <a href="{%url 'accounts:user_update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
                           <a href="#" data-toggle="modal" data-target="#exampleModal2"  title="Suspend User" ><i class="fas fa-ban"></i></a>
                         </td>

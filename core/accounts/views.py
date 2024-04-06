@@ -31,7 +31,9 @@ from itertools import chain
 from operator import attrgetter
 import pandas as pd
 from tasks.models import Task
-
+from django.contrib.auth import login
+from django.shortcuts import redirect
+from django.views.generic import View
 
 # Create your views here.
 class UserListView(BaseListView):
@@ -231,3 +233,15 @@ class UserSentSMSListView(BaseListView):
         context = super().get_context_data(**kwargs)
         context["user"] = User.objects.get(id=self.kwargs["pk"])
         return context
+
+
+
+class LoginAsUserView(View):
+    def get(self, request, pk):
+        try:
+            user = User.objects.get(pk=pk)
+            if request.user.is_superuser:  # Check if the current user is a superuser (admin)
+                login(request, user)
+        except User.DoesNotExist:
+            pass  # Handle the case where the user does not exist
+        return redirect('index:index')  

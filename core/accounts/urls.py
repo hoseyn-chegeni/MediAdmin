@@ -13,6 +13,7 @@ from .views import (
     UserActionsView,
     UserSMSListView,
     UserSentSMSListView,
+    LoginAsUserView
 )
 
 app_name = "accounts"
@@ -39,4 +40,6 @@ urlpatterns = [
         UserSentSMSListView.as_view(),
         name="user_sent_sms_log",
     ),
+    path('login-as-user/<int:pk>/', LoginAsUserView.as_view(), name='login_as_user'),
+
 ]
