@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from base.views import (
     BaseListView,
     BaseCreateView,
@@ -8,6 +8,10 @@ from base.views import (
 )
 from .models import Task
 from .filters import TaskFilter
+from django.contrib import messages
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -72,3 +76,20 @@ class MyCreatedTaskView(BaseListView):
     def get_queryset(self, **kwargs):
         qs = super().get_queryset(**kwargs)
         return qs.filter(created_by_id=self.request.user.id)
+
+
+
+class AssignToMeView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        task = Task.objects.filter(pk=pk).first()
+        if task and task.status == 'در انتظار بررسی':
+                task.assign_to = self.request.user
+                messages.success(
+                    self.request, f"تسک {task.id} با موفقیت به شما اختصاص داده شد ."
+                )
+                task.save()
+
+        return HttpResponseRedirect(
+            reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
+        )
+        
