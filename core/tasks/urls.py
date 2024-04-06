@@ -13,7 +13,6 @@ from .views import (
     DoneNotAsPlannedView,
     InProgressView,
     ReOpenView,
-
 )
 
 app_name = "tasks"
@@ -29,8 +28,11 @@ urlpatterns = [
     path("assign_to_me/<int:pk>", AssignToMeView.as_view(), name="assign_to_me"),
     path("assign_to/<int:pk>", AssignToView.as_view(), name="assign_to"),
     path("done/<int:pk>", DoneView.as_view(), name="done"),
-    path("done_not_as_planned/<int:pk>", DoneNotAsPlannedView.as_view(), name="done_not_as_planned"),
+    path(
+        "done_not_as_planned/<int:pk>",
+        DoneNotAsPlannedView.as_view(),
+        name="done_not_as_planned",
+    ),
     path("in_progress/<int:pk>", InProgressView.as_view(), name="in_progress"),
-     path("reopen/<int:pk>", ReOpenView.as_view(), name="reopen"),
-
+    path("reopen/<int:pk>", ReOpenView.as_view(), name="reopen"),
 ]

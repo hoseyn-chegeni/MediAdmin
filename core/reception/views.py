@@ -20,6 +20,7 @@ from kavenegar import *
 from os import getenv
 from tasks.models import Task
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -64,19 +65,22 @@ class ReceptionCreateView(BaseCreateView):
                     consumable = Consumable.objects.get(id=i.consumable.id)
                     consumable.quantity = consumable.quantity - int(i.dose)
                     consumable.save()
-                    if ( consumable.quantity <= consumable.reorder_quantity and consumable.supplier):
+                    if (
+                        consumable.quantity <= consumable.reorder_quantity
+                        and consumable.supplier
+                    ):
                         Task.objects.create(
-                            title=f'سفارش مجدد محصول {consumable}',
+                            title=f"سفارش مجدد محصول {consumable}",
                             description=(
-                                f'نیاز به شارژ مجدد محصول {consumable} می باشد. '
-                                'لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n'
-                                'با سپاس'
+                                f"نیاز به شارژ مجدد محصول {consumable} می باشد. "
+                                "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
+                                "با سپاس"
                             ),
-                            type='سفارش مجدد',
+                            type="سفارش مجدد",
                             status="در انتظار بررسی",
-                            priority="بالا"
+                            priority="بالا",
                         )
-                        if consumable.send_reorder_sms_to_supplier == True:                
+                        if consumable.send_reorder_sms_to_supplier == True:
                             try:
                                 api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
                                 params = {
@@ -125,7 +129,6 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         # Set the client for the reception
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
-        form.instance.client_id = self.kwargs["pk"]
         service = form.instance.service
         if service.check_consumable_inventory == True:
             invalid_consumable = False
@@ -143,21 +146,32 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
                     consumable.quantity = consumable.quantity - int(i.dose)
                     consumable.save()
                     if (
-                        consumable.send_reorder_sms_to_supplier == True
-                        and consumable.quantity <= consumable.reorder_quantity
+                        consumable.quantity <= consumable.reorder_quantity
                         and consumable.supplier
                     ):
-                        try:
-                            api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
-                            params = {
-                                "sender": "2000500666",  # optional
-                                "receptor": consumable.supplier.phone_number,  # multiple mobile number, split by comma
-                                "message": f" this is test for reOrder to supplier{consumable.name}",
-                            }
-                            response = api.sms_send(params)
-                            print(response)
-                        except (APIException, HTTPException) as e:
-                            print(e)
+                        Task.objects.create(
+                            title=f"سفارش مجدد محصول {consumable}",
+                            description=(
+                                f"نیاز به شارژ مجدد محصول {consumable} می باشد. "
+                                "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
+                                "با سپاس"
+                            ),
+                            type="سفارش مجدد",
+                            status="در انتظار بررسی",
+                            priority="بالا",
+                        )
+                        if consumable.send_reorder_sms_to_supplier == True:
+                            try:
+                                api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
+                                params = {
+                                    "sender": "2000500666",  # optional
+                                    "receptor": consumable.supplier.phone_number,  # multiple mobile number, split by comma
+                                    "message": f" this is test for reOrder to supplier{consumable.name}",
+                                }
+                                response = api.sms_send(params)
+                                print(response)
+                            except (APIException, HTTPException) as e:
+                                print(e)
 
         return super().form_valid(form)
 

@@ -34,11 +34,11 @@ class TaskDetailView(BaseDetailView):
 class TaskCreateView(BaseCreateView):
     model = Task
     fields = [
-        'title',
-        'description',
-        'type',
-        'priority',
-        'assign_to',
+        "title",
+        "description",
+        "type",
+        "priority",
+        "assign_to",
     ]
     template_name = "tasks/create.html"
     app_name = "tasks"
@@ -51,15 +51,14 @@ class TaskCreateView(BaseCreateView):
         return super().form_valid(form)
 
 
-
 class TaskUpdateView(BaseUpdateView):
     model = Task
     fields = [
-        'title',
-        'description',
-        'type',
-        'priority',
-        'assign_to',
+        "title",
+        "description",
+        "type",
+        "priority",
+        "assign_to",
     ]
     template_name = "tasks/update.html"
     app_name = "tasks"
@@ -98,21 +97,20 @@ class MyCreatedTaskView(BaseListView):
         return qs.filter(created_by_id=self.request.user.id)
 
 
-
 class AssignToMeView(LoginRequiredMixin, View):
     def get(self, request, pk):
         task = Task.objects.filter(pk=pk).first()
-        if task and task.status == 'در انتظار بررسی':
-                task.assign_to = self.request.user
-                messages.success(
-                    self.request, f"تسک {task.id} با موفقیت به شما اختصاص داده شد ."
-                )
-                task.save()
+        if task and task.status == "در انتظار بررسی":
+            task.assign_to = self.request.user
+            messages.success(
+                self.request, f"تسک {task.id} با موفقیت به شما اختصاص داده شد ."
+            )
+            task.save()
 
         return HttpResponseRedirect(
             reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
         )
-        
+
 
 class AssignToView(BaseUpdateView):
     template_name = "tasks/assign_to.html"
@@ -134,7 +132,8 @@ class DoneView(BaseUpdateView):
     def form_valid(self, form):
         form.instance.status = "انجام شده"
         return super().form_valid(form)
-    
+
+
 class DoneNotAsPlannedView(BaseUpdateView):
     template_name = "tasks/done.html"
     model = Task
@@ -146,21 +145,23 @@ class DoneNotAsPlannedView(BaseUpdateView):
     def form_valid(self, form):
         form.instance.status = "لغو شده"
         return super().form_valid(form)
-    
+
+
 class InProgressView(LoginRequiredMixin, View):
     def get(self, request, pk):
         task = Task.objects.filter(pk=pk).first()
-        if task and task.status =='در انتظار بررسی':
-                task.status = "در حال انجام"
-                messages.success(
-                    self.request, f" وضعیت تسک {task.id} یا موفقیت به حالت در حال انجام تغییر داده شد"
-                )
-                task.save()
+        if task and task.status == "در انتظار بررسی":
+            task.status = "در حال انجام"
+            messages.success(
+                self.request,
+                f" وضعیت تسک {task.id} یا موفقیت به حالت در حال انجام تغییر داده شد",
+            )
+            task.save()
 
         return HttpResponseRedirect(
             reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
         )
-    
+
 
 class ReOpenView(BaseUpdateView):
     template_name = "tasks/reopen.html"
@@ -171,6 +172,6 @@ class ReOpenView(BaseUpdateView):
     url_name = "detail"
 
     def form_valid(self, form):
-        form.instance.status =  "در انتظار بررسی"
-        form.instance.assign_to  = None
+        form.instance.status = "در انتظار بررسی"
+        form.instance.assign_to = None
         return super().form_valid(form)
