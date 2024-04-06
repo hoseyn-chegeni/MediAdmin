@@ -5,7 +5,11 @@
 <strong>status</strong>: {{object.status}} <br>
 <strong>assign_to</strong>: {{object.assign_to}} <br>
 <strong>Answer</strong>: {{object.answer}} <br>
-
+{%if not object.assign_to%}
 <a href="{% url 'tasks:assign_to_me' object.id%}">assign to me</a> <br>
 <a href="{% url 'tasks:assign_to' object.id%}">assign to</a> <br>
+{%endif%}
+{% if object.assign_to.email == request.user.email and object.status == "در حال انجام" %}
 <a href="{% url 'tasks:done' object.id%}">Mark As Done</a> <br>
+<a href="{% url 'tasks:done_not_as_planned' object.id%}">Mark As Done as Not planned</a> <br>
+{%endif%}

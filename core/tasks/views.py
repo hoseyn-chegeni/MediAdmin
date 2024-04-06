@@ -134,3 +134,15 @@ class DoneView(BaseUpdateView):
     def form_valid(self, form):
         form.instance.status = "انجام شده"
         return super().form_valid(form)
+    
+class DoneNotAsPlannedView(BaseUpdateView):
+    template_name = "tasks/done.html"
+    model = Task
+    fields = ("answer",)
+    permission_required = "tasks.change_task"
+    app_name = "tasks"
+    url_name = "detail"
+
+    def form_valid(self, form):
+        form.instance.status = "لغو شده"
+        return super().form_valid(form)

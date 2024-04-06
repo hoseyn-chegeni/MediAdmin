@@ -9,7 +9,8 @@ from .views import (
     MyTaskView,
     AssignToMeView,
     AssignToView,
-    DoneView
+    DoneView,
+    DoneNotAsPlannedView,
 
 )
 
@@ -26,5 +27,7 @@ urlpatterns = [
     path("assign_to_me/<int:pk>", AssignToMeView.as_view(), name="assign_to_me"),
     path("assign_to/<int:pk>", AssignToView.as_view(), name="assign_to"),
     path("done/<int:pk>", DoneView.as_view(), name="done"),
+    path("done_not_as_planned/<int:pk>", DoneNotAsPlannedView.as_view(), name="done_not_as_planned"),
+
 
 ]
