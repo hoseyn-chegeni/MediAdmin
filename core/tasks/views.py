@@ -50,8 +50,6 @@ class TaskDeleteView(BaseDeleteView):
     permission_required = "tasks.change_task"
 
 
-
-
 class MyTaskView(BaseListView):
     model = Task
     context_object_name = "tasks"

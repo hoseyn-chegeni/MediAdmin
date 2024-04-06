@@ -32,6 +32,7 @@ from operator import attrgetter
 import pandas as pd
 from tasks.models import Task
 
+
 # Create your views here.
 class UserListView(BaseListView):
     model = User
@@ -76,7 +77,6 @@ class UserDetailView(BaseDetailView):
         context["service"] = Service.objects.filter(created_by_id=user.id).count()
         context["created_task"] = Task.objects.filter(created_by_id=user.id).count()
         context["assign_task"] = Task.objects.filter(assign_to_id=user.id).count()
-
 
         return context
 

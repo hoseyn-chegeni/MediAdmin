@@ -153,7 +153,6 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
 
         return super().form_valid(form)
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
