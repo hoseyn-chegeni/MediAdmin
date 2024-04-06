@@ -12,7 +12,7 @@ from base.views import (
 )
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -236,7 +236,8 @@ class UserSentSMSListView(BaseListView):
 
 
 
-class LoginAsUserView(View):
+class LoginAsUserView(PermissionRequiredMixin, View):
+    permission_required = 'accounts.super_user'
     def get(self, request, pk):
         try:
             user = User.objects.get(pk=pk)

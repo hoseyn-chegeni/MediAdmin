@@ -3,6 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 
 # Create your views here.
-class IndexView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
-    permission_required = "index.view_index"
+
