@@ -29,7 +29,6 @@ from prescription.models import Prescription
 from services.models import Service
 from itertools import chain
 from operator import attrgetter
-import pandas as pd
 from tasks.models import Task
 from django.contrib.auth import login
 from django.shortcuts import redirect
