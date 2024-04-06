@@ -1,0 +1,17 @@
+<a href="{% url 'tasks:create' %}">Add Task</a><br>
+
+<h2>My Task</h2>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+
+{%for i in tasks%}
+  <p>  
+      {{i.id}}.{{i.title}},,,,,
+      <a href="{% url 'tasks:detail' i.pk %}">Details</a>,
+      <a href="{% url 'tasks:update' i.pk %}">Update</a>,
+      <a href="{% url 'tasks:delete' i.pk %}">Delete</a>,
+  </p>
+{% endfor %}

@@ -340,7 +340,30 @@ Auto
 </li>
 <li><a class="dropdown-item" href="{% url 'prescription:create_no_pk' %}">ایجاد نسخه جدید</a></li>
 </ul>
-</li> 
+</li>
+
+
+<li class="nav-item dropdown">            
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+مدیریت تسک ها
+  </a>
+  <ul class="dropdown-menu">
+  <li><a class="dropdown-item" href="{% url 'tasks:list' %}">لیست تسک ها </a></li>
+  <li>
+  <hr class="dropdown-divider">
+  </li>
+  <li><a class="dropdown-item" href="{% url 'tasks:create' %}">ایجاد تسک جدید</a></li>
+  <li>
+    <hr class="dropdown-divider">
+    </li>
+    <li><a class="dropdown-item" href="{% url 'tasks:my_list' %}">تسک های من</a></li>
+  <li>
+      <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="{% url 'tasks:my_created_list' %}">تسک های ایجاد شده من</a></li>
+
+  </ul>
+  </li> 
 
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -477,18 +500,15 @@ Auto
 </ul>
 </li> 
 
-<li class="nav-item dropdown">            
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت تسک ها
-  </a>
-  <ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="{% url 'tasks:list' %}">لیست تسک ها </a></li>
-  <li>
-  <hr class="dropdown-divider">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'tasks:create' %}">ایجاد تسک جدید</a></li>
-  </ul>
-  </li> 
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 
