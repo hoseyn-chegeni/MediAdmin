@@ -5,7 +5,6 @@ from .views import (
     UserCreateView,
     UserUpdateView,
     UserDeleteView,
-    UserLogoutView,
     ProfileView,
     ChangePasswordView,
     SuspendUserView,
@@ -13,7 +12,8 @@ from .views import (
     UserActionsView,
     UserSMSListView,
     UserSentSMSListView,
-    LoginAsUserView
+    LoginAsUserView,
+    logout_view,
 )
 
 app_name = "accounts"
@@ -24,7 +24,7 @@ urlpatterns = [
     path("user/create/", UserCreateView.as_view(), name="user_create"),
     path("user/update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
     path("user/delete/<int:pk>/", UserDeleteView.as_view(), name="user_delete"),
-    path("logout/", UserLogoutView.as_view(), name="logout"),
+    path('logout/', logout_view, name='logout'),
     path("profile/", ProfileView.as_view(), name="profile"),
     path("change_password/", ChangePasswordView.as_view(), name="change_password"),
     path("suspend/<int:pk>/", SuspendUserView.as_view(), name="suspend"),

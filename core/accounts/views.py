@@ -35,6 +35,10 @@ from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views.generic import View
 
+
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
 # Create your views here.
 class UserListView(BaseListView):
     model = User
@@ -112,9 +116,12 @@ class UserDeleteView(BaseDeleteView):
     permission_required = "accounts.delete_user"
 
 
-class UserLogoutView(LogoutView):
-    def get_success_url(self):
-        return reverse("two_factor:login")
+def logout_view(request):
+    logout(request)
+    # Redirect to a desired URL after logout
+    return redirect("two_factor:login")  # Replace 'login' with the name of your login URL pattern
+
+
 
 
 class ProfileView(BaseDetailView):
