@@ -8,6 +8,7 @@ from .views import (
     MyCreatedTaskView,
     MyTaskView,
     AssignToMeView,
+    AssignToView
 
 )
 
@@ -21,6 +22,6 @@ urlpatterns = [
     path("delete/<int:pk>/", TaskDeleteView.as_view(), name="delete"),
     path("my_list/", MyTaskView.as_view(), name="my_list"),
     path("my_created_list/", MyCreatedTaskView.as_view(), name="my_created_list"),
-    path("assign_to_mt/<int:pk>", AssignToMeView.as_view(), name="assign_to_me"),
-
+    path("assign_to_me/<int:pk>", AssignToMeView.as_view(), name="assign_to_me"),
+    path("assign_to/<int:pk>", AssignToView.as_view(), name="assign_to"),
 ]

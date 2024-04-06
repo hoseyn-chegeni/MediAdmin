@@ -93,3 +93,11 @@ class AssignToMeView(LoginRequiredMixin, View):
             reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
         )
         
+
+class AssignToView(BaseUpdateView):
+    template_name = "tasks/assign_to.html"
+    model = Task
+    fields = ("assign_to",)
+    permission_required = "tasks.change_task"
+    app_name = "tasks"
+    url_name = "detail"

@@ -4,4 +4,5 @@
 {{object.type}} <br>
 {{object.status}} <br>
 {{object.assign_to}} <br>
-<a href="{% url 'tasks:assign_to_me' object.id%}">assign to me</a>
+<a href="{% url 'tasks:assign_to_me' object.id%}">assign to me</a> <br>
+<a href="{% url 'tasks:assign_to' object.id%}">assign to</a> <br>
