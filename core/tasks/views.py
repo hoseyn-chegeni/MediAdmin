@@ -33,16 +33,34 @@ class TaskDetailView(BaseDetailView):
 
 class TaskCreateView(BaseCreateView):
     model = Task
-    fields = "__all__"
+    fields = [
+        'title',
+        'description',
+        'type',
+        'priority',
+        'assign_to',
+    ]
     template_name = "tasks/create.html"
     app_name = "tasks"
     url_name = "detail"
     permission_required = "tasks.add_task"
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.status = "در انتظار بررسی"
+        return super().form_valid(form)
+
+
 
 class TaskUpdateView(BaseUpdateView):
     model = Task
-    fields = "__all__"
+    fields = [
+        'title',
+        'description',
+        'type',
+        'priority',
+        'assign_to',
+    ]
     template_name = "tasks/update.html"
     app_name = "tasks"
     url_name = "detail"
