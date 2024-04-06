@@ -11,6 +11,7 @@ from .views import (
     AssignToView,
     DoneView,
     DoneNotAsPlannedView,
+    InProgressView
 
 )
 
@@ -28,6 +29,8 @@ urlpatterns = [
     path("assign_to/<int:pk>", AssignToView.as_view(), name="assign_to"),
     path("done/<int:pk>", DoneView.as_view(), name="done"),
     path("done_not_as_planned/<int:pk>", DoneNotAsPlannedView.as_view(), name="done_not_as_planned"),
+    path("in_progress/<int:pk>", InProgressView.as_view(), name="in_progress"),
+
 
 
 ]

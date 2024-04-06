@@ -146,3 +146,17 @@ class DoneNotAsPlannedView(BaseUpdateView):
     def form_valid(self, form):
         form.instance.status = "لغو شده"
         return super().form_valid(form)
+    
+class InProgressView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        task = Task.objects.filter(pk=pk).first()
+        if task and task.status =='در انتظار بررسی':
+                task.status = "در حال انجام"
+                messages.success(
+                    self.request, f" وضعیت تسک {task.id} یا موفقیت به حالت در حال انجام تغییر داده شد"
+                )
+                task.save()
+
+        return HttpResponseRedirect(
+            reverse_lazy("tasks:detail", kwargs={"pk": task.pk})
+        )
