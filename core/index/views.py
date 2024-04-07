@@ -5,7 +5,8 @@ from booking.models import Appointment
 from datetime import date
 from reception.models import Reception
 from tasks.models import Task
-
+from financial.models import Financial
+from django.db.models import Sum
 
 # Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -38,6 +39,20 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         context['total_task'] = total_task
         context['task_complete_percentage'] = task_complete_percentage
+
+        total_revenue = Financial.objects.aggregate(total_revenue=Sum('final_amount'))['total_revenue']
+        today_revenue = Financial.objects.filter(date_issued=today).aggregate(today_revenue=Sum('final_amount'))['today_revenue']
+
+        if total_revenue != 0:
+            revenue_percentage = round((today_revenue / total_revenue) * 100)
+        else:
+            revenue_percentage = 0
+
+        # Round today_revenue to two decimal places
+        today_revenue = round(today_revenue, 3)
+
+        context['today_revenue'] = today_revenue
+        context['revenue_percentage'] = revenue_percentage
         return context
 
 
