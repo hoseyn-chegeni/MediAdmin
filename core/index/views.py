@@ -26,8 +26,19 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context['appointment_count'] = appointment_count
         context['complete_percentage'] = complete_percentage
 
+        today_reception =  Reception.objects.filter(created_at__date = today).count()
+        total_reception = Reception.objects.count()
+
+        if total_reception != 0:
+            reception_percentage = round((today_reception / total_reception) * 100)
+        else:
+            reception_percentage = 0
+
         
-        context['today_reception'] = Reception.objects.filter(created_at__date = today).count()
+        context['today_reception'] = today_reception
+        context['reception_percentage'] = reception_percentage
+        
+       
 
         total_task =  Task.objects.count()
         complete_task = Task.objects.filter(status = "انجام شده").count()

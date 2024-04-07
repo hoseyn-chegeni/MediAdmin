@@ -42,10 +42,11 @@
 </h2>
 </div>
 <div class="col-4 text-right">
+<span>{{reception_percentage}}%  از کل پذیرش ها <i class="fa fa-arrow-up"></i></span>
 </div>
 </div>
 <div class="progress mt-1 " data-height="8" style="height: 8px;">
-<div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+<div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{reception_percentage}}%;"></div>
 </div>
 </div>
 </div>
@@ -76,7 +77,7 @@
 <div class="card l-bg-orange-dark">
 <div class="card-statistic-3 p-4">
 <div class="mb-4">
-<h5 class="card-title mb-0" style="font-size: 150%;" >درآمد امروز</h5>
+<h5 class="card-title mb-0" style="font-size: 150%;" >درآمد امروز </h5>
 </div>
 <div class="row align-items-center mb-2 d-flex">
 <div class="col-8">
@@ -85,7 +86,7 @@
 </h2>
 </div>
 <div class="col-4 text-right">
-<span>{{revenue_percentage}}% از درآمد کل<i class="fa fa-arrow-up"></i></span>
+<span>{{revenue_percentage}}% از درآمد کل <i class="fa fa-arrow-up"></i></span>
 </div>
 </div>
 <div class="progress mt-1 " data-height="8" style="height: 8px;">
