@@ -77,6 +77,7 @@
                         <th scope="col">سرویس</th>
                         <th scope="col"> نام پزشک معالجه کننده</th>
                         <th scope="col">شماره فاکتور</th>
+                        <th scope="col">شماره نوبت رزور شده </th>
                         <th scope="col">اکشن ها</th>
 
                       </tr>
@@ -112,6 +113,13 @@
                             <span>{{i.financial.id}}</span>
                           </td>
 
+                          <td class="align-middle">
+                            {% if i.appointment%}
+                            <span>{{i.appointment.id}}</span>
+                            {%else%}
+                            <span>مراجعه شده بدون نوبت قبلی</span>
+                          {%endif%}
+                          </td>
 
                         <td class="align-middle">
                             <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
