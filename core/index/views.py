@@ -3,6 +3,8 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from booking.models import Appointment
 from datetime import date
+from reception.models import Reception
+from tasks.models import Task
 
 
 # Create your views here.
@@ -22,6 +24,20 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         context['appointment_count'] = appointment_count
         context['complete_percentage'] = complete_percentage
+
+        
+        context['today_reception'] = Reception.objects.filter(created_at__date = today).count()
+
+        total_task =  Task.objects.count()
+        complete_task = Task.objects.filter(status = "انجام شده").count()
+
+        if total_task != 0:
+            task_complete_percentage = round((complete_task / total_task) * 100)
+        else:
+            task_complete_percentage = 0
+
+        context['total_task'] = total_task
+        context['task_complete_percentage'] = task_complete_percentage
         return context
 
 
