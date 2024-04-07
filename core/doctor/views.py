@@ -80,7 +80,6 @@ class DoctorDetailView(BaseDetailView):
         context["service_with_most_receptions"] = service_with_most_receptions
         return context
 
-        return context
 
 
 class DoctorCreateView(BaseCreateView):

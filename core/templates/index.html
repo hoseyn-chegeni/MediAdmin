@@ -1,20 +1,102 @@
 {%extends 'base.html'%}
 {% block content%}
-Welcome {{user}} <br>
-<a href="{% url 'booking:list'%}"> Appointment list</a> <br>
-<a href="{% url 'accounts:user_list'%}"> user list</a> <br>
-<a href="{% url 'client:list'%}"> Client list</a> <br>
-<a href="{% url 'doctor:list'%}"> Doctor list</a> <br>
-<a href="{% url 'reception:list'%}"> recent reception</a> <br>
-<a href="{% url 'prescription:list'%}"> recent Prescription</a> <br>
-<a href="{% url 'insurance:list'%}">Insurance list</a> <br>
-<a href="{% url 'services:list'%}">Services list</a> <br>
-<a href="{% url 'financial:list'%}">Financial</a> <br>
-<a href="{% url 'insurance:service_insurance_list' %}">Service Insurance List</a> <br>
-<a href="{% url 'asset:list'%}">consumable list</a> <br>
-<a href="{% url 'asset:category_list'%}">consumable  Category list</a> <br>
-<a href="{% url 'asset:supplier_list'%}">Supplier list</a> <br>
-<a href="{% url 'accounts:logout'%}">Logout</a>
+
+<br>
+
+<br>
+
+<div class="container">
+<div class="row ">
+<div class="col-xl-6 col-lg-6">
+<div class="card l-bg-cherry">
+<div class="card-statistic-3 p-4">
+<div class="mb-4">
+<h5 class="card-title mb-0" style="font-size: 150%;">نوبت های رزور شده امروز</h5>
+</div>
+<div class="row align-items-center mb-2 d-flex">
+<div class="col-8">
+<h2 class="d-flex align-items-center mb-0">
+{{appointment_count}}
+</h2>
+</div>
+<div class="col-4 text-right">
+<span> {{complete_percentage}}% پذیرش شده  <i class="fa fa-arrow-up"></i></span>
+</div>
+</div>
+<div class="progress mt-1 " data-height="8" style="height: 8px;">
+<div id ='appointment_section' class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{complete_percentage}}%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-6 col-lg-6">
+<div class="card l-bg-blue-dark">
+<div class="card-statistic-3 p-4">
+<div class="mb-4">
+<h5 class="card-title mb-0" style="font-size: 150%;">پذیرش ها</h5>
+</div>
+<div class="row align-items-center mb-2 d-flex">
+<div class="col-8">
+<h2 class="d-flex align-items-center mb-0">
+15.07k
+</h2>
+</div>
+<div class="col-4 text-right">
+<span>9.23% <i class="fa fa-arrow-up"></i></span>
+</div>
+</div>
+<div class="progress mt-1 " data-height="8" style="height: 8px;">
+<div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-6 col-lg-6">
+<div class="card l-bg-green-dark">
+<div class="card-statistic-3 p-4">
+<div class="mb-4">
+<h5 class="card-title mb-0" style="font-size: 150%;" > لیست تسک ها و سفارش ها</h5>
+</div>
+<div class="row align-items-center mb-2 d-flex">
+<div class="col-8">
+<h2 class="d-flex align-items-center mb-0">
+578
+</h2>
+</div>
+<div class="col-4 text-right">
+<span>10% <i class="fa fa-arrow-up"></i></span>
+</div>
+</div>
+<div class="progress mt-1 " data-height="8" style="height: 8px;">
+<div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-6 col-lg-6">
+<div class="card l-bg-orange-dark">
+<div class="card-statistic-3 p-4">
+<div class="mb-4">
+<h5 class="card-title mb-0" style="font-size: 150%;" >درآمد امروز</h5>
+</div>
+<div class="row align-items-center mb-2 d-flex">
+<div class="col-8">
+<h2 class="d-flex align-items-center mb-0">
+$11.61k
+</h2>
+</div>
+<div class="col-4 text-right">
+<span>2.5% <i class="fa fa-arrow-up"></i></span>
+</div>
+</div>
+<div class="progress mt-1 " data-height="8" style="height: 8px;">
+<div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <br>
 <br>
 <br>
