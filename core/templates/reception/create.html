@@ -57,7 +57,9 @@
                                     <select  class="form-select" name="service" required="" id="service">
                                       <option value="" selected="">---------</option>
                                     {% for i in form.service.field.queryset%}
+                                      {% if i.is_active %}
                                       <option value="{{i.id}}">{{i}}</option>
+                                      {% endif %}
                                       {%endfor%}
                                     </select>
                                     </div>
