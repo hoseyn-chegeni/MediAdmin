@@ -82,7 +82,11 @@
 <div class="row align-items-center mb-2 d-flex">
 <div class="col-8">
 <h2 class="d-flex align-items-center mb-0">
-{{today_revenue}} تومان
+{% if today_revenue %}
+    {{today_revenue}} تومان
+{%else%}
+    0
+{%endif%}
 </h2>
 </div>
 <div class="col-4 text-right">

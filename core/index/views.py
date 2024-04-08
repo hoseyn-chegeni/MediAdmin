@@ -54,13 +54,14 @@ class IndexView(LoginRequiredMixin, TemplateView):
         total_revenue = Financial.objects.aggregate(total_revenue=Sum('final_amount'))['total_revenue']
         today_revenue = Financial.objects.filter(date_issued=today).aggregate(today_revenue=Sum('final_amount'))['today_revenue']
 
-        if total_revenue != 0:
+        if total_revenue != 0 and today_revenue != None:
             revenue_percentage = round((today_revenue / total_revenue) * 100)
         else:
             revenue_percentage = 0
 
         # Round today_revenue to two decimal places
-        today_revenue = round(today_revenue, 3)
+        if today_revenue != None:
+            today_revenue = round(today_revenue, 3)
 
         context['today_revenue'] = today_revenue
         context['revenue_percentage'] = revenue_percentage
