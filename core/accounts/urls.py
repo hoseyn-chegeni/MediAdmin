@@ -14,6 +14,7 @@ from .views import (
     UserSentSMSListView,
     LoginAsUserView,
     logout_view,
+    delete_selected_users,
 )
 
 app_name = "accounts"
@@ -41,5 +42,7 @@ urlpatterns = [
         name="user_sent_sms_log",
     ),
     path('login-as-user/<int:pk>/', LoginAsUserView.as_view(), name='login_as_user'),
+    path('users/delete/', delete_selected_users, name='delete_selected_users'),
+
 
 ]

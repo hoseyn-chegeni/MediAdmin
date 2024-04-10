@@ -69,13 +69,18 @@
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
                     <div class="mb-4">
-                      <a href="{% url 'accounts:user_create' %}" class="btn btn-success me-2"> افزودن کاربر جدید</a>
+                      <form action="{% url 'accounts:delete_selected_users' %}" method="post">
+                        {% csrf_token %}
+                      <a href="{% url 'accounts:user_create' %}" class="btn btn-success"> افزودن کاربر جدید</a>
                       <a href="{% url 'reports:user_reports'%}" class="btn btn-success me-2">گزارشات</a>
+                      <button type="submit" class="btn btn-success me-2">حذف کاربران انتخاب شده</button> <!-- Delete button -->
+
                       </div>
   
                   <table class="table text-white mb-0">
                     <thead>
                       <tr>
+                        <th scope="col"></th>
                         <th scope="col">نام</th>
                         <th scope="col">ایمیل</th>
                         <th scope="col">کدملی</th>
@@ -85,7 +90,8 @@
                     </thead>
                     <tbody>
                         {%for i in users%}
-                      <tr class="fw-normal">
+                      <tr class="fw-normal">       
+                         <td><input type="checkbox" name="user_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
                         <th>
                           <img src="{{i.image.url}}"
                             alt="avatar 1" style="width: 45px; height: auto;">
@@ -102,7 +108,7 @@
                           </td>
                         <td class="align-middle">
                           <a href="{%url 'accounts:user_detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
-                          <a href="{%url 'accounts:login_as_user' i.pk %}" data-mdb-toggle="tooltip" title="Login as user"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'accounts:login_as_user' i.pk %}" data-mdb-toggle="tooltip" title="Login as user"> <i class="fas fa-sign-in-alt"></i></a>
                           <a href="{%url 'accounts:user_update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
                           <a href="#" data-toggle="modal" data-target="#exampleModal2"  title="Suspend User" ><i class="fas fa-ban"></i></a>
                         </td>
@@ -110,7 +116,7 @@
                       {%endfor%}
                       </tbody>
                   </table>
-    
+                  </form>
                   <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         {% if page_obj.has_previous %}

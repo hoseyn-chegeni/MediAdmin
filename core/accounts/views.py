@@ -252,3 +252,11 @@ class LoginAsUserView(PermissionRequiredMixin, View):
         except User.DoesNotExist:
             pass  # Handle the case where the user does not exist
         return redirect('index:index')  
+    
+
+
+def delete_selected_users(request):
+    if request.method == 'POST':
+        user_ids = request.POST.getlist('user_ids')  # Get the list of selected user IDs from the form
+        User.objects.filter(id__in=user_ids).delete()  # Delete selected users
+    return redirect('accounts:user_list')
