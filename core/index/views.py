@@ -8,6 +8,7 @@ from tasks.models import Task
 from financial.models import Financial
 from django.db.models import Sum
 
+
 # Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
@@ -16,17 +17,21 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         today = date.today()
         appointment_count = Appointment.objects.filter(date=today).count()
-        complete_appointment_count = Appointment.objects.filter(date=today, status="پذیرش شده").count()
+        complete_appointment_count = Appointment.objects.filter(
+            date=today, status="پذیرش شده"
+        ).count()
 
         if appointment_count != 0:
-            complete_percentage = round((complete_appointment_count / appointment_count) * 100)
+            complete_percentage = round(
+                (complete_appointment_count / appointment_count) * 100
+            )
         else:
             complete_percentage = 0
 
-        context['appointment_count'] = appointment_count
-        context['complete_percentage'] = complete_percentage
+        context["appointment_count"] = appointment_count
+        context["complete_percentage"] = complete_percentage
 
-        today_reception =  Reception.objects.filter(created_at__date = today).count()
+        today_reception = Reception.objects.filter(created_at__date=today).count()
         total_reception = Reception.objects.count()
 
         if total_reception != 0:
@@ -34,25 +39,26 @@ class IndexView(LoginRequiredMixin, TemplateView):
         else:
             reception_percentage = 0
 
-        
-        context['today_reception'] = today_reception
-        context['reception_percentage'] = reception_percentage
-        
-       
+        context["today_reception"] = today_reception
+        context["reception_percentage"] = reception_percentage
 
-        total_task =  Task.objects.count()
-        complete_task = Task.objects.filter(status = "انجام شده").count()
+        total_task = Task.objects.count()
+        complete_task = Task.objects.filter(status="انجام شده").count()
 
         if total_task != 0:
             task_complete_percentage = round((complete_task / total_task) * 100)
         else:
             task_complete_percentage = 0
 
-        context['total_task'] = total_task
-        context['task_complete_percentage'] = task_complete_percentage
+        context["total_task"] = total_task
+        context["task_complete_percentage"] = task_complete_percentage
 
-        total_revenue = Financial.objects.aggregate(total_revenue=Sum('final_amount'))['total_revenue']
-        today_revenue = Financial.objects.filter(date_issued=today).aggregate(today_revenue=Sum('final_amount'))['today_revenue']
+        total_revenue = Financial.objects.aggregate(total_revenue=Sum("final_amount"))[
+            "total_revenue"
+        ]
+        today_revenue = Financial.objects.filter(date_issued=today).aggregate(
+            today_revenue=Sum("final_amount")
+        )["today_revenue"]
 
         if total_revenue != 0 and today_revenue != None:
             revenue_percentage = round((today_revenue / total_revenue) * 100)
@@ -63,8 +69,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
         if today_revenue != None:
             today_revenue = round(today_revenue, 3)
 
-        context['today_revenue'] = today_revenue
-        context['revenue_percentage'] = revenue_percentage
+        context["today_revenue"] = today_revenue
+        context["revenue_percentage"] = revenue_percentage
         return context
-
-

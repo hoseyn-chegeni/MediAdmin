@@ -4,6 +4,7 @@ from datetime import datetime
 from .models import Consumable
 from tasks.models import Task
 
+
 @shared_task
 def check_consumable_expiration():
     consumable = Consumable.objects.all()
@@ -12,7 +13,6 @@ def check_consumable_expiration():
     for i in consumable:
         reminder_days = i.expiration_reminder
         expiration_date = i.expiration_date
-
 
         reminder_date = expiration_date - timedelta(days=reminder_days)
 

@@ -38,6 +38,7 @@ from django.views.generic import View
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
+
 # Create your views here.
 class UserListView(BaseListView):
     model = User
@@ -118,9 +119,9 @@ class UserDeleteView(BaseDeleteView):
 def logout_view(request):
     logout(request)
     # Redirect to a desired URL after logout
-    return redirect("two_factor:login")  # Replace 'login' with the name of your login URL pattern
-
-
+    return redirect(
+        "two_factor:login"
+    )  # Replace 'login' with the name of your login URL pattern
 
 
 class ProfileView(BaseDetailView):
@@ -241,22 +242,25 @@ class UserSentSMSListView(BaseListView):
         return context
 
 
-
 class LoginAsUserView(PermissionRequiredMixin, View):
-    permission_required = 'accounts.super_user'
+    permission_required = "accounts.super_user"
+
     def get(self, request, pk):
         try:
             user = User.objects.get(pk=pk)
-            if request.user.is_superuser:  # Check if the current user is a superuser (admin)
+            if (
+                request.user.is_superuser
+            ):  # Check if the current user is a superuser (admin)
                 login(request, user)
         except User.DoesNotExist:
             pass  # Handle the case where the user does not exist
-        return redirect('index:index')  
-    
+        return redirect("index:index")
 
 
 def delete_selected_users(request):
-    if request.method == 'POST':
-        user_ids = request.POST.getlist('user_ids')  # Get the list of selected user IDs from the form
+    if request.method == "POST":
+        user_ids = request.POST.getlist(
+            "user_ids"
+        )  # Get the list of selected user IDs from the form
         User.objects.filter(id__in=user_ids).delete()  # Delete selected users
-    return redirect('accounts:user_list')
+    return redirect("accounts:user_list")

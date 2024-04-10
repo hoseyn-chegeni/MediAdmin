@@ -81,7 +81,6 @@ class DoctorDetailView(BaseDetailView):
         return context
 
 
-
 class DoctorCreateView(BaseCreateView):
     model = Doctor
     fields = "__all__"

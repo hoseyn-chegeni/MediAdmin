@@ -23,7 +23,7 @@ class Consumable(models.Model):
     purchase_date = models.DateField()
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
     expiration_date = models.DateField(null=True, blank=True)
-    expiration_reminder = models.PositiveIntegerField(default = 1)
+    expiration_reminder = models.PositiveIntegerField(default=1)
     # Usage Information
     usage_notes = models.TextField(blank=True)
     last_usage_date = models.DateField(null=True, blank=True)

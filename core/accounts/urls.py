@@ -25,7 +25,7 @@ urlpatterns = [
     path("user/create/", UserCreateView.as_view(), name="user_create"),
     path("user/update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
     path("user/delete/<int:pk>/", UserDeleteView.as_view(), name="user_delete"),
-    path('logout/', logout_view, name='logout'),
+    path("logout/", logout_view, name="logout"),
     path("profile/", ProfileView.as_view(), name="profile"),
     path("change_password/", ChangePasswordView.as_view(), name="change_password"),
     path("suspend/<int:pk>/", SuspendUserView.as_view(), name="suspend"),
@@ -41,8 +41,6 @@ urlpatterns = [
         UserSentSMSListView.as_view(),
         name="user_sent_sms_log",
     ),
-    path('login-as-user/<int:pk>/', LoginAsUserView.as_view(), name='login_as_user'),
-    path('users/delete/', delete_selected_users, name='delete_selected_users'),
-
-
+    path("login-as-user/<int:pk>/", LoginAsUserView.as_view(), name="login_as_user"),
+    path("users/delete/", delete_selected_users, name="delete_selected_users"),
 ]
