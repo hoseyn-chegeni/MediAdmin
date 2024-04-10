@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     "django_celery_results",
     "reports",
     "tasks",
+    "consumable",
+
 ]
 
 MIDDLEWARE = [
