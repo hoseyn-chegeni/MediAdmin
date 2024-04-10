@@ -24,6 +24,12 @@ class ConsumableDetailView(BaseDetailView):
     context_object_name = "consumable"
     permission_required = "consumable.view_consumablev2"
 
+    def get_context_data(self, **kwargs):
+        consumable = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['inventory'] = Inventory.objects.filter(consumable_id = consumable.id)
+        return context
+
 
 class ConsumableCreateView(BaseCreateView):
     model = ConsumableV2

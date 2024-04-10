@@ -1,2 +1,6 @@
 {{consumable.name}} <br>
 {{consumable.quantity}}
+<p>-----------------</p>
+{% for i in inventory %}
+    {{i.quantity}}.....{{i.expiration_date}} <br>
+{% endfor %}
