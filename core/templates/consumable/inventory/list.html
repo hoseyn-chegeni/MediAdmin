@@ -1,0 +1,12 @@
+<a href="{% url 'consumable:inventory_create' %}">Add inventory</a><br>
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in inventory%}
+    {{i.id}}.{{i.consumable.name}},,,,,{{i.quantity}},,,,,,
+    <a href="{% url 'consumable:inventory_detail' i.pk %}">Details</a>,
+    <a href="{% url 'consumable:inventory_update' i.pk %}">Update</a>,
+    <a href="{% url 'consumable:inventory_delete' i.pk %}">Delete</a><br>
+{% endfor %}

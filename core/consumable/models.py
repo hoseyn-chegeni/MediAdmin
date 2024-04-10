@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class ConsumableV2(models.Model):
     name = models.CharField(max_length=255)
@@ -16,16 +17,21 @@ class ConsumableV2(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
-        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True, related_name = 'creator'
+        "accounts.User",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="creator",
     )
 
     def __str__(self):
         return self.name
 
+
 class Inventory(models.Model):
-    consumable = models.ForeignKey('ConsumableV2', on_delete = models.CASCADE)
+    consumable = models.ForeignKey("ConsumableV2", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    supplier = models.CharField(max_length = 100)
+    supplier = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField()
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
@@ -37,4 +43,3 @@ class Inventory(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-

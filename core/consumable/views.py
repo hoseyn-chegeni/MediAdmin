@@ -1,9 +1,17 @@
 from django.shortcuts import render
-from base.views import BaseCreateView,BaseDeleteView,BaseDetailView,BaseUpdateView,BaseListView
-from .models import ConsumableV2
+from base.views import (
+    BaseCreateView,
+    BaseDeleteView,
+    BaseDetailView,
+    BaseUpdateView,
+    BaseListView,
+)
+from .models import ConsumableV2, Inventory
 from django.views.generic import ListView
+
+
 # Create your views here.
-#Consumable Views.
+# Consumable Views.
 class ConsumableListView(ListView):
     model = ConsumableV2
     template_name = "consumable/list.html"
@@ -38,5 +46,46 @@ class ConsumableUpdateView(BaseUpdateView):
 class ConsumableDeleteView(BaseDeleteView):
     model = ConsumableV2
     app_name = "consumable"
-    url_name = 'list'
+    url_name = "list"
     permission_required = "consumable.delete_consumablev2"
+
+
+# Inventory Views.
+
+
+class InventoryListView(ListView):
+    model = Inventory
+    template_name = "consumable/inventory/list.html"
+    context_object_name = "inventory"
+
+
+class InventoryCreateView(BaseCreateView):
+    model = Inventory
+    fields = "__all__"
+    template_name = "consumable/inventory/create.html"
+    app_name = "consumable"
+    url_name = "inventory_detail"
+    permission_required = "consumable.add_inventory"
+
+
+class InventoryDetailView(BaseDetailView):
+    model = Inventory
+    template_name = "consumable/inventory/detail.html"
+    context_object_name = "inventory"
+    permission_required = "consumable.view_inventory"
+
+
+class InventoryUpdateView(BaseUpdateView):
+    model = Inventory
+    fields = "__all__"
+    template_name = "consumable/inventory/update.html"
+    app_name = "consumable"
+    url_name = "inventory_detail"
+    permission_required = "consumable.change_inventory"
+
+
+class InventoryDeleteView(BaseDeleteView):
+    model = Inventory
+    app_name = "consumable"
+    url_name = "inventory_list"
+    permission_required = "consumable.delete_inventory"
