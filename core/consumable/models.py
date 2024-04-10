@@ -11,7 +11,6 @@ class ConsumableV2(models.Model):
     expiration_reminder = models.PositiveIntegerField(default=1)
     usage_notes = models.TextField(blank=True)
     storage_notes = models.TextField(blank=True)
-    # Additional Information
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="images/", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -24,6 +23,11 @@ class ConsumableV2(models.Model):
         related_name="creator",
     )
 
+    @property
+    def quantity(self):
+        total_quantity = self.inventory_set.aggregate(total_quantity=models.Sum('quantity'))['total_quantity']
+        return total_quantity if total_quantity is not None else 0
+    
     def __str__(self):
         return self.name
 
