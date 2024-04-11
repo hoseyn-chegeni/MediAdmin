@@ -1,13 +1,13 @@
 from celery import shared_task
 from datetime import timedelta
 from datetime import date
-from .models import Consumable
+from .models import Inventory
 from tasks.models import Task
 
 
 @shared_task
-def check_consumable_expiration():
-    consumable = Consumable.objects.all()
+def check_inventory_expiration():
+    consumable = Inventory.objects.all()
 
     # Create a task for each expired or about to expire consumable
     for i in consumable:

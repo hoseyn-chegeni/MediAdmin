@@ -46,7 +46,6 @@ class Inventory(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField()
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
-    expiration_date = models.DateField(null=True, blank=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="images/", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -54,5 +53,5 @@ class Inventory(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
-    
-    expiration_reminder = models.PositiveIntegerField(default = 1)
+    expiration_date = models.DateField(null=True, blank=True)
+    expiration_reminder = models.PositiveIntegerField(default=1)
