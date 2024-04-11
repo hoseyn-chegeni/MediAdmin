@@ -14,7 +14,6 @@ def check_inventory_expiration():
         reminder_days = i.expiration_reminder
         expiration_date = i.expiration_date
 
-
         # Create a reminder task if the reminder date is one day ago
         if date.today() + timedelta(days=reminder_days) == expiration_date:
             Task.objects.create(
@@ -34,8 +33,7 @@ def change_inventory_status():
     for i in consumable:
         expiration_date = i.expiration_date
 
-
         # Create a reminder task if the reminder date is one day ago
         if date.today() > expiration_date:
-            i.status =  "منقضی شده"
+            i.status = "منقضی شده"
             i.save()

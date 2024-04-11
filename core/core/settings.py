@@ -177,18 +177,18 @@ CELERY_BEAT_SCHEDULE = {
     },
     "update_appointment_status": {
         "task": "booking.tasks.update_appointment_status",
-        "schedule": crontab(hour=10, minute=00), 
+        "schedule": crontab(hour=10, minute=00),
     },
     "check_consumable_expiration": {
         "task": "asset.tasks.check_consumable_expiration",
-        "schedule": crontab(hour=20, minute=2),  
+        "schedule": crontab(hour=20, minute=2),
     },
     "check_inventory_expiration": {
         "task": "consumable.tasks.check_inventory_expiration",
-        "schedule": crontab(hour=20, minute=8), 
+        "schedule": crontab(hour=20, minute=8),
     },
     "change_inventory_status": {
         "task": "consumable.tasks.change_inventory_status",
-        "schedule": crontab(hour=20, minute=14), 
+        "schedule": crontab(hour=20, minute=14),
     },
 }

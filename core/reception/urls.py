@@ -8,7 +8,6 @@ from .views import (
     CompleteReceptionView,
     ReceptionUpdateView,
     ReceptionWithAppointmentCreateView,
-
 )
 
 app_name = "reception"
@@ -16,7 +15,7 @@ app_name = "reception"
 urlpatterns = [
     path("list/", ReceptionListView.as_view(), name="list"),
     path("detail/<int:pk>/", ReceptionDetailView.as_view(), name="detail"),
-    path("create/",ReceptionCreateView.as_view(), name="create"),
+    path("create/", ReceptionCreateView.as_view(), name="create"),
     path(
         "create/<int:pk>/",
         ReceptionCreateViewUsingProfile.as_view(),

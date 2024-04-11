@@ -21,6 +21,7 @@ from os import getenv
 from tasks.models import Task
 from consumable.models import Inventory
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -56,16 +57,18 @@ class ReceptionCreateView(BaseCreateView):
                 if i.consumable.quantity < int(i.dose):
                     Task
                     form.add_error(
-                            "service",
-                            f"Not enough {i.consumable.name} available for the {service.name} service.",
-                        )    
-                    invalid_consumable = True 
-                    return super().form_invalid(form)    
+                        "service",
+                        f"Not enough {i.consumable.name} available for the {service.name} service.",
+                    )
+                    invalid_consumable = True
+                    return super().form_invalid(form)
             if invalid_consumable == False:
                 valid_inventory = False
                 for i in service.serviceconsumable_set.all():
 
-                    inventory = Inventory.objects.filter(consumable_id = i.consumable.id, status = "در انبار").order_by('expiration_date')
+                    inventory = Inventory.objects.filter(
+                        consumable_id=i.consumable.id, status="در انبار"
+                    ).order_by("expiration_date")
                     for j in inventory:
                         if j.quantity < int(i.dose):
                             j.status = "تمام شده"
@@ -79,10 +82,10 @@ class ReceptionCreateView(BaseCreateView):
                         form.add_error(
                             "service",
                             f"Not enough {i.consumable.name} available for the {service.name} service.",
-                        ) 
-                        return super().form_invalid(form)   
+                        )
+                        return super().form_invalid(form)
                     else:
-                        if i.consumable.quantity > i.consumable.reorder_quantity :
+                        if i.consumable.quantity > i.consumable.reorder_quantity:
                             Task.objects.create(
                                 title=f"سفارش مجدد محصول {i.consumable}",
                                 description=(
@@ -93,9 +96,11 @@ class ReceptionCreateView(BaseCreateView):
                                 type="سفارش مجدد",
                                 status="در انتظار بررسی",
                                 priority="بالا",
-                                )
-   
+                            )
+
         return super().form_valid(form)
+
+
 class ReceptionDetailView(BaseDetailView):
     model = Reception
     template_name = "reception/detail.html"
@@ -136,16 +141,18 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
                 if i.consumable.quantity < int(i.dose):
                     Task
                     form.add_error(
-                            "service",
-                            f"Not enough {i.consumable.name} available for the {service.name} service.",
-                        )    
-                    invalid_consumable = True 
-                    return super().form_invalid(form)    
+                        "service",
+                        f"Not enough {i.consumable.name} available for the {service.name} service.",
+                    )
+                    invalid_consumable = True
+                    return super().form_invalid(form)
             if invalid_consumable == False:
                 valid_inventory = False
                 for i in service.serviceconsumable_set.all():
 
-                    inventory = Inventory.objects.filter(consumable_id = i.consumable.id, status = "در انبار").order_by('expiration_date')
+                    inventory = Inventory.objects.filter(
+                        consumable_id=i.consumable.id, status="در انبار"
+                    ).order_by("expiration_date")
                     for j in inventory:
                         if j.quantity < int(i.dose):
                             j.status = "تمام شده"
@@ -159,10 +166,10 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
                         form.add_error(
                             "service",
                             f"Not enough {i.consumable.name} available for the {service.name} service.",
-                        ) 
-                        return super().form_invalid(form)   
+                        )
+                        return super().form_invalid(form)
                     else:
-                        if i.consumable.quantity > i.consumable.reorder_quantity :
+                        if i.consumable.quantity > i.consumable.reorder_quantity:
                             Task.objects.create(
                                 title=f"سفارش مجدد محصول {i.consumable}",
                                 description=(
@@ -173,8 +180,8 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
                                 type="سفارش مجدد",
                                 status="در انتظار بررسی",
                                 priority="بالا",
-                                )
-   
+                            )
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
