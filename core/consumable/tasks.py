@@ -24,3 +24,18 @@ def check_inventory_expiration():
                 status="در انتظار بررسی",
                 priority="بالا",
             )
+
+
+@shared_task
+def change_inventory_status():
+    consumable = Inventory.objects.all()
+
+    # Create a task for each expired or about to expire consumable
+    for i in consumable:
+        expiration_date = i.expiration_date
+
+
+        # Create a reminder task if the reminder date is one day ago
+        if date.today() > expiration_date:
+            i.status =  "منقضی شده"
+            i.save()
