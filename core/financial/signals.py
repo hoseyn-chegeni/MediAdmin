@@ -10,47 +10,47 @@ from .models import Coupon
 from decimal import Decimal
 
 
-@receiver(post_save, sender=Reception)
-def create_financial(sender, instance, created, **kwargs):
-    if created:
+# @receiver(post_save, sender=Reception)
+# def create_financial(sender, instance, created, **kwargs):
+#     if created:
 
-        wage = instance.service.price * (
-            Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100)
-        )
-        revenue = instance.service.price - wage
-        client_insurance = instance.client.insurance
-        service = instance.service
-        service_insurance_services = InsuranceService.objects.filter(
-            service_id=service.id
-        )
+#         wage = instance.service.price * (
+#             Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100)
+#         )
+#         revenue = instance.service.price - wage
+#         client_insurance = instance.client.insurance
+#         service = instance.service
+#         service_insurance_services = InsuranceService.objects.filter(
+#             service_id=service.id
+#         )
 
-        if service_insurance_services.exists():
-            for i in service_insurance_services:
-                if i.insurance == client_insurance:
-                    Financial.objects.create(
-                        reception=instance,
-                        invoice_number=f"INV-{instance.pk}",
-                        payment_status="UNPAID",
-                        payment_received_date=None,
-                        valid_insurance=True,
-                        insurance_range=i.percentage,
-                        attachment=instance.invoice_attachment,
-                        doctors_wage=wage,
-                        revenue=revenue,
-                        doctor=instance.service.doctor,
-                    )
-                    break
-        else:
-            Financial.objects.create(
-                reception=instance,
-                invoice_number=f"INV-{instance.pk}",
-                payment_status="UNPAID",
-                payment_received_date=None,
-                attachment=instance.invoice_attachment,
-                doctors_wage=wage,
-                revenue=revenue,
-                doctor=instance.service.doctor,
-            )
+#         if service_insurance_services.exists():
+#             for i in service_insurance_services:
+#                 if i.insurance == client_insurance:
+#                     Financial.objects.create(
+#                         reception=instance,
+#                         invoice_number=f"INV-{instance.pk}",
+#                         payment_status="UNPAID",
+#                         payment_received_date=None,
+#                         valid_insurance=True,
+#                         insurance_range=i.percentage,
+#                         attachment=instance.invoice_attachment,
+#                         doctors_wage=wage,
+#                         revenue=revenue,
+#                         doctor=instance.service.doctor,
+#                     )
+#                     break
+#         else:
+#             Financial.objects.create(
+#                 reception=instance,
+#                 invoice_number=f"INV-{instance.pk}",
+#                 payment_status="UNPAID",
+#                 payment_received_date=None,
+#                 attachment=instance.invoice_attachment,
+#                 doctors_wage=wage,
+#                 revenue=revenue,
+#                 doctor=instance.service.doctor,
+#             )
 
 
 @receiver(pre_save, sender=Coupon)

@@ -1,5 +1,12 @@
 from django.db import models
 
+STATUS_CHOICES = (
+        ("در انبار", "در انبار"),
+        ("تمام شده", "تمام شده"),
+        ("سفارش داده شده", "سفارش داده شده"),
+        ("منقضی شده", "منقضی شده"),
+
+    )
 
 # Create your models here.
 class ConsumableV2(models.Model):
@@ -22,7 +29,7 @@ class ConsumableV2(models.Model):
         null=True,
         related_name="creator",
     )
-
+    reorder_quantity = models.PositiveIntegerField(default = 1)
     @property
     def quantity(self):
         total_quantity = self.inventory_set.aggregate(total_quantity=models.Sum('quantity'))['total_quantity']
@@ -35,6 +42,7 @@ class ConsumableV2(models.Model):
 class Inventory(models.Model):
     consumable = models.ForeignKey("ConsumableV2", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
+    status = models.CharField(max_length = 100, choices=STATUS_CHOICES)
     supplier = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField()
@@ -47,3 +55,4 @@ class Inventory(models.Model):
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
+    

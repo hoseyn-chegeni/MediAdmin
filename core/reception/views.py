@@ -19,7 +19,7 @@ from asset.models import Consumable
 from kavenegar import *
 from os import getenv
 from tasks.models import Task
-
+from consumable.models import Inventory
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -50,52 +50,52 @@ class ReceptionCreateView(BaseCreateView):
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
+        invalid_consumable = False
         if service.check_consumable_inventory == True:
-            invalid_consumable = False
             for i in service.serviceconsumable_set.all():
                 if i.consumable.quantity < int(i.dose):
+                    Task
                     form.add_error(
-                        "service",
-                        f"Not enough {i.consumable.name} available for the {service.name} service.",
-                    )
-                    invalid_consumable = True
-                    return super().form_invalid(form)
+                            "service",
+                            f"Not enough {i.consumable.name} available for the {service.name} service.",
+                        )    
+                    invalid_consumable = True 
+                    return super().form_invalid(form)    
             if invalid_consumable == False:
+                valid_inventory = False
                 for i in service.serviceconsumable_set.all():
-                    consumable = Consumable.objects.get(id=i.consumable.id)
-                    consumable.quantity = consumable.quantity - int(i.dose)
-                    consumable.save()
-                    if (
-                        consumable.quantity <= consumable.reorder_quantity
-                        and consumable.supplier
-                    ):
-                        Task.objects.create(
-                            title=f"سفارش مجدد محصول {consumable}",
-                            description=(
-                                f"نیاز به شارژ مجدد محصول {consumable} می باشد. "
-                                "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
-                                "با سپاس"
-                            ),
-                            type="سفارش مجدد",
-                            status="در انتظار بررسی",
-                            priority="بالا",
-                        )
-                        if consumable.send_reorder_sms_to_supplier == True:
-                            try:
-                                api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
-                                params = {
-                                    "sender": "2000500666",  # optional
-                                    "receptor": consumable.supplier.phone_number,  # multiple mobile number, split by comma
-                                    "message": f" this is test for reOrder to supplier{consumable.name}",
-                                }
-                                response = api.sms_send(params)
-                                print(response)
-                            except (APIException, HTTPException) as e:
-                                print(e)
 
+                    inventory = Inventory.objects.filter(consumable_id = i.consumable.id, status = "در انبار").order_by('expiration_date')
+                    for j in inventory:
+                        if j.quantity < int(i.dose):
+                            j.status = "تمام شده"
+                            j.save()
+                        else:
+                            j.quantity = j.quantity - int(i.dose)
+                            j.save()
+                            valid_inventory = True
+                            break
+                    if valid_inventory == False:
+                        form.add_error(
+                            "service",
+                            f"Not enough {i.consumable.name} available for the {service.name} service.",
+                        ) 
+                        return super().form_invalid(form)   
+                    else:
+                        if i.consumable.quantity > i.consumable.reorder_quantity :
+                            Task.objects.create(
+                                title=f"سفارش مجدد محصول {i.consumable}",
+                                description=(
+                                    f"نیاز به شارژ مجدد محصول {i.consumable} می باشد. "
+                                    "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
+                                    "با سپاس"
+                                ),
+                                type="سفارش مجدد",
+                                status="در انتظار بررسی",
+                                priority="بالا",
+                                )
+   
         return super().form_valid(form)
-
-
 class ReceptionDetailView(BaseDetailView):
     model = Reception
     template_name = "reception/detail.html"
@@ -130,49 +130,51 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
+        invalid_consumable = False
         if service.check_consumable_inventory == True:
-            invalid_consumable = False
             for i in service.serviceconsumable_set.all():
                 if i.consumable.quantity < int(i.dose):
+                    Task
                     form.add_error(
-                        "service",
-                        f"Not enough {i.consumable.name} available for the {service.name} service.",
-                    )
-                    invalid_consumable = True
-                    return super().form_invalid(form)
+                            "service",
+                            f"Not enough {i.consumable.name} available for the {service.name} service.",
+                        )    
+                    invalid_consumable = True 
+                    return super().form_invalid(form)    
             if invalid_consumable == False:
+                valid_inventory = False
                 for i in service.serviceconsumable_set.all():
-                    consumable = Consumable.objects.get(id=i.consumable.id)
-                    consumable.quantity = consumable.quantity - int(i.dose)
-                    consumable.save()
-                    if (
-                        consumable.quantity <= consumable.reorder_quantity
-                        and consumable.supplier
-                    ):
-                        Task.objects.create(
-                            title=f"سفارش مجدد محصول {consumable}",
-                            description=(
-                                f"نیاز به شارژ مجدد محصول {consumable} می باشد. "
-                                "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
-                                "با سپاس"
-                            ),
-                            type="سفارش مجدد",
-                            status="در انتظار بررسی",
-                            priority="بالا",
-                        )
-                        if consumable.send_reorder_sms_to_supplier == True:
-                            try:
-                                api = KavenegarAPI(getenv("KAVENEGAR_API_KEY"))
-                                params = {
-                                    "sender": "2000500666",  # optional
-                                    "receptor": consumable.supplier.phone_number,  # multiple mobile number, split by comma
-                                    "message": f" this is test for reOrder to supplier{consumable.name}",
-                                }
-                                response = api.sms_send(params)
-                                print(response)
-                            except (APIException, HTTPException) as e:
-                                print(e)
 
+                    inventory = Inventory.objects.filter(consumable_id = i.consumable.id, status = "در انبار").order_by('expiration_date')
+                    for j in inventory:
+                        if j.quantity < int(i.dose):
+                            j.status = "تمام شده"
+                            j.save()
+                        else:
+                            j.quantity = j.quantity - int(i.dose)
+                            j.save()
+                            valid_inventory = True
+                            break
+                    if valid_inventory == False:
+                        form.add_error(
+                            "service",
+                            f"Not enough {i.consumable.name} available for the {service.name} service.",
+                        ) 
+                        return super().form_invalid(form)   
+                    else:
+                        if i.consumable.quantity > i.consumable.reorder_quantity :
+                            Task.objects.create(
+                                title=f"سفارش مجدد محصول {i.consumable}",
+                                description=(
+                                    f"نیاز به شارژ مجدد محصول {i.consumable} می باشد. "
+                                    "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
+                                    "با سپاس"
+                                ),
+                                type="سفارش مجدد",
+                                status="در انتظار بررسی",
+                                priority="بالا",
+                                )
+   
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
