@@ -22,6 +22,7 @@ from tasks.models import Task
 from consumable.models import Inventory
 from financial.models import ConsumablePrice
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -107,7 +108,6 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
                     )
                     return super().form_invalid(form)
         return super().form_valid(form)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

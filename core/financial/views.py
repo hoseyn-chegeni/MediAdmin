@@ -10,6 +10,7 @@ from .models import Financial, OfficeExpenses
 from .filters import FinancialFilter, OfficeExpensesFilter
 from .models import ConsumablePrice
 
+
 # Create your views here.
 class FinancialListView(BaseListView):
     model = Financial
@@ -37,10 +38,8 @@ class FinancialDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
         financial = self.get_object()
         client = financial.reception.client
-        consumable = ConsumablePrice.objects.filter(reception_id = financial.reception.id)
-        context['consumable'] = consumable 
-
-
+        consumable = ConsumablePrice.objects.filter(reception_id=financial.reception.id)
+        context["consumable"] = consumable
 
         context["client"] = client
         return context

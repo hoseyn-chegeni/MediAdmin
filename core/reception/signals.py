@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Reception
 from datetime import date
@@ -6,6 +6,7 @@ from booking.models import Appointment
 from consumable.models import Inventory
 from financial.models import ConsumablePrice
 from tasks.models import Task
+
 
 @receiver(post_save, sender=Reception)
 def update_last_reception_date(sender, instance, created, **kwargs):
@@ -38,11 +39,13 @@ def update_appointment_status(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Reception)
 def update_consumable_inventory(sender, instance, created, **kwargs):
-   if created:
+    if created:
         valid_inventory = False
         for i in instance.service.serviceconsumable_set.all():
 
-            inventory = Inventory.objects.filter(consumable_id=i.consumable.id, status="در انبار").order_by("expiration_date")
+            inventory = Inventory.objects.filter(
+                consumable_id=i.consumable.id, status="در انبار"
+            ).order_by("expiration_date")
             for j in inventory:
                 if j.quantity >= int(i.dose):
                     j.quantity = j.quantity - int(i.dose)
@@ -51,15 +54,17 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                     j.save()
                     valid_inventory = True
                     ConsumablePrice.objects.create(
-                        reception = instance,
-                        consumable = j,
-                        price = j.price * int(i.dose),
-                        dose = int(i.dose)
+                        reception=instance,
+                        consumable=j,
+                        price=j.price * int(i.dose),
+                        dose=int(i.dose),
                     )
                     break
             if valid_inventory == False:
                 for i in instance.service.serviceconsumable_set.all():
-                    inventory = Inventory.objects.filter(consumable_id=i.consumable.id, status="در انبار").order_by("expiration_date")
+                    inventory = Inventory.objects.filter(
+                        consumable_id=i.consumable.id, status="در انبار"
+                    ).order_by("expiration_date")
                     dose = int(i.dose)
                     for j in inventory:
                         if dose != 0 and dose > j.quantity:
@@ -68,18 +73,19 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                             j.status = "تمام شده"
                             j.save()
                             ConsumablePrice.objects.create(
-                            reception = instance,
-                            consumable = j,
-                            price = j.price * dose,
-                            dose = dose)
+                                reception=instance,
+                                consumable=j,
+                                price=j.price * dose,
+                                dose=dose,
+                            )
 
                         elif dose != 0 and dose < j.quantity:
 
                             ConsumablePrice.objects.create(
-                                reception = instance,
-                                consumable = j,
-                                price = j.price * (j.quantity - dose),
-                                dose = dose
+                                reception=instance,
+                                consumable=j,
+                                price=j.price * (j.quantity - dose),
+                                dose=dose,
                             )
                             j.quantity = j.quantity - dose
                             dose = 0
