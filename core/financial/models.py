@@ -16,9 +16,6 @@ class Financial(models.Model):
     service_price = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
-    consumable_price = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=True, null=True
-    )
     total_amount = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
@@ -62,11 +59,7 @@ class Financial(models.Model):
                 self.discount = self.coupon.amount
                 # Calculate service price and consumable prices
                 self.service_price = self.reception.service.price
-                self.consumable_price = sum(
-                    sc.consumable.price
-                    for sc in self.reception.service.serviceconsumable_set.all()
-                )
-                total_amount_before_tax = self.service_price + self.consumable_price
+                total_amount_before_tax = self.service_price
                 total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
                 self.tax = total_amount_after_tax - total_amount_before_tax
                 total_amount_with_insurance = total_amount_after_tax - (
@@ -87,11 +80,8 @@ class Financial(models.Model):
                 self.discount = self.coupon.percentage
                 # Calculate service price and consumable prices
                 self.service_price = self.reception.service.price
-                self.consumable_price = sum(
-                    sc.consumable.price
-                    for sc in self.reception.service.serviceconsumable_set.all()
-                )
-                total_amount_before_tax = self.service_price + self.consumable_price
+
+                total_amount_before_tax = self.service_price
                 total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
                 self.tax = total_amount_after_tax - total_amount_before_tax
                 total_amount_with_insurance = total_amount_after_tax - (
@@ -100,6 +90,7 @@ class Financial(models.Model):
                 )
                 self.total_amount = total_amount_after_tax
                 self.insurance_amount = (
+                    
                     total_amount_after_tax - total_amount_with_insurance
                 )
                 self.final_amount = total_amount_with_insurance - (
@@ -108,11 +99,7 @@ class Financial(models.Model):
                 )
             else:
                 self.service_price = self.reception.service.price
-                self.consumable_price = sum(
-                    sc.consumable.price
-                    for sc in self.reception.service.serviceconsumable_set.all()
-                )
-                total_amount_before_tax = self.service_price + self.consumable_price
+                total_amount_before_tax = self.service_price
                 total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
                 self.tax = total_amount_after_tax - total_amount_before_tax
                 total_amount_with_insurance = total_amount_after_tax - (
@@ -124,14 +111,6 @@ class Financial(models.Model):
                     total_amount_after_tax - total_amount_with_insurance
                 )
                 self.final_amount = total_amount_with_insurance
-
-        if "service_price" in kwargs.get(
-            "update_fields", []
-        ) or "consumable_price" in kwargs.get("update_fields", []):
-            # Recalculate total amount including tax
-            total_amount_before_tax = self.service_price + self.consumable_price
-            total_amount_after_tax = total_amount_before_tax * (1 + self.tax_rate)
-            self.total_amount = total_amount_after_tax
 
         super().save(*args, **kwargs)
 
