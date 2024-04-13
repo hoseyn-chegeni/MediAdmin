@@ -5,52 +5,49 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Financial
 from reception.models import Reception
-from insurance.models import InsuranceService
 from .models import Coupon
 from decimal import Decimal
+from .models import ConsumablePrice
 
 
 @receiver(post_save, sender=Reception)
 def create_financial(sender, instance, created, **kwargs):
     if created:
+        total_consumable_price = 0
+        total_consumable_tax = 0
+        total_consumable_price_final = 0
+
+        for i in  ConsumablePrice.objects.filter(reception_id=instance.id):
+                total_consumable_price_final = total_consumable_price_final +i.final_amount
+                total_consumable_tax = total_consumable_tax + i.tax_amount
+                total_consumable_price = total_consumable_price+i.price
 
         wage = instance.service.price * (
             Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100)
         )
         revenue = instance.service.price - wage
-        client_insurance = instance.client.insurance
-        service = instance.service
-        service_insurance_services = InsuranceService.objects.filter(
-            service_id=service.id
+
+        Financial.objects.create(
+            reception=instance,
+            invoice_number=f"INV-{instance.pk}",
+            payment_status="UNPAID",
+            payment_received_date=None,
+            valid_insurance=True,
+            attachment=instance.invoice_attachment,
+            doctors_wage=wage,
+            revenue=revenue,
+            doctor=instance.service.doctor,
+            service_price = instance.service.price,
+            service_tax = instance.service.price * 0.1,
+            service_price_final = instance.service.price + (instance.service.price * 0.1),
+
+            consumable_price = total_consumable_price,
+            consumable_tax = total_consumable_tax,
+            consumable_price_final = total_consumable_price_final,
+            total_amount = instance.service.price + total_consumable_price,
+            final_amount = total_consumable_price_final + (instance.service.price + (instance.service.price * 0.1))
         )
 
-        if service_insurance_services.exists():
-            for i in service_insurance_services:
-                if i.insurance == client_insurance:
-                    Financial.objects.create(
-                        reception=instance,
-                        invoice_number=f"INV-{instance.pk}",
-                        payment_status="UNPAID",
-                        payment_received_date=None,
-                        valid_insurance=True,
-                        insurance_range=i.percentage,
-                        attachment=instance.invoice_attachment,
-                        doctors_wage=wage,
-                        revenue=revenue,
-                        doctor=instance.service.doctor,
-                    )
-                    break
-        else:
-            Financial.objects.create(
-                reception=instance,
-                invoice_number=f"INV-{instance.pk}",
-                payment_status="UNPAID",
-                payment_received_date=None,
-                attachment=instance.invoice_attachment,
-                doctors_wage=wage,
-                revenue=revenue,
-                doctor=instance.service.doctor,
-            )
 
 
 @receiver(pre_save, sender=Coupon)

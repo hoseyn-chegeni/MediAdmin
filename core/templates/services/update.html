@@ -23,7 +23,7 @@
 
                     <div class="col-sm-6">
                         <label  for="doctor">پزشک:</label>
-                        <select  class="form-select" name="doctor" required="" id="doctor">
+                        <select  class="form-select" name="doctor"  id="doctor">
                           <option value="" selected="">---------</option>
                           {% for i in form.doctor.field.queryset%}
                         {% if object.doctor == i%}
@@ -45,7 +45,7 @@
 
                           <div class="col-sm-6">
                             <label  for="category">دسته بندی:</label>
-                            <select  class="form-select" name="category" required="" id="category">
+                            <select  class="form-select" name="category"  id="category">
                               <option value="" selected="">---------</option>
                               {% for i in form.category.field.queryset%}
                               {% if object.category == i%}
@@ -114,7 +114,7 @@
 
                         <div class="col-sm-6">
                             <label  for="is_active">فعال:</label>
-                            <select  class="form-select" name="is_active" required="" id="is_active">
+                            <select  class="form-select" name="is_active" id="is_active">
                               <option value="" selected="">---------</option>
                               {% if object.is_active == True%}
                               <option value="true" selected>بله</option>
