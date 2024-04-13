@@ -90,7 +90,7 @@ class Financial(models.Model):
                 )
                 self.total_amount = total_amount_after_tax
                 self.insurance_amount = (
-                    
+
                     total_amount_after_tax - total_amount_with_insurance
                 )
                 self.final_amount = total_amount_with_insurance - (
@@ -153,3 +153,14 @@ class Coupon(models.Model):  # BASED ON AMOUNT
 
     def __str__(self):
         return self.name
+
+
+
+class ConsumablePrice(models.Model):
+    reception = models.ForeignKey('reception.Reception', on_delete = models.CASCADE)
+    invoice = models.ForeignKey('Financial', on_delete = models.CASCADE)
+    consumable = models.ForeignKey('consumable.Inventory', on_delete = models.CASCADE)
+    price = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.reception}, {self.invoice}, {self.consumable}, {self.price}'
