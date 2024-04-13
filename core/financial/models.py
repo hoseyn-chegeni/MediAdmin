@@ -158,9 +158,8 @@ class Coupon(models.Model):  # BASED ON AMOUNT
 
 class ConsumablePrice(models.Model):
     reception = models.ForeignKey('reception.Reception', on_delete = models.CASCADE)
-    invoice = models.ForeignKey('Financial', on_delete = models.CASCADE)
     consumable = models.ForeignKey('consumable.Inventory', on_delete = models.CASCADE)
     price = models.PositiveIntegerField()
 
     def __str__(self):
-        return f'{self.reception}, {self.invoice}, {self.consumable}, {self.price}'
+        return f'{self.reception}, {self.consumable}, {self.price}'

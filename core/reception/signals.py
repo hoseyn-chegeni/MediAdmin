@@ -4,7 +4,9 @@ from .models import Reception
 from datetime import date
 from booking.models import Appointment
 from django.core.exceptions import ValidationError
-
+from consumable.models import Inventory
+from financial.models import ConsumablePrice
+from tasks.models import Task
 
 @receiver(post_save, sender=Reception)
 def update_last_reception_date(sender, instance, created, **kwargs):
@@ -33,3 +35,51 @@ def update_appointment_status(sender, instance, created, **kwargs):
         appointment = Appointment.objects.get(id=instance.appointment.id)
         appointment.status = "پذیرش شده"
         appointment.save()
+
+
+@receiver(post_save, sender=Reception)
+def update_consumable_inventory(sender, instance, created, **kwargs):
+   if created:
+        valid_inventory = False
+        for i in instance.service.serviceconsumable_set.all():
+
+            inventory = Inventory.objects.filter(consumable_id=i.consumable.id, status="در انبار").order_by("expiration_date")
+            for j in inventory:
+                if j.quantity >= int(i.dose):
+                    j.quantity = j.quantity - int(i.dose)
+                    j.save()
+                    valid_inventory = True
+                    ConsumablePrice.objects.create(
+                        reception = instance.id,
+                        consumable = j,
+                        price = j.price,
+                    )
+                    break
+            if valid_inventory == False:
+                for i in instance.service.serviceconsumable_set.all():
+                    inventory = Inventory.objects.filter(consumable_id=i.consumable.id, status="در انبار").order_by("expiration_date")
+                    dose = int(i.dose)
+                    for j in inventory:
+                        if dose != 0 and dose > j.quantity:
+                            dose = dose - j.quantity
+                            j.quantity = 0
+                            j.status = "تمام شده"
+                            j.save()
+                        elif dose != 0 and dose < j.quantity:
+                            j.quantity = j.quantity - dose
+                            dose = 0
+                            j.save()
+
+            else:
+                if i.consumable.quantity > i.consumable.reorder_quantity:
+                    Task.objects.create(
+                        title=f"سفارش مجدد محصول {i.consumable}",
+                        description=(
+                            f"نیاز به شارژ مجدد محصول {i.consumable} می باشد. "
+                            "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
+                            "با سپاس"
+                        ),
+                        type="سفارش مجدد",
+                        status="در انتظار بررسی",
+                        priority="بالا",
+                    )
