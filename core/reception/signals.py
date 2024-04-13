@@ -47,12 +47,14 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
             for j in inventory:
                 if j.quantity >= int(i.dose):
                     j.quantity = j.quantity - int(i.dose)
+                    if j.quantity == 0:
+                        j.status = "تمام شده"
                     j.save()
                     valid_inventory = True
                     ConsumablePrice.objects.create(
-                        reception = instance.id,
+                        reception = instance,
                         consumable = j,
-                        price = j.price,
+                        price = j.price * int(i.dose),
                     )
                     break
             if valid_inventory == False:
@@ -65,13 +67,24 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                             j.quantity = 0
                             j.status = "تمام شده"
                             j.save()
+                            ConsumablePrice.objects.create(
+                            reception = instance,
+                            consumable = j,
+                            price = j.price * dose,)
+
                         elif dose != 0 and dose < j.quantity:
+
+                            ConsumablePrice.objects.create(
+                                reception = instance,
+                                consumable = j,
+                                price = j.price * (j.quantity - dose),
+                            )
                             j.quantity = j.quantity - dose
                             dose = 0
                             j.save()
 
             else:
-                if i.consumable.quantity > i.consumable.reorder_quantity:
+                if i.consumable.quantity <= i.consumable.reorder_quantity:
                     Task.objects.create(
                         title=f"سفارش مجدد محصول {i.consumable}",
                         description=(
