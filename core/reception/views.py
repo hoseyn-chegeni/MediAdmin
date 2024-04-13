@@ -97,7 +97,6 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
-        invalid_consumable = False
         if service.check_consumable_inventory == True:
             for i in service.serviceconsumable_set.all():
                 if i.consumable.quantity < int(i.dose):
@@ -106,45 +105,9 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
                         "service",
                         f"Not enough {i.consumable.name} available for the {service.name} service.",
                     )
-                    invalid_consumable = True
                     return super().form_invalid(form)
-            if invalid_consumable == False:
-                valid_inventory = False
-                for i in service.serviceconsumable_set.all():
-
-                    inventory = Inventory.objects.filter(
-                        consumable_id=i.consumable.id, status="در انبار"
-                    ).order_by("expiration_date")
-                    for j in inventory:
-                        if j.quantity < int(i.dose):
-                            j.status = "تمام شده"
-                            j.save()
-                        else:
-                            j.quantity = j.quantity - int(i.dose)
-                            j.save()
-                            valid_inventory = True
-                            break
-                    if valid_inventory == False:
-                        form.add_error(
-                            "service",
-                            f"Not enough {i.consumable.name} available for the {service.name} service.",
-                        )
-                        return super().form_invalid(form)
-                    else:
-                        if i.consumable.quantity > i.consumable.reorder_quantity:
-                            Task.objects.create(
-                                title=f"سفارش مجدد محصول {i.consumable}",
-                                description=(
-                                    f"نیاز به شارژ مجدد محصول {i.consumable} می باشد. "
-                                    "لطفا در اسرع وقت نسبت به سفارش مجدد این محصول اقدام نمایید.\n"
-                                    "با سپاس"
-                                ),
-                                type="سفارش مجدد",
-                                status="در انتظار بررسی",
-                                priority="بالا",
-                            )
-
         return super().form_valid(form)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
