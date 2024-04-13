@@ -29,7 +29,7 @@ class FinancialCreateView(BaseCreateView):
     permission_required = "financial.add_financial"
 
 
-class FinancialDetailView(BaseDetailView):
+class InvoiceView(BaseDetailView):
     model = Financial
     template_name = "financial/detail.html"
     permission_required = "financial.view_financial"
