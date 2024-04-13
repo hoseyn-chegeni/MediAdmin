@@ -183,10 +183,6 @@ CELERY_BEAT_SCHEDULE = {
         "task": "asset.tasks.check_consumable_expiration",
         "schedule": crontab(hour=20, minute=2),
     },
-    "check_inventory_expiration": {
-        "task": "consumable.tasks.check_inventory_expiration",
-        "schedule": crontab(hour=20, minute=8),
-    },
     "change_inventory_status": {
         "task": "consumable.tasks.change_inventory_status",
         "schedule": crontab(hour=20, minute=14),
