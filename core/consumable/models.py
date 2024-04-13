@@ -58,3 +58,6 @@ class Inventory(models.Model):
     )
     expiration_date = models.DateField(null=True, blank=True)
     expiration_reminder = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return self.consumable.name

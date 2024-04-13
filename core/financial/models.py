@@ -160,6 +160,17 @@ class ConsumablePrice(models.Model):
     reception = models.ForeignKey('reception.Reception', on_delete = models.CASCADE)
     consumable = models.ForeignKey('consumable.Inventory', on_delete = models.CASCADE)
     price = models.PositiveIntegerField()
+    dose = models.PositiveIntegerField()
 
     def __str__(self):
         return f'{self.reception}, {self.consumable}, {self.price}'
+    
+    @property
+    def tax_amount(self):
+        # Calculate 10% tax on the price
+        return self.price * 0.1
+
+    @property
+    def final_amount(self):
+        # Add tax to the price to get the final amount
+        return self.price + self.tax_amount

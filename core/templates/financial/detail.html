@@ -146,6 +146,60 @@
         </tbody>
       </table>
     </div>
+
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"> مواد مصرفی </h3>
+      </div>
+      <table class="table table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th class="text-center colfix">نام</th>
+            <th class="text-center colfix">قیمت واحد</th>
+            <th class="text-center colfix">تعداد</th>
+            <th class="text-center colfix">مالیات</th>
+            <th class="text-center colfix">تخفیف</th>
+            <th class="text-center colfix">مبلغ کل</th>
+            <th class="text-center colfix">مبلغ نهایی</th>
+          </tr>
+        </thead>
+        {%for i in consumable%}
+        <tbody>
+          <tr>
+            <td>
+                <p> {{i.consumable}} </p>
+            </td>
+            <td class="text-right">
+              <span class="mono">{{i.consumable.price}} ریال</span>
+
+            </td>
+            <td>
+              <p> {{i.dose}} </p>
+          </td>
+          <td class="text-right">
+            <span class="mono">{{i.tax_amount}} ریال</span>
+            <br>
+            <span class="mono">۱۰ درصد </span>
+
+          </td>
+          <td>
+            <p> 0 </p>
+        </td>
+        <td>
+          <p> {{i.price}}</p>
+      </td>
+      <td>
+        <p> {{i.final_amount}}</p>
+    </td>
+
+
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
     <div class="panel panel-default">
       <table class="table table-bordered table-condensed">
         <thead>

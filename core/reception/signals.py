@@ -3,7 +3,6 @@ from django.dispatch import receiver
 from .models import Reception
 from datetime import date
 from booking.models import Appointment
-from django.core.exceptions import ValidationError
 from consumable.models import Inventory
 from financial.models import ConsumablePrice
 from tasks.models import Task
@@ -55,6 +54,7 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                         reception = instance,
                         consumable = j,
                         price = j.price * int(i.dose),
+                        dose = int(i.dose)
                     )
                     break
             if valid_inventory == False:
@@ -70,7 +70,8 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                             ConsumablePrice.objects.create(
                             reception = instance,
                             consumable = j,
-                            price = j.price * dose,)
+                            price = j.price * dose,
+                            dose = dose)
 
                         elif dose != 0 and dose < j.quantity:
 
@@ -78,6 +79,7 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                                 reception = instance,
                                 consumable = j,
                                 price = j.price * (j.quantity - dose),
+                                dose = dose
                             )
                             j.quantity = j.quantity - dose
                             dose = 0
