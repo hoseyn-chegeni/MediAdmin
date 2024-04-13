@@ -17,10 +17,10 @@ def create_financial(sender, instance, created, **kwargs):
         total_consumable_tax = 0
         total_consumable_price_final = 0
 
-        for i in  ConsumablePrice.objects.filter(reception_id=instance.id):
-                total_consumable_price_final = total_consumable_price_final +i.final_amount
-                total_consumable_tax = total_consumable_tax + i.tax_amount
-                total_consumable_price = total_consumable_price+i.price
+        for i in ConsumablePrice.objects.filter(reception_id=instance.id):
+            total_consumable_price_final = total_consumable_price_final + i.final_amount
+            total_consumable_tax = total_consumable_tax + i.tax_amount
+            total_consumable_price = total_consumable_price + i.price
 
         wage = instance.service.price * (
             Decimal(str(instance.service.doctors_wage_percentage)) / Decimal(100)
@@ -37,17 +37,16 @@ def create_financial(sender, instance, created, **kwargs):
             doctors_wage=wage,
             revenue=revenue,
             doctor=instance.service.doctor,
-            service_price = instance.service.price,
-            service_tax = instance.service.price * 0.1,
-            service_price_final = instance.service.price + (instance.service.price * 0.1),
-
-            consumable_price = total_consumable_price,
-            consumable_tax = total_consumable_tax,
-            consumable_price_final = total_consumable_price_final,
-            total_amount = instance.service.price + total_consumable_price,
-            final_amount = total_consumable_price_final + (instance.service.price + (instance.service.price * 0.1))
+            service_price=instance.service.price,
+            service_tax=instance.service.price * 0.1,
+            service_price_final=instance.service.price + (instance.service.price * 0.1),
+            consumable_price=total_consumable_price,
+            consumable_tax=total_consumable_tax,
+            consumable_price_final=total_consumable_price_final,
+            total_amount=instance.service.price + total_consumable_price,
+            final_amount=total_consumable_price_final
+            + (instance.service.price + (instance.service.price * 0.1)),
         )
-
 
 
 @receiver(pre_save, sender=Coupon)

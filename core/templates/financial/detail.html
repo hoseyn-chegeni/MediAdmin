@@ -107,7 +107,6 @@
             <th class="text-center colfix">تخفیف</th>
             <th class="text-center colfix">بیمه</th>
             <th class="text-center colfix">مبلغ کل</th>
-            <th class="text-center colfix">مبلغ نهایی</th>
           </tr>
         </thead>
         <tbody>
@@ -122,9 +121,9 @@
             </td>
 
             <td class="text-right">
-              <span class="mono">{{object.tax}} ریال</span>
+              <span class="mono">{{object.service_tax}} ریال</span>
               <br>
-              <small class="text-muted mono">9 درصد</small>
+              <small class="text-muted mono">10 درصد</small>
             </td>
             <td class="text-right">
               <span class="mono">{{object.discount}} ریال</span>
@@ -134,11 +133,9 @@
               <strong class="mono">{{object.insurance_range}} ریال</strong>
             </td>
             <td class="text-right">
-                <strong class="mono">{{object.total_amount}} ریال</strong>
+                <strong class="mono">{{object.service_price_final}} ریال</strong>
               </td>
-              <td class="text-right">
-                <strong class="mono">{{object.final_amount}} ریال</strong>
-              </td>
+
           </tr>
         </tbody>
       </table>
@@ -159,7 +156,6 @@
             <th class="text-center colfix">مالیات</th>
             <th class="text-center colfix">تخفیف</th>
             <th class="text-center colfix">مبلغ کل</th>
-            <th class="text-center colfix">مبلغ نهایی</th>
           </tr>
         </thead>
         {%for i in consumable%}
@@ -184,9 +180,7 @@
           <td>
             <p> 0 </p>
         </td>
-        <td>
-          <p> {{i.price}}</p>
-      </td>
+
       <td>
         <p> {{i.final_amount}}</p>
     </td>

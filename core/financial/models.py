@@ -11,24 +11,30 @@ class Financial(models.Model):
     valid_insurance = models.BooleanField(default=False)
     insurance_range = models.PositiveIntegerField(default=0)
 
-
     discount = models.PositiveIntegerField(default=0)
     insurance_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     date_issued = models.DateField(auto_now_add=True)
 
-
-
-    service_price = models.DecimalField( max_digits=10, decimal_places=2, blank=True, null=True)
+    service_price = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
     service_tax = models.PositiveIntegerField(default=0, blank=True, null=True)
-    service_price_final = models.PositiveIntegerField(default=0,blank=True, null=True)
+    service_price_final = models.PositiveIntegerField(default=0, blank=True, null=True)
 
-
-    consumable_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    consumable_price = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
     consumable_tax = models.PositiveIntegerField(default=0, blank=True, null=True)
-    consumable_price_final = models.PositiveIntegerField(default=0,blank=True, null=True)
+    consumable_price_final = models.PositiveIntegerField(
+        default=0, blank=True, null=True
+    )
 
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    final_amount = models.DecimalField( max_digits=10, decimal_places=2, blank=True, null=True)
+    total_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    final_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=True, null=True
+    )
     payment_status = models.CharField(
         max_length=20,
         choices=(
@@ -57,7 +63,6 @@ class Financial(models.Model):
 
     def __str__(self):
         return f"Invoice #{self.invoice_number} for {self.reception.client}"
-
 
 
 class OfficeExpenses(models.Model):

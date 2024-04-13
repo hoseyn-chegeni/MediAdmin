@@ -30,7 +30,7 @@ class Service(models.Model):
         "ServiceCategory", on_delete=models.SET_NULL, blank=True, null=True
     )
     duration = models.PositiveIntegerField()  # Duration in minutes
-    price = models.PositiveIntegerField(default = 1)
+    price = models.PositiveIntegerField(default=1)
     preparation_instructions = models.TextField(blank=True, null=True)
     documentation_requirements = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
