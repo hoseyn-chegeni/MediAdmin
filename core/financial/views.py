@@ -20,16 +20,7 @@ class FinancialListView(BaseListView):
     permission_required = "financial.view_financial"
 
 
-class FinancialCreateView(BaseCreateView):
-    model = Financial
-    fields = "__all__"
-    template_name = "financial/create.html"
-    app_name = "financial"
-    url_name = "detail"
-    permission_required = "financial.add_financial"
-
-
-class InvoiceView(BaseDetailView):
+class FinancialDetailView(BaseDetailView):
     model = Financial
     template_name = "financial/detail.html"
     permission_required = "financial.view_financial"
@@ -43,6 +34,15 @@ class InvoiceView(BaseDetailView):
 
         context["client"] = client
         return context
+
+
+class FinancialCreateView(BaseCreateView):
+    model = Financial
+    fields = "__all__"
+    template_name = "financial/create.html"
+    app_name = "financial"
+    url_name = "detail"
+    permission_required = "financial.add_financial"
 
 
 class FinancialUpdateView(BaseUpdateView):
@@ -68,6 +68,22 @@ class FinancialDeleteView(BaseDeleteView):
     app_name = "financial"
     url_name = "list"
     permission_required = "financial.delete_financial"
+
+
+class InvoiceView(BaseDetailView):
+    model = Financial
+    template_name = "financial/invoice.html"
+    permission_required = "financial.view_financial"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        financial = self.get_object()
+        client = financial.reception.client
+        consumable = ConsumablePrice.objects.filter(reception_id=financial.reception.id)
+        context["consumable"] = consumable
+
+        context["client"] = client
+        return context
 
 
 # OFFICE EXPENSES VIEWS HERE.

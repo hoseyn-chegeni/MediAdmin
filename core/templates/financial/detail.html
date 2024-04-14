@@ -1,255 +1,68 @@
+{% extends 'base.html' %}
+    {%block title %}جزییات صورتحساب {{object}}{%endblock%}
+{%block content%}
 
-<!DOCTYPE html>
-<html lang="en" dir="rtl">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="author" content="CodeHim">
-      <title>صورتحساب {{object.id}}</title>
-      <!-- Style CSS -->
-      {%load static%}
 
-      <link rel="stylesheet" href="{% static 'css/style.css' %}">
-      <link rel="stylesheet" href="{% static 'css/demo.css' %}">
 
-      <!-- Demo CSS (No need to include it into your project) -->
-      <link rel="stylesheet" href="./css/demo.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-   </head>
-   <body>
-     
-      <!--$%adsense%$-->
-      <main class="cd__main">
-         <!-- Start DEMO HTML (Use the following code into your project)-->
-         <div class="container invoice">
-  <div class="invoice-header">
-    <div class="row">
-      <div class="col-xs-8">
-        <h1>صورتحساب <small>اعتباری</small></h1>
-        <h4 class="text-muted">شماره: {{object.id}} | تاریخ: {{object.created_at.date}}</h4>
-      </div>
-      <div class="col-xs-4">
-        <div class="media">
-          <div class="media-left">
-            <img class="media-object logo" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"/>
+<div class="container mt-4">
+    <h2>جزییات صورتحساب {{ object }}</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                     اطلاعات صورتحساب
+             </strong>  </div>
+              <p class="card-text"><strong>شماره صورتحساب:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong> شماره پذیرش:</strong>{{object.reception.id}}</p>
+              <hr>
+              <p class="card-text"><strong>نام بیمار:</strong>{{client.get_full_name}}</p>
+              <hr>
+          
           </div>
-          <ul class="media-body list-unstyled">
-            <li><strong>مدیکال طب</strong></li>
-            <li>نرم افزار جامع مدیریت مطب</li>
-            <li>info@acme.com</li>
-          </ul>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="invoice-body">
-    <div class="row">
-      <div class="col-xs-5">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">اطلاعات مطب</h3>
+
+    
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+            <a href="{% url 'financial:invoice' object.id%}" class="btn btn-success me-2">نمایش صورتحساب</a>
+            <a href="{% url 'financial:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+            <a href="{% url 'client:detail' client.id%}" class="btn btn-success me-2">مشاهده بیمار</a>
+            <a href="{% url 'reception:detail' object.reception.id%}" class="btn btn-success me-2">مشاهده صفحه پذیرش</a>
+            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+
+
+
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              از حذف این صورتحساب مطمین هستید ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'financial:delete' pk=object.pk %}" class="btn">حذف</a>
           </div>
-          <div class="panel-body">
-            <dl class="dl-horizontal">
-              <dt>کلینیک ایرانیان </dt>
-              <dd><strong>نام</strong></dd>
-              <dt>زیبایی</dt>
-              <dd>زمینه فعالیت</dd>
-              <dt>عباس آباد٫ میرعماد</dt>
-              <dd> آدرس </dd>
-              <dt>1544</dt>
-              <dd>شماره تماس</dd>
-              <dt>mainl@acme.com</dt>
-              <dd>ایمیل</dd>
-              <dt>123456789</dt>
-              <dd class="mono">فکس</dd>
-              <dt>همه روزه ۸ صبح تا ۸ شب</dt>
-              <dd>ساعت فعالیت</dd>
           </div>
         </div>
       </div>
-      <div class="col-xs-7">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">اطلاعات بیمار</h3>
-          </div>
-          <div class="panel-body">
-            <dl class="dl-horizontal">
-              <dt>{{client}}</dt>
-              <dd>نام</dd>
-              <dt>{{client.id}}</dt>
-              <dd>شماره پرونده</dd>
-              <dt>{{client.national_id}}</dt>
-              <dd>کدملی</dd>
-              <dt>{{object.reception.reason}}</dt>
-              <dd>علت مراجعه</dd>
-              <dt>{{object.reception.service.doctor}}</dt>
-              <dd>پزشک معالج</dd>
-              <dt>{{object.reception.id}}</dt>
-              <dd class="mono">شماره پذیرش</dd>
-              <dt>&nbsp;</dt>
-              <dd>&nbsp;</dd>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">سرویس / خدمات </h3>
-      </div>
-      <table class="table table-bordered table-condensed">
-        <thead>
-          <tr>
-            <th class="text-center colfix">سرویس</th>
-            <th class="text-center colfix">قیمت واحد</th>
-            <th class="text-center colfix">مالیات</th>
-            <th class="text-center colfix">تخفیف</th>
-            <th class="text-center colfix">بیمه</th>
-            <th class="text-center colfix">مبلغ کل</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-                <p>   {{object.reception.service}} </p>
-            </td>
-            <td class="text-right">
-              <span class="mono">{{object.service_price}} ریال</span>
-              <br>
-              <small class="text-muted">پیش از مالیات</small>
-            </td>
 
-            <td class="text-right">
-              <span class="mono">{{object.service_tax}} ریال</span>
-              <br>
-              <small class="text-muted mono">10 درصد</small>
-            </td>
-            <td class="text-right">
-              <span class="mono">{{object.discount}} ریال</span>
-
-            </td>
-            <td class="text-right">
-              <strong class="mono">{{object.insurance_range}} ریال</strong>
-            </td>
-            <td class="text-right">
-                <strong class="mono">{{object.service_price_final}} ریال</strong>
-              </td>
-
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"> مواد مصرفی </h3>
-      </div>
-      <table class="table table-bordered table-condensed">
-        <thead>
-          <tr>
-            <th class="text-center colfix">نام</th>
-            <th class="text-center colfix">قیمت واحد</th>
-            <th class="text-center colfix">تعداد</th>
-            <th class="text-center colfix">مالیات</th>
-            <th class="text-center colfix">تخفیف</th>
-            <th class="text-center colfix">مبلغ کل</th>
-          </tr>
-        </thead>
-        {%for i in consumable%}
-        <tbody>
-          <tr>
-            <td>
-                <p> {{i.consumable}} </p>
-            </td>
-            <td class="text-right">
-              <span class="mono">{{i.consumable.price}} ریال</span>
-
-            </td>
-            <td>
-              <p> {{i.dose}} </p>
-          </td>
-          <td class="text-right">
-            <span class="mono">{{i.tax_amount}} ریال</span>
-            <br>
-            <span class="mono">۱۰ درصد </span>
-
-          </td>
-          <td>
-            <p> 0 </p>
-        </td>
-
-      <td>
-        <p> {{i.final_amount}}</p>
-    </td>
-
-
-          </tr>
-          {%endfor%}
-        </tbody>
-      </table>
-    </div>
-    <div class="panel panel-default">
-      <table class="table table-bordered table-condensed">
-        <thead>
-          <tr>
-            <td class="text-center col-xs-1">مبلغ کل</td>
-            <td class="text-center col-xs-1">تخفیف</td>
-            <td class="text-center col-xs-1">مالیت</td>
-            <td class="text-center col-xs-1">بیمه</td>
-            <td class="text-center col-xs-1">مبلغ نهایی</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th class="text-center rowtotal mono">{{object.total_amount}} ریال</th>
-            <th class="text-center rowtotal mono">{{object.discount}} ریال</th>
-            <th class="text-center rowtotal mono">{{object.tax}} ریال</th>
-            <th class="text-center rowtotal mono">{{object.insurance_range}} ریال</th>
-            <th class="text-center rowtotal mono">{{object.final_amount}} ریال</th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row">
-      <div class="col-xs-7">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <i>یادداشت</i>
-            <hr style="margin:3px 0 5px" /> از اینکه خدمات ما را انتخاب کردید متشکریم.
-            <br/> امیدواریم به زودی دوباره شما را ببینیم
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-5">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">نحوه پرداخت</h3>
-          </div>
-          <div class="panel-body">
-            <p>برای راحتی بیشتر شما عزیران، می توانید مبلغ نهایی را به یکی از حساب های بانکی های ما واریز کنید</p>
-            <ul class="list-unstyled">
-              <li>بانک ملی - حسین چگنی<span class="mono"> MO123456789456123 </span></li>
-              <li>بانک سامان - سپیده باقری<span class="mono"> MO123456789456123 </span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="invoice-footer">
-
-    <strong>~MEDICAL TEB~</strong>
-  </div>
 </div>
-         <!-- END EDMO HTML (Happy Coding!)-->
-      </main>
-      <footer class="cd__credit">Author: Christos Georgiou - Distributed By: <a title="Free web design code & scripts" href="https://www.codehim.com?source=demo-page" target="_blank">CodeHim</a></footer>
-      
-      <!-- Script JS -->
-      <!--$%analytics%$-->
-   </body>
-</html>
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
