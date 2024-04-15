@@ -13,8 +13,8 @@ from .views import (
     UserSMSListView,
     UserSentSMSListView,
     LoginAsUserView,
-    logout_view,
     DeleteSelectedUsersView,
+    logout_view,
 )
 
 app_name = "accounts"
