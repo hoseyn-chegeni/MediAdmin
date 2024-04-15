@@ -362,6 +362,15 @@ class ReactivePackageView(View):
             reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
         )
 
+class DeleteSelectedPackageView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "package_ids"
+            )  # Get the list of selected user IDs from the form
+            Package.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("services:package_list")
+
 
 # Package Steps Here.
 class ServicePackageCreateView(BaseCreateView):
