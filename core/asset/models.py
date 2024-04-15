@@ -4,68 +4,6 @@ from django.db import models
 from django.db import models
 
 
-class Consumable(models.Model):
-    # General Information
-    name = models.CharField(max_length=255)
-    category = models.ForeignKey(
-        "ConsumableCategory", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    quantity = models.PositiveIntegerField(default=0)
-    unit = models.CharField(max_length=50)
-    minimum_stock_level = models.PositiveIntegerField(default=0)
-    inventory_tracking_number = models.PositiveIntegerField(blank=True, null=True)
-
-    # Purchase Information
-    supplier = models.ForeignKey(
-        "Supplier", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    purchase_date = models.DateField()
-    purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
-    expiration_date = models.DateField(null=True, blank=True)
-    expiration_reminder = models.PositiveIntegerField(default=1)
-    # Usage Information
-    usage_notes = models.TextField(blank=True)
-    last_usage_date = models.DateField(null=True, blank=True)
-
-    # Storage Information
-    location = models.CharField(max_length=255)
-    storage_notes = models.TextField(blank=True)
-
-    # Financial Information
-    depreciation_rate = models.DecimalField(
-        max_digits=5, decimal_places=2, null=True, blank=True, help_text="in percentage"
-    )
-    disposal_method = models.CharField(max_length=100, blank=True)
-
-    # Additional Information
-    description = models.TextField(blank=True)
-    image = models.ImageField(upload_to="images/", blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(
-        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    send_reorder_sms_to_supplier = models.BooleanField(default=False)
-    reorder_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class ConsumableCategory(models.Model):
-    name = models.CharField(max_length=255)
-    note = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(
-        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
-    )
-
-    def __str__(self):
-        return self.name
-
-
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
     contact_person = models.CharField(max_length=100)

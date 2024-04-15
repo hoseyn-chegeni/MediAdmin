@@ -1,29 +1,7 @@
 from django_filters import FilterSet, DateFilter
-from .models import Consumable, ConsumableCategory, Supplier, Equipment
+from .models import Supplier, Equipment
 from base.filters import BaseFilter
 from django import forms
-
-
-class ConsumableFilter(BaseFilter):
-
-    class Meta:
-        model = Consumable
-        fields = {
-            "id": ["exact"],
-            "name": ["exact"],
-            "category": ["exact"],
-            "supplier": ["exact"],
-        }
-
-
-class ConsumableCategoryFilter(BaseFilter):
-
-    class Meta:
-        model = ConsumableCategory
-        fields = {
-            "id": ["exact"],
-            "name": ["exact"],
-        }
 
 
 class SupplierFilter(BaseFilter):

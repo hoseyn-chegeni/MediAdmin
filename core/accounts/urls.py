@@ -42,5 +42,7 @@ urlpatterns = [
         name="user_sent_sms_log",
     ),
     path("login-as-user/<int:pk>/", LoginAsUserView.as_view(), name="login_as_user"),
-    path("users/delete/", DeleteSelectedUsersView.as_view(), name="delete_selected_users"),
+    path(
+        "users/delete/", DeleteSelectedUsersView.as_view(), name="delete_selected_users"
+    ),
 ]

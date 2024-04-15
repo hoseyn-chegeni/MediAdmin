@@ -6,110 +6,20 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Consumable, ConsumableCategory, Supplier, Equipment
+from .models import Supplier, Equipment
 from .filters import (
-    ConsumableFilter,
-    ConsumableCategoryFilter,
     SupplierFilter,
     EquipmentFilter,
 )
 
 
-# Create your views here.
-class ConsumableListView(BaseListView):
-    model = Consumable
-    template_name = "asset/list.html"
-    context_object_name = "consumable"
-    filterset_class = ConsumableFilter
-    permission_required = "asset.view_consumable"
-
-
-class ConsumableDetailView(BaseDetailView):
-    model = Consumable
-    template_name = "asset/detail.html"
-    context_object_name = "consumable"
-    permission_required = "asset.view_consumable"
-
-
-class ConsumableCreateView(BaseCreateView):
-    model = Consumable
-    fields = "__all__"
-    template_name = "asset/create.html"
-    app_name = "asset"
-    url_name = "detail"
-    permission_required = "asset.add_consumable"
-
-
-class ConsumableUpdateView(BaseUpdateView):
-    model = Consumable
-    fields = "__all__"
-    template_name = "asset/update.html"
-    app_name = "asset"
-    url_name = "detail"
-    permission_required = "asset.change_consumable"
-
-
-class ConsumableDeleteView(BaseDeleteView):
-    model = Consumable
-    app_name = "asset"
-    url_name = Supplier
-    permission_required = "asset.delete_consumable"
-
-
-class UpdateInventoryTrackingNumberViews(BaseUpdateView):
-    model = Consumable
-    fields = ["inventory_tracking_number"]
-    template_name = "asset/update_inventory_tracking_number.html"
-    app_name = "asset"
-    url_name = "detail"
-    permission_required = "asset.change_consumable"
-
-
-# Consumable Category Views here.
-class ConsumableCategoryListView(BaseListView):
-    model = ConsumableCategory
-    template_name = "asset/category/list.html"
-    context_object_name = "category"
-    filterset_class = ConsumableCategoryFilter
-    permission_required = "asset.view_consumablecategory"
-
-
-class ConsumableCategoryDetailView(BaseDetailView):
-    model = ConsumableCategory
-    template_name = "asset/category/detail.html"
-    context_object_name = "category"
-    permission_required = "asset.view_consumablecategory"
-
-    def get_context_data(self, **kwargs):
-        category = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context["consumable"] = Consumable.objects.filter(category_id=category.id)
-        return context
-
-
-class ConsumableCategoryCreateView(BaseCreateView):
-    model = ConsumableCategory
-    fields = "__all__"
-    template_name = "asset/category/create.html"
-    app_name = "asset"
-    url_name = "category_detail"
-    permission_required = "asset.add_consumablecategory"
-
-
-class ConsumableCategoryUpdateView(BaseUpdateView):
-    model = ConsumableCategory
-    fields = "__all__"
-    template_name = "asset/category/update.html"
-    app_name = "asset"
-    url_name = "category_detail"
-    permission_required = "asset.change_consumablecategory"
-
-
-class ConsumableCategoryDeleteView(BaseDeleteView):
-    model = ConsumableCategory
-    app_name = "asset"
-    url_name = "category_list"
-    permission_required = "asset.delete_consumablecategory"
+# class UpdateInventoryTrackingNumberViews(BaseUpdateView):
+#     model = Consumable
+#     fields = ["inventory_tracking_number"]
+#     template_name = "asset/update_inventory_tracking_number.html"
+#     app_name = "asset"
+#     url_name = "detail"
+#     permission_required = "asset.change_consumable"
 
 
 # Supplier views here.
@@ -127,11 +37,11 @@ class SupplierDetailView(BaseDetailView):
     context_object_name = "supplier"
     permission_required = "asset.view_supplier"
 
-    def get_context_data(self, **kwargs):
-        supplier = self.get_object()
-        context = super().get_context_data(**kwargs)
-        context["consumable"] = Consumable.objects.filter(supplier_id=supplier.id)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     supplier = self.get_object()
+    #     context = super().get_context_data(**kwargs)
+    #     context["consumable"] = Consumable.objects.filter(supplier_id=supplier.id)
+    #     return context
 
 
 class SupplierCreateView(BaseCreateView):

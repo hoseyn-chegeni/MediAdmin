@@ -11,7 +11,9 @@ STATUS_CHOICES = (
 # Create your models here.
 class ConsumableV2(models.Model):
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=255)
+    category = models.ForeignKey(
+        "ConsumableCategory", on_delete=models.SET_NULL, blank=True, null=True
+    )
     unit = models.CharField(max_length=50)
     minimum_stock_level = models.PositiveIntegerField(default=0)
     inventory_tracking_number = models.PositiveIntegerField(blank=True, null=True)
@@ -61,3 +63,16 @@ class Inventory(models.Model):
 
     def __str__(self):
         return self.consumable.name
+
+
+class ConsumableCategory(models.Model):
+    name = models.CharField(max_length=255)
+    note = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+
+    def __str__(self):
+        return self.name
