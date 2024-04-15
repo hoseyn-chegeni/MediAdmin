@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -235,3 +235,14 @@ class ClientSMSListView(BaseListView):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
+
+
+
+class DeleteSelectedClientView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "client_ids"
+            )  # Get the list of selected user IDs from the form
+            Client.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("client:list")
