@@ -8,14 +8,18 @@ from base.views import (
 )
 from .models import ConsumableV2, Inventory, ConsumableCategory
 from django.views.generic import ListView
-
+from .filters import ConsumableFilter,ConsumableCategoryFilter
 
 # Create your views here.
 # Consumable Views.
-class ConsumableListView(ListView):
+
+class ConsumableListView(BaseListView):
     model = ConsumableV2
     template_name = "consumable/list.html"
     context_object_name = "consumable"
+    filterset_class =ConsumableFilter
+    permission_required = "consumable.view_consumablev2"
+
 
 
 class ConsumableDetailView(BaseDetailView):
@@ -107,7 +111,7 @@ class ConsumableCategoryListView(BaseListView):
     model = ConsumableCategory
     template_name = "consumable/category/list.html"
     context_object_name = "category"
-    filterset_class = 0
+    filterset_class =ConsumableCategoryFilter
     permission_required = "consumable.view_consumablecategory"
 
 
