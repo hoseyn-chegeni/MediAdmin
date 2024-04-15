@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Doctor
 from base.views import (
     BaseCreateView,
@@ -177,3 +177,13 @@ class DoctorServicesListView(BaseListView):
         context = super().get_context_data(**kwargs)
         context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])
         return context
+
+
+class DeleteSelectedDoctorsView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "doctor_ids"
+            )  # Get the list of selected user IDs from the form
+            Doctor.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("doctor:list")
