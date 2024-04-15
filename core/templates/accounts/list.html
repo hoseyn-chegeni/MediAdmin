@@ -73,7 +73,7 @@
                         {% csrf_token %}
                       <a href="{% url 'accounts:user_create' %}" class="btn btn-success"> افزودن کاربر جدید</a>
                       <a href="{% url 'reports:user_reports'%}" class="btn btn-success me-2">گزارشات</a>
-                      <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn">حذف کاربران انتخاب شده</button> <!-- Delete button -->
+                      <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف کاربران انتخاب شده</button> <!-- Delete button -->
 
                       </div>
   
@@ -91,7 +91,7 @@
                     <tbody>
                         {%for i in users%}
                       <tr class="fw-normal">       
-                         <td><input type="checkbox" name="user_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+                        <td><input type="checkbox" name="user_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
                         <th>
                           <img src="{{i.image.url}}"
                             alt="avatar 1" style="width: 45px; height: auto;">
@@ -180,6 +180,18 @@
 
 
       <script>
+        // Function to show delete button when checkboxes are selected
+        document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                if (checkedCheckboxes.length > 0) {
+                    document.getElementById('confirmDeleteBtn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('confirmDeleteBtn').style.display = 'none';
+                }
+            });
+        });
+    
         // Function to show modal when delete button is clicked
         document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
             $('#deleteConfirmationModal').modal('show');
