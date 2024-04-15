@@ -89,7 +89,6 @@
                         {%for i in office_expenses%}
                       <tr class="fw-normal">
                         <td><input type="checkbox" name="ids" value="{{ i.id }}"></td> <!-- Checkbox -->
-                      </form>
                         <th>
                           <span class="ms-2">{{i.id}}</span>
                         </th>
@@ -116,6 +115,8 @@
                         </td>
                       </tr>
                       {%endfor%}
+                    </form>
+
                       </tbody>
                   </table>
 

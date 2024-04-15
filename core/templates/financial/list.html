@@ -85,7 +85,6 @@
                         {%for i in financial%}
                       <tr class="fw-normal">
                         <td><input type="checkbox" name="financial_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
-                      </form>
                         <th>
                           <span class="ms-2">{{i.id}}</span>
                         </th>
@@ -114,6 +113,8 @@
                         </td>
                       </tr>
                       {%endfor%}
+                    </form>
+
                       </tbody>
                   </table>
                   <nav aria-label="Page navigation">

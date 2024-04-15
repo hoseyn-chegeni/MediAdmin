@@ -125,7 +125,6 @@
                         {%for i in clients%}
                       <tr class="fw-normal">
                         <td><input type="checkbox" name="client_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
-                      </form>
                         <th>
                           <span class="ms-2">{{i.id}}</span>
                         </th>
@@ -163,6 +162,8 @@
                         </td>
                       </tr>
                       {%endfor%}
+                    </form>
+
                       </tbody>
                   </table>
     
