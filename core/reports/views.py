@@ -4,8 +4,8 @@ from accounts.filters import UserFilter
 from accounts.models import User
 from django.shortcuts import HttpResponse
 import pandas as pd
-from asset.filters import  EquipmentFilter
-from asset.models import  Equipment
+from asset.filters import EquipmentFilter
+from asset.models import Equipment
 from base.views import BaseListView
 from booking.models import Appointment, PackageAppointment
 from booking.filters import AppointmentFilter, PackageAppointmentFilter
@@ -29,7 +29,6 @@ from tasks.models import Task
 from tasks.filters import TaskFilter
 from consumable.models import ConsumableV2, Supplier
 from consumable.filters import ConsumableFilter, SupplierFilter
-
 
 
 # Create your views here.
@@ -62,9 +61,6 @@ class ExportUsersExcelView(View):
         users_df.to_excel(response, index=False)
 
         return response
-
-
-
 
 
 class EquipmentReportsView(BaseListView):
@@ -513,7 +509,6 @@ class ExportTaskExcelView(View):
         return response
 
 
-
 class ConsumableReportsView(BaseListView):
     model = ConsumableV2
     template_name = "reports/consumable.html"
@@ -547,7 +542,6 @@ class ExportConsumableExcelView(View):
         users_df.to_excel(response, index=False)
 
         return response
-    
 
 
 class SupplierReportsView(BaseListView):

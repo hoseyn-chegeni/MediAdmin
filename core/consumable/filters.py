@@ -1,5 +1,6 @@
-from .models import ConsumableCategory, ConsumableV2,  Supplier
-from  base.filters import BaseFilter
+from .models import ConsumableCategory, ConsumableV2, Supplier
+from base.filters import BaseFilter
+
 
 class ConsumableFilter(BaseFilter):
 
@@ -11,6 +12,7 @@ class ConsumableFilter(BaseFilter):
             "category": ["exact"],
             # "supplier": ["exact"],
         }
+
 
 class ConsumableCategoryFilter(BaseFilter):
 

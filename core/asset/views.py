@@ -6,7 +6,7 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import  Equipment
+from .models import Equipment
 from .filters import (
     EquipmentFilter,
 )

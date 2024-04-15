@@ -1,8 +1,7 @@
 from django_filters import FilterSet, DateFilter
-from .models import  Equipment
+from .models import Equipment
 from base.filters import BaseFilter
 from django import forms
-
 
 
 class EquipmentFilter(BaseFilter):

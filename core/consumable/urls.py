@@ -72,7 +72,7 @@ urlpatterns = [
         ConsumableCategoryDeleteView.as_view(),
         name="category_delete",
     ),
-    #SUPPLIERS URLS
+    # SUPPLIERS URLS
     path("supplier/list/", SupplierListView.as_view(), name="supplier_list"),
     path(
         "supplier/detail/<int:pk>/",

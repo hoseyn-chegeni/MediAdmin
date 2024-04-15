@@ -14,7 +14,9 @@ class ConsumableV2(models.Model):
     category = models.ForeignKey(
         "ConsumableCategory", on_delete=models.SET_NULL, blank=True, null=True
     )
-    supplier = models.ForeignKey('Supplier', on_delete = models.SET_NULL, blank = True, null = True)
+    supplier = models.ForeignKey(
+        "Supplier", on_delete=models.SET_NULL, blank=True, null=True
+    )
     unit = models.CharField(max_length=50)
     minimum_stock_level = models.PositiveIntegerField(default=0)
     inventory_tracking_number = models.PositiveIntegerField(blank=True, null=True)
@@ -77,7 +79,6 @@ class ConsumableCategory(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class Supplier(models.Model):
