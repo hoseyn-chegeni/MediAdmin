@@ -158,3 +158,13 @@ class DeleteSelectedFinancialView(View):
             )  # Get the list of selected user IDs from the form
             Financial.objects.filter(id__in=user_ids).delete()  # Delete selected users
         return redirect("financial:list")
+
+
+class DeleteSelectedOfficeExpensesView(View):
+    def post(self, request):
+        if request.method == "POST":
+            ids = request.POST.getlist(
+                "ids"
+            )  # Get the list of selected user IDs from the form
+            OfficeExpenses.objects.filter(id__in=ids).delete()  # Delete selected users
+        return redirect("financial:office_expenses_list")
