@@ -124,22 +124,6 @@ def logout_view(request):
     )  # Replace 'login' with the name of your login URL pattern
 
 
-class ProfileView(BaseDetailView):
-    model = User
-    template_name = "accounts/profile.html"
-    context_object_name = "profile"
-    permission_required = "accounts.view_user"
-
-    def get_object(self, queryset=None):
-        # Assuming UserProfile is associated with User model through a OneToOneField named 'user'
-        return self.request.user
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["user"] = self.request.user
-        return context
-
-
 class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     success_message = "Password Successfully Changed"
     template_name = (
