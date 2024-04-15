@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Supplier, Equipment
+from .models import  Equipment
 
 # Register your models here.
-admin.site.register(Supplier)
 admin.site.register(Equipment)

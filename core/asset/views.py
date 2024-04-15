@@ -6,9 +6,8 @@ from base.views import (
     BaseListView,
     BaseUpdateView,
 )
-from .models import Supplier, Equipment
+from .models import  Equipment
 from .filters import (
-    SupplierFilter,
     EquipmentFilter,
 )
 
@@ -20,53 +19,6 @@ from .filters import (
 #     app_name = "asset"
 #     url_name = "detail"
 #     permission_required = "asset.change_consumable"
-
-
-# Supplier views here.
-class SupplierListView(BaseListView):
-    model = Supplier
-    template_name = "asset/supplier/list.html"
-    context_object_name = "supplier"
-    filterset_class = SupplierFilter
-    permission_required = "asset.view_supplier"
-
-
-class SupplierDetailView(BaseDetailView):
-    model = Supplier
-    template_name = "asset/supplier/detail.html"
-    context_object_name = "supplier"
-    permission_required = "asset.view_supplier"
-
-    # def get_context_data(self, **kwargs):
-    #     supplier = self.get_object()
-    #     context = super().get_context_data(**kwargs)
-    #     context["consumable"] = Consumable.objects.filter(supplier_id=supplier.id)
-    #     return context
-
-
-class SupplierCreateView(BaseCreateView):
-    model = Supplier
-    fields = "__all__"
-    template_name = "asset/supplier/create.html"
-    app_name = "asset"
-    url_name = "supplier_detail"
-    permission_required = "asset.add_supplier"
-
-
-class SupplierUpdateView(BaseUpdateView):
-    model = Supplier
-    fields = "__all__"
-    template_name = "asset/supplier/update.html"
-    app_name = "asset"
-    url_name = "supplier_detail"
-    permission_required = "asset.change_supplier"
-
-
-class SupplierDeleteView(BaseDeleteView):
-    model = Supplier
-    app_name = "asset"
-    url_name = "supplier_list"
-    permission_required = "asset.delete_supplier"
 
 
 # Medical Equipment Views Here.

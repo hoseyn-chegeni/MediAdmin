@@ -21,7 +21,6 @@ from logs.models import UserSMSLog, ClientSMSLog
 from client.models import Client
 from reception.models import Reception
 from booking.models import Appointment
-from asset.models import Supplier
 from financial.models import OfficeExpenses
 from doctor.models import Doctor
 from insurance.models import Insurance
@@ -71,7 +70,6 @@ class UserDetailView(BaseDetailView):
         ).count()
         context["user_count"] = User.objects.filter(created_by_id=user.id).count()
         # context["consumable"] = Consumable.objects.filter(created_by_id=user.id).count()
-        context["supplier"] = Supplier.objects.filter(created_by_id=user.id).count()
         context["office_expenses"] = OfficeExpenses.objects.filter(
             created_by_id=user.id
         ).count()
