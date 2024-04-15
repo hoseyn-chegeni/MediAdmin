@@ -257,10 +257,9 @@ class LoginAsUserView(PermissionRequiredMixin, View):
         return redirect("index:index")
 
 
-def delete_selected_users(request):
-    if request.method == "POST":
-        user_ids = request.POST.getlist(
-            "user_ids"
-        )  # Get the list of selected user IDs from the form
-        User.objects.filter(id__in=user_ids).delete()  # Delete selected users
-    return redirect("accounts:user_list")
+class DeleteSelectedUsersView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist("user_ids")  # Get the list of selected user IDs from the form
+            User.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("accounts:user_list")
