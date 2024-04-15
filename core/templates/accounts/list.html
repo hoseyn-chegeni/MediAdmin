@@ -69,11 +69,11 @@
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
                     <div class="mb-4">
-                      <form action="{% url 'accounts:delete_selected_users' %}" method="post">
+                      <form action="{% url 'accounts:delete_selected_users' %}" method="post" id="deleteForm">
                         {% csrf_token %}
                       <a href="{% url 'accounts:user_create' %}" class="btn btn-success"> افزودن کاربر جدید</a>
                       <a href="{% url 'reports:user_reports'%}" class="btn btn-success me-2">گزارشات</a>
-                      <button type="submit" class="btn btn-success me-2">حذف کاربران انتخاب شده</button> <!-- Delete button -->
+                      <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn">حذف کاربران انتخاب شده</button> <!-- Delete button -->
 
                       </div>
   
@@ -156,6 +156,42 @@
             </div>
           </div>
         </div>
+
+
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      کاربران انتخاب شده به طور کامل از سیستم حذف می شوند
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                      <button type="button" class="btn btn-primary" id="confirmDelete">تایید</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <script>
+        // Function to show modal when delete button is clicked
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            $('#deleteConfirmationModal').modal('show');
+        });
+    
+        // Function to submit the form when confirm delete button in modal is clicked
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            $('#deleteForm').submit();
+        });
+    </script>
+    
+      
       </section>
 <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
