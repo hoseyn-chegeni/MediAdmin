@@ -27,8 +27,10 @@ from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from tasks.models import Task
 from tasks.filters import TaskFilter
-from consumable.models import ConsumableV2
-from consumable.filters import ConsumableFilter
+from consumable.models import ConsumableV2, Supplier
+from consumable.filters import ConsumableFilter, SupplierFilter
+
+
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -540,6 +542,38 @@ class ExportConsumableExcelView(View):
         response["Content-Disposition"] = (
             'attachment; filename="consumable_report.xlsx"'
         )
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+    
+
+
+class SupplierReportsView(BaseListView):
+    model = Supplier
+    template_name = "reports/supplier.html"
+    context_object_name = "supplier"
+    filterset_class = SupplierFilter
+    permission_required = "asset.view_supplier"
+
+
+class ExportSupplierExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        supplier_filter = SupplierFilter(request.GET, queryset=Supplier.objects.all())
+        filtered_supplier = supplier_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_supplier.values()))
+
+        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type="application/vnd.ms-excel")
+        response["Content-Disposition"] = 'attachment; filename="supplier_report.xlsx"'
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)
