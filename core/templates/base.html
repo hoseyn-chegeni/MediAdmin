@@ -438,7 +438,7 @@ Auto
 <li>
 <hr class="dropdown-divider">
 </li>
-<li><a class="dropdown-item" href="{% url 'reports:supplier_reports' %}">تامین کنندگان</a></li>
+{% comment %} <li><a class="dropdown-item" href="{% url 'reports:supplier_reports' %}">تامین کنندگان</a></li> {% endcomment %}
 <li>
 <hr class="dropdown-divider">
 </li>
@@ -533,6 +533,16 @@ Auto
         <hr class="dropdown-divider">
         </li>
         <li><a class="dropdown-item" href="{% url 'consumable:category_list'%}">مدیریت دسته بندی مواد مصرفی</a></li>
+        <li>
+            <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'consumable:supplier_list' %}">لیست تامین کنندگان</a></li>
+            <li>
+            <hr class="dropdown-divider">
+            </li>
+            </li>
+            <li><a class="dropdown-item" href="{% url 'consumable:supplier_create' %}">ایجاد تامین کننده جدید</a></li>
+
     
     </ul>
     </li> 
@@ -551,15 +561,6 @@ Auto
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="#">لیست سفارش ها</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'asset:supplier_list' %}">لیست تامین کنندگان</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-</li>
-<li><a class="dropdown-item" href="{% url 'asset:supplier_create' %}">ایجاد تامین کننده جدید</a></li>
 
 </ul>
 </li> 

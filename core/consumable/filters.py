@@ -1,5 +1,4 @@
-from django_filters import FilterSet
-from .models import ConsumableCategory, ConsumableV2
+from .models import ConsumableCategory, ConsumableV2,  Supplier
 from  base.filters import BaseFilter
 
 class ConsumableFilter(BaseFilter):
@@ -20,4 +19,18 @@ class ConsumableCategoryFilter(BaseFilter):
         fields = {
             "id": ["exact"],
             "name": ["exact"],
+        }
+
+
+class SupplierFilter(BaseFilter):
+
+    class Meta:
+        model = Supplier
+        fields = {
+            "id": ["exact"],
+            "name": ["exact"],
+            "contact_person": ["exact"],
+            "email": ["exact"],
+            "phone_number": ["exact"],
+            "city": ["exact", "icontains"],
         }

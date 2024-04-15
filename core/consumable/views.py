@@ -6,9 +6,9 @@ from base.views import (
     BaseUpdateView,
     BaseListView,
 )
-from .models import ConsumableV2, Inventory, ConsumableCategory
+from .models import ConsumableV2, Inventory, ConsumableCategory, Supplier
 from django.views.generic import ListView
-from .filters import ConsumableFilter,ConsumableCategoryFilter
+from .filters import ConsumableFilter,ConsumableCategoryFilter, SupplierFilter
 
 # Create your views here.
 # Consumable Views.
@@ -151,3 +151,52 @@ class ConsumableCategoryDeleteView(BaseDeleteView):
     app_name = "consumable"
     url_name = "category_list"
     permission_required = "consumable.delete_consumablecategory"
+
+
+
+
+# Supplier views here.
+class SupplierListView(BaseListView):
+    model = Supplier
+    template_name = "consumable/supplier/list.html"
+    context_object_name = "supplier"
+    filterset_class = SupplierFilter
+    permission_required = "consumable.view_supplier"
+
+
+class SupplierDetailView(BaseDetailView):
+    model = Supplier
+    template_name = "consumable/supplier/detail.html"
+    context_object_name = "supplier"
+    permission_required = "consumable.view_supplier"
+
+    def get_context_data(self, **kwargs):
+        supplier = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["consumable"] = ConsumableV2.objects.filter(supplier_id=supplier.id)
+        return context
+
+
+class SupplierCreateView(BaseCreateView):
+    model = Supplier
+    fields = "__all__"
+    template_name = "consumable/supplier/create.html"
+    app_name = "consumable"
+    url_name = "supplier_detail"
+    permission_required = "consumable.add_supplier"
+
+
+class SupplierUpdateView(BaseUpdateView):
+    model = Supplier
+    fields = "__all__"
+    template_name = "consumable/supplier/update.html"
+    app_name = "consumable"
+    url_name = "supplier_detail"
+    permission_required = "consumable.change_supplier"
+
+
+class SupplierDeleteView(BaseDeleteView):
+    model = Supplier
+    app_name = "consumable"
+    url_name = "supplier_list"
+    permission_required = "consumable.delete_supplier"
