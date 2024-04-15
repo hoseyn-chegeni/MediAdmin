@@ -30,7 +30,8 @@ from .views import (
     ServicePackageDeleteView,
     UpdateServicePricesView,
     AddServiceUsingDoctorProfileView,
-)
+    DeleteSelectedServicesView,
+    )
 
 app_name = "services"
 
@@ -61,6 +62,9 @@ urlpatterns = [
         "<int:service_id>/receptions/",
         WaitingQueueView.as_view(),
         name="queue",
+    ),
+    path(
+        "delete/", DeleteSelectedServicesView.as_view(), name="delete_selected_services"
     ),
     # SERVICE CATEGORY URLS.
     path("category_list/", ServiceCategoryListView.as_view(), name="category_list"),
@@ -141,4 +145,5 @@ urlpatterns = [
         AddServiceUsingDoctorProfileView.as_view(),
         name="add_service_from_doctor_profile",
     ),
+
 ]

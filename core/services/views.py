@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -130,6 +131,16 @@ class ReactiveServiceView(View):
         return HttpResponseRedirect(
             reverse_lazy("services:detail", kwargs={"pk": service.pk})
         )
+
+
+class DeleteSelectedServicesView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "service_ids"
+            )  # Get the list of selected user IDs from the form
+            Service.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("services:list")
 
 
 # ServiceConsumable Views here.
