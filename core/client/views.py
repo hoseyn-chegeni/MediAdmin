@@ -241,8 +241,8 @@ class ClientSMSListView(BaseListView):
 class DeleteSelectedClientView(View):
     def post(self, request):
         if request.method == "POST":
-            user_ids = request.POST.getlist(
+            client_ids = request.POST.getlist(
                 "client_ids"
             )  # Get the list of selected user IDs from the form
-            Client.objects.filter(id__in=user_ids).delete()  # Delete selected users
+            Client.objects.filter(id__in=client_ids).delete()  # Delete selected users
         return redirect("client:list")

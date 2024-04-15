@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -9,7 +9,7 @@ from base.views import (
 from .models import Financial, OfficeExpenses
 from .filters import FinancialFilter, OfficeExpensesFilter
 from .models import ConsumablePrice
-
+from django.views.generic import View
 
 # Create your views here.
 class FinancialListView(BaseListView):
@@ -147,3 +147,14 @@ class OfficeExpensesDeleteView(BaseDeleteView):
     app_name = "financial"
     url_name = "office_expenses_list"
     permission_required = "financial.delete_officeexpenses"
+
+
+
+class DeleteSelectedFinancialView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "financial_ids"
+            )  # Get the list of selected user IDs from the form
+            Financial.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("financial:list")

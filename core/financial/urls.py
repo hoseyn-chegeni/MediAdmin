@@ -11,6 +11,7 @@ from .views import (
     OfficeExpensesDetailView,
     OfficeExpensesListView,
     OfficeExpensesUpdateView,
+    DeleteSelectedFinancialView,
 )
 
 app_name = "financial"
@@ -47,5 +48,8 @@ urlpatterns = [
         "office_expenses_delete/<int:pk>/",
         OfficeExpensesDeleteView.as_view(),
         name="office_expenses_delete",
+    ),
+    path(
+        "delete/", DeleteSelectedFinancialView.as_view(), name="delete_selected_financial"
     ),
 ]
