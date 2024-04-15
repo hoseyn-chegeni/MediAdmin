@@ -32,7 +32,7 @@ from tasks.models import Task
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views.generic import View
-
+from consumable.models import ConsumableV2, Supplier
 
 from django.contrib.auth import logout
 from django.shortcuts import redirect
@@ -81,6 +81,8 @@ class UserDetailView(BaseDetailView):
         context["service"] = Service.objects.filter(created_by_id=user.id).count()
         context["created_task"] = Task.objects.filter(created_by_id=user.id).count()
         context["assign_task"] = Task.objects.filter(assign_to_id=user.id).count()
+        context["consumable"] = ConsumableV2.objects.filter(created_by_id=user.id).count()
+        context["supplier"] = Supplier.objects.filter(created_by_id=user.id).count()
 
         return context
 
