@@ -10,6 +10,11 @@ from .views import (
     InventoryDetailView,
     InventoryListView,
     InventoryUpdateView,
+    ConsumableCategoryCreateView,
+    ConsumableCategoryDeleteView,
+    ConsumableCategoryDetailView,
+    ConsumableCategoryListView,
+    ConsumableCategoryUpdateView,
 )
 
 app_name = "consumable"
@@ -39,5 +44,27 @@ urlpatterns = [
         "inventory_delete/<int:pk>/",
         InventoryDeleteView.as_view(),
         name="inventory_delete",
+    ),
+    # CONSUMABLE CATEGORY VIEWS
+    path("category/list/", ConsumableCategoryListView.as_view(), name="category_list"),
+    path(
+        "category/detail/<int:pk>/",
+        ConsumableCategoryDetailView.as_view(),
+        name="category_detail",
+    ),
+    path(
+        "category/create/",
+        ConsumableCategoryCreateView.as_view(),
+        name="category_create",
+    ),
+    path(
+        "category/update/<int:pk>/",
+        ConsumableCategoryUpdateView.as_view(),
+        name="category_update",
+    ),
+    path(
+        "category/delete/<int:pk>/",
+        ConsumableCategoryDeleteView.as_view(),
+        name="category_delete",
     ),
 ]

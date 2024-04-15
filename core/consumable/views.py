@@ -6,7 +6,7 @@ from base.views import (
     BaseUpdateView,
     BaseListView,
 )
-from .models import ConsumableV2, Inventory
+from .models import ConsumableV2, Inventory, ConsumableCategory
 from django.views.generic import ListView
 
 
@@ -100,3 +100,50 @@ class InventoryDeleteView(BaseDeleteView):
     app_name = "consumable"
     url_name = "inventory_list"
     permission_required = "consumable.delete_inventory"
+
+
+# Consumable Category Views here.
+class ConsumableCategoryListView(BaseListView):
+    model = ConsumableCategory
+    template_name = "consumable/category/list.html"
+    context_object_name = "category"
+    filterset_class = 0
+    permission_required = "consumable.view_consumablecategory"
+
+
+class ConsumableCategoryDetailView(BaseDetailView):
+    model = ConsumableCategory
+    template_name = "consumable/category/detail.html"
+    context_object_name = "category"
+    permission_required = "consumable.view_consumablecategory"
+
+    def get_context_data(self, **kwargs):
+        category = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context["consumable"] = ConsumableV2.objects.filter(category_id=category.id)
+        return context
+
+
+class ConsumableCategoryCreateView(BaseCreateView):
+    model = ConsumableCategory
+    fields = "__all__"
+    template_name = "consumable/category/create.html"
+    app_name = "consumable"
+    url_name = "category_detail"
+    permission_required = "consumable.add_consumablecategory"
+
+
+class ConsumableCategoryUpdateView(BaseUpdateView):
+    model = ConsumableCategory
+    fields = "__all__"
+    template_name = "consumable/category/update.html"
+    app_name = "consumable"
+    url_name = "category_detail"
+    permission_required = "consumable.change_consumablecategory"
+
+
+class ConsumableCategoryDeleteView(BaseDeleteView):
+    model = ConsumableCategory
+    app_name = "consumable"
+    url_name = "category_list"
+    permission_required = "consumable.delete_consumablecategory"
