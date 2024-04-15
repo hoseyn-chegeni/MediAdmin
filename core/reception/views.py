@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from base.views import (
     BaseCreateView,
     BaseListView,
@@ -173,3 +174,13 @@ class ReceptionWithAppointmentCreateView(BaseCreateView):
         appointment = Appointment.objects.get(id=self.kwargs["pk"])
         context["client"] = Client.objects.get(id=appointment.client.id)
         return context
+
+
+class DeleteSelectedReceptionView(View):
+    def post(self, request):
+        if request.method == "POST":
+            reception_ids = request.POST.getlist(
+                "reception_ids"
+            )  # Get the list of selected user IDs from the form
+            Reception.objects.filter(id__in=reception_ids).delete()  # Delete selected users
+        return redirect("reception:list")
