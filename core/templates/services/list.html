@@ -102,10 +102,10 @@
                         <th scope="col">نام پزشک</th>
                         <th scope="col">دسته بندی</th>
                         <th scope="col">قیمت</th>
+                        <th scope="col">وضعیت</th>
                         <th scope="col">  پذیرش های امروز</th>
-                        <th scope="col">درانتظار</th>
                         <th scope="col">رزرو شد امروز</th>
-                        <th scope="col">تعداد بیماران</th>
+                        <th scope="col">بیماران</th>
                         <th scope="col">  کل پذیرش ها</th>
                         <th scope="col">اکشن ها</th>
 
@@ -135,14 +135,18 @@
                             <span>{{i.price}}</span>
                           </td>
 
+                          <td class="align-middle">
+                            {% if i.is_active == True %}
+                            <span class="badge bg-success rounded-pill"> فعال </span>
+                            {% else %}
+                            <span class="badge bg-danger rounded-pill"> غیرفعال </span>
+                            {% endif %}
+                          </td>
 
                           <td class="align-middle">
                             <span>{{i.today_reception_count}}</span>
                           </td>
 
-                          <td class="align-middle">
-                            <span>{{i.waiting_receptions_today}}</span>
-                          </td>
 
 
                           <td class="align-middle">
