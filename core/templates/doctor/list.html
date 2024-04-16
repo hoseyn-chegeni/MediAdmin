@@ -101,7 +101,7 @@
                         <th scope="col">نام</th>
                         <th scope="col">نظام پزشکی</th>
                         <th scope="col">تخصص</th>
-                        <th scope="col">فعال</th>
+                        <th scope="col">وضعیت</th>
                         <th scope="col">تعداد سرویس </th>
                         <th scope="col">تعداد  پذیرش </th>
                         <th scope="col">اکشن ها</th>
@@ -127,9 +127,12 @@
                             <span>{{i.specialization}}</span>
                           </td>
 
-
                           <td class="align-middle">
-                            <span>{{i.is_active}}</span>
+                            {% if i.is_active == True %}
+                            <span class="badge bg-success rounded-pill"> فعال </span>
+                            {% else %}
+                            <span class="badge bg-danger rounded-pill"> غیرفعال </span>
+                            {% endif %}
                           </td>
 
                           <td class="align-middle">
