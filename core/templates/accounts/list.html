@@ -84,6 +84,7 @@
                         <th scope="col">نام</th>
                         <th scope="col">ایمیل</th>
                         <th scope="col">کدملی</th>
+                        <th scope="col">وضعیت</th>
                         <th scope="col">آخرین ورود</th>
                         <th scope="col">اکشن ها</th>
                       </tr>
@@ -102,6 +103,13 @@
                         </td>
                         <td class="align-middle">
                           <span>{{i.national_id}}</span>
+                        </td>
+                        <td class="align-middle">
+                          {% if i.is_active == True %}
+                          <span class="badge bg-success rounded-pill"> فعال </span>
+                          {% else %}
+                          <span class="badge bg-danger rounded-pill"> غیرفعال </span>
+                          {% endif %}
                         </td>
                         <td class="align-middle">
                             <span>{{i.last_login}}</span>
