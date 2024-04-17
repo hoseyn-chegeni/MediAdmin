@@ -150,10 +150,10 @@ class SuspendUserView(View):
         if user:
             user.is_active = False
             messages.success(
-                self.request, f"User Suspended '{user.email}' successfully!"
+                self.request, f"کاربر با موفقیت غیرفعال شد."
             )
             user.save()
-        return HttpResponseRedirect(reverse_lazy("accounts:user_list"))
+        return HttpResponseRedirect(reverse_lazy("accounts:user_detail", kwargs={"pk": user.id}))
 
 
 class ReactiveUserView(View):
@@ -162,39 +162,10 @@ class ReactiveUserView(View):
         if user:
             user.is_active = True
             messages.success(
-                self.request, f"User Reactive '{user.email}' successfully!"
+                self.request, f"کاربر با موفقیت فعال شد."
             )
             user.save()
-        return HttpResponseRedirect(reverse_lazy("accounts:suspend_user_list"))
-
-
-class UserActionsView(BaseDetailView):
-    model = User
-    template_name = "accounts/actions.html"
-    context_object_name = "user"
-    permission_required = "accounts.view_user"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.get_object()
-        clients = Client.objects.filter(created_by_id=user.id)
-        services = Service.objects.filter(created_by_id=user.id)
-        reception = Reception.objects.filter(created_by_id=user.id)
-        appointment = Appointment.objects.filter(created_by_id=user.id)
-        # Combine the querysets of clients and services
-        action_list = sorted(
-            chain(clients, services, reception, appointment),
-            key=attrgetter("created_at"),
-            reverse=True,
-        )
-
-        # Add model names to each instance in the action_list
-        for obj in action_list:
-            obj.model_name = obj._meta.verbose_name.title()
-
-        context["actions"] = action_list
-        return context
-
+        return HttpResponseRedirect(reverse_lazy("accounts:user_detail", kwargs={"pk": user.id}))
 
 class UserSMSListView(BaseListView):
     model = UserSMSLog
