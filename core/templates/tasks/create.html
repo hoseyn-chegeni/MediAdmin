@@ -19,23 +19,23 @@
 
 
                     <div class="col-sm-6">
-                      <label for="title" class="form-label">title</label>
+                      <label for="title" class="form-label">عنوان</label>
                       <input type="text" class="form-control" id="title" placeholder="" value="{{object.title}}" name="title" >
                     </div>
 
                     <div class="col-sm-6">
-                      <label for="description" class="form-label">description</label>
+                      <label for="description" class="form-label">توضیحات</label>
                       <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
                     </div>
 
                     <div class="col-sm-6">
-                      <label for="type" class="form-label">type</label>
+                      <label for="type" class="form-label">نوع تسک</label>
                       <input type="text" class="form-control" id="type" placeholder="" value="{{object.type}}" name="type" >
                     </div>
 
 
                 <div class="col-sm-6">
-                  <label  for="priority">priority:</label>
+                  <label  for="priority">اولویت:</label>
                   <select  class="form-select" name="priority"  id="priority">
                     <option value="" selected="">---------</option>
                     <option value="پایین">پایین</option>
@@ -46,7 +46,7 @@
 
 
                     <div class="col-sm-6">
-                      <label  for="assign_to">assign_to :</label>
+                      <label  for="assign_to">اختصاص به :</label>
                       <select  class="form-select" name="assign_to"  id="assign_to">
                         <option value="" selected="">---------</option>
                         {% for i in form.assign_to.field.queryset%}
