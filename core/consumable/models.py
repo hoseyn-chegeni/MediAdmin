@@ -19,7 +19,6 @@ class ConsumableV2(models.Model):
     )
     unit = models.CharField(max_length=50)
     minimum_stock_level = models.PositiveIntegerField(default=0)
-    inventory_tracking_number = models.PositiveIntegerField(blank=True, null=True)
     usage_notes = models.TextField(blank=True)
     storage_notes = models.TextField(blank=True)
     description = models.TextField(blank=True)

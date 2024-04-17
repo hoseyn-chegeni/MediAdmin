@@ -12,15 +12,6 @@ from .filters import (
 )
 
 
-# class UpdateInventoryTrackingNumberViews(BaseUpdateView):
-#     model = Consumable
-#     fields = ["inventory_tracking_number"]
-#     template_name = "asset/update_inventory_tracking_number.html"
-#     app_name = "asset"
-#     url_name = "detail"
-#     permission_required = "asset.change_consumable"
-
-
 # Medical Equipment Views Here.
 class EquipmentListView(BaseListView):
     model = Equipment
