@@ -32,7 +32,7 @@ from .views import (
     AddServiceUsingDoctorProfileView,
     DeleteSelectedServicesView,
     DeleteSelectedPackageView,
-    )
+)
 
 app_name = "services"
 
@@ -120,7 +120,9 @@ urlpatterns = [
         name="package_reactive",
     ),
     path(
-        "package/delete/", DeleteSelectedPackageView.as_view(), name="delete_selected_package"
+        "package/delete/",
+        DeleteSelectedPackageView.as_view(),
+        name="delete_selected_package",
     ),
     # PACKAGE STEPS URLS.
     path(
@@ -149,5 +151,4 @@ urlpatterns = [
         AddServiceUsingDoctorProfileView.as_view(),
         name="add_service_from_doctor_profile",
     ),
-
 ]

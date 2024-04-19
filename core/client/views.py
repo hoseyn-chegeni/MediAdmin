@@ -237,7 +237,6 @@ class ClientSMSListView(BaseListView):
         return context
 
 
-
 class DeleteSelectedClientView(View):
     def post(self, request):
         if request.method == "POST":

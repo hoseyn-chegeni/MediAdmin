@@ -182,5 +182,7 @@ class DeleteSelectedReceptionView(View):
             reception_ids = request.POST.getlist(
                 "reception_ids"
             )  # Get the list of selected user IDs from the form
-            Reception.objects.filter(id__in=reception_ids).delete()  # Delete selected users
+            Reception.objects.filter(
+                id__in=reception_ids
+            ).delete()  # Delete selected users
         return redirect("reception:list")

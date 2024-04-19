@@ -362,6 +362,7 @@ class ReactivePackageView(View):
             reverse_lazy("services:package_detail", kwargs={"pk": package.pk})
         )
 
+
 class DeleteSelectedPackageView(View):
     def post(self, request):
         if request.method == "POST":

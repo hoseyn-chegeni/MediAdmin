@@ -51,9 +51,13 @@ urlpatterns = [
         name="office_expenses_delete",
     ),
     path(
-        "delete/", DeleteSelectedFinancialView.as_view(), name="delete_selected_financial"
+        "delete/",
+        DeleteSelectedFinancialView.as_view(),
+        name="delete_selected_financial",
     ),
     path(
-        "office-expenses/delete/", DeleteSelectedOfficeExpensesView.as_view(), name="delete_selected_office_expenses"
+        "office-expenses/delete/",
+        DeleteSelectedOfficeExpensesView.as_view(),
+        name="delete_selected_office_expenses",
     ),
 ]

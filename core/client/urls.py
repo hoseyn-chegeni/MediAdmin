@@ -12,7 +12,7 @@ from .views import (
     ClientFinancialInstancesListView,
     ClientAppointmentListView,
     ClientSMSListView,
-    DeleteSelectedClientView
+    DeleteSelectedClientView,
 )
 
 app_name = "client"
@@ -50,7 +50,5 @@ urlpatterns = [
         ClientSMSListView.as_view(),
         name="client-sms_log",
     ),
-    path(
-        "delete/", DeleteSelectedClientView.as_view(), name="delete_selected_clients"
-    ),
+    path("delete/", DeleteSelectedClientView.as_view(), name="delete_selected_clients"),
 ]

@@ -8,7 +8,7 @@ from .views import (
     CompleteReceptionView,
     ReceptionUpdateView,
     ReceptionWithAppointmentCreateView,
-    DeleteSelectedReceptionView
+    DeleteSelectedReceptionView,
 )
 
 app_name = "reception"
@@ -31,6 +31,8 @@ urlpatterns = [
         name="created_with_appointment",
     ),
     path(
-        "delete/", DeleteSelectedReceptionView.as_view(), name="delete_selected_reception"
+        "delete/",
+        DeleteSelectedReceptionView.as_view(),
+        name="delete_selected_reception",
     ),
 ]

@@ -11,6 +11,7 @@ from .filters import FinancialFilter, OfficeExpensesFilter
 from .models import ConsumablePrice
 from django.views.generic import View
 
+
 # Create your views here.
 class FinancialListView(BaseListView):
     model = Financial
@@ -147,7 +148,6 @@ class OfficeExpensesDeleteView(BaseDeleteView):
     app_name = "financial"
     url_name = "office_expenses_list"
     permission_required = "financial.delete_officeexpenses"
-
 
 
 class DeleteSelectedFinancialView(View):

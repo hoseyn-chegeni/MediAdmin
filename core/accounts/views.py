@@ -149,11 +149,11 @@ class SuspendUserView(View):
         user = User.objects.get(pk=pk)
         if user:
             user.is_active = False
-            messages.success(
-                self.request, f"کاربر با موفقیت غیرفعال شد."
-            )
+            messages.success(self.request, f"کاربر با موفقیت غیرفعال شد.")
             user.save()
-        return HttpResponseRedirect(reverse_lazy("accounts:user_detail", kwargs={"pk": user.id}))
+        return HttpResponseRedirect(
+            reverse_lazy("accounts:user_detail", kwargs={"pk": user.id})
+        )
 
 
 class ReactiveUserView(View):
@@ -161,11 +161,12 @@ class ReactiveUserView(View):
         user = User.objects.filter(pk=pk).first()
         if user:
             user.is_active = True
-            messages.success(
-                self.request, f"کاربر با موفقیت فعال شد."
-            )
+            messages.success(self.request, f"کاربر با موفقیت فعال شد.")
             user.save()
-        return HttpResponseRedirect(reverse_lazy("accounts:user_detail", kwargs={"pk": user.id}))
+        return HttpResponseRedirect(
+            reverse_lazy("accounts:user_detail", kwargs={"pk": user.id})
+        )
+
 
 class UserSMSListView(BaseListView):
     model = UserSMSLog
