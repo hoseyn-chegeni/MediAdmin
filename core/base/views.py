@@ -1,10 +1,11 @@
 from django.forms import BaseForm
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from django.views.generic import DeleteView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django_filters.views import FilterView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 # Create your views here.
@@ -57,10 +58,20 @@ class BaseUpdateView(
         return "با موفقیت ویرایش شد"
 
 
+
+
+
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
-    template_name = "delete.html"
+    message = ""
     app_name = ""
     url_name = ""
 
-    def get_success_url(self):
-        return reverse_lazy(f"{self.app_name}:{self.url_name}")
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+
+        self.object.delete()
+        messages.success(self.request, self.message)
+        return HttpResponseRedirect(reverse_lazy(f"{self.app_name}:{self.url_name}"))
