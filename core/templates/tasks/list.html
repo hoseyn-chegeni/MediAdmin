@@ -89,8 +89,12 @@
                     </form>
 
                     <div class="mb-4">
+                      <form action="{% url 'tasks:delete_selected_tasks' %}" method="post" id="deleteForm">
+                        {% csrf_token %}
                     <a href="{% url 'tasks:create' %}" class="btn btn-success me-2">ایجاد تسک جدید</a>
                     <a href="{% url 'reports:tasks_reports' %}" class="btn btn-success me-2">گزارشات</a>
+                    <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+
 
                     </div>
 
@@ -113,7 +117,7 @@
                     <tbody>
                         {%for i in tasks%}
                       <tr class="fw-normal">
-                        <td><input type="checkbox" name="service_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+                        <td><input type="checkbox" name="tasks_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
 
                         <th>
                           <span class="ms-2">{{i.id}}</span>
@@ -160,10 +164,11 @@
                         <td class="align-middle">
                             <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات تسک"> <i class="fas fa-info-circle"></i></a>
                             <a href="{%url 'tasks:update' i.id %}" data-mdb-toggle="tooltip" title="ویرارش"><i class="fas fa-edit" ></i></a>
+
                         </td>
                       </tr>
                       {%endfor%}
-
+                    </form>
                       </tbody>
                   </table>
 
@@ -217,7 +222,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    سرویس های انتخاب شده به طور کامل از سیستم حذف می شوند
+                    تسک های انتخاب شده به طور کامل از سیستم حذف می شوند
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>

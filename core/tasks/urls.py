@@ -13,6 +13,7 @@ from .views import (
     DoneNotAsPlannedView,
     InProgressView,
     ReOpenView,
+    DeleteSelectedTasksView
 )
 
 app_name = "tasks"
@@ -35,4 +36,7 @@ urlpatterns = [
     ),
     path("in_progress/<int:pk>", InProgressView.as_view(), name="in_progress"),
     path("reopen/<int:pk>", ReOpenView.as_view(), name="reopen"),
+    path(
+        "delete/", DeleteSelectedTasksView.as_view(), name="delete_selected_tasks"
+    ),
 ]

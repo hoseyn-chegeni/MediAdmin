@@ -1,6 +1,4 @@
-from django.forms import BaseForm
-from django.http.response import HttpResponse
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from base.views import (
     BaseListView,
     BaseCreateView,
@@ -175,3 +173,13 @@ class ReOpenView(BaseUpdateView):
         form.instance.status = "در انتظار بررسی"
         form.instance.assign_to = None
         return super().form_valid(form)
+
+
+class DeleteSelectedTasksView(View):
+    def post(self, request):
+        if request.method == "POST":
+            tasks_ids = request.POST.getlist(
+                "tasks_ids"
+            )  # Get the list of selected user IDs from the form
+            Task.objects.filter(id__in=tasks_ids).delete()  # Delete selected users
+        return redirect("tasks:list")
