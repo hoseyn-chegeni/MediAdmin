@@ -71,29 +71,6 @@ class TaskDeleteView(BaseDeleteView):
     permission_required = "tasks.change_task"
 
 
-class MyTaskView(BaseListView):
-    model = Task
-    context_object_name = "tasks"
-    template_name = "tasks/my_task.html"
-    filterset_class = TaskFilter
-    permission_required = "tasks.view_task"
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(assign_to_id=self.request.user.id)
-
-
-class MyCreatedTaskView(BaseListView):
-    template_name = "tasks/my_created_task.html"
-    model = Task
-    context_object_name = "tasks"
-    filterset_class = TaskFilter
-    permission_required = "tasks.view_task"
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        return qs.filter(created_by_id=self.request.user.id)
-
 
 class AssignToMeView(LoginRequiredMixin, View):
     def get(self, request, pk):
