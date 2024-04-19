@@ -50,11 +50,11 @@
             <div class="card-body">
                 <div class="card-text">
             {%if not object.assign_to%}
-            <a href="{% url 'tasks:assign_to_me' object.id%}" class="btn btn-success me-2">اختصاص تسک به من</a>
+            <a href="#" data-toggle="modal" data-target="#AssignModal"  class="btn btn-success me-2" >اختصاص تسک به من</a>
             <a href="{% url 'tasks:assign_to' object.id%}" class="btn btn-success me-2">اختصاص تسک به ...</a>
             {%endif%}
             {% if object.assign_to.email == request.user.email and object.status ==  "در انتظار بررسی"%}
-            <a href="{% url 'tasks:in_progress' object.id%}" class="btn btn-success me-2">تغییر وضعیت به در حال انجام..</a>
+            <a href="#" data-toggle="modal" data-target="#InProgressModal"  class="btn btn-success me-2">تغییر وضعیت به در حال انجام..</a>
             {%endif%}
             {% if object.assign_to.email == request.user.email and object.status == "در حال انجام" %}
             <a href="{% url 'tasks:done' object.id%}" class="btn btn-success me-2">اتمام تسک</a>
@@ -91,6 +91,47 @@
           </div>
         </div>
       </div>
+
+            <!-- ASSIGN TO ME MODALS -->
+            <div class="modal fade" id="AssignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">تایید اختصاص تسک</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                     تسک به شما اختصاص داده خواهد شد
+                    </div>
+                    <div class="modal-footer">
+                      <a class="btn btn-primary" href="{% url 'tasks:assign_to_me' object.id%}" class="btn">حذف</a>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+
+            <!--IN PROGRESS MODALS -->
+            <div class="modal fade" id="InProgressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">تایید شروع کار</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      تغییر وضعیت به درحال انجام
+                    </div>
+                    <div class="modal-footer">
+                      <a class="btn btn-primary" href="{% url 'tasks:in_progress' object.id%}" class="btn">حذف</a>
+                  </div>
+                  </div>
+                </div>
+              </div>
 
 </div>
 
