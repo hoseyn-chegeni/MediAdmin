@@ -129,9 +129,14 @@
                             <span>{{i.status}}</span>
                           </td>
 
-
                           <td class="align-middle">
-                            <span>{{i.priority}}</span>
+                            {% if i.priority == 'بالا' %}
+                            <span class="badge bg-danger rounded-pill"> بالا </span>
+                            {% elif i.priority == 'متوسط' %}
+                            <span class="badge bg-success rounded-pill"> متوسط </span>
+                            {% else %}
+                            <span class="badge bg-info rounded-pill"> پایین </span>
+                            {%endif%}
                           </td>
 
 
