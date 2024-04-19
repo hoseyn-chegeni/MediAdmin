@@ -62,7 +62,7 @@ class BaseUpdateView(
 
 
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
-    message = ""
+    message = "با موفقیت از سیستم حذف شد"
     app_name = ""
     url_name = ""
 
