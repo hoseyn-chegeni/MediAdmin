@@ -1,29 +1,102 @@
-<strong>ID:</strong> {{object.id}} <br>
-<strong>Title</strong>:{{object.title}} <br>
-<strong>Description</strong>: {{object.description}} <br>
-<strong>type</strong>: {{object.type}} <br>
-<strong>status</strong>: {{object.status}} <br>
-<strong>assign_to</strong>: {{object.assign_to}} <br>
-<strong>Answer</strong>: {{object.answer}} <br>
-{% if object.reopen_message%}
-    <strong>reopen_message</strong>: {{object.reopen_message}} <br>
-{%endif%}
+{% extends 'base.html' %}
+    {%block title %}جزییات تسک {{object}}{%endblock%}
+{%block content%}
 
 
-{%if not object.assign_to%}
-<a href="{% url 'tasks:assign_to_me' object.id%}">assign to me</a> <br>
-<a href="{% url 'tasks:assign_to' object.id%}">assign to</a> <br>
-{%endif%}
-{% if object.assign_to.email == request.user.email and object.status ==  "در انتظار بررسی"%}
-<a href="{% url 'tasks:in_progress' object.id%}">In Progress</a> <br>
-{%endif%}
-{% if object.assign_to.email == request.user.email and object.status == "در حال انجام" %}
-<a href="{% url 'tasks:done' object.id%}">Mark As Done</a> <br>
-<a href="{% url 'tasks:done_not_as_planned' object.id%}">Mark As Done as Not planned</a> <br>
-{%endif%}
-{% if object.assign_to.email == request.user.email %}
-    {%if object.status ==  "انجام شده" or  object.status == "لغو شده"%}
-        <a href="{% url 'tasks:reopen' object.id%}">Reopen</a> <br>
-    {%endif%}
-{%endif%}
 
+<div class="container mt-4">
+    <h2>جزییات تسک {{ object }}</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                     اطلاعات سرویس
+             </strong>  </div>
+              <p class="card-text"><strong>ID:</strong> {{object.id}} </p>
+              <hr>
+              <p class="card-text"><strong>عنوان:</strong>{{object.title}}</p>
+              <hr>
+              <p class="card-text"><strong>توضیحات:</strong>{{object.description}}</p>
+              <hr>
+              <p class="card-text"><strong>نوع تسک: </strong>{{object.type}}</p>
+              <hr>
+              <p class="card-text"><strong>وضعیت: </strong>{{object.status}}</p>
+              <hr>
+              <p class="card-text"><strong>اولویت: </strong>{{object.priority}}</p>
+              <hr>
+              <p class="card-text"><strong>کاربر بررسی کننده: </strong>{{object.assign_to}}</p>
+              <hr>
+              <p class="card-text"><strong>پاسخ نهایی: </strong>{{object.Answer}}</p>
+              <hr>
+              {% if object.reopen_message%}
+              <p class="card-text"><strong>دلیل بازگشایی مجدد تسک: </strong>{{object.reopen_message}}</p>
+              <hr>
+              {%endif%}
+              <p class="card-text"><strong>تاریخ ایجاد: </strong>{{object.created_at}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ آخرین ویرایش: </strong>{{object.updated_at}}</p>
+              <hr>
+              <p class="card-text"><strong>ایجاد کننده: </strong>{{object.created_by}}</p>
+              <hr>
+            </div>
+          </div>
+        </div>
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+            {%if not object.assign_to%}
+            <a href="{% url 'tasks:assign_to_me' object.id%}" class="btn btn-success me-2">اختصاص تسک به من</a>
+            <a href="{% url 'tasks:assign_to' object.id%}" class="btn btn-success me-2">اختصاص تسک به ...</a>
+            {%endif%}
+            {% if object.assign_to.email == request.user.email and object.status ==  "در انتظار بررسی"%}
+            <a href="{% url 'tasks:in_progress' object.id%}" class="btn btn-success me-2">تغییر وضعیت به در حال انجام..</a>
+            {%endif%}
+            {% if object.assign_to.email == request.user.email and object.status == "در حال انجام" %}
+            <a href="{% url 'tasks:done' object.id%}" class="btn btn-success me-2">اتمام تسک</a>
+            <a href="{% url 'tasks:done_not_as_planned' object.id%}" class="btn btn-success me-2">اتمام برنامه ریزی نشده تسک</a>
+            {%endif%}
+            {% if object.assign_to.email == request.user.email %}
+            {%if object.status ==  "انجام شده" or  object.status == "لغو شده"%}
+            <a href="{% url 'tasks:reopen' object.id%}" class="btn btn-success me-2">بازگشایی مجدد تسک</a>
+            {%endif%}
+        {%endif%}
+
+            <a href="{% url 'tasks:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+
+
+
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              از حذف این تسک مطمین هستید ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'tasks:delete' pk=object.pk %}" class="btn">حذف</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
