@@ -228,10 +228,16 @@ Auto
 <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">پنل مدیریتی</h5>
 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
-<form class="d-flex mt-3" role="search" action="{% url 'client:search' %}" method="GET">
-    <input class="form-control me-2" type="search" placeholder="جستجوی بیمار" aria-label="Search" name="query">
+<form class="d-flex mt-3" role="search" action="{% url 'client:national_id_search' %}" method="GET">
+    <input class="form-control me-2" type="search" placeholder="جستجوی بیمار با  کدملی"  aria-label="Search" name="query">
     <button class="btn btn-outline-success" type="submit">جستجو</button>
 </form>
+<br>
+<form class="d-flex mt-3" role="search" action="{% url 'client:case_id_search' %}" method="GET">
+    <input class="form-control me-2" type="search" placeholder="جستجوی بیمار با شماره پرونده  " aria-label="Search" name="query">
+    <button class="btn btn-outline-success" type="submit">جستجو</button>
+</form>
+<br>
 <div class="offcanvas-body">
 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 <li class="nav-item">

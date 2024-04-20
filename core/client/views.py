@@ -248,12 +248,29 @@ class DeleteSelectedClientView(View):
 
 
 
-class ClientSearchView(View):
+class ClientNationalIdSearchView(View):
     def get(self, request):
         query = request.GET.get('query')
         if query:
             # Search for the client
             client = Client.objects.filter(national_id=query).first()
+            if client:
+                # Redirect to the client detail page
+                return redirect('client:detail', pk=client.pk)
+            else:
+                # Client does not exist, redirect to index page with a message
+                messages.error(request, "Client does not exist.")
+                return redirect('index:index')  # Update 'index:index' with your actual URL name
+        else:
+            # If no query provided, redirect to the index page
+            return redirect('index:index') 
+        
+class ClientCaseIdSearchView(View):
+    def get(self, request):
+        query = request.GET.get('query')
+        if query:
+            # Search for the client
+            client = Client.objects.filter(id=query).first()
             if client:
                 # Redirect to the client detail page
                 return redirect('client:detail', pk=client.pk)
