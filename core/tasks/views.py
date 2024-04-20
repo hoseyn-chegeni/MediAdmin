@@ -71,7 +71,6 @@ class TaskDeleteView(BaseDeleteView):
     permission_required = "tasks.change_task"
 
 
-
 class AssignToMeView(LoginRequiredMixin, View):
     def get(self, request, pk):
         task = Task.objects.filter(pk=pk).first()

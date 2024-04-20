@@ -58,9 +58,6 @@ class BaseUpdateView(
         return "با موفقیت ویرایش شد"
 
 
-
-
-
 class BaseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     message = "با موفقیت از سیستم حذف شد"
     app_name = ""
