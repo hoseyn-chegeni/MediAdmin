@@ -52,7 +52,7 @@
                       <form action="{% url 'services:delete_selected_package' %}" method="post" id="deleteForm">
                         {% csrf_token %}
                     <a href="{% url 'services:package_create' %}" class="btn btn-success me-2">ایجاد پکیج جدید</a>
-                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    <a href="{% url 'reports:package_reports' %}" class="btn btn-success me-2">گزارشات</a>
                     <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
 
                     </div>
