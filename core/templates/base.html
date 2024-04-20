@@ -228,9 +228,9 @@ Auto
 <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">پنل مدیریتی</h5>
 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
-<form class="d-flex mt-3" role="search">
-<input class="form-control me-2" type="search" placeholder="جستجوی بیمار" aria-label="Search">
-<button class="btn btn-outline-success" type="submit">جستجو</button>
+<form class="d-flex mt-3" role="search" action="{% url 'client:search' %}" method="GET">
+    <input class="form-control me-2" type="search" placeholder="جستجوی بیمار" aria-label="Search" name="query">
+    <button class="btn btn-outline-success" type="submit">جستجو</button>
 </form>
 <div class="offcanvas-body">
 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
