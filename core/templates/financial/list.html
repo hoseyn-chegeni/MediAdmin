@@ -62,7 +62,7 @@
                     <div class="mb-4">
                       <form action="{% url 'financial:delete_selected_financial' %}" method="post" id="deleteForm">
                         {% csrf_token %}
-                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    <a href="{% url 'reports:financial_reports' %}" class="btn btn-success me-2">گزارشات</a>
                     <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
 
                     </div>
