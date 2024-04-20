@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
-  <h1>{% block title %}{% trans "Login" %}{% endblock %}</h1>
+  <h1>{% block title %}{% trans "ورود به سامانه" %}{% endblock %}</h1>
 
   {% if wizard.steps.current == 'auth' %}
-    <p>{% blocktrans %}Enter your credentials.{% endblocktrans %}</p>
+    <p>{% blocktrans %} اطلاعات خود را وارد کنید.{% endblocktrans %}</p>
   {% elif wizard.steps.current == 'token' %}
     <p>{{ device|as_verbose_action }}</p>
   {% elif wizard.steps.current == 'backup' %}
