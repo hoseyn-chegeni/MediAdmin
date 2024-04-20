@@ -13,8 +13,8 @@ from client.models import Client
 from client.filters import ClientFilters
 from doctor.models import Doctor
 from doctor.filters import DoctorFilter
-from financial.models import Financial
-from financial.filters import FinancialFilter
+from financial.models import Financial, OfficeExpenses
+from financial.filters import FinancialFilter, OfficeExpensesFilter
 from insurance.models import Insurance, InsuranceService
 from insurance.filters import InsuranceFilter, InsuranceServiceFilter
 from prescription.models import Prescription
@@ -568,6 +568,40 @@ class ExportSupplierExcelView(View):
         # Create a response object
         response = HttpResponse(content_type="application/vnd.ms-excel")
         response["Content-Disposition"] = 'attachment; filename="supplier_report.xlsx"'
+
+        # Write DataFrame to Excel file and return response
+        users_df.to_excel(response, index=False)
+
+        return response
+
+
+class OfficeExpensesReportsView(BaseListView):
+    model = Financial
+    template_name = "reports/office_expenses.html"
+    filterset_class = OfficeExpensesFilter
+    permission_required = "financial.view_office_expenses"
+
+
+class ExportOfficeExpensesExcelView(View):
+    def get(self, request):
+        # Get filtered users based on request parameters
+        office_expenses_filter = OfficeExpensesFilter(
+            request.GET, queryset=OfficeExpenses.objects.all()
+        )
+        filtered_office_expenses = office_expenses_filter.qs
+
+        # Convert filtered users queryset to DataFrame
+        users_df = pd.DataFrame(list(filtered_office_expenses.values()))
+
+        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        for date_column in date_columns:
+            users_df[date_column] = users_df[date_column].dt.date
+
+        # Create a response object
+        response = HttpResponse(content_type="application/vnd.ms-excel")
+        response["Content-Disposition"] = (
+            'attachment; filename="office_expenses_report.xlsx"'
+        )
 
         # Write DataFrame to Excel file and return response
         users_df.to_excel(response, index=False)

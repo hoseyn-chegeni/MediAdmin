@@ -67,7 +67,7 @@
                       <form action="{% url 'financial:delete_selected_office_expenses' %}" method="post" id="deleteForm">
                         {% csrf_token %}
                     <a href="{% url 'financial:office_expenses_create' %}" class="btn btn-success me-2">ایجاد رسید جدید </a>
-                    <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    <a href="{% url 'reports:office_expenses_reports' %}" class="btn btn-success me-2">گزارشات</a>
                     <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
 
                     </div>
