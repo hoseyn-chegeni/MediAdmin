@@ -1,14 +1,31 @@
-{% extends "two_factor/_base_focus.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 
 {% block content %}
-  <h1>{% block title %}{% trans "Disable Two-factor Authentication" %}{% endblock %}</h1>
-  <p>{% blocktrans trimmed %}You are about to disable two-factor authentication. This
-    weakens your account security, are you sure?{% endblocktrans %}</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+  <h1>{% block title %}{% trans "غیرفعال سازی تایید دو مرحله ای" %}{% endblock %}</h1>
+  <p>{% blocktrans trimmed %}شما در شرف غیرفعال کردن تایید دو مرحله ای حساب کاربری خود هستید. در صورت غیرفعال سازی
+     امنیت حساب شما تضعیف خواهد شد، آیا از غیرفعال سازی مطمئن هستید؟{% endblocktrans %}</p>
   <form method="post">
     {% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <button class="btn btn-danger"
-            type="submit">{% trans "Disable" %}</button>
+<table><tbody><tr>
+    <th><label for="id_understand">بله,مطمئن هستم:</label></th>
+    <td>
+      <input type="checkbox" name="understand" required="" id="id_understand">
+    </td>
+
+  </tr></tbody></table> 
+  <br>
+   <button class="btn btn-danger"
+            type="submit">{% trans "غیرفعال سازی" %}</button>
   </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

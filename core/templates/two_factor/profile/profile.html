@@ -1,13 +1,18 @@
-{% extends "two_factor/_base.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load two_factor_tags %}
 
 {% block content %}
-  <h1>{% block title %}{% trans "Account Security" %}{% endblock %}</h1>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+  <h1>{% block title %}{% trans "امنیت حساب کاربری" %}{% endblock %}</h1>
 
   {% if default_device %}
-    <p>{% blocktrans with primary=default_device|as_action %}Primary method: {{ primary }}{% endblocktrans %}</p>
-
+    <p>{% blocktrans with primary=default_device|as_action %}متد اصلی: توکن تولید شده توسط سازنده توکن خود را وارد کنید{% endblocktrans %}</p>
+<hr>
     {% if available_phone_methods %}
       <h2>{% trans "Backup Phone Numbers" %}</h2>
       <p>{% blocktrans trimmed %}If your primary method is not available, we are able to
@@ -29,30 +34,32 @@
         class="btn btn-info">{% trans "Add Phone Number" %}</a></p>
     {% endif %}
 
-    <h2>{% trans "Backup Tokens" %}</h2>
+    <h2>{% trans "رمز دوم جایگزین" %}</h2>
     <p>
-      {% blocktrans trimmed %}If you don't have any device with you, you can access
-        your account using backup tokens.{% endblocktrans %}
+      {% blocktrans trimmed %}اگر دستگاهی همراه خود ندارید، می توانید با استفاده از توکن های پشتیبان به حساب خود دسترسی داشته باشید...{% endblocktrans %}
       {% blocktrans trimmed count counter=backup_tokens %}
-        You have only one backup token remaining.
+شما فقط یک رمز دوم جایگزین باقی مانده دارید.
       {% plural %}
-        You have {{ counter }} backup tokens remaining.
+        تعداد {{ counter }} رمز دوم جایگزین باقیمانده دارید
       {% endblocktrans %}
     </p>
     <p><a href="{% url 'two_factor:backup_tokens' %}"
-          class="btn btn-info">{% trans "Show Codes" %}</a></p>
-
-    <h3>{% trans "Disable Two-Factor Authentication" %}</h3>
-    <p>{% blocktrans trimmed %}However we strongly discourage you to do so, you can
-      also disable two-factor authentication for your account.{% endblocktrans %}</p>
+          class="btn btn-info">{% trans "نمایش رمز" %}</a></p>
+<hr>
+    <h3>{% trans "غیرفعال سازی تایید دو مرحله ای" %}</h3>
+    <p>{% blocktrans trimmed %} لطفا در نظر داشته باشید که در صورت غیرفعال سازی تایید دو مرحله ای امنیت حساب شما پایین خواهد آمد .{% endblocktrans %}</p>
     <p><a class="btn btn-secondary" href="{% url 'two_factor:disable' %}">
-      {% trans "Disable Two-Factor Authentication" %}</a></p>
+      {% trans "تایید غیرفعال سازی" %}</a></p>
   {% else %}
-    <p>{% blocktrans trimmed %}Two-factor authentication is not enabled for your
-      account. Enable two-factor authentication for enhanced account
-      security.{% endblocktrans %}</p>
+    <p>{% blocktrans trimmed %}تایید دو مرحله ای حساب کاربری برای شما فعال نیست
+    {% endblocktrans %}</p>
     <p><a href="{% url 'two_factor:setup' %}" class="btn btn-primary">
-      {% trans "Enable Two-Factor Authentication" %}</a>
+      {% trans "فعال سازی تایید دو مرحله ای" %}</a>
     </p>
   {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
