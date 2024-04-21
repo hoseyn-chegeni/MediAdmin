@@ -21,7 +21,6 @@ class Reception(models.Model):
     PAYMENT_STATUS_CHOICES = (
         ("پرداخت شده", "پرداخت شده"),
         ("پرداخت نشده", "پرداخت نشده"),
-        ( "قسط یندی",  "قسط یندی"),
     )
     payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS_CHOICES)
     date = models.DateField(auto_now_add=True)
