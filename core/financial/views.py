@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.urls import reverse_lazy
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -10,8 +11,8 @@ from .models import Financial, OfficeExpenses
 from .filters import FinancialFilter, OfficeExpensesFilter
 from .models import ConsumablePrice
 from django.views.generic import View
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 # Create your views here.
 class FinancialListView(BaseListView):
     model = Financial
@@ -85,6 +86,23 @@ class InvoiceView(BaseDetailView):
 
         context["client"] = client
         return context
+
+
+class UpdatePaymentStatusView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        invoice = Financial.objects.filter(pk=pk).first()
+        if invoice :
+            invoice.payment_status = "پرداخت شده"
+            messages.success(
+                self.request,
+                f"وضعیت فاکتور با موفقیت به حالت پرداخت شده درآمد"
+            )
+            invoice.save()
+
+        return HttpResponseRedirect(
+            reverse_lazy("financial:detail", kwargs={"pk": invoice.pk})
+        )
+
 
 
 # OFFICE EXPENSES VIEWS HERE.
