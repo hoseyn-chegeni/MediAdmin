@@ -42,14 +42,19 @@
                     </form>
 
                     <div class="mb-4">
+                      <form action="{% url 'services:delete_selected_category' %}" method="post" id="deleteForm">
+                        {% csrf_token %}
                     <a href="{% url 'services:category_create' %}" class="btn btn-success me-2">ایجاد دسته بندی جدید</a>
                     <a href="{% url 'services:list' %}" class="btn btn-success me-2">لیست سرویس ها</a>
                     <a href="#" class="btn btn-success me-2">گزارشات</a>
+                    <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+
                     </div>
 
                   <table class="table text-white mb-0">
                     <thead>
                       <tr>
+                        <th scope="col"></th>
                         <th scope="col">شماره دسته بندی</th>
                         <th scope="col">نام دسته بندی</th>
                         <th scope="col">تعداد سرویس ها</th>
@@ -62,6 +67,8 @@
                     <tbody>
                         {%for i in category%}
                       <tr class="fw-normal">
+                        <td><input type="checkbox" name="category_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+
                         <th>
                           <span class="ms-2">{{i.id}}</span>
                         </th>
@@ -97,7 +104,7 @@
                       {%endfor%}
                       </tbody>
                   </table>
-
+                </form>
             
                   <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
@@ -140,4 +147,55 @@
         </div>
       </section>
     </div>
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  دسته بندی های انتخاب شده به طور کامل از سیستم حذف می شوند
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                  <button type="button" class="btn btn-primary" id="confirmDelete">تایید</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+    // Function to show delete button when checkboxes are selected
+    document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkedCheckboxes.length > 0) {
+                document.getElementById('confirmDeleteBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('confirmDeleteBtn').style.display = 'none';
+            }
+        });
+    });
+
+    // Function to show modal when delete button is clicked
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        $('#deleteConfirmationModal').modal('show');
+    });
+
+    // Function to submit the form when confirm delete button in modal is clicked
+    document.getElementById('confirmDelete').addEventListener('click', function() {
+        $('#deleteForm').submit();
+    });
+</script>
+
+  
+  </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 {%endblock%}

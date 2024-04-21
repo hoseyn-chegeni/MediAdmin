@@ -285,6 +285,17 @@ class ReactiveServiceCategoryView(View):
         )
 
 
+
+class DeleteSelectedServiceCategoryView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "category_ids"
+            )  # Get the list of selected user IDs from the form
+            ServiceCategory.objects.filter(id__in=user_ids).delete()  # Delete selected users
+        return redirect("services:category_list")
+
+
 # PACKAGE VIEWS HERE.
 class PackageListView(BaseListView):
     model = Package

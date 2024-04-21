@@ -32,6 +32,7 @@ from .views import (
     AddServiceUsingDoctorProfileView,
     DeleteSelectedServicesView,
     DeleteSelectedPackageView,
+    DeleteSelectedServiceCategoryView,
 )
 
 app_name = "services"
@@ -68,22 +69,22 @@ urlpatterns = [
         "delete/", DeleteSelectedServicesView.as_view(), name="delete_selected_services"
     ),
     # SERVICE CATEGORY URLS.
-    path("category_list/", ServiceCategoryListView.as_view(), name="category_list"),
+    path("category/list/", ServiceCategoryListView.as_view(), name="category_list"),
     path(
         "category_detail/<int:pk>/",
         ServiceCategoryDetailView.as_view(),
         name="category_detail",
     ),
     path(
-        "category_create/", ServiceCategoryCreateView.as_view(), name="category_create"
+        "category/create/", ServiceCategoryCreateView.as_view(), name="category_create"
     ),
     path(
-        "category_update/<int:pk>/",
+        "category/update/<int:pk>/",
         ServiceCategoryUpdateView.as_view(),
         name="category_update",
     ),
     path(
-        "category_delete/<int:pk>/",
+        "category/delete/<int:pk>/",
         ServiceCategoryDeleteView.as_view(),
         name="category_delete",
     ),
@@ -93,9 +94,12 @@ urlpatterns = [
         name="category_suspend",
     ),
     path(
-        "category_reactive/<int:pk>/",
+        "category/reactive/<int:pk>/",
         ReactiveServiceCategoryView.as_view(),
         name="category_reactive",
+    ),
+    path(
+        "category/delete/", DeleteSelectedServiceCategoryView.as_view(), name="delete_selected_category"
     ),
     # PACKAGE URLS.
     path("package_list/", PackageListView.as_view(), name="package_list"),
