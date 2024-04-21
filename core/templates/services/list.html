@@ -2,7 +2,8 @@
 {% block title %}لیست سرویس ها{% endblock %}
 
 {%block content%}
-    <section class="vh-100 gradient-custom-2" style="margin-bottom: 35%;">
+<div class="container" style="padding-bottom: 70%;">
+    <section class="vh-100 gradient-custom-2" >
         <div class="container py-5 h-100">
           <div class="text-center pt-3 pb-2">
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
@@ -235,8 +236,7 @@
         </div>
     </div>
 
-
-    <script>
+  </div>    <script>
       // Function to show delete button when checkboxes are selected
       document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
           checkbox.addEventListener('change', function() {
