@@ -38,9 +38,9 @@ class Financial(models.Model):
     payment_status = models.CharField(
         max_length=20,
         choices=(
-            ("PAID", "Paid"),
-            ("UNPAID", "Unpaid"),
-            ("PARTIAL", "Partial Payment"),
+            ("پرداخت شده", "پرداخت شده"),
+            ("پرداخت نشده", "پرداخت نشده"),
+            ("قسط یندی", "قسط یندی"),
         ),
         default="UNPAID",
     )

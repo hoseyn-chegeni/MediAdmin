@@ -19,11 +19,11 @@ class Reception(models.Model):
     )
     payment_type = models.CharField(max_length=10, choices=PAYMENT_TYPE_CHOICES)
     PAYMENT_STATUS_CHOICES = (
-        ("PAID", "Paid"),
-        ("PENDING", "Pending"),
-        ("UNPAID", "Unpaid"),
+        ("پرداخت شده", "پرداخت شده"),
+        ("پرداخت نشده", "پرداخت نشده"),
+        ( "قسط یندی",  "قسط یندی"),
     )
-    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES)
+    payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS_CHOICES)
     date = models.DateField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
