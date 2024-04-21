@@ -415,11 +415,11 @@ Auto
 مدیریت مالی
 </a>
 <ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'financial:list' %}">لیست فاکتور ها</a></li>
+<li><a class="dropdown-item" href="{% url 'financial:list' %}">لیست صورتحساب ها</a></li>
 <li>
 <hr class="dropdown-divider">
 </li>
-<li><a class="dropdown-item" href="#">گزارشات</a></li>
+<li><a class="dropdown-item" href="{% url 'financial:unpaid_list' %}">لیست صورتحساب های پرداخت نشده</a></li>
 <li>
 <hr class="dropdown-divider">
 </li>

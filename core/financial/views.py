@@ -103,6 +103,15 @@ class UpdatePaymentStatusView(LoginRequiredMixin, View):
             reverse_lazy("financial:detail", kwargs={"pk": invoice.pk})
         )
 
+class UnpaidInvoiceListView(BaseListView):
+    model = Financial
+    template_name = "financial/unpaid_list.html"
+    context_object_name = "financial"
+    filterset_class = FinancialFilter
+    permission_required = "financial.view_financial"
+
+    def get_queryset(self):
+        return Financial.objects.filter(payment_status="پرداخت نشده")
 
 
 # OFFICE EXPENSES VIEWS HERE.

@@ -14,12 +14,14 @@ from .views import (
     DeleteSelectedFinancialView,
     DeleteSelectedOfficeExpensesView,
     UpdatePaymentStatusView,
+    UnpaidInvoiceListView,
 )
 
 app_name = "financial"
 
 urlpatterns = [
     path("list/", FinancialListView.as_view(), name="list"),
+    path("list/unpaid/", UnpaidInvoiceListView.as_view(), name="unpaid_list"),
     path("invoice/<int:pk>/", InvoiceView.as_view(), name="invoice"),
     path("detail/<int:pk>/", FinancialDetailView.as_view(), name="detail"),
     path("create/", FinancialCreateView.as_view(), name="create"),
