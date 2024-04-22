@@ -6,6 +6,11 @@
     <title>PERMISSIONS</title>
 </head>
 <body>
+    <form action="" method="get">
+        {%csrf_token%}
+        {{filter.form.as_p}}
+        <input type="submit">
+    </form>
     <button><a href="{%url 'permissions:create'%}">Add New Permission</a></button><br>
     {%for i in permission%}
    {{i.id}}. {{i.name}} <a href="{%url 'permissions:detail' i.id%}">Detail</a>,<a href="{%url 'permissions:update' i.id%}">Update</a>,<a href="{%url 'permissions:delete' i.id%}">Delete</a><br>

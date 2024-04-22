@@ -7,16 +7,17 @@ from base.views import (
     BaseUpdateView,
     BaseListView,
 )
-from django.views.generic import ListView
 from accounts.models import User
+from .filters import PermissionFilters, GroupFilter
 
 
 # Create your views here.
-class PermissionsListView(ListView):
+class PermissionsListView(BaseListView):
     model = Permission
     template_name = "permission/list.html"
     context_object_name = "permission"
-
+    filterset_class = PermissionFilters
+    permission_required = "permission.add_permission"
 
 class PermissionsDetailView(BaseDetailView):
     model = Permission
@@ -59,11 +60,12 @@ class AssignPermissionsView(BaseUpdateView):
 
 
 # GROUP VIEWS HERE.
-class GroupListView(ListView):
+class GroupListView(BaseListView):
     model = Group
     template_name = "permission/group/list.html"
     context_object_name = "group"
-
+    filterset_class = GroupFilter
+    permission_required = "auth.view_group"
 
 class GroupDetailView(BaseDetailView):
     model = Group
