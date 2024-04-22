@@ -11,6 +11,7 @@ from django.views.generic import ListView
 from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
 from django.views import View
 from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 # Consumable Views.
 
@@ -32,11 +33,10 @@ class ConsumableDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         consumable = self.get_object()
         context = super().get_context_data(**kwargs)
-        context["inventory"] = Inventory.objects.filter(consumable_id=consumable.id)
-        context["first_inventory"] = (
-            Inventory.objects.filter(consumable_id=consumable.id)
-            .order_by("expiration_date")
-            .first()
+        context["inventory"] = Inventory.objects.filter(consumable_id=consumable.id, status =  "در انبار")
+        context["expired"] = Inventory.objects.filter(
+            Q(status="تمام شده") | Q(status="منقضی شده"),
+            consumable_id=consumable.id
         )
         return context
 
