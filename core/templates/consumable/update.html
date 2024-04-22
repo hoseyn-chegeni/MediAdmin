@@ -1,15 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Consumable</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}ویرایش مواد مصرفی {{object}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ویرایش مواد مصرفی {{object}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="name" class="form-label">نام محصول</label>
+                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                    </div>
+
+        <div class="col-sm-6">
+            <label  for="category">دسته بندی:</label>
+            <select  class="form-select" name="category"  id="category">
+              <option value="" selected="">---------</option>
+              {% for i in form.category.field.queryset%}
+              {% if i == object.category%}
+              <option value="{{i.id}}" selected>{{i}}</option>
+              {%else%}
+              <option value="{{i.id}}" >{{i}}</option>
+                {%endif%}
+              {%endfor%}
+            </select>
+            </div>
+
+            <div class="col-sm-6">
+                <label  for="supplier">تامین کننده:</label>
+                <select  class="form-select" name="supplier"  id="supplier">
+                  <option value="" selected="">---------</option>
+                  {% for i in form.supplier.field.queryset%}
+                {% if i == object.supplier%}
+                  <option value="{{i.id}}" selected>{{i}}</option>
+                  {%else%}
+                  <option value="{{i.id}}">{{i}}</option>
+                    {%endif%}
+                  {%endfor%}
+                </select>
+                </div>
+
+            <div class="col-sm-6">
+                <label for="unit" class="form-label">واحد اندازه گیری</label>
+                <input type="text" class="form-control" id="unit" placeholder="" value="{{object.unit}}" name="unit" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="minimum_stock_level" class="form-label">حداقل سطح موجودی</label>
+                <input type="number" class="form-control" id="minimum_stock_level" placeholder="" value="{{object.minimum_stock_level}}" name="minimum_stock_level" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="usage_notes" class="form-label">نحوه مصرف</label>
+                <input type="text" class="form-control" id="usage_notes" placeholder="" value="{{object.usage_notes}}" name="usage_notes" >
+              </div>
+
+                  <div class="col-sm-6">
+                <label for="storage_notes" class="form-label">نحوه نگهداری</label>
+                <input type="text" class="form-control" id="storage_notes" placeholder="" value="{{object.storage_notes}}" name="storage_notes" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="description" class="form-label">توضیحات</label>
+                <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+              </div>
+
+              <div class="col-sm-6">
+                <label for="reorder_quantity" class="form-label">سطح موجودی برای یادآوری سفارش مجدد </label>
+                <input type="number" class="form-control" id="reorder_quantity" placeholder="" value="{{object.reorder_quantity}}" name="reorder_quantity" >
+              </div>
+
+              <label class="form-label" for="customFile"> تصویر محصول</label>
+              <input type="file" class="form-control" id="customFile" name="image" />
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}
