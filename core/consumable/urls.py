@@ -20,6 +20,7 @@ from .views import (
     SupplierDetailView,
     SupplierListView,
     SupplierUpdateView,
+    DeleteSelectedConsumableView,
 )
 
 app_name = "consumable"
@@ -32,6 +33,8 @@ urlpatterns = [
     path("create/", ConsumableCreateView.as_view(), name="create"),
     path("update/<int:pk>/", ConsumableUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", ConsumableDeleteView.as_view(), name="delete"),
+    path("delete/", DeleteSelectedConsumableView.as_view(), name="delete_selected_consumable"),
+
     # INVENTORY URLS...
     path("inventory_list/", InventoryListView.as_view(), name="inventory_list"),
     path(

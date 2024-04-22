@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -9,7 +9,8 @@ from base.views import (
 from .models import ConsumableV2, Inventory, ConsumableCategory, Supplier
 from django.views.generic import ListView
 from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
-
+from django.views import View
+from django.contrib import messages
 # Create your views here.
 # Consumable Views.
 
@@ -63,6 +64,21 @@ class ConsumableDeleteView(BaseDeleteView):
     app_name = "consumable"
     url_name = "list"
     permission_required = "consumable.delete_consumablev2"
+
+class DeleteSelectedConsumableView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "consumable_ids"
+            )  # Get the list of selected user IDs from the form
+            deleted_users_count = ConsumableV2.objects.filter(
+                id__in=user_ids
+            ).delete()  # Delete selected users
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} مواد مصرفی با موفقیت حذف شدند."
+            )  # Add success message
+        return redirect("consumable:list")
+
 
 
 # Inventory Views.
@@ -198,3 +214,4 @@ class SupplierDeleteView(BaseDeleteView):
     app_name = "consumable"
     url_name = "supplier_list"
     permission_required = "consumable.delete_supplier"
+
