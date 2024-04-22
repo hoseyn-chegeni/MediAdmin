@@ -10,7 +10,7 @@ class ConsumableFilter(BaseFilter):
             "id": ["exact"],
             "name": ["exact"],
             "category": ["exact"],
-            # "supplier": ["exact"],
+            "supplier": ["exact"],
         }
 
 
