@@ -21,6 +21,7 @@ from .views import (
     SupplierListView,
     SupplierUpdateView,
     DeleteSelectedConsumableView,
+    InventoryCreateWithPKView,
 )
 
 app_name = "consumable"
@@ -43,6 +44,8 @@ urlpatterns = [
         name="inventory_detail",
     ),
     path("inventory_create/", InventoryCreateView.as_view(), name="inventory_create"),
+    path("create/<int:pk>/", InventoryCreateWithPKView.as_view(), name="inventory_create_with_pk"),
+
     path(
         "inventory_update/<int:pk>/",
         InventoryUpdateView.as_view(),

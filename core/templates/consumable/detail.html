@@ -51,7 +51,7 @@
             <div class="card-body">
                 <div class="card-text">
             <a href="{% url 'consumable:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
-            <a href="#" class="btn btn-success me-2">افزایش موجودی</a>
+            <a href="{% url 'consumable:inventory_create_with_pk' object.id%}" class="btn btn-success me-2">افزایش موجودی</a>
 
             <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
         </div>

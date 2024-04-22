@@ -12,6 +12,7 @@ from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
 from django.views import View
 from django.contrib import messages
 from django.db.models import Q
+from django.urls import reverse_lazy
 # Create your views here.
 # Consumable Views.
 
@@ -121,7 +122,33 @@ class InventoryDeleteView(BaseDeleteView):
     url_name = "inventory_list"
     permission_required = "consumable.delete_inventory"
 
+class InventoryCreateWithPKView(BaseCreateView):
+    model = Inventory
+    fields = [
+        "quantity",
+        "supplier",
+        "price",
+        "purchase_date",
+        "purchase_cost",
+        "description",
+        "image",
+        "expiration_date",
+        "expiration_reminder",
 
+    ]
+    template_name = "consumable/inventory/create_with_pk.html"
+    permission_required = "consumable.delete_inventory"
+
+    def form_valid(self, form):
+        form.instance.consumable_id = self.kwargs["pk"]
+        form.instance.status = "در انبار"
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy(
+            "consumable:detail", kwargs={"pk": self.kwargs["pk"]}
+        )
+    
 # Consumable Category Views here.
 class ConsumableCategoryListView(BaseListView):
     model = ConsumableCategory
