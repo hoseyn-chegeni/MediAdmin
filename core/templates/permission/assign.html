@@ -1,5 +1,5 @@
 {%extends 'base.html' %}
-{%block title %}مدیریت دسترسی های {{object}}{{object}}{%endblock%}
+{%block title %}مدیریت دسترسی های {{object}}{%endblock%}
 
 {%block content %} 
    
@@ -17,7 +17,7 @@
             <div class="row g-3">
                
                               <div class=" w-100 col-sm-6">
-                                <label for="user_permissions">روزهای تعطیل:</label>
+                                <label for="user_permissions">دسترسی ها:</label>
                                 <select class="form-select" name="user_permissions" required="" id="user_permissions" multiple>
                                     <option value="">---------</option>
                                     {% for i in form.user_permissions.field.queryset %}

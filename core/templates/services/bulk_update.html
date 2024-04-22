@@ -1,11 +1,45 @@
-{% extends 'base.html' %}
+{%extends 'base.html' %}
+{%block title %}افزایش قیمت دسته ای سرویس ها{%endblock%}
 
-{% block content %}
-  <h1>Update Service Prices</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>افزایش قیمت دسته ای سرویس ها</h2>
+      </div>
 
-    <button type="submit">Update Prices</button>
-  </form>
-{% endblock %}
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post">
+            {%csrf_token%}
+            <div class="row g-3">
+               
+                              <div class=" w-100 col-sm-6">
+                                <label for="services"> سرویس های مورد نظر را انتخاب نمایید:</label>
+                                <select class="form-select" name="services" required="" id="services" multiple>
+                                    <option value="">---------</option>
+                                    {% for i in form.services.field.queryset %}
+                                        <option value="{{ i.id }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class=" w-100 col-sm-6">
+                              <label for="percentage_change" class="form-label">درصد افزایش قیمت</label>
+                              <input type="number" class="form-control" id="percentage_change" placeholder="" value="{{object.percentage_change}}" name="percentage_change" >
+                            </div>
+          
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">اعمال تغییر</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%} 
