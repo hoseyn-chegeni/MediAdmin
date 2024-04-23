@@ -36,10 +36,11 @@ class ConsumableV2(models.Model):
 
     @property
     def quantity(self):
-        total_quantity = self.inventory_set.aggregate(
+        total_quantity = self.inventory_set.filter(status="در انبار").aggregate(
             total_quantity=models.Sum("quantity")
         )["total_quantity"]
         return total_quantity if total_quantity is not None else 0
+
 
     def __str__(self):
         return self.name
