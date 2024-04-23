@@ -142,6 +142,12 @@ class InventoryCreateWithPKView(BaseCreateView):
             "consumable:detail", kwargs={"pk": self.kwargs["pk"]}
         )
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["consumable"] = ConsumableV2.objects.get(id=self.kwargs["pk"])
+        return context
+
+    
 # Consumable Category Views here.
 class ConsumableCategoryListView(BaseListView):
     model = ConsumableCategory
