@@ -13,6 +13,7 @@ from django.views import View
 from django.contrib import messages
 from django.db.models import Q
 from django.urls import reverse_lazy
+
 # Create your views here.
 # Consumable Views.
 
@@ -34,10 +35,11 @@ class ConsumableDetailView(BaseDetailView):
     def get_context_data(self, **kwargs):
         consumable = self.get_object()
         context = super().get_context_data(**kwargs)
-        context["inventory"] = Inventory.objects.filter(consumable_id=consumable.id, status =  "در انبار")
+        context["inventory"] = Inventory.objects.filter(
+            consumable_id=consumable.id, status="در انبار"
+        )
         context["expired"] = Inventory.objects.filter(
-            Q(status="تمام شده") | Q(status="منقضی شده"),
-            consumable_id=consumable.id
+            Q(status="تمام شده") | Q(status="منقضی شده"), consumable_id=consumable.id
         )
         return context
 
@@ -66,6 +68,7 @@ class ConsumableDeleteView(BaseDeleteView):
     url_name = "list"
     permission_required = "consumable.delete_consumablev2"
 
+
 class DeleteSelectedConsumableView(View):
     def post(self, request):
         if request.method == "POST":
@@ -76,14 +79,13 @@ class DeleteSelectedConsumableView(View):
                 id__in=user_ids
             ).delete()  # Delete selected users
             messages.success(
-                request, f"تعداد {deleted_users_count[0]} مواد مصرفی با موفقیت حذف شدند."
+                request,
+                f"تعداد {deleted_users_count[0]} مواد مصرفی با موفقیت حذف شدند.",
             )  # Add success message
         return redirect("consumable:list")
 
 
-
 # Inventory Views.
-
 
 
 class InventoryDetailView(BaseDetailView):
@@ -95,7 +97,18 @@ class InventoryDetailView(BaseDetailView):
 
 class InventoryUpdateView(BaseUpdateView):
     model = Inventory
-    fields = "__all__"
+    fields = [
+        "quantity",
+        "status",
+        "supplier",
+        "price",
+        "purchase_date",
+        "purchase_cost",
+        "description",
+        "image",
+        "expiration_date",
+        "expiration_reminder",
+    ]
     template_name = "consumable/inventory/update.html"
     app_name = "consumable"
     url_name = "inventory_detail"
@@ -107,11 +120,13 @@ class InventoryUpdateView(BaseUpdateView):
         context["consumable"] = ConsumableV2.objects.get(id=inventory.consumable.id)
         return context
 
+
 class InventoryDeleteView(BaseDeleteView):
     model = Inventory
     app_name = "consumable"
     url_name = "inventory_list"
     permission_required = "consumable.delete_inventory"
+
 
 class InventoryCreateWithPKView(BaseCreateView):
     model = Inventory
@@ -125,7 +140,6 @@ class InventoryCreateWithPKView(BaseCreateView):
         "image",
         "expiration_date",
         "expiration_reminder",
-
     ]
     template_name = "consumable/inventory/create_with_pk.html"
     permission_required = "consumable.delete_inventory"
@@ -134,18 +148,16 @@ class InventoryCreateWithPKView(BaseCreateView):
         form.instance.consumable_id = self.kwargs["pk"]
         form.instance.status = "در انبار"
         return super().form_valid(form)
-    
+
     def get_success_url(self):
-        return reverse_lazy(
-            "consumable:detail", kwargs={"pk": self.kwargs["pk"]}
-        )
-    
+        return reverse_lazy("consumable:detail", kwargs={"pk": self.kwargs["pk"]})
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["consumable"] = ConsumableV2.objects.get(id=self.kwargs["pk"])
         return context
 
-    
+
 # Consumable Category Views here.
 class ConsumableCategoryListView(BaseListView):
     model = ConsumableCategory
@@ -238,4 +250,3 @@ class SupplierDeleteView(BaseDeleteView):
     app_name = "consumable"
     url_name = "supplier_list"
     permission_required = "consumable.delete_supplier"
-

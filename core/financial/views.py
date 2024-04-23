@@ -13,6 +13,8 @@ from .models import ConsumablePrice
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+
+
 # Create your views here.
 class FinancialListView(BaseListView):
     model = Financial
@@ -91,17 +93,17 @@ class InvoiceView(BaseDetailView):
 class UpdatePaymentStatusView(LoginRequiredMixin, View):
     def get(self, request, pk):
         invoice = Financial.objects.filter(pk=pk).first()
-        if invoice :
+        if invoice:
             invoice.payment_status = "پرداخت شده"
             messages.success(
-                self.request,
-                f"وضعیت فاکتور با موفقیت به حالت پرداخت شده درآمد"
+                self.request, f"وضعیت فاکتور با موفقیت به حالت پرداخت شده درآمد"
             )
             invoice.save()
 
         return HttpResponseRedirect(
             reverse_lazy("financial:detail", kwargs={"pk": invoice.pk})
         )
+
 
 class UnpaidInvoiceListView(BaseListView):
     model = Financial

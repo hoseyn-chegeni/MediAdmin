@@ -99,7 +99,9 @@ urlpatterns = [
         name="category_reactive",
     ),
     path(
-        "category/delete/", DeleteSelectedServiceCategoryView.as_view(), name="delete_selected_category"
+        "category/delete/",
+        DeleteSelectedServiceCategoryView.as_view(),
+        name="delete_selected_category",
     ),
     # PACKAGE URLS.
     path("package_list/", PackageListView.as_view(), name="package_list"),

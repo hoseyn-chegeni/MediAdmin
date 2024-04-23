@@ -3,7 +3,5 @@ from .models import Service
 
 
 class ServiceSelectionForm(forms.Form):
-    services = forms.ModelMultipleChoiceField(
-        queryset=Service.objects.all()
-    )
+    services = forms.ModelMultipleChoiceField(queryset=Service.objects.all())
     percentage_change = forms.DecimalField(label="Percentage Change (%)")

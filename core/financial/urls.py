@@ -27,8 +27,11 @@ urlpatterns = [
     path("create/", FinancialCreateView.as_view(), name="create"),
     path("update/<int:pk>/", FinancialUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", FinancialDeleteView.as_view(), name="delete"),
-    path("update/payment_status/<int:pk>/", UpdatePaymentStatusView.as_view(), name="update_payment_status"),
-
+    path(
+        "update/payment_status/<int:pk>/",
+        UpdatePaymentStatusView.as_view(),
+        name="update_payment_status",
+    ),
     # OFFICE EXPENSES
     path(
         "office_expenses_list/",

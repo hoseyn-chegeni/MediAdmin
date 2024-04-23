@@ -30,7 +30,7 @@ def create_financial(sender, instance, created, **kwargs):
         Financial.objects.create(
             reception=instance,
             invoice_number=f"INV-{instance.pk}",
-            payment_status= instance.payment_status,
+            payment_status=instance.payment_status,
             payment_received_date=None,
             valid_insurance=True,
             attachment=instance.invoice_attachment,

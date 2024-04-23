@@ -20,7 +20,23 @@
                       <input type="number" class="form-control" id="quantity" placeholder="" value="{{object.quantity}}" name="quantity" >
                     </div>
 
+
                     <div class="col-sm-6">
+                        <label for="status">اولویت</label>
+                        <select class="form-select" name="status" id="status">
+                            {% for choice in form.status.field.choices %}
+                            {% if choice.1  ==  object.status%}
+                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                            {%else %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                            {%endif%}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+
+                                          <div class="col-sm-6">
                         <label for="supplier" class="form-label">تامین کننده</label>
                         <input type="text" class="form-control" id="supplier" placeholder="" value="{{object.supplier}}" name="supplier" >
                       </div>

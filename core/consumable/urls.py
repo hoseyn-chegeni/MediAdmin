@@ -32,16 +32,22 @@ urlpatterns = [
     path("create/", ConsumableCreateView.as_view(), name="create"),
     path("update/<int:pk>/", ConsumableUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", ConsumableDeleteView.as_view(), name="delete"),
-    path("delete/", DeleteSelectedConsumableView.as_view(), name="delete_selected_consumable"),
-
+    path(
+        "delete/",
+        DeleteSelectedConsumableView.as_view(),
+        name="delete_selected_consumable",
+    ),
     # INVENTORY URLS...
     path(
         "inventory_detail/<int:pk>/",
         InventoryDetailView.as_view(),
         name="inventory_detail",
     ),
-    path("create/<int:pk>/", InventoryCreateWithPKView.as_view(), name="inventory_create_with_pk"),
-
+    path(
+        "create/<int:pk>/",
+        InventoryCreateWithPKView.as_view(),
+        name="inventory_create_with_pk",
+    ),
     path(
         "inventory_update/<int:pk>/",
         InventoryUpdateView.as_view(),

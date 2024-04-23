@@ -19,6 +19,7 @@ class PermissionsListView(BaseListView):
     filterset_class = PermissionFilters
     permission_required = "permission.add_permission"
 
+
 class PermissionsDetailView(BaseDetailView):
     model = Permission
     template_name = "permission/detail.html"
@@ -66,6 +67,7 @@ class GroupListView(BaseListView):
     context_object_name = "group"
     filterset_class = GroupFilter
     permission_required = "auth.view_group"
+
 
 class GroupDetailView(BaseDetailView):
     model = Group
