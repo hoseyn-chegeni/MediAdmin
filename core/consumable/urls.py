@@ -5,7 +5,6 @@ from .views import (
     ConsumableDeleteView,
     ConsumableDetailView,
     ConsumableUpdateView,
-    InventoryCreateView,
     InventoryDeleteView,
     InventoryDetailView,
     InventoryUpdateView,
@@ -41,7 +40,6 @@ urlpatterns = [
         InventoryDetailView.as_view(),
         name="inventory_detail",
     ),
-    path("inventory_create/", InventoryCreateView.as_view(), name="inventory_create"),
     path("create/<int:pk>/", InventoryCreateWithPKView.as_view(), name="inventory_create_with_pk"),
 
     path(
