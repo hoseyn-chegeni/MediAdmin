@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -13,6 +13,8 @@ from django.views import View
 from django.contrib import messages
 from django.db.models import Q
 from django.urls import reverse_lazy
+from django.views.generic import DeleteView
+
 
 # Create your views here.
 # Consumable Views.
@@ -91,10 +93,8 @@ class DeleteSelectedConsumableView(View):
 class InventoryDetailView(BaseDetailView):
     model = Inventory
     template_name = "consumable/inventory/detail.html"
-    context_object_name = "inventory"
     permission_required = "consumable.view_inventory"
-
-
+    
 class InventoryUpdateView(BaseUpdateView):
     model = Inventory
     fields = [
@@ -121,11 +121,22 @@ class InventoryUpdateView(BaseUpdateView):
         return context
 
 
-class InventoryDeleteView(BaseDeleteView):
+class InventoryDeleteView(DeleteView):
     model = Inventory
-    app_name = "consumable"
-    url_name = "inventory_list"
     permission_required = "consumable.delete_inventory"
+    message = 'موجودی با موفقیت حذف شد'
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+
+        self.object.delete()
+        messages.success(self.request, self.message)
+        return HttpResponseRedirect(reverse_lazy(
+            "consumable:detail", kwargs={"pk": self.object.consumable.pk}
+        ))
+
 
 
 class InventoryCreateWithPKView(BaseCreateView):
