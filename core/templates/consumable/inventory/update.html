@@ -1,15 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Inventory</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}افزایش موجودی محصول {{consumable}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ویرایش موجودی {{object.id}} محصول {{consumable}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="quantity" class="form-label">تعداد</label>
+                      <input type="number" class="form-control" id="quantity" placeholder="" value="{{object.quantity}}" name="quantity" >
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="supplier" class="form-label">تامین کننده</label>
+                        <input type="text" class="form-control" id="supplier" placeholder="" value="{{object.supplier}}" name="supplier" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="price" class="form-label">قیمت</label>
+                        <input type="number" class="form-control" id="price" placeholder="" value="{{object.price}}" name="price" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="purchase_date" class="form-label">تاریخ خرید</label>
+                        <input type="text" class="form-control" id="purchase_date" placeholder="" value="{{object.purchase_date}}" name="purchase_date" >
+                      </div>
+  
+                      <div class="col-sm-6">
+                        <label for="purchase_cost" class="form-label">هزینه خرید</label>
+                        <input type="number" class="form-control" id="purchase_cost" placeholder="" value="{{object.purchase_cost}}" name="purchase_cost" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="description" class="form-label">توضیحات</label>
+                        <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="expiration_date" class="form-label">تاریخ انقضا</label>
+                        <input type="text" class="form-control" id="expiration_date" placeholder="" value="{{object.expiration_date}}" name="expiration_date" >
+                      </div>
+                      <div class="col-sm-6">
+                        <label for="expiration_reminder" class="form-label">چند روز پیش از فرا رسیدن انقضا یادآوری انجام شود</label>
+                        <input type="number" class="form-control" id="expiration_reminder" placeholder="" value="1" name="expiration_reminder" >
+                      </div>
+
+              <label class="form-label" for="customFile"> تصویر </label>
+              <input type="file" class="form-control" id="customFile" name="image" />
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}

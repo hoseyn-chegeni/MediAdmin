@@ -101,6 +101,11 @@ class InventoryUpdateView(BaseUpdateView):
     url_name = "inventory_detail"
     permission_required = "consumable.change_inventory"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        inventory = self.get_object()
+        context["consumable"] = ConsumableV2.objects.get(id=inventory.consumable.id)
+        return context
 
 class InventoryDeleteView(BaseDeleteView):
     model = Inventory
