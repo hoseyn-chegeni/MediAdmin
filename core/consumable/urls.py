@@ -8,7 +8,6 @@ from .views import (
     InventoryCreateView,
     InventoryDeleteView,
     InventoryDetailView,
-    InventoryListView,
     InventoryUpdateView,
     ConsumableCategoryCreateView,
     ConsumableCategoryDeleteView,
@@ -37,7 +36,6 @@ urlpatterns = [
     path("delete/", DeleteSelectedConsumableView.as_view(), name="delete_selected_consumable"),
 
     # INVENTORY URLS...
-    path("inventory_list/", InventoryListView.as_view(), name="inventory_list"),
     path(
         "inventory_detail/<int:pk>/",
         InventoryDetailView.as_view(),

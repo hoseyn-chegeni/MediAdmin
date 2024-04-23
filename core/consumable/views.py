@@ -84,13 +84,6 @@ class DeleteSelectedConsumableView(View):
 
 # Inventory Views.
 
-
-class InventoryListView(ListView):
-    model = Inventory
-    template_name = "consumable/inventory/list.html"
-    context_object_name = "inventory"
-
-
 class InventoryCreateView(BaseCreateView):
     model = Inventory
     fields = "__all__"
