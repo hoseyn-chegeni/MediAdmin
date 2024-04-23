@@ -54,111 +54,261 @@
           </div>
           </div>
         </div>
-
-
-
-
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="card-text">
-                <div class="card-header"><strong>
-                     روزهای تعطیل سرویس
-                </strong>  </div>
-
-                {%for i in object.off_days.all%}
-                    <p>{{i}}</p>
-                    <hr>
-                {% empty %}
-                <p>روز تعطیل یافت نشد</p>
-                {% endfor %}
-        </div>
-      </div>  
-    </div>
-
-      
-
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="card-text">
-            <div class="card-header"><strong>
-                   مواد مصرفی
-            </strong>  </div>
-                {%for i in consumable%}
-                    {{i.consumable}}: <a href="{% url 'services:service_consumable_delete' i.id %}">حذف آیتم</a><br>
-                {% empty %}
-                <p>مواد مصرفی به سرویس اختصاص داده نشده است </p>
-                {% endfor %}
-        </div>
-      </div>   
-      </div>
-      
-      <div class="card mb-4">
-        <div class="card-body">
-            <div class="card-text">
-            <div class="card-header"><strong>
-                  تجهیزات پزشکی
-            </strong>  </div>
-                {%for i in object.medical_equipment.all%}
-                    {{i}}: <a href="{% url 'asset:equipment_detail' i.id %}">جزییات</a> <br>
-                    <hr>
-                {% empty %}
-                <p> تجهیزات پزشکی به سرویس اختصاص داده نشده است </p>
-                {% endfor %}
-        </div>
-      </div>   
-      </div>
-
-
-      <div class="card mb-4">
-        <div class="card-body">
-            
-            <div class="card-header"><strong>
-                 لیست بیمه های پوشش دهنده
-            </strong>  </div>
-            <div class="card-text">
-            {%for i in insurance%}
-                {{i.insurance}}: %{{i.percentage}}
-            {% empty %}
-            <p>بیمه برای همه افراد آزاد در نظر گرفته میشود</p>
-            {% endfor %}
-    </div>
-  </div>    
-</div>
-
-<div class="card mb-4">
-  <div class="card-body">
-      <div class="card-text">
-      <div class="card-header"><strong>
-            لیست بیمارانی که از این سرویس استفاده نموده اند
-      </strong>  </div>
-
-      {%for i in clients%}
-          <p>{{i.get_full_name}}, <a href="{% url 'client:detail' i.id %}">جزییات</a></p>
-          <hr>
-      {% empty %}
-      <p>یافت نشد</p>
-      {% endfor %}
-</div>
-</div>  
 </div>
 
         <!-- Buttons to change status, priority, add comment, etc. -->
         <div class="card mb-4">
+          <div class="card-body">
+              <div class="card-text">
+          <a href="{% url 'services:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+          <a href="{% url 'services:appointment_config' object.id%}" class="btn btn-success me-2">تنظیمات</a>
+          <a href="{% url 'services:service_consumable_create' object.id%}" class="btn btn-success me-2">افزودن مواد مصرفی</a>
+          <a href="{% url 'services:queue' object.id%}" class="btn btn-success me-2">صف انتظار سرویس</a>
+
+          {% if object.is_active == True%}
+          <a href="#" data-toggle="modal" data-target="#suspendModal"  class="btn btn-success me-2" title="suspend" >تعلیق سرویس</a>
+          {%else%}
+          <a href="#" data-toggle="modal" data-target="#reactiveModal"  class="btn btn-success me-2" title="reactive" >فعال سازی مجدد</a>
+          {%endif%}
+          <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+      </div>
+</div>
+</div>
+        <div class="container mt-4">
+          <h2>روز های تعطیل سروریس</h2>
+          <br>
+      
+          <!-- Card for basic service details -->
+          <div class="card mb-4">
+              <div class="card-body">
+                  <div class="card-text">
+                      <div class="card-header"><strong>
+                           اطلاعات 
+                   </strong>  </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              {%for i in object.off_days.all%}
+              <th scope="col">{{i}}</th>
+              {% empty %}
+              <th scope="col">روز تعطیل یافت نشد</th>
+              {% endfor %}
+            </tr>
+          </thead>
+        </Table>
+      </div>
+    </div>
+  </div>
+</div>
+      
+
+  <div class="container mt-4">
+    <h2>مواد مصرفی</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                     اطلاعات 
+             </strong>  </div>
+             <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">عنوان </th>
+                  <th scope="col">دسته بندی</th>
+                  <th scope="col">تامین کننده</th>
+                  <th scope="col">موجودی</th>
+                  <th scope="col">اکشن ها</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                  {%for i in consumable%}
+                <tr class="fw-normal">
+                    <td class="align-middle">
+                        <span>{{i.consumable.id}}</span>
+                      </td>
+                  <td class="align-middle">
+                    <span>{{i.consumable.name}}</span>
+                  </td>
+                  <td class="align-middle">
+                      <span>{{i.consumable.category}}</span>
+                    </td>
+                    <td class="align-middle">
+                      <span>{{i.consumable.supplier}}</span>
+                    </td>
+                    <td class="align-middle">
+                        <span>{{i.consumable.quantity}}</span>
+                      </td>
+                    <td class="align-middle">
+                      <a href="{%url 'consumable:detail' i.consumable.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+              {%endfor%}
+            </table>
+        </div>
+        </div>
+      </div>
+</div>
+
+
+      <div class="container mt-4">
+        <h2>تجهیزات پزشکی
+        </h2>
+        <br>
+    
+        <!-- Card for basic service details -->
+        <div class="card mb-4">
             <div class="card-body">
                 <div class="card-text">
-            <a href="{% url 'services:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
-            <a href="{% url 'services:appointment_config' object.id%}" class="btn btn-success me-2">تنظیمات</a>
-            <a href="{% url 'services:service_consumable_create' object.id%}" class="btn btn-success me-2">افزودن مواد مصرفی</a>
-            <a href="{% url 'services:queue' object.id%}" class="btn btn-success me-2">صف انتظار سرویس</a>
+                    <div class="card-header"><strong>
+                         اطلاعات 
+                 </strong>  </div>
+                 <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">عنوان </th>
+                      <th scope="col">سازنده</th>
+                      <th scope="col">مدل</th>
+                      <th scope="col">اکشن ها</th>
+    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for i in object.medical_equipment.all%}
+                    <tr class="fw-normal">
+                        <td class="align-middle">
+                            <span>{{i.id}}</span>
+                          </td>
+                      <td class="align-middle">
+                        <span>{{i.name}}</span>
+                      </td>
+                      <td class="align-middle">
+                          <span>{{i.manufacturer}}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{i.model}}</span>
+                        </td>
+                        <td class="align-middle">
+                          <a href="{%url 'asset:equipment_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+    
+                    </tbody>
+                  {%endfor%}
+                </table>
+            </div>
+            </div>
+          </div>
+</div>
 
-            {% if object.is_active == True%}
-            <a href="#" data-toggle="modal" data-target="#suspendModal"  class="btn btn-success me-2" title="suspend" >تعلیق سرویس</a>
-            {%else%}
-            <a href="#" data-toggle="modal" data-target="#reactiveModal"  class="btn btn-success me-2" title="reactive" >فعال سازی مجدد</a>
-            {%endif%}
-            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
-        </div>
+          <div class="container mt-4">
+            <h2>لیست بیمه های پوشش دهنده</h2>
+            <br>
+        
+            <!-- Card for basic service details -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="card-header"><strong>
+                             اطلاعات 
+                     </strong>  </div>
+                     <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">عنوان </th>
+                          <th scope="col">شرکت بیمه</th>
+                          <th scope="col">درصد پوشش</th>
+                          <th scope="col">اکشن ها</th>
+        
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {%for i in insurance%}
+                        <tr class="fw-normal">
+                            <td class="align-middle">
+                                <span>{{i.insurance.id}}</span>
+                              </td>
+                          <td class="align-middle">
+                            <span>{{i.insurance}}</span>
+                          </td>
+                          <td class="align-middle">
+                              <span>{{i.insurance.insurance_company}}</span>
+                            </td>
+                            <td class="align-middle">
+                              <span>{{i.percentage}}</span>
+                            </td>
+                            <td class="align-middle">
+                              <a href="{%url 'insurance:detail' i.insurance.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                            </td>
+                        </tr>
+        
+                        </tbody>
+                      {%endfor%}
+                    </table>
+                </div>
+                </div>
+              </div>
 
+</div>
+
+              <div class="container mt-4">
+                <h2>لیست بیمارانی که از این سرویس استفاده نموده اند
+                </h2>
+                <br>
+            
+                <!-- Card for basic service details -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div class="card-header"><strong>
+                                 اطلاعات 
+                         </strong>  </div>
+                         <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">نام و نام خانوداگی </th>
+                              <th scope="col">کدملی</th>
+                              <th scope="col">وضعیت</th>
+                              <th scope="col">اکشن ها</th>
+            
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {%for i in clients%}
+                            <tr class="fw-normal">
+                                <td class="align-middle">
+                                    <span>{{i.id}}</span>
+                                  </td>
+                              <td class="align-middle">
+                                <span>{{i.get_full_name}}</span>
+                              </td>
+                              <td class="align-middle">
+                                  <span>{{i.national_id}}</span>
+                                </td>
+                                <td class="align-middle">
+                                  <span>{{i.is_vip}}</span>
+                                </td>
+                                <td class="align-middle">
+                                  <a href="{%url 'client:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                                </td>
+                            </tr>
+            
+                            </tbody>
+                          {%endfor%}
+                        </table>
+                    </div>
+                    </div>
+                  </div>
+</div>
 
 
       <!-- DELETE MODALS -->
@@ -220,6 +370,9 @@
                 </div>
             </div>
             </div>
+</div>
+</div>
+</div>
 </div>
     <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

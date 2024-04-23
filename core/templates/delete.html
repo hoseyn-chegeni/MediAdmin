@@ -13,18 +13,3 @@
     </form>
 </body>
 </html>
-
-
-
-<a href="{% url 'consumable:create' %}">Add Consumable</a><br>
-<form action="" method="get">
-    {%csrf_token%}
-    {{filter.form.as_p}}
-    <input type="submit">
-</form>
-{%for i in consumable%}
-    {{i.id}}.{{i.name}},,,,,,,,,,,,,,,,QUANTITY {{i.quantity}}..........
-    <a href="{% url 'consumable:detail' i.pk %}">Details</a>,
-    <a href="{% url 'consumable:update' i.pk %}">Update</a>,
-    <a href="{% url 'consumable:delete' i.pk %}">Delete</a><br>
-{% endfor %}
