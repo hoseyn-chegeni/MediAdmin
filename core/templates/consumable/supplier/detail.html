@@ -1,5 +1,149 @@
-{{supplier.name}}
-<p>----------</p>
-{%for i in inventory%}
-    {{i}}
-{%endfor%}
+{% extends 'base.html' %}
+    {%block title %}جزییات تامین کننده {{object}}{%endblock%}
+{%block content%}
+
+
+
+<div class="container mt-4">
+    <h2>جزییات تامین کننده {{ object }}</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                    اطلاعات
+             </strong>  </div>
+              <p class="card-text"><strong>شماره:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong>نام:</strong>{{object.name}}</p>
+              <hr>
+              <p class="card-text"><strong>نام واسط:</strong>{{object.contact_person}}</p>
+              <hr>
+              <p class="card-text"><strong>شماره تلفن: </strong>{{object.phone_number}}</p>
+              <hr>
+              <p class="card-text"><strong>آدرس: </strong>{{object.address}}</p>
+              <hr>
+              <p class="card-text"><strong>شهر: </strong>{{object.city}}</p>
+              <hr>
+              <p class="card-text"><strong>یادداشت: </strong>{{object.notes}}</p>
+              <hr>
+              <p class="card-text"><strong> تاریخ ایجاد: </strong>{{object.created_at}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>{{object.updated_at}}</p>
+              <hr>
+              <!-- Add other task details as needed -->
+          </div>
+          </div>
+        </div>
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+            <a href="{% url 'consumable:supplier_update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+</div>
+</div>
+        <div class="container mt-4">
+            <h2>موجودی های تامین شده توسط {{object}}</h2>
+            <br>
+        
+            <!-- Card for basic service details -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="card-header"><strong>
+اطلاعات     
+                     </strong>  </div>
+
+
+                     <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">موجودی </th>
+                            <th scope="col">قیمت</th>
+                            <th scope="col">وضعیت</th>
+                            <th scope="col">تاریخ خرید</th>
+                            <th scope="col">هزینه خرید</th>
+                            <th scope="col">تاریخ انقضا</th>
+                            <th scope="col">تاریخ ایجاد</th>
+                            <th scope="col">اکشن ها</th>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {%for i in inventory%}
+                          <tr class="fw-normal">
+                              <td class="align-middle">
+                                  <span>{{i.id}}</span>
+                                </td>
+                            <td class="align-middle">
+                              <span>{{i.quantity}}</span>
+                            </td>
+                              <td class="align-middle">
+                                <span>{{i.price}}</span>
+                              </td>
+                              <td class="align-middle">
+                                <span>{{i.status}}</span>
+                              </td>
+                              <td class="align-middle">
+                                  <span>{{i.purchase_date}}</span>
+                                </td>
+                              <td class="align-middle" >
+                                <span>{{i.purchase_cost}}</span>
+                              </td>
+                              <td class="align-middle" >
+                                <span>{{i.expiration_date}}</span>
+                              </td>
+                              <td class="align-middle" >
+                                <span>{{i.created_at.date}}</span>
+                              </td>
+                              <td class="align-middle">
+                                <a href="{%url 'consumable:inventory_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                                <a href="{%url 'consumable:inventory_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+                                <a href="{%url 'consumable:detail' i.consumable.id %}" data-mdb-toggle="tooltip" title="جزییات  محصول"><i class="fas fa-industry" ></i></a>
+
+                              </td>
+                          </tr>
+                          {%endfor%}
+                          </tbody>
+                      </table>
+                  </div>
+                  </div>
+                </div>
+
+
+
+
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              از حذف این تامین کننده مطمین هستید ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'consumable:supplier_delete' pk=object.pk %}" class="btn">حذف</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+</div>
+</div>
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}

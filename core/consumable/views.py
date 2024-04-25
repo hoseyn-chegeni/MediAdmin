@@ -229,7 +229,6 @@ class SupplierListView(BaseListView):
 class SupplierDetailView(BaseDetailView):
     model = Supplier
     template_name = "consumable/supplier/detail.html"
-    context_object_name = "supplier"
     permission_required = "consumable.view_supplier"
 
     def get_context_data(self, **kwargs):
