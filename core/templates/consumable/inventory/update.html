@@ -36,9 +36,18 @@
 
 
 
-                                          <div class="col-sm-6">
-                        <label for="supplier" class="form-label">تامین کننده</label>
-                        <input type="text" class="form-control" id="supplier" placeholder="" value="{{object.supplier}}" name="supplier" >
+                    <div class="col-sm-6">
+                      <label  for="supplier">تامین کننده:</label>
+                      <select  class="form-select" name="supplier"  id="supplier">
+                        <option value="" selected="">---------</option>
+                        {% for i in form.supplier.field.queryset%}
+                      {% if i == object.supplier%}
+                        <option value="{{i.id}}" selected>{{i}}</option>
+                        {%else%}
+                        <option value="{{i.id}}">{{i}}</option>
+                          {%endif%}
+                        {%endfor%}
+                      </select>
                       </div>
 
                       <div class="col-sm-6">
