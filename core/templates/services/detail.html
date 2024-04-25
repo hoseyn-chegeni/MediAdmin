@@ -310,7 +310,61 @@
                   </div>
 </div>
 
+<div class="container mt-4">
+  <h2> پذیرش های انجام شده این سروریس
+  </h2>
+  <br>
 
+  <!-- Card for basic service details -->
+  <div class="card mb-4">
+      <div class="card-body">
+          <div class="card-text">
+              <div class="card-header"><strong>
+                   اطلاعات 
+           </strong>  </div>
+           <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">نام بیمار </th>
+                <th scope="col">وضعیت پذیرش</th>
+                <th scope="col">وضعیت پرداخت</th>
+                <th scope="col">اکشن ها</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {%for i in reception%}
+              <tr class="fw-normal">
+                  <td class="align-middle">
+                      <span>{{i.id}}</span>
+                    </td>
+                <td class="align-middle">
+                  <span>{{i.client.get_full_name}}</span>
+                </td>
+                <td class="align-middle">
+                  {% if i.status == 'WAITE'%}
+                  <span class="badge bg-danger rounded-pill"> در انتظار ویزیت  </span>
+                  {% else%}
+                  <span class="badge bg-success rounded-pill"> انجام شده </span>
+
+                  {%endif%}
+                  </td>
+                  <td class="align-middle">
+                    <span>{{i.payment_status}}</span>
+                  </td>
+                  <td class="align-middle">
+                    <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                  </td>
+              </tr>
+
+              </tbody>
+            {%endfor%}
+          </table>
+      </div>
+      </div>
+    </div>
+</div>
       <!-- DELETE MODALS -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
