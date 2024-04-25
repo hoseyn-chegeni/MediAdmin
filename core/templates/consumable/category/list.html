@@ -1,12 +1,173 @@
-<a href="{% url 'consumable:category_create' %}">Add Consumable Category</a><br>
-<form action="" method="get">
-    {%csrf_token%}
-    {{filter.form.as_p}}
-    <input type="submit">
-</form>
-{%for i in category%}
-    {{i.id}}.{{i.name}},
-    <a href="{% url 'consumable:category_detail' i.pk %}">Details</a>,
-    <a href="{% url 'consumable:category_update' i.pk %}">Update</a>,
-    <a href="{% url 'consumable:category_delete' i.pk %}">Delete</a><br>
-{% endfor %}
+{% extends 'base.html'%}
+{% block title %} لیست  دسته بندی های مواد مصرفی {% endblock %}
+
+{%block content%}
+<div class="container" style="padding-bottom: 70%;">
+
+    <section class="vh-100 gradient-custom-2" >
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">لیست  دسته بندی های مواد مصرفی </h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get" >
+                    {%csrf_token%}
+                    <div class="row g-3">
+
+
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">Id</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="name" class="form-label">نام دسته بندی</label>
+                        <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                      </div>
+
+                    
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+                    </form>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="mb-4">
+                      <form action="{% url 'consumable:delete_selected_supplier' %}" method="post" id="deleteForm">
+                        {% csrf_token %}
+                      <a href="{% url 'consumable:create' %}" class="btn btn-success">افزودن دسته بندی جدید</a>
+                      <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+
+                      </div>
+  <hr>
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">ID</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">تعداد محصولات</th>
+                        <th scope="col">اکشن ها</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in category%}
+                      <tr class="fw-normal">       
+                        <td><input type="checkbox" name="supplier_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+                        <td class="align-middle">
+                          <span>{{i.id}}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span>{{i.name}}</span>
+                        </td>
+                        <td class="align-middle">
+                          <span> {{i.consumable_count}} </span>
+                        </td>
+ 
+
+                        <td class="align-middle">
+                          <a href="{%url 'consumable:category_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                          <a href="{%url 'consumable:category_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+                        </td>
+                      </tr>
+                      {%endfor%}
+                      </tbody>
+                  </table>
+                  </form>
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">قبلی</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</a>
+                        </li>
+                
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">یعدی</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                    موارد انتخاب شده به طور کامل از سیستم حذف می شوند
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                      <button type="button" class="btn btn-primary" id="confirmDelete">تایید</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <script>
+        // Function to show delete button when checkboxes are selected
+        document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                if (checkedCheckboxes.length > 0) {
+                    document.getElementById('confirmDeleteBtn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('confirmDeleteBtn').style.display = 'none';
+                }
+            });
+        });
+    
+        // Function to show modal when delete button is clicked
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            $('#deleteConfirmationModal').modal('show');
+        });
+    
+        // Function to submit the form when confirm delete button in modal is clicked
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            $('#deleteForm').submit();
+        });
+    </script>
+    
+      
+      </section>
+<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{%endblock%}
