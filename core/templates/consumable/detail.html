@@ -113,6 +113,8 @@
                               <td class="align-middle">
                                 <a href="{%url 'consumable:inventory_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
                                 <a href="{%url 'consumable:inventory_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+                                <a href="{%url 'consumable:supplier_detail' i.supplier.id %}" data-mdb-toggle="tooltip" title="جزییات تامین کننده"><i class="fas fa-industry" ></i></a>
+
                               </td>
                           </tr>
                           {%endfor%}
