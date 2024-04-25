@@ -216,6 +216,7 @@ class ConsumableCategoryDeleteView(BaseDeleteView):
     url_name = "category_list"
     permission_required = "consumable.delete_consumablecategory"
 
+
 class DeleteSelectedCategoryView(View):
     def post(self, request):
         if request.method == "POST":
@@ -229,7 +230,6 @@ class DeleteSelectedCategoryView(View):
                 request, f"تعداد {deleted_users_count[0]} دسته بندی با موفقیت حذف شدند."
             )  # Add success message
         return redirect("consumable:category_list")
-
 
 
 # Supplier views here.
@@ -288,7 +288,7 @@ class DeleteSelectedSupplierView(View):
                 id__in=user_ids
             ).delete()  # Delete selected users
             messages.success(
-                request, f"تعداد {deleted_users_count[0]} تامین کننده با موفقیت حذف شدند."
+                request,
+                f"تعداد {deleted_users_count[0]} تامین کننده با موفقیت حذف شدند.",
             )  # Add success message
         return redirect("consumable:supplier_list")
-

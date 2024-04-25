@@ -12,7 +12,11 @@ STATUS_CHOICES = (
 class ConsumableV2(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(
-        "ConsumableCategory", on_delete=models.SET_NULL, blank=True, null=True, related_name='consumables'
+        "ConsumableCategory",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="consumables",
     )
     unit = models.CharField(max_length=50)
     minimum_stock_level = models.PositiveIntegerField(default=0)
@@ -81,6 +85,7 @@ class ConsumableCategory(models.Model):
     @property
     def consumable_count(self):
         return self.consumables.count()
+
 
 class Supplier(models.Model):
     name = models.CharField(max_length=100)

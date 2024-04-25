@@ -1,5 +1,5 @@
 from typing import Any
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from booking.models import Appointment
 from datetime import date
@@ -7,6 +7,9 @@ from reception.models import Reception
 from tasks.models import Task
 from financial.models import Financial
 from django.db.models import Sum
+from django.contrib import messages
+from django.shortcuts import redirect
+from client.models import Client
 
 
 # Create your views here.
@@ -72,3 +75,43 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context["today_revenue"] = today_revenue
         context["revenue_percentage"] = revenue_percentage
         return context
+
+
+class ClientNationalIdSearchView(View):
+    def get(self, request):
+        query = request.GET.get("query")
+        if query:
+            # Search for the client
+            client = Client.objects.filter(national_id=query).first()
+            if client:
+                # Redirect to the client detail page
+                return redirect("client:detail", pk=client.pk)
+            else:
+                # Client does not exist, redirect to index page with a message
+                messages.error(request, "بیمار با کدملی وارد شده در سیستم موجود نیست")
+                return redirect(
+                    "index:index"
+                )  # Update 'index:index' with your actual URL name
+        else:
+            # If no query provided, redirect to the index page
+            return redirect("index:index")
+
+
+class ClientCaseIdSearchView(View):
+    def get(self, request):
+        query = request.GET.get("query")
+        if query:
+            # Search for the client
+            client = Client.objects.filter(id=query).first()
+            if client:
+                # Redirect to the client detail page
+                return redirect("client:detail", pk=client.pk)
+            else:
+                # Client does not exist, redirect to index page with a message
+                messages.error(request, "بیمار با شماره پرونده وارد شده در سیستم موجود نیست")
+                return redirect(
+                    "index:index"
+                )  # Update 'index:index' with your actual URL name
+        else:
+            # If no query provided, redirect to the index page
+            return redirect("index:index")
