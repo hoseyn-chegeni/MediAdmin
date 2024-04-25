@@ -31,15 +31,6 @@
             </select>
             </div>
 
-            <div class="col-sm-6">
-                <label  for="supplier">تامین کننده:</label>
-                <select  class="form-select" name="supplier"  id="supplier">
-                  <option value="" selected="">---------</option>
-                  {% for i in form.supplier.field.queryset%}
-                  <option value="{{i.id}}">{{i}}</option>
-                  {%endfor%}
-                </select>
-                </div>
 
             <div class="col-sm-6">
                 <label for="unit" class="form-label">واحد اندازه گیری</label>

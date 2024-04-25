@@ -42,15 +42,6 @@
                         </select>
                       </div>
 
-                      <div class="col-sm-6">
-                        <label for="supplier">تامین کننده</label>
-                        <select class="form-select" name="supplier" id="supplier">
-                          <option value="" selected>---------</option>
-                          {% for i in filter.form.supplier.field.queryset %}
-                            <option value="{{ i.id }}">{{ i.name }}</option>
-                          {% endfor %}
-                        </select>
-                      </div>
 
                       <div class="col-sm-6">
                         <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
@@ -92,7 +83,6 @@
                         <th scope="col">نام</th>
                         <th scope="col">دسته بندی</th>
                         <th scope="col">موجودی</th>
-                        <th scope="col">تامین کننده</th>
                         <th scope="col">اکشن ها</th>
                       </tr>
                     </thead>
@@ -112,9 +102,7 @@
                         <td class="align-middle">
                             <span>{{i.quantity}}</span>
                           </td>
-                          <td class="align-middle">
-                            <span>{{i.supplier}}</span>
-                          </td>
+
                         <td class="align-middle">
                           <a href="{%url 'consumable:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
                           <a href="{%url 'consumable:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
