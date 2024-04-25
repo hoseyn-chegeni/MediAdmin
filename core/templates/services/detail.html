@@ -295,7 +295,11 @@
                                   <span>{{i.national_id}}</span>
                                 </td>
                                 <td class="align-middle">
-                                  <span>{{i.is_vip}}</span>
+                                  {% if i.is_vip == True%}
+                                  <span class="badge bg-primary rounded-pill">ٰVIP</span>
+                                    {% else%}
+                                    <span class="badge bg-secondary rounded-pill">اشتراک معمولی</span>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle">
                                   <a href="{%url 'client:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
@@ -351,7 +355,11 @@
                   {%endif%}
                   </td>
                   <td class="align-middle">
-                    <span>{{i.payment_status}}</span>
+                    {% if i.payment_status == "پرداخت شده"%}
+                    <span class="badge bg-primary rounded-pill">پرداخت شده</span>
+                      {% else%}
+                      <span class="badge bg-secondary rounded-pill">پرداخت نشده</span>
+                      {% endif %}
                   </td>
                   <td class="align-middle">
                     <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
