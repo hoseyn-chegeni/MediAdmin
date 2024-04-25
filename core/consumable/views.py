@@ -216,6 +216,21 @@ class ConsumableCategoryDeleteView(BaseDeleteView):
     url_name = "category_list"
     permission_required = "consumable.delete_consumablecategory"
 
+class DeleteSelectedCategoryView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "category_ids"
+            )  # Get the list of selected user IDs from the form
+            deleted_users_count = ConsumableCategory.objects.filter(
+                id__in=user_ids
+            ).delete()  # Delete selected users
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} دسته بندی با موفقیت حذف شدند."
+            )  # Add success message
+        return redirect("consumable:category_list")
+
+
 
 # Supplier views here.
 class SupplierListView(BaseListView):

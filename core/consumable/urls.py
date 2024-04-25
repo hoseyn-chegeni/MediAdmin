@@ -21,6 +21,7 @@ from .views import (
     DeleteSelectedConsumableView,
     InventoryCreateWithPKView,
     DeleteSelectedSupplierView,
+    DeleteSelectedCategoryView,
 )
 
 app_name = "consumable"
@@ -80,6 +81,11 @@ urlpatterns = [
         "category/delete/<int:pk>/",
         ConsumableCategoryDeleteView.as_view(),
         name="category_delete",
+    ),
+    path(
+        "category/delete/",
+        DeleteSelectedCategoryView.as_view(),
+        name="delete_selected_category",
     ),
     # SUPPLIERS URLS
     path("supplier/list/", SupplierListView.as_view(), name="supplier_list"),
