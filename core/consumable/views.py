@@ -262,3 +262,19 @@ class SupplierDeleteView(BaseDeleteView):
     app_name = "consumable"
     url_name = "supplier_list"
     permission_required = "consumable.delete_supplier"
+
+
+class DeleteSelectedSupplierView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "supplier_ids"
+            )  # Get the list of selected user IDs from the form
+            deleted_users_count = Supplier.objects.filter(
+                id__in=user_ids
+            ).delete()  # Delete selected users
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} تامین کننده با موفقیت حذف شدند."
+            )  # Add success message
+        return redirect("consumable:supplier_list")
+
