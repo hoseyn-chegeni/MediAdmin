@@ -1,3 +1,88 @@
-{{object.id}}
-{{object.name}}
-{{object.model}}
+{% extends 'base.html' %}
+    {%block title %}جزییات دستگاه {{object}}{%endblock%}
+{%block content%}
+
+
+
+<div class="container mt-4">
+    <h2>جزییات دستگاه {{ object }}</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                     اطلاعات
+             </strong>  </div>
+              <p class="card-text"><strong>شماره:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong>نام:</strong>{{object.name}}</p>
+              <hr>
+              <p class="card-text"><strong>توضیحات:</strong>{{object.description}}</p>
+              <hr>
+              <p class="card-text"><strong>تولید کننده: </strong>{{object.manufacturer}}</p>
+              <hr>
+              <p class="card-text"><strong>مدل: </strong>{{object.model}}</p>
+              <hr>
+              <p class="card-text"><strong>شماره سریال: </strong>{{object.serial_number}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ شروع استفاده از دستگاه: </strong>{{object.acquisition_date}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ انقضا گارانتی:</strong>{{object.warranty_expiry_date}}</p>
+              <hr>
+              <p class="card-text"><strong>لوکیشن: </strong>{{object.location}}</p>
+              <hr>
+              <p class="card-text"><strong>در دسترس: </strong>{{object.is_available}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>{{object.last_maintenance_date}}</p>
+              <hr>
+              <p class="card-text"><strong> تاریخ ایجاد: </strong>{{object.created_at}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>{{object.updated_at}}</p>
+              <hr>
+              <p class="card-text"><strong>موجودی: </strong>{{object.quantity}}</p>
+              <hr>
+              <!-- Add other task details as needed -->
+          </div>
+          </div>
+        </div>
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+            <a href="{% url 'asset:equipment_update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+
+            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+</div>
+</div>
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              از حذف این دستگاه مطمین هستید ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'asset:equipment_delete' pk=object.pk %}" class="btn">حذف</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+</div>
+</div>
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
