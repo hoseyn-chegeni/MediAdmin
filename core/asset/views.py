@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from base.views import (
     BaseCreateView,
     BaseDeleteView,
@@ -10,7 +10,8 @@ from .models import Equipment
 from .filters import (
     EquipmentFilter,
 )
-
+from django.contrib import messages
+from django.views.generic import View
 
 # Medical Equipment Views Here.
 class EquipmentListView(BaseListView):
@@ -50,3 +51,17 @@ class EquipmentDeleteView(BaseDeleteView):
     app_name = "asset"
     url_name = "equipment_list"
     permission_required = "asset.delete_equipment"
+
+class DeleteSelectedEquipmentView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "equipment_ids"
+            )  # Get the list of selected user IDs from the form
+            deleted_users_count = Equipment.objects.filter(
+                id__in=user_ids
+            ).delete()  # Delete selected users
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} تجهیزات پزشکی با موفقیت حذف شدند."
+            )  # Add success message
+        return redirect("asset:equipment_list")

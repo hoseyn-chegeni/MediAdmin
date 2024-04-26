@@ -79,7 +79,7 @@
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
                     <div class="mb-4">
-                      <form action="{% url 'consumable:delete_selected_consumable' %}" method="post" id="deleteForm">
+                      <form action="{% url 'asset:delete_selected_equipment' %}" method="post" id="deleteForm">
                         {% csrf_token %}
                       <a href="{% url 'asset:equipment_create' %}" class="btn btn-success"> افزودن تجهیزات پزشکی جدید</a>
                       <a href="{% url 'reports:equipment_reports'%}" class="btn btn-success me-2">گزارشات</a>
@@ -102,7 +102,7 @@
                     <tbody>
                         {%for i in equipment%}
                       <tr class="fw-normal">       
-                        <td><input type="checkbox" name="consumable_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+                        <td><input type="checkbox" name="equipment_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
                         <td class="align-middle">
                           <span>{{i.id}}</span>
                         </td>

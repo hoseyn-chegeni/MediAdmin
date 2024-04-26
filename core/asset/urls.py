@@ -5,6 +5,7 @@ from .views import (
     EquipmentDetailView,
     EquipmentListView,
     EquipmentUpdateView,
+    DeleteSelectedEquipmentView,
 )
 
 app_name = "asset"
@@ -27,5 +28,8 @@ urlpatterns = [
         "equipment/delete/<int:pk>/",
         EquipmentDeleteView.as_view(),
         name="equipment_delete",
+    ),
+    path(
+        "equipment/delete/", DeleteSelectedEquipmentView.as_view(), name="delete_selected_equipment"
     ),
 ]
