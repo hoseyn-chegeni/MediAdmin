@@ -21,9 +21,57 @@
                         <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
                       </div>
 
+
+
                       <div class="col-sm-6">
                         <label for="name" class="form-label">نام</label>
                         <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="manufacturer" class="form-label">تولید کننده</label>
+                        <input  class="form-control" type="text" name="manufacturer" step="any" id="manufacturer" value="{{ request.GET.manufacturer }}" >
+                      </div>
+    
+
+                      <div class="col-sm-6">
+                        <label for="serial_number" class="form-label">شماره سریال</label>
+                        <input  class="form-control" type="text" name="serial_number" step="any" id="serial_number" value="{{ request.GET.serial_number }}" >
+                      </div>
+                      
+
+                      <div class="col-sm-6">
+                        <label for="location" class="form-label">لوکیشن</label>
+                        <input  class="form-control" type="text" name="location" step="any" id="location" value="{{ request.GET.location }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+                        </label>
+                        <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="acquisition_date" class="form-label">تاریخ شروع استفاده از دستگاه</label>
+                        <input  class="form-control" type="date" name="acquisition_date" step="any" id="acquisition_date" value="{{ request.GET.acquisition_date }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="date" class="form-label">تاریخ</label>
+                        <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                      </div>
+          
+
+          
+                      <div class="col-sm-6">
+                        <label for="date_range">محدوده زمانی</label>
+                        <select class="form-select" name="date_range" id="date_range">
+                          <option value="" selected>---------</option>
+                          <option value="today">امروز</option>
+                          <option value="this_week">هفته گذشته</option>
+                          <option value="this_month">ماه گذشته</option>
+                        </select>
                       </div>
 
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">دانلود فایل گزارش</button>
