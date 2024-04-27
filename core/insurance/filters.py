@@ -13,7 +13,6 @@ class InsuranceFilter(BaseFilter):
         fields = {
             "id": ["exact"],
             "insurance_company": ["exact"],
-            "policy_type": ["exact"],
             "policy_number": ["exact"],
         }
 
