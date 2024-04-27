@@ -77,7 +77,7 @@ class DeleteSelectedInsuranceView(View):
 class ServiceInsuranceCreateView(BaseCreateView):
     model = InsuranceService
     fields = ['service','percentage','notes',]
-    template_name = "service_insurance/create.html"
+    template_name = "insurance/services/create.html"
     app_name = "insurance"
     url_name = "service_insurance_detail"
     permission_required = "insurance.add_insuranceservice"
@@ -99,7 +99,7 @@ class ServiceInsuranceCreateView(BaseCreateView):
 class ServiceInsuranceUpdateView(BaseUpdateView):
     model = InsuranceService
     fields = "__all__"
-    template_name = "service_insurance/update.html"
+    template_name = "insurance/services/update.html"
     app_name = "insurance"
     url_name = "service_insurance_detail"
     permission_required = "insurance.change_insuranceservice"
