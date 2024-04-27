@@ -74,14 +74,6 @@ class DeleteSelectedInsuranceView(View):
 
 
 # ServiceInsurance Views here.
-class ServiceInsuranceListView(BaseListView):
-    model = InsuranceService
-    template_name = "service_insurance/list.html"
-    context_object_name = "insurance"
-    filterset_class = InsuranceServiceFilter
-    permission_required = "insurance.view_insuranceservice"
-
-
 class ServiceInsuranceCreateView(BaseCreateView):
     model = InsuranceService
     fields = ['service','percentage','notes',]

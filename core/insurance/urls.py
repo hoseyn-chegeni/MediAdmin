@@ -9,7 +9,6 @@ from .views import (
     ServiceInsuranceDeleteView,
     ServiceInsuranceDetailView,
     ServiceInsuranceUpdateView,
-    ServiceInsuranceListView,
     DeleteSelectedInsuranceView
 )
 
@@ -24,11 +23,6 @@ urlpatterns = [
     path("delete/", DeleteSelectedInsuranceView.as_view(), name="delete_selected_insurance"),
 
     # SERVICE INSURANCE
-    path(
-        "service_insurance_list/",
-        ServiceInsuranceListView.as_view(),
-        name="service_insurance_list",
-    ),
     path(
         "service_insurance_detail/<int:pk>/",
         ServiceInsuranceDetailView.as_view(),
