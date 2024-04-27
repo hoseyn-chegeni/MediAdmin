@@ -105,12 +105,6 @@ class ServiceInsuranceUpdateView(BaseUpdateView):
     permission_required = "insurance.change_insuranceservice"
 
 
-class ServiceInsuranceDetailView(BaseDetailView):
-    model = InsuranceService
-    template_name = "service_insurance/detail.html"
-    context_object_name = "insurance"
-    permission_required = "insurance.view_insuranceservice"
-
 
 class ServiceInsuranceDeleteView(BaseDeleteView):
     model = InsuranceService
