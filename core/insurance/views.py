@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from base.views import (
     BaseListView,
     BaseCreateView,
@@ -10,8 +10,8 @@ from .models import Insurance, InsuranceService
 from django.urls import reverse_lazy
 from .filters import InsuranceFilter, InsuranceServiceFilter
 from client.models import Client
-
-
+from django.contrib import messages
+from django.views.generic import View
 # Create your views here.
 class InsuranceListView(BaseListView):
     model = Insurance
@@ -58,6 +58,20 @@ class InsuranceDeleteView(BaseDeleteView):
     app_name = "insurance"
     url_name = "list"
     permission_required = "insurance.delete_insurance"
+
+class DeleteSelectedInsuranceView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "insurance_ids"
+            )
+            deleted_users_count = Insurance.objects.filter(
+                id__in=user_ids
+            ).delete()
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} بیمه با موفقیت حذف شدند."
+            ) 
+        return redirect("insurance:list")
 
 
 # ServiceInsurance Views here.

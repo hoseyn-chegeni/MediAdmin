@@ -66,7 +66,7 @@
                     </form>
 
                     <div class="mb-4">
-                      <form action="{% url 'services:delete_selected_services' %}" method="post" id="deleteForm">
+                      <form action="{% url 'insurance:delete_selected_insurance' %}" method="post" id="deleteForm">
                         {% csrf_token %}
                     <a href="{% url 'insurance:create' %}" class="btn btn-success me-2">ایجاد بیمه جدید</a>
                     <a href="{% url 'reports:insurance_reports' %}" class="btn btn-success me-2">گزارشات</a>
@@ -88,7 +88,7 @@
                     <tbody>
                         {%for i in insurance%}
                       <tr class="fw-normal">
-                        <td><input type="checkbox" name="service_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+                        <td><input type="checkbox" name="insurance_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
 
                         <th>
                           <span class="ms-2">{{i.id}}</span>
