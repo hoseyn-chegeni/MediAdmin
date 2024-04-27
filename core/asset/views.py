@@ -13,6 +13,7 @@ from .filters import (
 from django.contrib import messages
 from django.views.generic import View
 
+
 # Medical Equipment Views Here.
 class EquipmentListView(BaseListView):
     model = Equipment
@@ -52,6 +53,7 @@ class EquipmentDeleteView(BaseDeleteView):
     url_name = "equipment_list"
     permission_required = "asset.delete_equipment"
 
+
 class DeleteSelectedEquipmentView(View):
     def post(self, request):
         if request.method == "POST":
@@ -62,6 +64,7 @@ class DeleteSelectedEquipmentView(View):
                 id__in=user_ids
             ).delete()  # Delete selected users
             messages.success(
-                request, f"تعداد {deleted_users_count[0]} تجهیزات پزشکی با موفقیت حذف شدند."
+                request,
+                f"تعداد {deleted_users_count[0]} تجهیزات پزشکی با موفقیت حذف شدند.",
             )  # Add success message
         return redirect("asset:equipment_list")

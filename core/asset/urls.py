@@ -30,6 +30,8 @@ urlpatterns = [
         name="equipment_delete",
     ),
     path(
-        "equipment/delete/", DeleteSelectedEquipmentView.as_view(), name="delete_selected_equipment"
+        "equipment/delete/",
+        DeleteSelectedEquipmentView.as_view(),
+        name="delete_selected_equipment",
     ),
 ]

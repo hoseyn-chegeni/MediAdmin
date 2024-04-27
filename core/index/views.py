@@ -108,7 +108,9 @@ class ClientCaseIdSearchView(View):
                 return redirect("client:detail", pk=client.pk)
             else:
                 # Client does not exist, redirect to index page with a message
-                messages.error(request, "بیمار با شماره پرونده وارد شده در سیستم موجود نیست")
+                messages.error(
+                    request, "بیمار با شماره پرونده وارد شده در سیستم موجود نیست"
+                )
                 return redirect(
                     "index:index"
                 )  # Update 'index:index' with your actual URL name

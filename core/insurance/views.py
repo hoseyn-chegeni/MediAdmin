@@ -12,6 +12,8 @@ from .filters import InsuranceFilter, InsuranceServiceFilter
 from client.models import Client
 from django.contrib import messages
 from django.views.generic import View
+
+
 # Create your views here.
 class InsuranceListView(BaseListView):
     model = Insurance
@@ -58,33 +60,33 @@ class InsuranceDeleteView(BaseDeleteView):
     url_name = "list"
     permission_required = "insurance.delete_insurance"
 
+
 class DeleteSelectedInsuranceView(View):
     def post(self, request):
         if request.method == "POST":
-            user_ids = request.POST.getlist(
-                "insurance_ids"
-            )
-            deleted_users_count = Insurance.objects.filter(
-                id__in=user_ids
-            ).delete()
+            user_ids = request.POST.getlist("insurance_ids")
+            deleted_users_count = Insurance.objects.filter(id__in=user_ids).delete()
             messages.success(
                 request, f"تعداد {deleted_users_count[0]} بیمه با موفقیت حذف شدند."
-            ) 
+            )
         return redirect("insurance:list")
 
 
 # ServiceInsurance Views here.
 class ServiceInsuranceCreateView(BaseCreateView):
     model = InsuranceService
-    fields = ['service','percentage','notes',]
+    fields = [
+        "service",
+        "percentage",
+        "notes",
+    ]
     template_name = "insurance/services/create.html"
     app_name = "insurance"
     url_name = "service_insurance_detail"
     permission_required = "insurance.add_insuranceservice"
 
-
     def form_valid(self, form):
-        form.instance.insurance =  Insurance.objects.get(id =  self.kwargs["pk"])
+        form.instance.insurance = Insurance.objects.get(id=self.kwargs["pk"])
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -105,12 +107,17 @@ class ServiceInsuranceUpdateView(BaseUpdateView):
     permission_required = "insurance.change_insuranceservice"
 
 
-
 class DeleteSelectedServiceInsuranceView(View):
     def post(self, request, pk):
         if request.method == "POST":
             service_insurance_ids = request.POST.getlist("service_insurance_ids")
-            deleted_count, _ = InsuranceService.objects.filter(id__in=service_insurance_ids).delete()
-            messages.success(request, f"تعداد {deleted_count} سرویس از پوشش این بیمه خارج شدند")
-        
-        return redirect(reverse('insurance:detail', kwargs={"pk": self.kwargs['pk']}))  # Redirect to the detail URL with the appropriate kwargs
+            deleted_count, _ = InsuranceService.objects.filter(
+                id__in=service_insurance_ids
+            ).delete()
+            messages.success(
+                request, f"تعداد {deleted_count} سرویس از پوشش این بیمه خارج شدند"
+            )
+
+        return redirect(
+            reverse("insurance:detail", kwargs={"pk": self.kwargs["pk"]})
+        )  # Redirect to the detail URL with the appropriate kwargs
