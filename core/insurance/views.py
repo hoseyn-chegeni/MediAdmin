@@ -84,11 +84,24 @@ class ServiceInsuranceListView(BaseListView):
 
 class ServiceInsuranceCreateView(BaseCreateView):
     model = InsuranceService
-    fields = "__all__"
+    fields = ['service','percentage','notes',]
     template_name = "service_insurance/create.html"
     app_name = "insurance"
     url_name = "service_insurance_detail"
     permission_required = "insurance.add_insuranceservice"
+
+
+    def form_valid(self, form):
+        form.instance.insurance =  Insurance.objects.get(id =  self.kwargs["pk"])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("insurance:detail", kwargs={"pk": self.kwargs["pk"]})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["insurance"] = Insurance.objects.get(id=self.kwargs["pk"])
+        return context
 
 
 class ServiceInsuranceUpdateView(BaseUpdateView):

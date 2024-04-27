@@ -35,7 +35,7 @@ urlpatterns = [
         name="service_insurance_detail",
     ),
     path(
-        "service_insurance_create/",
+        "service_insurance_create/<int:pk>/",
         ServiceInsuranceCreateView.as_view(),
         name="service_insurance_create",
     ),
