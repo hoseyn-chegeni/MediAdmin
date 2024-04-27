@@ -33,7 +33,6 @@ class InsuranceCreateView(BaseCreateView):
 class InsuranceDetailView(BaseDetailView):
     model = Insurance
     template_name = "insurance/detail.html"
-    context_object_name = "insurance"
     permission_required = "insurance.view_insurance"
 
     def get_context_data(self, **kwargs):

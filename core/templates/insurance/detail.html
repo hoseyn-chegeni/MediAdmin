@@ -1,18 +1,195 @@
-{{insurance.id}}::{{insurance.name}}
-<p>---------------------------</p>
-{% for i in clients%}
-    {{i.first_name}} {{i.last_name}} <br>
-{%endfor%}
+{% extends 'base.html' %}
+    {%block title %}جزییات مواد مصرفی {{object}}{%endblock%}
+{%block content%}
 
 
-<h2>Services</h2>
-<ul>
-    {% for i in service %}
-        <li>
-                {{ i.service }}:{{i.percentage}} <br>
-            <!-- Add other financial instance details as needed -->
-        </li>
-    {% empty %}
-    <li>No service found.</li>
-    {% endfor %}
-</ul>
+
+<div class="container mt-4">
+    <h2>جزییات مواد مصرفی {{ object }}</h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+                     اطلاعات محصول
+             </strong>  </div>
+              <p class="card-text"><strong>شماره:</strong>{{object.id}}</p>
+              <hr>
+              <p class="card-text"><strong>نام:</strong>{{object.name}}</p>
+              <hr>
+              <p class="card-text"><strong>یادداشت:</strong>{{object.description}}</p>
+              <hr>
+              <p class="card-text"><strong>شماره بیمه: </strong>{{object.policy_number}}</p>
+              <hr>
+              <p class="card-text"><strong>سازمان اريه دهنده: </strong>{{object.insurance_company}}</p>
+              <hr>
+              <p class="card-text"><strong> قابل کسر : </strong>{{object.deductible}}</p>
+              <hr>
+              <p class="card-text"><strong>پرداخت مشترک(copay): </strong>{{object.copay}}</p>
+              <hr>
+              <p class="card-text"><strong> حداکثر پوشش سالانه : </strong>{{object.max_annual_coverage}}</p>
+              <hr>
+              <p class="card-text"><strong>policy_type : </strong>{{object.policy_type}}</p>
+              <hr>
+              <p class="card-text"><strong> تاریخ ایجاد: </strong>{{object.created_at}}</p>
+              <hr>
+              <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>{{object.updated_at}}</p>
+              <hr>
+              <p class="card-text"><strong>موجودی: </strong>{{object.quantity}}</p>
+              <hr>
+              <!-- Add other task details as needed -->
+          </div>
+          </div>
+        </div>
+
+        <!-- Buttons to change status, priority, add comment, etc. -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-text">
+            <a href="{% url 'insurance:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+
+            <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+        </div>
+</div>
+</div>
+
+<div class="container mt-4">
+    <h2>بیماران تحت پوشش این بیمه </h2>
+    <br>
+
+    <!-- Card for basic service details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <div class="card-header"><strong>
+اطلاعات     
+             </strong>  </div>
+
+
+             <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">نام و نام خانوداگی </th>
+                    <th scope="col">کدملی</th>
+                    <th scope="col">وضعیت</th>
+                    <th scope="col">اکشن ها</th>
+  
+
+                  </tr>
+                </thead>
+                <tbody>
+                    {%for i in clients%}
+                    <tr class="fw-normal">
+                        <td class="align-middle">
+                            <span>{{i.id}}</span>
+                          </td>
+                      <td class="align-middle">
+                        <span>{{i.get_full_name}}</span>
+                      </td>
+                      <td class="align-middle">
+                          <span>{{i.national_id}}</span>
+                        </td>
+                        <td class="align-middle">
+                          {% if i.is_vip == True%}
+                          <span class="badge bg-primary rounded-pill">ٰVIP</span>
+                            {% else%}
+                            <span class="badge bg-secondary rounded-pill">اشتراک معمولی</span>
+                            {% endif %}
+                        </td>
+                        <td class="align-middle">
+                          <a href="{%url 'client:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+    
+                    </tbody>
+                  {%endfor%}
+                  </tbody>
+              </table>
+          </div>
+          </div>
+        </div>
+
+        <div class="container mt-4">
+            <h2>سرویس های تحت پوشش این بیمه </h2>
+            <br>
+        
+            <!-- Card for basic service details -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="card-header"><strong>
+        اطلاعات     
+                     </strong>  </div>
+        
+        
+                     <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">نام سرویس</th>
+                            <th scope="col">نام پزشک</th>
+                            <th scope="col">دسته بندی</th>
+                            <th scope="col">اکشن ها</th>
+          
+        
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {%for i in service%}
+                            <tr class="fw-normal">
+                                <td class="align-middle">
+                                    <span>{{i.id}}</span>
+                                  </td>
+                              <td class="align-middle">
+                                <span>{{i.service.name}}</span>
+                              </td>
+                              <td class="align-middle">
+                                  <span>{{i.service.doctor.get_full_name}}</span>
+                                </td>
+                                <td class="align-middle">
+                                    <span>{{i.service.category}}</span>
+                                  </td>
+                                <td class="align-middle">
+                                  <a href="{%url 'services:detail' i.service.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+                                </td>
+                            </tr>
+            
+                            </tbody>
+                          {%endfor%}
+                          </tbody>
+                      </table>
+                  </div>
+                  </div>
+                </div>
+
+      <!-- DELETE MODALS -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              از حذف این بیمه {{object}} مطمین هستید ؟
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary" href="{% url 'insurance:delete' pk=object.pk %}" class="btn">حذف</a>
+          </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+</div>
+</div>
+    <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{%endblock%}
