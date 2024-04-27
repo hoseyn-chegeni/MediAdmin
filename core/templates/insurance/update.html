@@ -1,15 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Insurance</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%extends 'base.html' %}
+{%block title %}ویرایش بیمه {{object}}{%endblock%}
+
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ویرایش بیمه {{object}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+
+                    <div class="col-sm-6">
+                      <label for="name" class="form-label">نام</label>
+                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                    </div>
+
+                    <div class="col-sm-6">
+                      <label for="policy_number" class="form-label">شماره بیمه</label>
+                      <input type="text" class="form-control" id="policy_number" placeholder="" value="{{object.policy_number}}" name="policy_number" >
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="insurance_company" class="form-label">سازمان ارایه دهنده</label>
+                        <input type="text" class="form-control" id="insurance_company" placeholder="" value="{{object.insurance_company}}" name="insurance_company" >
+                      </div>
+         
+                      <div class="col-sm-6">
+                        <label for="deductible" class="form-label"> قابل کسر </label>
+                        <input type="number" class="form-control" id="deductible" placeholder="" value="{{object.deductible}}" name="deductible" >
+                      </div>     
+                      
+                      <div class="col-sm-6">
+                        <label for="copay" class="form-label">  پرداخت مشترک(copay) </label>
+                        <input type="number" class="form-control" id="copay" placeholder="" value="{{object.copay}}" name="copay" >
+                      </div>     
+
+                      <div class="col-sm-6">
+                        <label for="max_annual_coverage" class="form-label"> حداکثر پوشش سالانه </label>
+                        <input type="number" class="form-control" id="max_annual_coverage" placeholder="" value="{{object.max_annual_coverage}}" name="max_annual_coverage" >
+                      </div>  
+
+
+                      <div class="col-sm-6">
+                        <label for="policy_type" class="form-label"> policy_type </label>
+                        <input type="text" class="form-control" id="policy_type" placeholder="" value="{{object.policy_type}}" name="policy_type" >
+                      </div>  
+
+                      <div class="col-sm-6">
+                        <label for="notes" class="form-label"> یادداشت </label>
+                        <input type="text" class="form-control" id="notes" placeholder="" value="{{object.notes}}" name="notes" >
+                      </div>  
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+
+{%endblock%}
