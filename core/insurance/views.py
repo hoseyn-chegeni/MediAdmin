@@ -103,11 +103,3 @@ class ServiceInsuranceUpdateView(BaseUpdateView):
     app_name = "insurance"
     url_name = "service_insurance_detail"
     permission_required = "insurance.change_insuranceservice"
-
-
-
-class ServiceInsuranceDeleteView(BaseDeleteView):
-    model = InsuranceService
-    app_name = "insurance"
-    url_name = "list"
-    permission_required = "insurance.delete_insuranceservice"
