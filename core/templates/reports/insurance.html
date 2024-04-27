@@ -16,21 +16,50 @@
                   <form class="table text-white mb-0" method="get" action="{% url 'reports:export_insurance_excel'%}">
                     {%csrf_token%}
                     <div class="row g-3">
-
                       <div class="col-sm-6">
                         <label for="id" class="form-label">ID</label>
                         <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
                       </div>
-
+          
                       <div class="col-sm-6">
                         <label for="name" class="form-label">نام</label>
-                        <input  class="form-control" type="text" name="name" step="any" id="name"value="{{ request.GET.name }}" >
+                        <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
                       </div>
 
                       <div class="col-sm-6">
-                        <label for="policy_number" class="form-label">policy number</label>
-                        <input  class="form-control" type="number" name="policy_number" step="any" id="policy_number"value="{{ request.GET.policy_number }}" >
+                        <label for="insurance_company" class="form-label">سازمان ارایه دهنده</label>
+                        <input  class="form-control" type="text" name="insurance_company" step="any" id="insurance_company" value="{{ request.GET.insurance_company }}" >
                       </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="policy_number" class="form-label">شماره بیمه</label>
+                        <input  class="form-control" type="text" name="policy_number" step="any" id="policy_number" value="{{ request.GET.policy_number }}" >
+                      </div>
+
+
+
+                        <div class="col-sm-6">
+                          <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+                          </label>
+                          <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                        </div>
+  
+                        <div class="col-sm-6">
+                          <label for="date" class="form-label">تاریخ</label>
+                          <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                        </div>
+            
+                        <div class="col-sm-6">
+                          <label for="date_range">محدوده زمانی</label>
+                          <select class="form-select" name="date_range" id="date_range">
+                            <option value="" selected>---------</option>
+                            <option value="today">امروز</option>
+                            <option value="this_week">هفته گذشته</option>
+                            <option value="this_month">ماه گذشته</option>
+                          </select>
+                        </div>
+          
 
 
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">دانلود فایل گزارش</button>
