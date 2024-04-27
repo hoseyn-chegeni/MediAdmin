@@ -7,7 +7,7 @@ from base.views import (
     BaseUpdateView,
 )
 from .models import Insurance, InsuranceService
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from .filters import InsuranceFilter, InsuranceServiceFilter
 from client.models import Client
 from django.contrib import messages
@@ -103,3 +103,14 @@ class ServiceInsuranceUpdateView(BaseUpdateView):
     app_name = "insurance"
     url_name = "service_insurance_detail"
     permission_required = "insurance.change_insuranceservice"
+
+
+
+class DeleteSelectedServiceInsuranceView(View):
+    def post(self, request, pk):
+        if request.method == "POST":
+            service_insurance_ids = request.POST.getlist("service_insurance_ids")
+            deleted_count, _ = InsuranceService.objects.filter(id__in=service_insurance_ids).delete()
+            messages.success(request, f"تعداد {deleted_count} سرویس از پوشش این بیمه خارج شدند")
+        
+        return redirect(reverse('insurance:detail', kwargs={"pk": self.kwargs['pk']}))  # Redirect to the detail URL with the appropriate kwargs

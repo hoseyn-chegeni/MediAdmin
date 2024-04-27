@@ -7,7 +7,8 @@ from .views import (
     InsuranceUpdateView,
     ServiceInsuranceCreateView,
     ServiceInsuranceUpdateView,
-    DeleteSelectedInsuranceView
+    DeleteSelectedInsuranceView,
+    DeleteSelectedServiceInsuranceView,
 )
 
 app_name = "insurance"
@@ -31,5 +32,7 @@ urlpatterns = [
         ServiceInsuranceUpdateView.as_view(),
         name="service_insurance_update",
     ),
+
+    path("service_insurance_delete/<int:pk>/", DeleteSelectedServiceInsuranceView.as_view(), name="delete_selected_service_insurance"),
 
 ]
