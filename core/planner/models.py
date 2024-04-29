@@ -26,3 +26,9 @@ class WeekDay(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Session(models.Model):
+    day = models.ForeignKey('Day', on_delete = models.CASCADE)
+    service = models.ForeignKey('services.Service', on_delete = models.CASCADE)
+    client = models.ForeignKey('client.Client', on_delete = models.CASCADE)
