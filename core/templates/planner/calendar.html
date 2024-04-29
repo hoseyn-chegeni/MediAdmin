@@ -1,9 +1,10 @@
 {%extends 'base.html' %}
-    {%block head%}{%endblock%}
+    {%block title%}نوبت دهی سرویس {{service}}{%endblock%}
 
   {%block content%}
     <div class="container">
-        <h1>Calendar</h1>
+        <h1>نوبت دهی سرویس {{service}}</h1>
+        <br>
         {% for month in months %}
         <div class="card mb-3">
             <div class="card-header">{{ month.slug }}</div>

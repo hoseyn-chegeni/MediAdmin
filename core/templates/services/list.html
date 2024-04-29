@@ -166,6 +166,7 @@
                             <a href="{%url 'services:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
                             <a href="{%url 'services:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
                             <a href="{% url 'services:appointment_config' i.pk %}" data-mdb-toggle="tooltip" title="Appointment Config"><i class="fas fa-cog" ></i></a>
+                            <a href="{% url 'planner:calendar' i.pk %}" data-mdb-toggle="tooltip" title="Appointment"><i class="fas fa-calendar" ></i></a>
                             <a href="{% url 'services:queue' i.pk %}" data-mdb-toggle="tooltip" title="Waiting Queue"><i class="fas fa-list" ></i></a>
                         </td>
                       </tr>
