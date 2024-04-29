@@ -1,9 +1,10 @@
-from typing import Any
-from django.db.models.query import QuerySet
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView
-from .models import Month, Session
+from django.views.generic import ListView, CreateView
+from .models import Month, Session, Day
 from services.models import Service
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -21,8 +22,23 @@ class CalendarView(ListView):
     
 
 class SessionListView(ListView):
-    template_name = 'planner/session_list.html'
+    template_name = 'planner/list.html'
     context_object_name = 'session'
 
     def get_queryset(self):
         return Session.objects.filter(day_id = self.kwargs['day_pk'], service_id = self.kwargs['service_pk'])
+
+
+class SessionCreateView(CreateView):
+    model = Session
+    fields = ['client',]
+    template_name = "planner/create.html"
+
+    def get_success_url(self):
+            return reverse_lazy(
+                'planner:calendar', kwargs={"pk": self.kwargs["service_pk"]}
+            )
+    def form_valid(self, form):
+        form.instance.day = Day.objects.get(id = self.kwargs['day_pk'])
+        form.instance.service = Service.objects.get(id = self.kwargs['service_pk'])
+        return super().form_valid(form)
