@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "reports",
     "tasks",
     "consumable",
+    "planner",
+
 ]
 
 MIDDLEWARE = [
