@@ -15,7 +15,11 @@
                         <div class="card">
                             <div class="card-header">{{ day.name }},{{ day }} </div>
                             <div class="card-body">
-
+                                {%for i in service.off_days.all%}
+                                    {% if i.number == day.name.number%}
+                                    <span class="badge bg-danger rounded-pill">روز تعطیل</span>
+                                    {%endif%}
+                                {%endfor%}
                             </div>
                         </div>
                     </div>
