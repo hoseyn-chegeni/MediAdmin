@@ -7,13 +7,15 @@ from django.core.validators import MaxValueValidator
 # Create your models here.
 
 DAYS_OF_WEEK = (
-    (0, "Monday"),
-    (1, "Tuesday"),
-    (2, "Wednesday"),
-    (3, "Thursday"),
-    (4, "Friday"),
-    (5, "Saturday"),
-    (6, "Sunday"),
+    (1, "شنبه"),
+    (2, "یک شنبه"),
+    (3, "دو شنبه"),
+    (4, "سه شنبه"),
+    (5, "چهارشنبه"),
+    (6, "پنج شنبه"),
+    (7, "جمعه"),
+
+
 )
 
 
