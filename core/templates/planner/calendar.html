@@ -13,12 +13,19 @@
                     {% for day in month.day_set.all %}
                     <div class="col-md-2">
                         <div class="card">
-                            <div class="card-header">{{ day.name }},{{ day }} </div>
+                            <div class="card-header">{{ day.name }} , {{ day }} </div>
                             <div class="card-body">
                                 {%if day.name in service.off_days.all%}
                                    <h5> <span class="badge bg-danger rounded-pill">روز تعطیل</span></h5>
+                                   <hr>
+<br>
+<br>
+
                                 {%else%}
-                                <h5> <span class="badge bg-primary rounded-pill"> 0 / {{service.appointment_per_day}}</span></h5>
+                                <h5> <span class="badge bg-success rounded-pill"> 0 / {{service.appointment_per_day}}</span></h5>
+                                <hr>
+                                <a href="#" class="btn btn-outline-success ms-1">نمایش</a>
+
                                 {%endif%}
 
                             </div>
