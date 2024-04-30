@@ -64,6 +64,7 @@
           <a href="{% url 'services:appointment_config' object.id%}" class="btn btn-success me-2">تنظیمات</a>
           <a href="{% url 'services:service_consumable_create' object.id%}" class="btn btn-success me-2">افزودن مواد مصرفی</a>
           <a href="{% url 'services:queue' object.id%}" class="btn btn-success me-2">صف انتظار سرویس</a>
+          <a href="{% url 'planner:calendar' object.id%}" class="btn btn-success me-2">نویت دهی</a>
 
           {% if object.is_active == True%}
           <a href="#" data-toggle="modal" data-target="#suspendModal"  class="btn btn-success me-2" title="suspend" >تعلیق سرویس</a>
