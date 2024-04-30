@@ -9,7 +9,9 @@
             <div class="card p-3 mb-2">
                     <h3 class="heading">{{i}}</h3>
                     <br>
-                    <h6 >دکتر {{i.doctor.get_full_name}}</h6>
+                    <h۵ >دکتر {{i.doctor.get_full_name}}</h6>
+                    <small >تخصص: {{i.doctor.specialization}}</small>
+
                     <hr>
                         <div>                            
                             <a href="{% url 'planner:calendar' i.id%}" class="btn btn-outline-success me-2">نمایش تقویم نوبت دهی</a>
