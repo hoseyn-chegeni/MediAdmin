@@ -32,3 +32,6 @@ class Session(models.Model):
     day = models.ForeignKey('Day', on_delete = models.CASCADE)
     service = models.ForeignKey('services.Service', on_delete = models.CASCADE)
     client = models.ForeignKey('client.Client', on_delete = models.CASCADE)
+    name = models.CharField(max_length = 100, blank = True, null = True)
+    national_id = models.CharField(max_length = 20, blank = True, null = True)
+    phone_number = models.CharField(max_length = 20, blank = True, null = True)
