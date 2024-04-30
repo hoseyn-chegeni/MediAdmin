@@ -37,7 +37,14 @@ class SessionListView(BaseListView):
     filterset_class = 0
     def get_queryset(self):
         return Session.objects.filter(day_id = self.kwargs['day_pk'], service_id = self.kwargs['service_pk'])
+    
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["service"] = Service.objects.get(id=self.kwargs['service_pk'])
+        context["day"] = Day.objects.get(id=self.kwargs['day_pk'])
+        return context
 
 class SessionCreateView(BaseCreateView):
     model = Session

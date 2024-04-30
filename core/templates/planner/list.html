@@ -1,3 +1,89 @@
-{% for i in session%}
-    <p>{{i.service}}/ {{i.client}} / {{i.day}}</p>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block title %}لیست نوبت ها {% endblock %}
+
+{% block content %}
+<div class="py-5 text-center">
+  <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+  <h2>لیست نوبت های سرویس {{ service }} تاریخ {{day}}</h2>
+</div>
+
+
+<div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="col-md-12 col-xl-10">
+    <div class="card mask-custom">
+      <div class="card-body p-4 text-white">
+
+<p>اطلاعات</p>
+<br>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">شماره پرونده بیمار</th>
+      <th scope="col">نام </th>
+      <th scope="col">کدملی</th>
+      <th scope="col">شماره همراه</th>
+      <th scope="col">اکشن</th>
+    </tr>
+  </thead>
+  <tbody>
+      {%for i in session%}
+    <tr class="fw-normal">
+        <td class="align-middle">
+            <span>{{i.id}}</span>
+          </td>
+      <td class="align-middle">
+      {% if i.client %}
+        <span>{{i.client.id}}</span>
+        {%else%}
+        <span>#</span>
+        {%endif%}
+      </td>
+      <td class="align-middle">
+        {%if i.client %}
+        <span>{{i.client.get_full_name}}</span>
+        {% else %}
+        <span>{{i.name}}</span>
+        {%endif%}
+      </td>
+      <td class="align-middle">
+        {%if i.client%}
+          <span>{{i.client.national_id}}</span>
+        {%else%}
+        <span>{{i.national_id}}</span>
+        {%endif%}
+        </td>
+        <td class="align-middle">
+            {%if i.client %}
+            <span>{{i.client.phone_number}}</span>
+            {%else%}
+            <span>{{i.phone_number}}</span>
+            {%endif%}
+          </td>
+
+        <td class="align-middle">
+          <span>
+            {% if i.client %}
+            <a href="#" class="btn btn-outline-success btn-sm">جزییات</a>
+            <a href="#" class="btn btn-outline-success btn-sm">پذیرش</a>
+            <a href="#" class="btn btn-outline-success btn-sm">لغو نوبت</a>
+            {%else%}
+            <a href="#" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
+            <a href="#" class="btn btn-outline-success btn-sm">لغو نوبت</a>
+          {% endif %}
+        </span>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
