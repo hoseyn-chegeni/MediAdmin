@@ -2,7 +2,9 @@ from base.views import BaseListView, BaseCreateView
 from .models import Month, Session, Day
 from services.models import Service
 from django.urls import reverse_lazy
-
+from django.views.generic import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 
 
@@ -69,3 +71,13 @@ class ServiceCardView(BaseListView):
     filterset_class = 0
     permission_required = "services.view_service"
     
+class SessionDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Session
+    permission_required = 'planner.delete_session'  # Update with your permission
+    success_message = "نوبت اعلام شده با موفقیت لغو شد."
+    template_name = 'planner/delete.html'
+
+    def get_success_url(self):
+        # Override to redirect to a specific URL after deletion
+        return reverse_lazy("planner:list", kwargs={"day_pk": self.object.day.pk, "service_pk":self.object.service.pk})
+        
