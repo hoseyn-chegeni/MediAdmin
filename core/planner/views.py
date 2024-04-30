@@ -8,16 +8,24 @@ from django.urls import reverse_lazy
 
 # Create your views here.
 
+
 class CalendarView(ListView):
     template_name = 'planner/calendar.html'
     context_object_name = 'months'
 
     def get_queryset(self):
         return Month.objects.all().prefetch_related('day_set')
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["service"] = Service.objects.get(id=self.kwargs["pk"])
+        service_id = self.kwargs["pk"]
+        context["service"] = Service.objects.get(id=service_id)
+
+        # Annotate each day with the count of sessions for the specific service
+        for month in context["months"]:
+            for day in month.day_set.all():
+                day.session_count = Session.objects.filter(day=day, service_id=service_id).count()
+
         return context
     
 

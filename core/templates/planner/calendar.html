@@ -22,7 +22,7 @@
 <br>
 
                                 {%else%}
-                                <h5> <span class="badge bg-success rounded-pill"> 0 / {{service.appointment_per_day}}</span></h5>
+                                <h5> <span class="badge bg-success rounded-pill"> {{day.session_count}} / {{service.appointment_per_day}}</span></h5>
                                 <hr>
                                 <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-success ms-1">نمایش</a>
                                 <a href="{% url 'planner:create' service.id day.id %}" class="btn btn-outline-success ms-1">ثبت</a>
