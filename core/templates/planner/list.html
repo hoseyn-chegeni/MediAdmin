@@ -67,8 +67,8 @@
         <td class="align-middle">
           <span>
             {% if i.client %}
-            <a href="#" class="btn btn-outline-success btn-sm">جزییات</a>
-            <a href="#" class="btn btn-outline-success btn-sm">پذیرش</a>
+            <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات</a>
+            <a href="{% url 'reception:reception_create_using_profile' i.client.id%}" class="btn btn-outline-success btn-sm">پذیرش</a>
             <a href="#" class="btn btn-outline-success btn-sm">لغو نوبت</a>
             {%else%}
             <a href="#" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
