@@ -14,7 +14,7 @@ class Day(models.Model):
     name = models.ForeignKey('WeekDay', on_delete = models.DO_NOTHING)
     month = models.ForeignKey('Month', on_delete = models.CASCADE)
     date = models.DateField()
-
+    is_holiday = models.BooleanField(default = False)
     def __str__(self):
         return f'{self.month.number} / {self.number}'
     
