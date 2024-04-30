@@ -95,7 +95,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
-        form.instance.client = Client.objects.get(id = self.kwargs['pk'])
+        form.instance.client = Client.objects.get(id=self.kwargs["pk"])
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service

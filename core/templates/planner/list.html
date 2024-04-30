@@ -70,7 +70,7 @@
             <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات</a>
             <a href="{% url 'reception:reception_create_using_profile' i.client.id%}" class="btn btn-outline-success btn-sm">پذیرش</a>
             {%else%}
-            <a href="#" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
+            <a href="{% url 'client:create_from_session' i.id %}" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
           {% endif %}
           <a href="{% url 'planner:session_delete' i.id%}" class="btn btn-outline-success btn-sm">لغو نوبت</a>
 

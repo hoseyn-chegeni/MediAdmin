@@ -15,10 +15,7 @@ DAYS_OF_WEEK = (
     (5, "چهارشنبه"),
     (6, "پنج شنبه"),
     (7, "جمعه"),
-
-
 )
-
 
 
 class Service(models.Model):

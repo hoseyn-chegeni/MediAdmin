@@ -26,7 +26,7 @@ from logs.models import ClientSMSLog
 from booking.models import Appointment
 from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
-
+from planner.models import Session
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -245,3 +245,42 @@ class DeleteSelectedClientView(View):
             )  # Get the list of selected user IDs from the form
             Client.objects.filter(id__in=client_ids).delete()  # Delete selected users
         return redirect("client:list")
+
+
+class CreateClintFromSessionView(BaseCreateView):
+    model = Client
+    fields = [
+        "case_id",
+        "fathers_name",
+        "date_of_birth",
+        "gender",
+        "address",
+        "marital_status",
+        "emergency_contact_name",
+        "emergency_contact_number",
+        "surgeries",
+        "allergies",
+        "medical_history",
+        "medications",
+        "smoker",
+        "disease",
+        "insurance",
+        "is_vip",
+        "image",
+    ]
+    template_name = "client/create_from_session.html"
+    permission_required = "client.add_client"
+
+    def form_valid(self, form):
+        session = Session.objects.get(id=self.kwargs["pk"])
+        form.instance.first_name = session.first_name
+        form.instance.last_name = session.last_name
+        form.instance.national_id = session.national_id
+        form.instance.phone_number = session.phone_number
+        return super().form_valid(form)
+    
+    def get_success_url(self):        
+        session = Session.objects.get(id=self.kwargs["pk"])
+        return reverse_lazy(
+            'planner:list', kwargs={"service_pk": session.service.id, 'day_pk':session.day.id}
+        )
