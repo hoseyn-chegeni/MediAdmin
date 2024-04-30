@@ -41,7 +41,7 @@ class SessionListView(BaseListView):
 
 class SessionCreateView(BaseCreateView):
     model = Session
-    fields = ['client',]
+    fields = ['client','name','national_id','phone_number']
     template_name = "planner/create.html"
     permission_required = 'planner.add_session'
 
