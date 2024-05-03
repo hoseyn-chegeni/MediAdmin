@@ -14,7 +14,7 @@
     <div class="card mask-custom">
       <div class="card-body p-4 text-white">
 
-<p class="text-muted">اطلاعات</p>
+<h3 class="text-muted">اطلاعات</h3>
 <br>
 
 
@@ -67,7 +67,7 @@
         <td class="align-middle">
           <span>
             {% if i.client %}
-            <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات</a>
+            <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات بیمار</a>
             <a href="{% url 'reception:reception_create_using_profile' i.client.id%}" class="btn btn-outline-success btn-sm">پذیرش</a>
             {%else%}
             <a href="{% url 'client:create_from_session' i.id %}" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
@@ -80,9 +80,86 @@
     {%endfor%}
     </tbody>
 </table>
+
 </div>
 </div>
 </div>
 </div>
 
+<div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="col-md-12 col-xl-10">
+    <div class="card mask-custom">
+      <div class="card-body p-4 text-white">
+
+
+<h3 class="text-muted">نوبت های لغو شده</h3>
+<br>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">شماره پرونده بیمار</th>
+      <th scope="col">نام </th>
+      <th scope="col">کدملی</th>
+      <th scope="col">شماره همراه</th>
+      <th scope="col">علت لغو</th>
+      <th scope="col">اکشن</th>
+    </tr>
+  </thead>
+  <tbody>
+      {%for i in deleted%}
+    <tr class="fw-normal">
+        <td class="align-middle">
+            <span>{{i.id}}</span>
+          </td>
+      <td class="align-middle">
+      {% if i.client %}
+        <span>{{i.client.id}}</span>
+        {%else%}
+        <span>#</span>
+        {%endif%}
+      </td>
+      <td class="align-middle">
+        {%if i.client %}
+        <span>{{i.client.get_full_name}}</span>
+        {% else %}
+        <span>{{i.get_full_name}}</span>
+        {%endif%}
+      </td>
+      <td class="align-middle">
+        {%if i.client%}
+          <span>{{i.client.national_id}}</span>
+        {%else%}
+        <span>{{i.national_id}}</span>
+        {%endif%}
+        </td>
+        <td class="align-middle">
+            {%if i.client %}
+            <span>{{i.client.phone_number}}</span>
+            {%else%}
+            <span>{{i.phone_number}}</span>
+            {%endif%}
+          </td>
+          <td class="align-middle">
+            <span>{{i.reason}}</span>
+          </td>
+        <td class="align-middle">
+          <span>
+            {% if i.client %}
+            <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات بیمار</a>
+          {% endif %}
+
+        </span>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
 {% endblock %}

@@ -49,9 +49,11 @@ class SessionListView(BaseListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context["service"] = Service.objects.get(id=self.kwargs["service_pk"])
-        context["day"] = Day.objects.get(id=self.kwargs["day_pk"])
+        day = Day.objects.get(id=self.kwargs["day_pk"])
+        service =  Service.objects.get(id=self.kwargs["service_pk"])
+        context["service"] = Service
+        context["day"] = day
+        context['deleted'] = DeletedSession.objects.filter(day_id = day.id, service_id = service.id)
         return context
 
 
