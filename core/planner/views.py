@@ -3,10 +3,7 @@ from .models import Month, Session, Day, DeletedSession
 
 from services.models import Service
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-
+from .filters import SessionFilters
 # Create your views here.
 
 
@@ -115,3 +112,11 @@ class SessionDeleteView(BaseCreateView):
             "planner:list",
             kwargs={"day_pk": self.object.day.id, "service_pk": self.object.service.id},
         )
+    
+
+class TotalSessionListView(BaseListView):
+    model = Session
+    template_name = "planner/total_list.html"
+    context_object_name = "session"
+    filterset_class = SessionFilters
+    permission_required = "planner.view_session"

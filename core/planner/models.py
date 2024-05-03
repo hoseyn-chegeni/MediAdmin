@@ -5,7 +5,11 @@ from django.db import models
 class Month(models.Model):
     number = models.PositiveIntegerField()
     slug = models.CharField(max_length=100)
-
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.slug
 
@@ -16,7 +20,11 @@ class Day(models.Model):
     month = models.ForeignKey("Month", on_delete=models.CASCADE)
     date = models.DateField()
     is_holiday = models.BooleanField(default=False)
-
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return f"{self.month.number} / {self.number}"
 
@@ -24,7 +32,11 @@ class Day(models.Model):
 class WeekDay(models.Model):
     number = models.PositiveIntegerField()
     name = models.CharField(max_length=100)
-
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
@@ -39,7 +51,11 @@ class Session(models.Model):
     last_name = models.CharField(max_length=100, blank=True, null=True)
     national_id = models.CharField(max_length=20, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -54,5 +70,10 @@ class DeletedSession(models.Model):
     national_id = models.CharField(max_length=20, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     reason = models.TextField()
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"

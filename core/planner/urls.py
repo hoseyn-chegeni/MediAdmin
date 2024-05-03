@@ -5,6 +5,7 @@ from .views import (
     SessionCreateView,
     ServiceCardView,
     SessionDeleteView,
+    TotalSessionListView
 )
 
 app_name = "planner"
@@ -23,4 +24,5 @@ urlpatterns = [
         SessionDeleteView.as_view(),
         name="session_delete",
     ),
+    path('total/list/',TotalSessionListView.as_view(), name = 'total_list')
 ]
