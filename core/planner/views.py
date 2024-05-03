@@ -1,5 +1,6 @@
 from base.views import BaseListView, BaseCreateView
-from .models import Month, Session, Day
+from .models import Month, Session, Day, DeletedSession
+
 from services.models import Service
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
@@ -79,17 +80,36 @@ class ServiceCardView(BaseListView):
     permission_required = "services.view_service"
 
 
-class SessionDeleteView(
-    LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView
-):
-    model = Session
+class SessionDeleteView(BaseCreateView):
+    model = DeletedSession
     permission_required = "planner.delete_session"  # Update with your permission
-    success_message = "نوبت اعلام شده با موفقیت لغو شد."
     template_name = "planner/delete.html"
+    fields = ['reason',]
+     # Update with your success URL name
+    def form_valid(self, form):
+        # Save the form data to create a new Session instance
+        session_instance = Session.objects.get(id = self.kwargs['pk'])
+
+        # Create a new instance in DeletedSession model
+
+        form.instance.day_id=session_instance.day.id
+        form.instance.service_id=session_instance.service.id
+        form.instance.client_id=session_instance.client.id
+        form.instance.first_name=session_instance.first_name
+        form.instance.last_name=session_instance.last_name
+        form.instance.national_id=session_instance.national_id
+        form.instance.phone_number=session_instance.phone_number
+
+        session_instance.delete()
+
+        return super().form_valid(form)
+    
+
+    def get_success_message(self, cleaned_data):
+        return "با موفقیت حذف شد"
 
     def get_success_url(self):
-        # Override to redirect to a specific URL after deletion
         return reverse_lazy(
             "planner:list",
-            kwargs={"day_pk": self.object.day.pk, "service_pk": self.object.service.pk},
+            kwargs={"day_pk": self.object.day.id, "service_pk": self.object.service.id},
         )
