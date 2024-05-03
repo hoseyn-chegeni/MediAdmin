@@ -120,3 +120,11 @@ class TotalSessionListView(BaseListView):
     context_object_name = "session"
     filterset_class = SessionFilters
     permission_required = "planner.view_session"
+
+
+class TotalDeletedSessionListView(BaseListView):
+    model = DeletedSession
+    template_name = "planner/total_list.html"
+    context_object_name = "session"
+    filterset_class = SessionFilters
+    permission_required = "planner.view_session"
