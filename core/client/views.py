@@ -277,6 +277,7 @@ class CreateClintFromSessionView(BaseCreateView):
         form.instance.last_name = session.last_name
         form.instance.national_id = session.national_id
         form.instance.phone_number = session.phone_number
+        form.instance.initial_session = session
         return super().form_valid(form)
     
     def get_success_url(self):        
