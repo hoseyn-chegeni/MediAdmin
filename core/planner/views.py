@@ -101,7 +101,8 @@ class SessionDeleteView(BaseCreateView):
 
         form.instance.day_id=session_instance.day.id
         form.instance.service_id=session_instance.service.id
-        form.instance.client_id=session_instance.client.id
+        if session_instance.client:
+            form.instance.client_id=session_instance.client.id
         form.instance.first_name=session_instance.first_name
         form.instance.last_name=session_instance.last_name
         form.instance.national_id=session_instance.national_id
@@ -120,6 +121,12 @@ class SessionDeleteView(BaseCreateView):
             "planner:list",
             kwargs={"day_pk": self.object.day.id, "service_pk": self.object.service.id},
         )
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session = Session.objects.get(id=self.kwargs["pk"])
+        context['session'] = session
+        return context
     
 
 class TotalSessionListView(BaseListView):
