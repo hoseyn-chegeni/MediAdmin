@@ -14,7 +14,7 @@ def send_service_session_creation_info(sender, instance, created, **kwargs):
             params = {
                 "sender": "2000500666",  # optional
                 "receptor": f"{instance.client.phone_number}",  # multiple mobile number, split by comma
-                "message": f"همراه گرامی نوبت شما با موفقیت ثبت شد \n نام بیمار: {instance.client.get_full_name()} \n زمان نوبت:‌ {instance.day}  \nکد پیگیری: {instance.id} \n نام پزشک: {instance.service.doctor} \n نام مرکز: مطب دکتر باقری \n آدرس مرکز: تهران تهرانسر خیبان سی ام \n تلفن مرکز:‌ 021445823456",
+                "message": f"همراه گرامی نوبت شما با موفقیت ثبت شد \n نام بیمار: {instance.client.get_full_name()} \n نام سرویس :{instance.service} \n زمان نوبت:‌ {instance.day.number} {instance.day.month}  \nکد پیگیری: {instance.id} \n نام پزشک: دکتر {instance.service.doctor} \n نام مرکز: مطب دکتر باقری \n آدرس مرکز: تهران تهرانسر خیبان سی ام \n تلفن مرکز:‌ 021445823456",
             }
             response = api.sms_send(params)
             print(response)
