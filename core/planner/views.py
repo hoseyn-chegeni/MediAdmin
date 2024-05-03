@@ -70,6 +70,14 @@ class SessionCreateView(BaseCreateView):
         form.instance.service = Service.objects.get(id=self.kwargs["service_pk"])
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        day = Day.objects.get(id=self.kwargs["day_pk"])
+        service =  Service.objects.get(id=self.kwargs["service_pk"])
+        context["service"] = service
+        context["day"] = day
+        return context
+
 
 class ServiceCardView(BaseListView):
     model = Service
