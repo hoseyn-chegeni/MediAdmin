@@ -12,7 +12,7 @@
         <form class="needs-validation" method="post" enctype="multipart/form-data">
 
         <label  for="client">بیمار:</label>
-        <select  class="form-select" name="client" required="" id="client">
+        <select  class="form-select" name="client"  id="client">
           <option value="" selected="">---------</option>
           {% for i in form.client.field.queryset%}
           <option value="{{i.id}}">{{i}}</option>

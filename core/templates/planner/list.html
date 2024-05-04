@@ -26,6 +26,7 @@
       <th scope="col">نام </th>
       <th scope="col">کدملی</th>
       <th scope="col">شماره همراه</th>
+      <th scope="col">وضعیت</th>
       <th scope="col">اکشن</th>
     </tr>
   </thead>
@@ -61,6 +62,15 @@
             <span>{{i.client.phone_number}}</span>
             {%else%}
             <span>{{i.phone_number}}</span>
+            {%endif%}
+          </td>
+          <td class="align-middle">
+            {%if i.status ==  "در انتظار" %}
+            <span class="badge bg-warning rounded-pill">در انتظار</span>
+            {%elif i.status == "پذیرش شده" %}
+            <span class="badge bg-success rounded-pill">پذیرش شده</span>
+            {% else %}
+            <span class="badge bg-danger rounded-pill">عدم مراجعه</span>
             {%endif%}
           </td>
 

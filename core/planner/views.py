@@ -56,7 +56,7 @@ class SessionListView(BaseListView):
 
 class SessionCreateView(BaseCreateView):
     model = Session
-    fields = ["client", "first_name", "last_name", "national_id", "phone_number"]
+    fields = ["client", "first_name", "last_name", "national_id", "phone_number","status"]
     template_name = "planner/create.html"
     permission_required = "planner.add_session"
 
@@ -68,6 +68,7 @@ class SessionCreateView(BaseCreateView):
     def form_valid(self, form):
         form.instance.day = Day.objects.get(id=self.kwargs["day_pk"])
         form.instance.service = Service.objects.get(id=self.kwargs["service_pk"])
+        form.instance.status = "در انتظار"
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
