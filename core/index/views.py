@@ -1,7 +1,6 @@
 from typing import Any
 from django.views.generic.base import TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from booking.models import Appointment
 from datetime import date
 from reception.models import Reception
 from tasks.models import Task
@@ -10,7 +9,7 @@ from django.db.models import Sum
 from django.contrib import messages
 from django.shortcuts import redirect
 from client.models import Client
-
+from planner.models import Session
 
 # Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -19,9 +18,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         today = date.today()
-        appointment_count = Appointment.objects.filter(date=today).count()
-        complete_appointment_count = Appointment.objects.filter(
-            date=today, status="پذیرش شده"
+        appointment_count = Session.objects.filter(day__date=today).count()
+        complete_appointment_count = Session.objects.filter(
+            day__date=today, status="پذیرش شده"
         ).count()
 
         if appointment_count != 0:
