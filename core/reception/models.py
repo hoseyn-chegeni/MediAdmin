@@ -36,6 +36,8 @@ class Reception(models.Model):
     appointment = models.OneToOneField(
         "booking.Appointment", on_delete=models.SET_NULL, blank=True, null=True
     )
-
+    session = models.OneToOneField(
+        "planner.Session", on_delete=models.SET_NULL, blank=True, null=True
+    )
     def __str__(self):
         return f"Reception for {self.client.first_name} {self.client.last_name}"

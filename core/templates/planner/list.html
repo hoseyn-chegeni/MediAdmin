@@ -78,7 +78,7 @@
           <span>
             {% if i.client %}
             <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات بیمار</a>
-            <a href="{% url 'reception:reception_create_using_profile' i.client.id%}" class="btn btn-outline-success btn-sm">پذیرش</a>
+            <a href="{% url 'reception:created_with_appointment' i.id%}" class="btn btn-outline-success btn-sm">پذیرش</a>
             {%else%}
             <a href="{% url 'client:create_from_session' i.id %}" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
           {% endif %}

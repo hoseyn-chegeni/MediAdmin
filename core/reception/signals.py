@@ -6,7 +6,7 @@ from booking.models import Appointment
 from consumable.models import Inventory
 from financial.models import ConsumablePrice
 from tasks.models import Task
-
+from  planner.models import Session
 
 @receiver(post_save, sender=Reception)
 def update_last_reception_date(sender, instance, created, **kwargs):
@@ -31,10 +31,10 @@ def update_reception_number(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Reception)
 def update_appointment_status(sender, instance, created, **kwargs):
-    if created and instance.appointment:
-        appointment = Appointment.objects.get(id=instance.appointment.id)
-        appointment.status = "پذیرش شده"
-        appointment.save()
+    if created and instance.session:
+        session = Session.objects.get(id=instance.session.id)
+        session.status = "پذیرش شده"
+        session.save()
 
 
 @receiver(post_save, sender=Reception)

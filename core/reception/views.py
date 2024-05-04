@@ -19,8 +19,7 @@ from booking.models import Appointment
 from kavenegar import *
 from os import getenv
 from tasks.models import Task
-from consumable.models import Inventory
-from financial.models import ConsumablePrice
+from planner.models import Session
 
 
 # Create your views here.
@@ -152,7 +151,7 @@ class ReceptionUpdateView(BaseUpdateView):
     permission_required = "reception.change_reception"
 
 
-class ReceptionWithAppointmentCreateView(BaseCreateView):
+class ReceptionWithSessionCreateView(BaseCreateView):
     model = Reception
     fields = ["reason", "payment_type", "payment_status"]
     template_name = "reception/create_with_appointment.html"
@@ -161,19 +160,19 @@ class ReceptionWithAppointmentCreateView(BaseCreateView):
     permission_required = "reception.add_reception"
 
     def form_valid(self, form):
-        appointment = Appointment.objects.get(id=self.kwargs["pk"])
+        session = Session.objects.get(id=self.kwargs["pk"])
         # Set the client for the reception
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
-        form.instance.client = appointment.client
-        form.instance.service = appointment.service
-        form.instance.appointment = appointment
+        form.instance.client = session.client
+        form.instance.service = session.service
+        form.instance.session = session
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        appointment = Appointment.objects.get(id=self.kwargs["pk"])
-        context["client"] = Client.objects.get(id=appointment.client.id)
+        session = Session.objects.get(id=self.kwargs["pk"])
+        context["client"] = Client.objects.get(id=session.client.id)
         return context
 
 
