@@ -10,30 +10,6 @@ STATUS = (
     ("عدم مراجعه", "عدم مراجعه"),
 )
 
-
-class Appointment(models.Model):
-    service = models.ForeignKey("services.Service", on_delete=models.CASCADE)
-    client = models.ForeignKey(
-        "client.Client", on_delete=models.CASCADE, blank=True, null=True
-    )
-    national_code = models.CharField(max_length=100, blank=True, null=True)
-    client_name = models.CharField(max_length=100, blank=True, null=True)
-    date = models.DateField()
-    status = models.CharField(max_length=100, choices=STATUS, blank=True, null=True)
-    has_package = models.BooleanField(default=False)
-    package = models.ForeignKey(
-        "PackageAppointment", on_delete=models.CASCADE, blank=True, null=True
-    )
-    created_by = models.ForeignKey(
-        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.service}, {self.client}, {self.date}"
-
-
 class PackageAppointment(models.Model):
     package = models.ForeignKey("services.Package", on_delete=models.CASCADE)
     client = models.ForeignKey(

@@ -4,8 +4,6 @@ from .views import (
     UserReportsView,
     EquipmentReportsView,
     ExportEquipmentExcelView,
-    ExportAppointmentExcelView,
-    AppointmentReportsView,
     PackageAppointmentReportsView,
     ExportPackageAppointmentExcelView,
     ClientReportsView,
@@ -52,16 +50,6 @@ urlpatterns = [
         "export-equipment-excel/",
         ExportEquipmentExcelView.as_view(),
         name="export_equipment_excel",
-    ),
-    path(
-        "appointment_reports/",
-        AppointmentReportsView.as_view(),
-        name="appointment_reports",
-    ),
-    path(
-        "export-appointment-excel/",
-        ExportAppointmentExcelView.as_view(),
-        name="export_appointment_excel",
     ),
     path(
         "package_appointment_reports/",

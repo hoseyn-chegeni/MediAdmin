@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Appointment, PackageAppointment
+from .models import  PackageAppointment
 
 # Register your models here.
-admin.site.register(Appointment)
 admin.site.register(PackageAppointment)

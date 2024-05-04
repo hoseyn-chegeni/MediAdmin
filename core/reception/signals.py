@@ -2,7 +2,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Reception
 from datetime import date
-from booking.models import Appointment
 from consumable.models import Inventory
 from financial.models import ConsumablePrice
 from tasks.models import Task

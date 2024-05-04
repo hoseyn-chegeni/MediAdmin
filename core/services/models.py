@@ -1,9 +1,7 @@
 from django.db import models
 from datetime import date
 from reception.models import Reception
-from booking.models import Appointment
 from django.core.validators import MaxValueValidator
-from planner.models import WeekDay
 
 # Create your models here.
 
@@ -61,10 +59,6 @@ class Service(models.Model):
     def total_reception_count(self):
         return Reception.objects.filter(service=self).count()
 
-    @property
-    def appointment_count_today(self):
-        today = date.today()
-        return Appointment.objects.filter(service=self, date=today).count()
 
     @property
     def waiting_receptions_today(self):
@@ -143,17 +137,6 @@ class ServiceCategory(models.Model):
         for service in self.service_set.all():
             total += service.reception_set.filter(date=today).count()
         return total
-
-    @property
-    def number_of_appointments(self):
-        today = date.today()
-        # Get all services related to this category
-        services = self.service_set.all()
-        # Count appointments for all related services
-        appointments_count = Appointment.objects.filter(
-            service__in=services, date=today
-        ).count()
-        return appointments_count
 
     def __str__(self):
         return f"{self.name}"

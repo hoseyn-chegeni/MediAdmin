@@ -11,7 +11,6 @@ from .filters import (
     ClientFilters,
     ClientReceptionHistoryFilter,
     ClientFinancialHistoryFilter,
-    ClientAppointmentFilter,
 )
 from django.urls import reverse_lazy, reverse
 from reception.models import Reception
@@ -206,7 +205,7 @@ class ClientFinancialInstancesListView(BaseListView):
 class ClientAppointmentListView(BaseListView):
     model = Session
     template_name = "client/client_appointment.html"
-    filterset_class = ClientAppointmentFilter
+    filterset_class = 0
     permission_required = "client.view_client"
 
     def get_queryset(self):

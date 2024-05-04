@@ -15,7 +15,6 @@ from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
-from booking.models import Appointment
 from kavenegar import *
 from os import getenv
 from tasks.models import Task
