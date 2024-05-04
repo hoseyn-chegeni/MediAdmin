@@ -1,7 +1,12 @@
 from django.db import models
 
-
 # Create your models here.
+STATUS = (
+    ("در انتظار", "در انتظار"),
+    ("پذیرش شده", "پذیرش شده"),
+    ("عدم مراجعه", "عدم مراجعه"),
+)
+
 class Month(models.Model):
     number = models.PositiveIntegerField()
     slug = models.CharField(max_length=100)
@@ -51,6 +56,7 @@ class Session(models.Model):
     last_name = models.CharField(max_length=100, blank=True, null=True)
     national_id = models.CharField(max_length=20, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
+    status = models.CharField(max_length=100, choices=STATUS, blank=True, null=True)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
     )
