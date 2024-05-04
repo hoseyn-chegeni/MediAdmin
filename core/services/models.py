@@ -59,7 +59,6 @@ class Service(models.Model):
     def total_reception_count(self):
         return Reception.objects.filter(service=self).count()
 
-
     @property
     def waiting_receptions_today(self):
         today = date.today()

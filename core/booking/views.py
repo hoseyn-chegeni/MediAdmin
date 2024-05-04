@@ -5,8 +5,8 @@ from base.views import (
     BaseUpdateView,
     BaseListView,
 )
-from .models import  PackageAppointment
-from .filters import  PackageAppointmentFilter
+from .models import PackageAppointment
+from .filters import PackageAppointmentFilter
 
 
 # Create your views here.

@@ -7,8 +7,8 @@ import pandas as pd
 from asset.filters import EquipmentFilter
 from asset.models import Equipment
 from base.views import BaseListView
-from booking.models import  PackageAppointment
-from booking.filters import  PackageAppointmentFilter
+from booking.models import PackageAppointment
+from booking.filters import PackageAppointmentFilter
 from client.models import Client
 from client.filters import ClientFilters
 from doctor.models import Doctor
@@ -93,6 +93,7 @@ class ExportEquipmentExcelView(View):
         users_df.to_excel(response, index=False)
 
         return response
+
 
 class PackageAppointmentReportsView(BaseListView):
     model = PackageAppointment

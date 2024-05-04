@@ -46,5 +46,3 @@ class ClientFinancialHistoryFilter(BaseFilter):
             "id": ["exact"],
             "invoice_number": ["exact"],
         }
-
-

@@ -1,9 +1,7 @@
 from django_filters import FilterSet, CharFilter, DateFilter, ChoiceFilter
-from .models import  PackageAppointment
+from .models import PackageAppointment
 from django import forms
 from datetime import datetime, timedelta
-
-
 
 
 ######################################################################################################

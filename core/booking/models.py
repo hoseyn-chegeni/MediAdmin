@@ -10,6 +10,7 @@ STATUS = (
     ("عدم مراجعه", "عدم مراجعه"),
 )
 
+
 class PackageAppointment(models.Model):
     package = models.ForeignKey("services.Package", on_delete=models.CASCADE)
     client = models.ForeignKey(

@@ -13,7 +13,7 @@ def send_sms_reminders():
     date = datetime.now() + timedelta(days=1)
 
     # Query appointments scheduled for tomorrow
-    appointments_tomorrow = Session.objects.filter(day__date = date)
+    appointments_tomorrow = Session.objects.filter(day__date=date)
 
     # Iterate over appointments and send reminders
     for appointment in appointments_tomorrow:
@@ -46,7 +46,7 @@ def update_appointment_status():
     # Get all appointments that are one day old and have not been marked as done
     appointments_to_update = Session.objects.filter(
         day__date__lte=one_day_ago,
-        status="در انتظار",   
+        status="در انتظار",
     )
 
     # Update the status of each appointment to done
