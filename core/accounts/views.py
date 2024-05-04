@@ -20,7 +20,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from logs.models import UserSMSLog, ClientSMSLog
 from client.models import Client
 from reception.models import Reception
-from booking.models import Appointment
+from planner.models import Session
 from financial.models import OfficeExpenses
 from doctor.models import Doctor
 from insurance.models import Insurance
@@ -65,7 +65,7 @@ class UserDetailView(BaseDetailView):
         context["sent_sms_count"] = sent_sms.count()
         context["clients"] = Client.objects.filter(created_by_id=user.id).count()
         context["receptions"] = Reception.objects.filter(created_by_id=user.id).count()
-        context["appointments"] = Appointment.objects.filter(
+        context["appointments"] = Session.objects.filter(
             created_by_id=user.id
         ).count()
         context["user_count"] = User.objects.filter(created_by_id=user.id).count()
