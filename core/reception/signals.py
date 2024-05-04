@@ -6,7 +6,8 @@ from booking.models import Appointment
 from consumable.models import Inventory
 from financial.models import ConsumablePrice
 from tasks.models import Task
-from  planner.models import Session
+from planner.models import Session
+
 
 @receiver(post_save, sender=Reception)
 def update_last_reception_date(sender, instance, created, **kwargs):

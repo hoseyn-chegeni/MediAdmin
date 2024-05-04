@@ -25,7 +25,10 @@ urlpatterns = [
         SessionDeleteView.as_view(),
         name="session_delete",
     ),
-    path('total/list/',TotalSessionListView.as_view(), name = 'total_list'),
-    path('total/deleted/',TotalDeletedSessionListView.as_view(), name = 'total_deleted_list'),
-
+    path("total/list/", TotalSessionListView.as_view(), name="total_list"),
+    path(
+        "total/deleted/",
+        TotalDeletedSessionListView.as_view(),
+        name="total_deleted_list",
+    ),
 ]

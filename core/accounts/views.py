@@ -1,7 +1,6 @@
 from .models import User
 from django.urls import reverse_lazy, reverse
 from .forms import CustomUserCreationForm
-from django.contrib.auth.views import LogoutView
 from .filters import UserFilter, UserSentSMSFilter, UserSMSFilter
 from base.views import (
     BaseCreateView,
@@ -65,9 +64,7 @@ class UserDetailView(BaseDetailView):
         context["sent_sms_count"] = sent_sms.count()
         context["clients"] = Client.objects.filter(created_by_id=user.id).count()
         context["receptions"] = Reception.objects.filter(created_by_id=user.id).count()
-        context["appointments"] = Session.objects.filter(
-            created_by_id=user.id
-        ).count()
+        context["appointments"] = Session.objects.filter(created_by_id=user.id).count()
         context["user_count"] = User.objects.filter(created_by_id=user.id).count()
         # context["consumable"] = Consumable.objects.filter(created_by_id=user.id).count()
         context["office_expenses"] = OfficeExpenses.objects.filter(

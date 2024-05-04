@@ -11,6 +11,7 @@ from django.shortcuts import redirect
 from client.models import Client
 from planner.models import Session
 
+
 # Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"

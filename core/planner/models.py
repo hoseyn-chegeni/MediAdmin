@@ -7,6 +7,7 @@ STATUS = (
     ("عدم مراجعه", "عدم مراجعه"),
 )
 
+
 class Month(models.Model):
     number = models.PositiveIntegerField()
     slug = models.CharField(max_length=100)
@@ -15,6 +16,7 @@ class Month(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.slug
 
@@ -30,6 +32,7 @@ class Day(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return f"{self.month.number} / {self.number}"
 
@@ -42,6 +45,7 @@ class WeekDay(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
 
@@ -62,8 +66,10 @@ class Session(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
 
 class DeletedSession(models.Model):
     day = models.ForeignKey("Day", on_delete=models.CASCADE)
@@ -81,5 +87,6 @@ class DeletedSession(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"

@@ -51,6 +51,10 @@ urlpatterns = [
         ClientSMSListView.as_view(),
         name="client-sms_log",
     ),
-    path("delete/", DeleteSelectedClientView.as_view(), name="delete_selected_clients"), 
-    path("create/session/<int:pk>/", CreateClintFromSessionView.as_view(), name="create_from_session"),
+    path("delete/", DeleteSelectedClientView.as_view(), name="delete_selected_clients"),
+    path(
+        "create/session/<int:pk>/",
+        CreateClintFromSessionView.as_view(),
+        name="create_from_session",
+    ),
 ]

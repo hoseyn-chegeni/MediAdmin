@@ -47,7 +47,14 @@ class Client(models.Model):
     number_of_receptions = models.PositiveIntegerField(blank=True, null=True, default=0)
     last_reception_date = models.DateField(blank=True, null=True)
     last_reception_reason = models.CharField(blank=True, null=True, max_length=255)
-    initial_session = models.ForeignKey('planner.Session', on_delete = models.SET_NULL, blank = True, null = True, related_name = 'initial_session')
+    initial_session = models.ForeignKey(
+        "planner.Session",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="initial_session",
+    )
+
     @property
     def age(self):
         today = date.today()

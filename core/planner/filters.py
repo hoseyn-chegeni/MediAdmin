@@ -5,7 +5,6 @@ from django.db import models
 from base.filters import BaseFilter
 
 
-
 class SessionFilters(BaseFilter):
     name = django_filters.CharFilter(method="filter_by_name")
 

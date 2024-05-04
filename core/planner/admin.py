@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WeekDay, Month, Day, Session,DeletedSession
+from .models import WeekDay, Month, Day, Session, DeletedSession
 
 # Register your models here.
 admin.site.register(Day)

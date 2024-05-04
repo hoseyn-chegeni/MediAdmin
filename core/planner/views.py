@@ -4,6 +4,7 @@ from .models import Month, Session, Day, DeletedSession
 from services.models import Service
 from django.urls import reverse_lazy
 from .filters import SessionFilters
+
 # Create your views here.
 
 
@@ -47,16 +48,25 @@ class SessionListView(BaseListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         day = Day.objects.get(id=self.kwargs["day_pk"])
-        service =  Service.objects.get(id=self.kwargs["service_pk"])
+        service = Service.objects.get(id=self.kwargs["service_pk"])
         context["service"] = Service
         context["day"] = day
-        context['deleted'] = DeletedSession.objects.filter(day_id = day.id, service_id = service.id)
+        context["deleted"] = DeletedSession.objects.filter(
+            day_id=day.id, service_id=service.id
+        )
         return context
 
 
 class SessionCreateView(BaseCreateView):
     model = Session
-    fields = ["client", "first_name", "last_name", "national_id", "phone_number","status"]
+    fields = [
+        "client",
+        "first_name",
+        "last_name",
+        "national_id",
+        "phone_number",
+        "status",
+    ]
     template_name = "planner/create.html"
     permission_required = "planner.add_session"
 
@@ -74,7 +84,7 @@ class SessionCreateView(BaseCreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         day = Day.objects.get(id=self.kwargs["day_pk"])
-        service =  Service.objects.get(id=self.kwargs["service_pk"])
+        service = Service.objects.get(id=self.kwargs["service_pk"])
         context["service"] = service
         context["day"] = day
         return context
@@ -92,27 +102,29 @@ class SessionDeleteView(BaseCreateView):
     model = DeletedSession
     permission_required = "planner.delete_session"  # Update with your permission
     template_name = "planner/delete.html"
-    fields = ['reason',]
-     # Update with your success URL name
+    fields = [
+        "reason",
+    ]
+
+    # Update with your success URL name
     def form_valid(self, form):
         # Save the form data to create a new Session instance
-        session_instance = Session.objects.get(id = self.kwargs['pk'])
+        session_instance = Session.objects.get(id=self.kwargs["pk"])
 
         # Create a new instance in DeletedSession model
 
-        form.instance.day_id=session_instance.day.id
-        form.instance.service_id=session_instance.service.id
+        form.instance.day_id = session_instance.day.id
+        form.instance.service_id = session_instance.service.id
         if session_instance.client:
-            form.instance.client_id=session_instance.client.id
-        form.instance.first_name=session_instance.first_name
-        form.instance.last_name=session_instance.last_name
-        form.instance.national_id=session_instance.national_id
-        form.instance.phone_number=session_instance.phone_number
+            form.instance.client_id = session_instance.client.id
+        form.instance.first_name = session_instance.first_name
+        form.instance.last_name = session_instance.last_name
+        form.instance.national_id = session_instance.national_id
+        form.instance.phone_number = session_instance.phone_number
 
         session_instance.delete()
 
         return super().form_valid(form)
-    
 
     def get_success_message(self, cleaned_data):
         return "با موفقیت حذف شد"
@@ -122,13 +134,13 @@ class SessionDeleteView(BaseCreateView):
             "planner:list",
             kwargs={"day_pk": self.object.day.id, "service_pk": self.object.service.id},
         )
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         session = Session.objects.get(id=self.kwargs["pk"])
-        context['session'] = session
+        context["session"] = session
         return context
-    
+
 
 class TotalSessionListView(BaseListView):
     model = Session

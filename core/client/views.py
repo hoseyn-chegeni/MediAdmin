@@ -28,6 +28,7 @@ from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from planner.models import Session
 
+
 # Create your views here.
 class ClientListView(BaseListView):
     model = Client
@@ -279,9 +280,10 @@ class CreateClintFromSessionView(BaseCreateView):
         form.instance.phone_number = session.phone_number
         form.instance.initial_session = session
         return super().form_valid(form)
-    
-    def get_success_url(self):        
+
+    def get_success_url(self):
         session = Session.objects.get(id=self.kwargs["pk"])
         return reverse_lazy(
-            'planner:list', kwargs={"service_pk": session.service.id, 'day_pk':session.day.id}
+            "planner:list",
+            kwargs={"service_pk": session.service.id, "day_pk": session.day.id},
         )

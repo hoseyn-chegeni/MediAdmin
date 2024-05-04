@@ -49,4 +49,4 @@ def send_service_session_creation_info(sender, instance, created, **kwargs):
             response = api.sms_send(params)
             print(response)
         except (APIException, HTTPException) as e:
-                print(e)
+            print(e)
