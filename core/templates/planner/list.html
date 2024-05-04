@@ -82,8 +82,9 @@
             {%else%}
             <a href="{% url 'client:create_from_session' i.id %}" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
           {% endif %}
+          {% if i.status == "در انتظار"%}
           <a href="{% url 'planner:session_delete' i.id%}" class="btn btn-outline-success btn-sm">لغو نوبت</a>
-
+            {% endif %}
         </span>
         </td>
     </tr>
