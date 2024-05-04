@@ -23,7 +23,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from logs.models import ClientSMSLog
-from booking.models import Appointment
+from planner.models import Session
 from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from planner.models import Session
@@ -87,7 +87,7 @@ class ClientDetailView(BaseDetailView):
             "-created_at"
         )[:5]
         context["sms_count"] = ClientSMSLog.objects.filter(client_id=client.id).count()
-        appointment = Appointment.objects.filter(client_id=client.id)
+        appointment = Session.objects.filter(client_id=client.id)
         context["appointment"] = appointment.order_by("-created_at")[:5]
         context["appointment_count"] = appointment.count()
         return context
@@ -203,14 +203,14 @@ class ClientFinancialInstancesListView(BaseListView):
 
 
 class ClientAppointmentListView(BaseListView):
-    model = Appointment
+    model = Session
     template_name = "client/client_appointment.html"
     filterset_class = ClientAppointmentFilter
     permission_required = "client.view_client"
 
     def get_queryset(self):
         client_id = self.kwargs["pk"]
-        return Appointment.objects.filter(client_id=client_id)
+        return Session.objects.filter(client_id=client_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

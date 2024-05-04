@@ -274,7 +274,7 @@
               <div class="card-body">
                 <p class="mb-4"><span class="text-primary font-italic me-1">تاریخچه نوبت ها   </p>
                 {% for i in appointment %}
-                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i.service}} / {{i.date}}, <a href="{% url 'booking:detail' i.id %}">جزییات</a> </p>
+                <p class="mt-4 mb-1" style="font-size: .77rem;">{{i.service}} - {{i.day.number}}-{{i.day.month}} </p>
               {%empty%}
                 <p class="mt-4 mb-1" style="font-size: .77rem;">یافت نشد</p>
                 {%endfor%}

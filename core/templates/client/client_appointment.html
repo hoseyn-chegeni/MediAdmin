@@ -48,7 +48,7 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">شماره نوب دهی</th>
+      <th scope="col">شماره نوبت دهی</th>
       <th scope="col">سرویس</th>
       <th scope="col">پزشک معالجه کننده</th>
       <th scope="col">وضعیت</th>
@@ -70,23 +70,38 @@
           <span>{{i.service.doctor}}</span>
         </td>
         <td class="align-middle">
-            <span>{{i.status}}</span>
-          </td>
+          {%if i.status ==  "در انتظار" %}
+          <span class="badge bg-info rounded-pill">در انتظار</span>
+          {%elif i.status == "پذیرش شده" %}
+          <span class="badge bg-success rounded-pill">پذیرش شده</span>
+          {% else %}
+          <span class="badge bg-danger rounded-pill">عدم مراجعه</span>
+          {%endif%}
+        </td>
         <td class="align-middle" >
           <span>{{i.package}}</span>
         </td>
         <td class="align-middle">
-          <span>{{i.date}}</span>
+          <span>{{i.day}}</span>
         </td>
         <td class="align-middle">
           <span>
-            <a href="{% url 'booking:detail' i.id %}" class="btn btn-outline-success btn-sm">جزییات</a>
+            <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات بیمار</a>
+            {% if i.status == "در انتظار"%}
+            <a href="{% url 'planner:session_delete' i.id%}" class="btn btn-outline-success btn-sm">لغو نوبت</a>
+          {% endif %}
+
         </span>
         </td>
     </tr>
     {%endfor%}
     </tbody>
 </table>
+
+</div></div>
+</div>
+</div>
+</div>
 <br>
 <br>
 <br>
