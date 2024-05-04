@@ -38,20 +38,18 @@ def send_sms_reminders():
             print(e)
 
 
-# @shared_task
-# def update_appointment_status():
-#     # Calculate the date one day ago
-#     one_day_ago = datetime.now() - timedelta(days=1)
+@shared_task
+def update_appointment_status():
+    # Calculate the date one day ago
+    one_day_ago = datetime.now() - timedelta(days=1)
 
-#     # Get all appointments that are one day old and have not been marked as done
-#     appointments_to_update = Session.objects.filter(
-#         date__lte=one_day_ago,
-#         status__in=[
-#             "WAITE",
-#         ],
-#     )
+    # Get all appointments that are one day old and have not been marked as done
+    appointments_to_update = Session.objects.filter(
+        day__date__lte=one_day_ago,
+        status="در انتظار",   
+    )
 
-#     # Update the status of each appointment to done
-#     for appointment in appointments_to_update:
-#         appointment.status = "عدم مراجعه"
-#         appointment.save()
+    # Update the status of each appointment to done
+    for appointment in appointments_to_update:
+        appointment.status = "عدم مراجعه"
+        appointment.save()

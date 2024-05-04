@@ -177,8 +177,8 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(hour=13, minute=45),
     },
     "update_appointment_status": {
-        "task": "booking.tasks.update_appointment_status",
-        "schedule": crontab(hour=10, minute=00),
+        "task": "planner.tasks.update_appointment_status",
+        "schedule": crontab(hour=13, minute=58),
     },
     "check_consumable_expiration": {
         "task": "asset.tasks.check_consumable_expiration",
