@@ -8,7 +8,9 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-text">
-            <a href="{% url 'services:detail' service.id%}" class="btn btn-success me-2">جزییات سرویس</a>
+            <a href="{% url 'services:detail' service.id%}" class="btn btn-success me-2">جزییات سرویس</a> 
+            <a href="{% url 'services:queue' service.id%}" class="btn btn-success me-2">صف انتظار ویزیت</a>
+
         </div>
   </div>
   </div>
