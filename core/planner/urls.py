@@ -7,6 +7,7 @@ from .views import (
     SessionDeleteView,
     TotalSessionListView,
     TotalDeletedSessionListView,
+    TodaySessionListView,
 )
 
 app_name = "planner"
@@ -31,4 +32,6 @@ urlpatterns = [
         TotalDeletedSessionListView.as_view(),
         name="total_deleted_list",
     ),
+    path("list/today/", TodaySessionListView.as_view(), name="today_list"),
+
 ]

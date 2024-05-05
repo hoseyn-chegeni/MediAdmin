@@ -1,6 +1,6 @@
 from base.views import BaseListView, BaseCreateView
 from .models import Month, Session, Day, DeletedSession
-
+from datetime import datetime
 from services.models import Service
 from django.urls import reverse_lazy
 from .filters import SessionFilters
@@ -156,3 +156,14 @@ class TotalDeletedSessionListView(BaseListView):
     context_object_name = "session"
     filterset_class = SessionFilters
     permission_required = "planner.view_session"
+
+
+class TodaySessionListView(BaseListView):
+    model = Session
+    template_name = "planner/today_list.html"
+    context_object_name = "session"
+    permission_required = "planner.view_session"
+    filterset_class = 0
+
+    def get_queryset(self):
+        return Session.objects.filter(day__date = datetime.now())

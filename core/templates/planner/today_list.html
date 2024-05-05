@@ -1,0 +1,10 @@
+<form action="" method="get">
+    {%csrf_token%}
+    {{filter.form.as_p}}
+    <input type="submit">
+</form>
+{%for i in session%}
+  <p>  
+      {{i.id}}.{{i.client}} {{i.service}} {{i.day}},
+  </p>
+{% endfor %}
