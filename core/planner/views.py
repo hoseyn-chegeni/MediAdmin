@@ -166,4 +166,4 @@ class TodaySessionListView(BaseListView):
     filterset_class = 0
 
     def get_queryset(self):
-        return Session.objects.filter(day__date = datetime.now())
+        return Session.objects.filter(day__date=datetime.now())

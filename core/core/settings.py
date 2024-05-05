@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "tasks",
     "consumable",
     "planner",
+    "django_jalali",
 ]
 
 MIDDLEWARE = [

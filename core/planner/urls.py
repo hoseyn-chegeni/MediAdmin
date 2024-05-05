@@ -33,5 +33,4 @@ urlpatterns = [
         name="total_deleted_list",
     ),
     path("list/today/", TodaySessionListView.as_view(), name="today_list"),
-
 ]
