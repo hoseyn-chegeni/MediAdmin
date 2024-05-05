@@ -1,4 +1,6 @@
 from django.db import models
+from django_jalali.db import models as jmodels
+
 
 # Create your models here.
 STATUS = (
@@ -9,6 +11,7 @@ STATUS = (
 
 
 class Month(models.Model):
+    objects = jmodels.jManager()
     number = models.PositiveIntegerField()
     slug = models.CharField(max_length=100)
     created_by = models.ForeignKey(
@@ -25,7 +28,7 @@ class Day(models.Model):
     number = models.PositiveIntegerField()
     name = models.ForeignKey("WeekDay", on_delete=models.DO_NOTHING)
     month = models.ForeignKey("Month", on_delete=models.CASCADE)
-    date = models.DateField()
+    date = jmodels.jDateField()
     is_holiday = models.BooleanField(default=False)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
