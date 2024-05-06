@@ -1,6 +1,6 @@
 from django.db import models
 from django_jalali.db import models as jmodels
-
+from django import forms
 
 # Create your models here.
 STATUS = (
@@ -29,6 +29,7 @@ class Day(models.Model):
     name = models.ForeignKey("WeekDay", on_delete=models.DO_NOTHING)
     month = models.ForeignKey("Month", on_delete=models.CASCADE)
     date = jmodels.jDateField()
+    mock_date = models.CharField(max_length = 255, blank = True, null = True)
     is_holiday = models.BooleanField(default=False)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
@@ -38,6 +39,8 @@ class Day(models.Model):
 
     def __str__(self):
         return f"{self.month.number} / {self.number}"
+    
+
 
 
 class WeekDay(models.Model):

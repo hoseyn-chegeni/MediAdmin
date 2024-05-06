@@ -29,8 +29,8 @@
                       </div>
 
                         <div class="col-sm-6">
-                          <label for="date" class="form-label">تاریخ</label>
-                          <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+                          <label for="day_date" class="form-label">تاریخ</label>
+                          <input   class="form-control" type="text" name="day_date" step="any" id="day_date" value="{{ request.GET.day_date }}" data-jdp>
                         </div>
             
                         <div class="col-sm-6">
@@ -64,6 +64,7 @@
                         <th scope="col">نام </th>
                         <th scope="col">کدملی</th>
                         <th scope="col">شماره همراه</th>
+                        <th scope="col">تاریخ</th>
                         <th scope="col">وضعیت</th>
                         <th scope="col">اکشن</th>
                       </tr>
@@ -103,6 +104,9 @@
                               {% else %}
                               <span>{{i.phone_number}}</span>
                               {% endif %}
+                              </td>
+                              <td class="align-middle">
+                                <span>{{i.date}}</span>
                               </td>
 
                               <td class="align-middle">
@@ -178,4 +182,7 @@
         </div>
       </section>
 </div>
+<script>
+  jalaliDatepicker.startWatch();
+</script>
 {%endblock%}
