@@ -83,30 +83,18 @@
                           {% endif %}
                         </td>
                         <td class="align-middle">
-                          {% if i.client%}
-                            <span>{{i.client.get_full_name}}</span>
-                          {% else %}
                           <span>{{i.get_full_name}}</span>
-                          {% endif %}
                           </td>
 
                           <td class="align-middle">
-                            {% if i.client%}
-                              <span>{{i.client.national_id}}</span>
-                            {% else %}
                             <span>{{i.national_id}}</span>
-                            {% endif %}
                             </td>
 
                             <td class="align-middle">
-                              {% if i.client%}
-                                <span>{{i.client.phone_number}}</span>
-                              {% else %}
                               <span>{{i.phone_number}}</span>
-                              {% endif %}
                               </td>
                               <td class="align-middle">
-                                <span>{{i.date}}</span>
+                                <span>{{i.day.mock_date}}</span>
                               </td>
 
                               <td class="align-middle">

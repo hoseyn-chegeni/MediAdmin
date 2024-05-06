@@ -79,6 +79,12 @@ class SessionCreateView(BaseCreateView):
         form.instance.day = Day.objects.get(id=self.kwargs["day_pk"])
         form.instance.service = Service.objects.get(id=self.kwargs["service_pk"])
         form.instance.status = "در انتظار"
+        if form.instance.client:
+            form.instance.first_name =form.instance.client.first_name 
+            form.instance.last_name =form.instance.client.first_name 
+            form.instance.national_id =form.instance.client.national_id 
+            form.instance.phone_number =form.instance.client.phone_number 
+            
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
