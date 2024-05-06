@@ -64,6 +64,7 @@
                         <th scope="col">نام </th>
                         <th scope="col">کدملی</th>
                         <th scope="col">شماره همراه</th>
+                        <th scope="col">تاریخ</th>
                         <th scope="col">اکشن</th>
                       </tr>
                     </thead>
@@ -103,6 +104,10 @@
                               <span>{{i.phone_number}}</span>
                               {% endif %}
                               </td>
+
+                              <td class="align-middle">
+                                <span>{{i.day.mock_date}}</span>
+                                </td>
 
                               <td class="align-middle">
                                 <span>
