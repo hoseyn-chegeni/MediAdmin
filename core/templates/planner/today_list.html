@@ -22,32 +22,62 @@
                         <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
                       </div>
         
+                      <div class="col-sm-6">
+                        <label for="client_id" class="form-label">شماره پرونده بیمار</label>
+                        <input  class="form-control" type="number" name="client_id" step="any" id="client_id"value="{{ request.GET.client_id }}" >
+                      </div>
 
                       <div class="col-sm-6">
-                        <label for="name" class="form-label">نام</label>
+                        <label for="name" class="form-label">نام بیمار</label>
                         <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
                       </div>
 
-                        <div class="col-sm-6">
-                          <label for="date" class="form-label">تاریخ</label>
-                          <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
-                        </div>
-            
-                        <div class="col-sm-6">
-                          <label for="date_range">محدوده زمانی</label>
-                          <select class="form-select" name="date_range" id="date_range">
-                            <option value="" selected>---------</option>
-                            <option value="today">امروز</option>
-                            <option value="this_week">هفته گذشته</option>
-                            <option value="this_month">ماه گذشته</option>
-                          </select>
-                        </div>
-  
+                      <div class="col-sm-6">
+                        <label for="national_id" class="form-label">کدملی بیمار</label>
+                        <input   class="form-control" type="text" name="national_id" step="any" id="national_id" value="{{ request.GET.national_id }}">
+                      </div>
+
 
                         <div class="col-sm-6">
-                          <label for="created_by_email" class="form-label">ایجاد کننده</label>
+                          <label for="status">وضعیت</label>
+                          <select class="form-select" name="status" id="status">
+                              {% for choice in filter.form.status.field.choices %}
+                              <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                              {% endfor %}
+                          </select>
+                      </div>
+  
+            
+                        <div class="col-sm-6">
+                          <label  for="service"> سرویس:</label>
+                          <select  class="form-select" name="service"  id="service">
+                            <option value="" selected="">---------</option>
+                          {% for i in filter.form.service.field.queryset%}
+                            <option value="{{i.id}}">{{i}}</option>
+                            {%endfor%}
+                          </select>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <label for="doctor" class="form-label">نام پزشک</label>
+                            <input  class="form-control" type="text" name="doctor" step="any" id="doctor" value="{{ request.GET.doctor }}" >
+                          </div>
+
+                        <div class="col-sm-6">
+                          <label for="created_by_email" class="form-label">ایمیل ایجاد کننده</label>
                           <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
                         </div>
+
+                        <div class="col-sm-6">
+                          <label  for="has_client"> پرونده پزشکی:</label>
+                          <select  class="form-select" name="has_client"  id="has_client">
+                            <option value="" selected="">نمایش همه ی بیماران</option>
+                            <option value="true">نمایش بیماران دارای پرونده</option>
+                            <option value="false">نمایش بیماران فاقد پرونده</option>
+                          </select>
+                          </div>
+
+
 
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>

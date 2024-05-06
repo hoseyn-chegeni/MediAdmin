@@ -169,7 +169,7 @@ class TodaySessionListView(BaseListView):
     template_name = "planner/today_list.html"
     context_object_name = "session"
     permission_required = "planner.view_session"
-    filterset_class = 0
+    filterset_class = SessionFilters
 
     def get_queryset(self):
         return Session.objects.filter(day__date=datetime.now())
