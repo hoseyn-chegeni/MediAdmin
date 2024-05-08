@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IndexView, ClientCaseIdSearchView, ClientNationalIdSearchView
+from .views import IndexView, ClientCaseIdSearchView, ClientNationalIdSearchView,autocomplete_national_id
 
 app_name = "index"
 
@@ -11,4 +11,6 @@ urlpatterns = [
         name="national_id_search",
     ),
     path("case_id/search/", ClientCaseIdSearchView.as_view(), name="case_id_search"),
+    path('autocomplete-national-id/', autocomplete_national_id, name='autocomplete-national-id'),
+
 ]
