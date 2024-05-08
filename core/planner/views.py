@@ -76,16 +76,30 @@ class SessionCreateView(BaseCreateView):
         )
 
     def form_valid(self, form):
-        form.instance.day = Day.objects.get(id=self.kwargs["day_pk"])
-        form.instance.service = Service.objects.get(id=self.kwargs["service_pk"])
+        day = Day.objects.get(id=self.kwargs["day_pk"])
+        service = Service.objects.get(id=self.kwargs["service_pk"])
+        form.instance.day = day
+        form.instance.service = service
+        
+        # Check if there is an existing session for the client, day, and service
+        existing_session = Session.objects.filter(day=day, service=service, client=form.instance.client).exists()
+        if existing_session:
+            form.add_error(
+                None,
+                f"نوبت از پیش برای این بیمار در این روز برای این سرویس ثبت شده است",
+            )
+            return self.form_invalid(form)
+
         form.instance.status = "در انتظار"
         if form.instance.client:
-            form.instance.first_name =form.instance.client.first_name 
-            form.instance.last_name =form.instance.client.first_name 
-            form.instance.national_id =form.instance.client.national_id 
-            form.instance.phone_number =form.instance.client.phone_number 
-            
+            form.instance.first_name = form.instance.client.first_name
+            form.instance.last_name = form.instance.client.last_name
+            form.instance.national_id = form.instance.client.national_id
+            form.instance.phone_number = form.instance.client.phone_number
+
         return super().form_valid(form)
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
