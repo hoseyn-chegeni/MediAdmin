@@ -93,8 +93,6 @@ class ExportEquipmentExcelView(View):
         return response
 
 
-
-
 class ClientReportsView(BaseListView):
     model = Client
     template_name = "reports/client.html"

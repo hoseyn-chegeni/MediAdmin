@@ -29,7 +29,7 @@ class CalendarView(BaseListView):
                 day.session_count = Session.objects.filter(
                     day=day, service_id=service_id
                 ).count()
-        context['today'] = datetime.now()
+        context["today"] = datetime.now()
         return context
 
 
@@ -80,9 +80,11 @@ class SessionCreateView(BaseCreateView):
         service = Service.objects.get(id=self.kwargs["service_pk"])
         form.instance.day = day
         form.instance.service = service
-        
+
         # Check if there is an existing session for the client, day, and service
-        existing_session = Session.objects.filter(day=day, service=service, client=form.instance.client).exists()
+        existing_session = Session.objects.filter(
+            day=day, service=service, client=form.instance.client
+        ).exists()
         if existing_session:
             form.add_error(
                 None,
@@ -98,8 +100,6 @@ class SessionCreateView(BaseCreateView):
             form.instance.phone_number = form.instance.client.phone_number
 
         return super().form_valid(form)
-
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

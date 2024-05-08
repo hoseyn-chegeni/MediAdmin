@@ -29,7 +29,7 @@ class Day(models.Model):
     name = models.ForeignKey("WeekDay", on_delete=models.DO_NOTHING)
     month = models.ForeignKey("Month", on_delete=models.CASCADE)
     date = jmodels.jDateField()
-    mock_date = models.CharField(max_length = 255, blank = True, null = True)
+    mock_date = models.CharField(max_length=255, blank=True, null=True)
     christ_date = models.DateField()
     is_holiday = models.BooleanField(default=False)
     created_by = models.ForeignKey(
@@ -40,8 +40,6 @@ class Day(models.Model):
 
     def __str__(self):
         return f"{self.month.number} / {self.number}"
-    
-
 
 
 class WeekDay(models.Model):
