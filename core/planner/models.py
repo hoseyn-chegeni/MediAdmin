@@ -30,6 +30,7 @@ class Day(models.Model):
     month = models.ForeignKey("Month", on_delete=models.CASCADE)
     date = jmodels.jDateField()
     mock_date = models.CharField(max_length = 255, blank = True, null = True)
+    christ_date = models.DateField()
     is_holiday = models.BooleanField(default=False)
     created_by = models.ForeignKey(
         "accounts.User", on_delete=models.SET_NULL, blank=True, null=True

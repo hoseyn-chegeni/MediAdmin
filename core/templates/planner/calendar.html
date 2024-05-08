@@ -1,63 +1,66 @@
-{%extends 'base.html' %}
-    {%block title%}نوبت دهی سرویس {{service}}{%endblock%}
+{% extends 'base.html' %}
 
-  {%block content%}
-    <div class="container">
-        <h1>نوبت دهی سرویس {{service}}</h1>
-        <br>
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="card-text">
-            <a href="{% url 'services:detail' service.id%}" class="btn btn-success me-2">جزییات سرویس</a> 
-            <a href="{% url 'services:queue' service.id%}" class="btn btn-success me-2">صف انتظار ویزیت</a>
+{% block title %}نوبت دهی سرویس {{ service }}{% endblock %}
 
-        </div>
-  </div>
-  </div>
-        {% for month in months %}
-        <div class="card mb-3">
-            <div class="card-header">{{ month.slug }}</div>
-            <div class="card-body">
-                <div class="row">
-                    {% for day in month.day_set.all %}
-                    <div class="col-md-2">
-                        <div class="card">
-                            <div class="card-header">{{ day.name }} , {{ day }} </div>
-                            <div class="card-body">
-                                {% if day.is_holiday == True%}
-                                <h5> <span class="badge bg-danger rounded-pill">تعطیل رسمی</span></h5>
-                                <hr>
-<br>
-<br>
-                                {%elif day.name in service.off_days.all%}
-                                   <h5> <span class="badge bg-danger rounded-pill">روز تعطیل</span></h5>
-                                   <hr>
-<br>
-<br>
-
-                                {%elif day.session_count == service.appointment_per_day %}
-                                <h5>
-                                     <span class="badge bg-warning rounded-pill"> {{day.session_count}} / {{service.appointment_per_day}}</span>
-                                     <span class="badge bg-warning rounded-pill">اتمام ظرفیت</span>
-                                </h5>
-                                <hr>
-                                <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-warning ms-1">نمایش</a>
-                                {%else%}
-                                <h5> <span class="badge bg-success rounded-pill"> {{day.session_count}} / {{service.appointment_per_day}}</span></h5>
-                                <hr>
-                                <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-success ms-1">نمایش</a>
-                                <a href="{% url 'planner:create' service.id day.id %}" class="btn btn-outline-success ms-1">ثبت</a>
-
-
-                                {%endif%}
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+{% block content %}
+<div class="container">
+    <h1>نوبت دهی سرویس {{ service }}</h1>
+    <br>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="card-text">
+                <a href="{% url 'services:detail' service.id %}" class="btn btn-success me-2">جزییات سرویس</a> 
+                <a href="{% url 'services:queue' service.id %}" class="btn btn-success me-2">صف انتظار ویزیت</a>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% for month in months %}
+    <div class="card mb-3">
+        <div class="card-header">{{ month.slug }}</div>
+        <div class="card-body">
+            <div class="row">
+                {% for day in month.day_set.all %}
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">{{ day.name }}, {{ day }}</div>
+                        <div class="card-body">
+                            {% if day.is_holiday %}
+                            <h5><span class="badge bg-danger rounded-pill">تعطیل رسمی</span></h5>
+                            <hr>
+                            <br>
+                            <br>
+                            {% elif day.name in service.off_days.all %}
+                            <h5><span class="badge bg-danger rounded-pill">روز تعطیل</span></h5>
+                            <hr>
+                            <br>
+                            <br>
+                            {% elif day.session_count == service.appointment_per_day %}
+                            <h5>
+                                <span class="badge bg-warning rounded-pill">{{ day.session_count }} / {{ service.appointment_per_day }}</span>
+                                <span class="badge bg-warning rounded-pill">اتمام ظرفیت</span>
+                            </h5>
+                            <hr>
+                            <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-warning ms-1">نمایش</a>
+                            {% else %}
+                            {% comment %} Check if the day is in the future {% endcomment %}
+                            {% if day.christ_date.day > today.day %}
+                            <h5><span class="badge bg-success rounded-pill">{{ day.session_count }} / {{ service.appointment_per_day }}</span></h5>
+                            <hr>
+                            <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-success ms-1">نمایش</a>
+                            <a href="{% url 'planner:create' service.id day.id %}" class="btn btn-outline-success ms-1">ثبت</a>
+                            {% else %}
+                            <h5><span class="badge bg-secondary rounded-pill">{{ day.session_count }} / {{ service.appointment_per_day }}</span></h5>
+                            <hr>
+                            <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-secondary ms-1">نمایش</a>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

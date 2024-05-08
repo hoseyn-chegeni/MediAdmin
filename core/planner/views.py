@@ -29,7 +29,7 @@ class CalendarView(BaseListView):
                 day.session_count = Session.objects.filter(
                     day=day, service_id=service_id
                 ).count()
-
+        context['today'] = datetime.now()
         return context
 
 
