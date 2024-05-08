@@ -7,8 +7,6 @@ import pandas as pd
 from asset.filters import EquipmentFilter
 from asset.models import Equipment
 from base.views import BaseListView
-from booking.models import PackageAppointment
-from booking.filters import PackageAppointmentFilter
 from client.models import Client
 from client.filters import ClientFilters
 from doctor.models import Doctor
@@ -95,38 +93,6 @@ class ExportEquipmentExcelView(View):
         return response
 
 
-class PackageAppointmentReportsView(BaseListView):
-    model = PackageAppointment
-    template_name = "reports/package_appointment.html"
-    filterset_class = PackageAppointmentFilter
-    permission_required = "booking.view_packageappointment"
-
-
-class ExportPackageAppointmentExcelView(View):
-    def get(self, request):
-        # Get filtered users based on request parameters
-        package_appointment_filter = PackageAppointmentFilter(
-            request.GET, queryset=PackageAppointment.objects.all()
-        )
-        filtered_package_appointment = package_appointment_filter.qs
-
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_package_appointment.values()))
-
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
-        for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
-
-        # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = (
-            'attachment; filename="package_appointment_report.xlsx"'
-        )
-
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
-
-        return response
 
 
 class ClientReportsView(BaseListView):
