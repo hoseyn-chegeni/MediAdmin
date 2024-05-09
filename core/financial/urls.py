@@ -5,7 +5,6 @@ from .views import (
     InvoiceView,
     FinancialDetailView,
     FinancialListView,
-    FinancialUpdateView,
     OfficeExpensesCreateView,
     OfficeExpensesDeleteView,
     OfficeExpensesDetailView,
@@ -25,7 +24,6 @@ urlpatterns = [
     path("invoice/<int:pk>/", InvoiceView.as_view(), name="invoice"),
     path("detail/<int:pk>/", FinancialDetailView.as_view(), name="detail"),
     path("create/", FinancialCreateView.as_view(), name="create"),
-    path("update/<int:pk>/", FinancialUpdateView.as_view(), name="update"),
     path("delete/<int:pk>/", FinancialDeleteView.as_view(), name="delete"),
     path(
         "update/payment_status/<int:pk>/",

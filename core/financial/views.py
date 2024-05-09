@@ -48,25 +48,6 @@ class FinancialCreateView(BaseCreateView):
     url_name = "detail"
     permission_required = "financial.add_financial"
 
-
-class FinancialUpdateView(BaseUpdateView):
-    model = Financial
-    fields = ["service_price", "consumable_price"]
-    template_name = "financial/update.html"
-    app_name = "financial"
-    url_name = "detail"
-    permission_required = "financial.change_financial"
-
-    def form_valid(self, form):
-        financial = form.save(commit=False)
-        # Calculate total amount including tax
-        total_amount_before_tax = financial.service_price + financial.consumable_price
-        total_amount_after_tax = total_amount_before_tax * (1 + financial.tax_rate)
-        financial.total_amount = total_amount_after_tax
-        financial.save()
-        return super().form_valid(form)
-
-
 class FinancialDeleteView(BaseDeleteView):
     model = Financial
     app_name = "financial"
