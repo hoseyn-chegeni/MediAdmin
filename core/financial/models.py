@@ -41,7 +41,7 @@ class Financial(models.Model):
             ("پرداخت شده", "پرداخت شده"),
             ("پرداخت نشده", "پرداخت نشده"),
         ),
-        default="UNPAID",
+        default="پرداخت نشده",
     )
     payment_received_date = models.DateField(blank=True, null=True)
     tax_rate = Decimal("0.1")

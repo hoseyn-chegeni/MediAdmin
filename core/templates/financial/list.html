@@ -99,7 +99,11 @@
                           <span>{{i.reception.service}}</span>
                         </td>
                         <td class="align-middle">
-                            <span>{{i.payment_status}}</span>
+                          {% if i.payment_status == "پرداخت شده"%}
+                          <span class="badge bg-success rounded-pill">پرداخت شده</span>
+                          {% else %}
+                          <span class="badge bg-secondary rounded-pill">پرداخت نشده</span>
+                        {% endif %}
                           </td>
                           <td class="align-middle">
                             <span>{{i.created_at.date}}</span>
