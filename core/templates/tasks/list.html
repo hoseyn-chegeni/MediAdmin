@@ -1,269 +1,154 @@
-{% extends 'base.html'%}
+{% extends 'base_list.html' %}
 {% block title %}لیست تسک ها{% endblock %}
+{%block list_title%}لیست تسک ها{%endblock%}
+{%block filter_field%}
+<div class="row g-3">
+  <div class="col-sm-6">
+    <label for="id" class="form-label">ID</label>
+    <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+  </div>
 
-{%block content%}
-<div class="container" style="padding-bottom: 90%;">
+  <div class="col-sm-6">
+    <label for="title" class="form-label">عنوان</label>
+    <input  class="form-control" type="text" name="title" step="any" id="title" value="{{ request.GET.title }}" >
+  </div>
 
-    <section class="vh-100 gradient-custom-2">
-        <div class="container py-5 h-100">
-          <div class="text-center pt-3 pb-2">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
-              alt="Check" width="60">
-            <h2 class="my-4">لیست تسک ها</h2>
-          </div>
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-12 col-xl-10">
-              <div class="card mask-custom">
-                <div class="card-body p-4 text-white">
-                  <form class="table text-white mb-0" method="get">
-                    {%csrf_token%}
-                    
-                    <div class="row g-3">
-                      <div class="col-sm-6">
-                        <label for="id" class="form-label">ID</label>
-                        <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
-                      </div>
-          
-                      <div class="col-sm-6">
-                        <label for="title" class="form-label">عنوان</label>
-                        <input  class="form-control" type="text" name="title" step="any" id="title" value="{{ request.GET.title }}" >
-                      </div>
-          
-                      <div class="col-sm-6">
-                        <label for="type" class="form-label">نوع تسک</label>
-                        <input  class="form-control" type="text" name="type" step="any" id="type" value="{{ request.GET.type }}" >
-                      </div>
-          
-
-                      
-                      <div class="col-sm-6">
-                        <label for="status">وضعیت</label>
-                        <select class="form-select" name="status" id="status">
-                            {% for choice in filter.form.status.field.choices %}
-                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    
+  <div class="col-sm-6">
+    <label for="type" class="form-label">نوع تسک</label>
+    <input  class="form-control" type="text" name="type" step="any" id="type" value="{{ request.GET.type }}" >
+  </div>
 
 
-                    <div class="col-sm-6">
-                      <label for="priority">اولویت</label>
-                      <select class="form-select" name="priority" id="priority">
-                          {% for choice in filter.form.priority.field.choices %}
-                              <option value="{{ choice.0 }}">{{ choice.1 }}</option>
-                          {% endfor %}
-                      </select>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="assign_to">کاربر بررسی کننده</label>
-                    <select class="form-select" name="assign_to" id="assign_to">
-                      <option value="" selected>---------</option>
-                      {% for i in filter.form.assign_to.field.queryset %}
-                        <option value="{{ i.id }}">{{ i.email }}</option>
-                      {% endfor %}
-                    </select>
-                  </div> 
-                        <div class="col-sm-6">
-                          <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
-                          </label>
-                          <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
-                        </div>
   
-                        <div class="col-sm-6">
-                          <label for="date" class="form-label">تاریخ</label>
-                          <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
-                        </div>
-            
-                        <div class="col-sm-6">
-                          <label for="date_range">محدوده زمانی</label>
-                          <select class="form-select" name="date_range" id="date_range">
-                            <option value="" selected>---------</option>
-                            <option value="today">امروز</option>
-                            <option value="this_week">هفته گذشته</option>
-                            <option value="this_month">ماه گذشته</option>
-                          </select>
-                        </div>
-          
-
-                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
-                    </form>
-
-                    <div class="mb-4">
-                      <form action="{% url 'tasks:delete_selected_tasks' %}" method="post" id="deleteForm">
-                        {% csrf_token %}
-                    <a href="{% url 'tasks:create' %}" class="btn btn-success me-2">ایجاد تسک جدید</a>
-                    <a href="{% url 'reports:tasks_reports' %}" class="btn btn-success me-2">گزارشات</a>
-                    <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
-
-
-                    </div>
-
-                  <table class="table text-white mb-0">
-                    <thead>
-                      <tr>
-                        <th scope="col"> </th>
-                        <th scope="col">شماره تسک</th>
-                        <th scope="col">عنوان</th>
-                        <th scope="col">نوع تسک</th>
-                        <th scope="col">وضعیت</th>
-                        <th scope="col">اولویت</th>
-                        <th scope="col">کاربر بررسی کننده</th>
-                        <th scope="col">کاربر ایجاد کننده</th>
-                        <th scope="col">تاریخ ایجاد</th>
-                        <th scope="col">اکشن ها</th>
-
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {%for i in tasks%}
-                      <tr class="fw-normal">
-                        <td><input type="checkbox" name="tasks_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
-
-                        <th>
-                          <span class="ms-2">{{i.id}}</span>
-                        </th>
-                        <td class="align-middle">
-                          <span>{{i.title}}</span>
-                        </td>
-                        <td class="align-middle">
-                            <span>{{i.type}}</span>
-                          </td>
-
-                          <td class="align-middle">
-                            <span>{{i.status}}</span>
-                          </td>
-
-                          <td class="align-middle">
-                            {% if i.priority == 'بالا' %}
-                            <span class="badge bg-danger rounded-pill"> بالا </span>
-                            {% elif i.priority == 'متوسط' %}
-                            <span class="badge bg-success rounded-pill"> متوسط </span>
-                            {% else %}
-                            <span class="badge bg-info rounded-pill"> پایین </span>
-                            {%endif%}
-                          </td>
-
-
-                          <td class="align-middle">
-                            <span>{{i.assign_to.email}}</span>
-                          </td>
+  <div class="col-sm-6">
+    <label for="status">وضعیت</label>
+    <select class="form-select" name="status" id="status">
+        {% for choice in filter.form.status.field.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+</div>
 
 
 
-                          <td class="align-middle">
-                            <span>{{i.created_by.email}}</span>
-                          </td>
+<div class="col-sm-6">
+  <label for="priority">اولویت</label>
+  <select class="form-select" name="priority" id="priority">
+      {% for choice in filter.form.priority.field.choices %}
+          <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+      {% endfor %}
+  </select>
+</div>
 
-                          <td class="align-middle">
-                            <span>{{i.created_at.date}}</span>
-                          </td>
-
-
-
-
-                        <td class="align-middle">
-                            <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات تسک"> <i class="fas fa-info-circle"></i></a>
-                            <a href="{%url 'tasks:update' i.id %}" data-mdb-toggle="tooltip" title="ویرارش"><i class="fas fa-edit" ></i></a>
-
-                        </td>
-                      </tr>
-                      {%endfor%}
-                    </form>
-                      </tbody>
-                  </table>
-
-                  <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page=1" aria-label="First">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                                    <span aria-hidden="true">صفحه قبل</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</a>
-                        </li>
-                
-                        {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                                    <span aria-hidden="true">صفحه بعد</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>         </div>
-              </div>
-      
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تایید حذف</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    تسک های انتخاب شده به طور کامل از سیستم حذف می شوند
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-                    <button type="button" class="btn btn-primary" id="confirmDelete">تایید</button>
-                </div>
-            </div>
-        </div>
+<div class="col-sm-6">
+<label for="assign_to">کاربر بررسی کننده</label>
+<select class="form-select" name="assign_to" id="assign_to">
+  <option value="" selected>---------</option>
+  {% for i in filter.form.assign_to.field.queryset %}
+    <option value="{{ i.id }}">{{ i.email }}</option>
+  {% endfor %}
+</select>
+</div> 
+    <div class="col-sm-6">
+      <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+      </label>
+      <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
     </div>
-</div>
-</div>
-    <script>
-      // Function to show delete button when checkboxes are selected
-      document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
-          checkbox.addEventListener('change', function() {
-              var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-              if (checkedCheckboxes.length > 0) {
-                  document.getElementById('confirmDeleteBtn').style.display = 'inline-block';
-              } else {
-                  document.getElementById('confirmDeleteBtn').style.display = 'none';
-              }
-          });
-      });
-  
-      // Function to show modal when delete button is clicked
-      document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-          $('#deleteConfirmationModal').modal('show');
-      });
-  
-      // Function to submit the form when confirm delete button in modal is clicked
-      document.getElementById('confirmDelete').addEventListener('click', function() {
-          $('#deleteForm').submit();
-      });
-  </script>
-  
-    
-    </section>
-<!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Bootstrap JavaScript -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <div class="col-sm-6">
+      <label for="date" class="form-label">تاریخ</label>
+      <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+    </div>
+
+    <div class="col-sm-6">
+      <label for="date_range">محدوده زمانی</label>
+      <select class="form-select" name="date_range" id="date_range">
+        <option value="" selected>---------</option>
+        <option value="today">امروز</option>
+        <option value="this_week">هفته گذشته</option>
+        <option value="this_month">ماه گذشته</option>
+      </select>
+    </div>
+
+{%endblock%}
+{%block buttons%} 
+<form action="{% url 'tasks:delete_selected_tasks' %}" method="post" id="deleteForm">
+  {% csrf_token %}
+<a href="{% url 'tasks:create' %}" class="btn btn-success me-2">ایجاد تسک جدید</a>
+<a href="{% url 'reports:tasks_reports' %}" class="btn btn-success me-2">گزارشات</a>
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+
+
+{%endblock%}
+{%block thead%}
+
+<th scope="col"> </th>
+<th scope="col">شماره تسک</th>
+<th scope="col">عنوان</th>
+<th scope="col">نوع تسک</th>
+<th scope="col">وضعیت</th>
+<th scope="col">اولویت</th>
+<th scope="col">کاربر بررسی کننده</th>
+<th scope="col">کاربر ایجاد کننده</th>
+<th scope="col">تاریخ ایجاد</th>
+<th scope="col">اکشن ها</th>
+
+{%endblock%}
+{%block tbody%} 
+{%for i in tasks%}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="tasks_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.title}}</span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.type}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.status}}</span>
+    </td>
+
+    <td class="align-middle">
+      {% if i.priority == 'بالا' %}
+      <span class="badge bg-danger rounded-pill"> بالا </span>
+      {% elif i.priority == 'متوسط' %}
+      <span class="badge bg-success rounded-pill"> متوسط </span>
+      {% else %}
+      <span class="badge bg-info rounded-pill"> پایین </span>
+      {%endif%}
+    </td>
+
+
+    <td class="align-middle">
+      <span>{{i.assign_to.email}}</span>
+    </td>
+
+
+
+    <td class="align-middle">
+      <span>{{i.created_by.email}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.created_at.date}}</span>
+    </td>
+
+
+
+
+  <td class="align-middle">
+      <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات تسک"> <i class="fas fa-info-circle"></i></a>
+      <a href="{%url 'tasks:update' i.id %}" data-mdb-toggle="tooltip" title="ویرارش"><i class="fas fa-edit" ></i></a>
+
+  </td>
+</tr>
+{%endfor%}
+{%endblock%}
+{%block delete_content%}
+تسک های انتخاب شده به طور کامل از سیستم حذف می شوند
 {%endblock%}
