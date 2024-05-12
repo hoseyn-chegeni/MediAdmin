@@ -14,7 +14,8 @@ from .views import (
     ClientSMSListView,
     DeleteSelectedClientView,
     CreateClintFromSessionView,
-    ClientGalleryListView
+    ClientGalleryListView,
+    ClientGalleryCreateView,
 )
 
 app_name = "client"
@@ -59,5 +60,7 @@ urlpatterns = [
         name="create_from_session",
     ),
     path("<int:pk>/gallery/", ClientGalleryListView.as_view(), name="gallery_list"),
+    path("<int:pk>/gallery/add/", ClientGalleryCreateView.as_view(), name="gallery_add"),
+
 
 ]

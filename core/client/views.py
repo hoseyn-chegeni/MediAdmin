@@ -300,8 +300,33 @@ class ClientGalleryListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # Get reception history for the client
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
-
         return context
+
+class ClientGalleryCreateView(BaseCreateView):
+    model = ClientGallery
+    fields = ['title','image',]
+    template_name = "client/add_photo.html"
+    permission_required = "client.add_client"
+
+
+    def get_success_url(self):
+        return reverse_lazy(
+            f"client:gallery_list", kwargs={"pk": self.kwargs['pk']}
+        )
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.client = Client.objects.get(id=self.kwargs["pk"])
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
+        return context
+
+class ClientGalleryUpdateView(BaseUpdateView):
+    pass
+
+class ClientGalleryDeleteView(BaseDeleteView):
+    pass

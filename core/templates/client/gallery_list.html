@@ -3,7 +3,7 @@
 
 {% block content %}
 <h2>گالری تصاویر {{client}}</h2>
-
+<a href="{% url 'client:gallery_add' client.id %}">add</a>
 <div class="container mt-5 mb-3">
     <div class="row">
       {% for image in images %}
