@@ -16,6 +16,7 @@ from .views import (
     CreateClintFromSessionView,
     ClientGalleryListView,
     ClientGalleryCreateView,
+    ClientGalleryUpdateView,
 )
 
 app_name = "client"
@@ -61,6 +62,7 @@ urlpatterns = [
     ),
     path("<int:pk>/gallery/", ClientGalleryListView.as_view(), name="gallery_list"),
     path("<int:pk>/gallery/add/", ClientGalleryCreateView.as_view(), name="gallery_add"),
+    path("<int:client_pk>/gallery/update/<int:pk>/", ClientGalleryUpdateView.as_view(), name="gallery_update"),
 
 
 ]

@@ -326,7 +326,14 @@ class ClientGalleryCreateView(BaseCreateView):
         return context
 
 class ClientGalleryUpdateView(BaseUpdateView):
-    pass
+    model = ClientGallery
+    fields = ["title",]
+    template_name = "client/update_photo.html"
+    permission_required = "client.change_client"
+    def get_success_url(self):
+        return reverse_lazy(
+            f"client:gallery_list", kwargs={"pk": self.kwargs['client_pk']}
+        )
 
 class ClientGalleryDeleteView(BaseDeleteView):
     pass

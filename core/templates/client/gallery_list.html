@@ -12,6 +12,8 @@
           <img src="{{ image.image.url }}" class="card-img-top" alt="{{ image.title }}">
           <div class="card-body">
             <p class="card-text">{{ image.title }}</p>
+            <p class="card-text"><a href="{%url 'client:gallery_update' client.id image.id %}"> update </a></p>
+
           </div>
         </div>
       </div>
