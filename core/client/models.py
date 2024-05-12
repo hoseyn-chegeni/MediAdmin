@@ -88,3 +88,18 @@ class ClientGallery(models.Model):
 
     def __str__(self):
         return f'{self.client} : {self.title}'
+    
+
+class ClientAttachment(models.Model):
+    client = models.ForeignKey('Client' , on_delete = models.CASCADE)
+    title = models.CharField(max_length = 255)
+    description = models.TextField(blank = True, null = True)
+    attachments = models.FileField(upload_to='attachments/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        "accounts.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+
+    def __str__(self):
+        return f'{self.client} : {self.title}'
