@@ -73,3 +73,13 @@ class Client(models.Model):
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
+class ClientGallery(models.Model):
+    client = models.ForeignKey('Client' , on_delete = models.CASCADE)
+    title = models.CharField(max_length = 255)
+    image = models.ImageField(upload_to="images") 
+
+    def __str__(self):
+        return f'{self.client} : {self.title}'
