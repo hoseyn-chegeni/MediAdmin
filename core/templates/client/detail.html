@@ -21,6 +21,7 @@
               <a href="{% url 'client:update' client.id %}" class="btn btn-outline-primary btn-sm ms-1">ویرایش</a>
               <a href="{% url 'client:edit_health_history' client.id %}" class="btn btn-outline-primary btn-sm ms-1">ویرایش سوابق بیماری</a>
               <a href="{%url 'notification:send_sms' client.id %}" class="btn btn-outline-primary btn-sm ms-1">ارسال پیام</a>
+              <a href="{%url 'client:gallery_list' client.id %}" class="btn btn-outline-primary btn-sm ms-1">گالری تصاویر</a>
               <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" class="btn btn-outline-primary btn-sm ms-1">حذف</a>
           </div>
           

@@ -6,7 +6,8 @@ from base.views import (
     BaseDetailView,
     BaseUpdateView,
 )
-from .models import Client
+from django.views.generic import ListView
+from .models import Client, ClientGallery
 from .filters import (
     ClientFilters,
     ClientReceptionHistoryFilter,
@@ -286,3 +287,21 @@ class CreateClintFromSessionView(BaseCreateView):
             "planner:list",
             kwargs={"service_pk": session.service.id, "day_pk": session.day.id},
         )
+
+
+class ClientGalleryListView(ListView):
+    model = ClientGallery
+    template_name = "client/gallery_list.html"
+    context_object_name = "images"
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        return ClientGallery.objects.filter(client_id = self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get reception history for the client
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
+
+        return context
