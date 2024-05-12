@@ -335,5 +335,18 @@ class ClientGalleryUpdateView(BaseUpdateView):
             f"client:gallery_list", kwargs={"pk": self.kwargs['client_pk']}
         )
 
-class ClientGalleryDeleteView(BaseDeleteView):
-    pass
+class DeleteSelectedImagesView(View):
+    def post(self, request):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "image_ids"
+            )  # Get the list of selected user IDs from the form
+            deleted_users_count = ClientGallery.objects.filter(
+                id__in=user_ids
+            ).delete()  # Delete selected users
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} تصویر با موفقیت حذف شدند."
+            )  # Add success message
+        return redirect(
+            f"client:list"
+        )
