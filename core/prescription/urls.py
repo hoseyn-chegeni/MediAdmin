@@ -9,6 +9,7 @@ from .views import (
     PrescriptionListView,
     PrescriptionCreateWithoutPkView,
     PrescriptionItemUpdateView,
+    PrescriptionItemDeleteView,
 )
 
 app_name = "prescription"
@@ -30,5 +31,6 @@ urlpatterns = [
         "update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="header_update"
     ),
     path("item/update/<int:pk>/", PrescriptionItemUpdateView.as_view(), name="item_update"),
+    path("item/delete/<int:pk>/", PrescriptionItemDeleteView.as_view(), name="item_delete"),
 
 ]

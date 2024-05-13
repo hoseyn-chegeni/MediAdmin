@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import PrescriptionHeader, Prescription, PrescriptionItem
 
@@ -9,6 +9,9 @@ from base.views import (
     BaseDetailView,
     BaseListView,
 )
+from django.contrib import messages
+
+
 from .filters import PrescriptionFilter
 from .forms import PrescriptionItemForm
 # Create your views here.
@@ -138,4 +141,18 @@ class PrescriptionItemUpdateView(BaseUpdateView):
             f"prescription:detail", kwargs={"pk": self.object.prescription.pk}
         )
 class PrescriptionItemDeleteView(BaseDeleteView):
-    pass
+    model = PrescriptionItem
+    permission_required = "prescription.delete_prescription"
+
+    
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+
+        self.object.delete()
+        messages.success(self.request, self.message)
+        return HttpResponseRedirect( reverse_lazy(
+            f"prescription:detail", kwargs={"pk": self.object.prescription.pk}
+        ))
