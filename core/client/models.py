@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django_jalali.db import models as jmodels
 
 
 # Create your models here.
@@ -9,7 +10,7 @@ class Client(models.Model):
     last_name = models.CharField(max_length=100)
     fathers_name = models.CharField(max_length=100)
     national_id = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
+    date_of_birth = models.CharField(max_length = 255)
     GENDER_CHOICES = (
         ("M", "Male"),
         ("F", "Female"),

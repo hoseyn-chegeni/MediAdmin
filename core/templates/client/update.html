@@ -44,7 +44,7 @@
 
                       <div class="col-sm-6">
                         <label for="date_of_birth" class="date_of_birth-label">تاریخ تولد</label>
-                        <input type="text" class="form-control" id="date_of_birth" placeholder="" value="{{object.date_of_birth}}" name="date_of_birth" >
+                        <input type="text" class="form-control" id="date_of_birth" placeholder="" value="{{object.date_of_birth}}" name="date_of_birth" data-jdp>
                       </div>
 
                       <div class="col-sm-6">
@@ -128,5 +128,7 @@
 
     </main>
 </div>
-
+<script>
+  jalaliDatepicker.startWatch();
+</script>
 {%endblock%}
