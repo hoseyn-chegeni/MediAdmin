@@ -48,6 +48,7 @@ class FinancialCreateView(BaseCreateView):
     url_name = "detail"
     permission_required = "financial.add_financial"
 
+
 class FinancialDeleteView(BaseDeleteView):
     model = Financial
     app_name = "financial"

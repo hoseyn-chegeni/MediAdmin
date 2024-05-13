@@ -22,7 +22,7 @@ from .views import (
     ClientAttachmentDetailView,
     ClientAttachmentCreateView,
     ClientAttachmentUpdateView,
-    ClientAttachmentDeleteView
+    ClientAttachmentDeleteView,
 )
 
 app_name = "client"
@@ -66,16 +66,45 @@ urlpatterns = [
         CreateClintFromSessionView.as_view(),
         name="create_from_session",
     ),
-    #PHOTO GALLERY URLS
+    # PHOTO GALLERY URLS
     path("<int:pk>/gallery/", ClientGalleryListView.as_view(), name="gallery_list"),
-    path("<int:pk>/gallery/add/", ClientGalleryCreateView.as_view(), name="gallery_add"),
-    path("<int:client_pk>/gallery/update/<int:pk>/", ClientGalleryUpdateView.as_view(), name="gallery_update"),
-    path('<int:client_id>/gallery/delete/', DeleteSelectedImagesView.as_view(), name='delete_selected_images'),
-    #ATTACHMENTS URLS
-    path("<int:pk>/attachment/", ClientAttachmentListView.as_view(), name="attachment_list"),
-    path("attachment/detail/<int:pk>/", ClientAttachmentDetailView.as_view(), name="attachment_detail"),
-    path("<int:pk>/attachments/create", ClientAttachmentCreateView.as_view(), name="attachment_create"),
-    path("attachments/update/<int:pk>", ClientAttachmentUpdateView.as_view(), name="attachment_update"),
-    path("attachments/delete/<int:pk>", ClientAttachmentDeleteView.as_view(), name="attachment_delete"),
-
+    path(
+        "<int:pk>/gallery/add/", ClientGalleryCreateView.as_view(), name="gallery_add"
+    ),
+    path(
+        "<int:client_pk>/gallery/update/<int:pk>/",
+        ClientGalleryUpdateView.as_view(),
+        name="gallery_update",
+    ),
+    path(
+        "<int:client_id>/gallery/delete/",
+        DeleteSelectedImagesView.as_view(),
+        name="delete_selected_images",
+    ),
+    # ATTACHMENTS URLS
+    path(
+        "<int:pk>/attachment/",
+        ClientAttachmentListView.as_view(),
+        name="attachment_list",
+    ),
+    path(
+        "attachment/detail/<int:pk>/",
+        ClientAttachmentDetailView.as_view(),
+        name="attachment_detail",
+    ),
+    path(
+        "<int:pk>/attachments/create",
+        ClientAttachmentCreateView.as_view(),
+        name="attachment_create",
+    ),
+    path(
+        "attachments/update/<int:pk>",
+        ClientAttachmentUpdateView.as_view(),
+        name="attachment_update",
+    ),
+    path(
+        "attachments/delete/<int:pk>",
+        ClientAttachmentDeleteView.as_view(),
+        name="attachment_delete",
+    ),
 ]

@@ -75,11 +75,10 @@ class Client(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-
 class ClientGallery(models.Model):
-    client = models.ForeignKey('Client' , on_delete = models.CASCADE)
-    title = models.CharField(max_length = 255)
-    image = models.ImageField(upload_to="images") 
+    client = models.ForeignKey("Client", on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="images")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -87,15 +86,15 @@ class ClientGallery(models.Model):
     )
 
     def __str__(self):
-        return f'{self.client} : {self.title}'
-    
+        return f"{self.client} : {self.title}"
+
 
 class ClientAttachment(models.Model):
-    client = models.ForeignKey('Client' , on_delete = models.CASCADE)
-    title = models.CharField(max_length = 255)
-    type = models.CharField(max_length = 255)
-    description = models.TextField(blank = True, null = True)
-    attachments = models.FileField(upload_to='attachments/')
+    client = models.ForeignKey("Client", on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    type = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    attachments = models.FileField(upload_to="attachments/")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -103,4 +102,4 @@ class ClientAttachment(models.Model):
     )
 
     def __str__(self):
-        return f'{self.client} : {self.title}'
+        return f"{self.client} : {self.title}"

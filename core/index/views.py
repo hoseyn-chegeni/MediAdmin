@@ -12,6 +12,7 @@ from client.models import Client
 from planner.models import Session
 from django.http import JsonResponse
 
+
 # Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
@@ -76,10 +77,16 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context["revenue_percentage"] = revenue_percentage
         return context
 
+
 def autocomplete_national_id(request):
     term = request.GET.get("term")
-    suggestions = list(Client.objects.filter(national_id__istartswith=term).values_list("national_id", flat=True))
+    suggestions = list(
+        Client.objects.filter(national_id__istartswith=term).values_list(
+            "national_id", flat=True
+        )
+    )
     return JsonResponse(suggestions, safe=False)
+
 
 class ClientNationalIdSearchView(View):
     def get(self, request):

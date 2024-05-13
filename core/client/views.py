@@ -290,14 +290,14 @@ class CreateClintFromSessionView(BaseCreateView):
         )
 
 
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
 
-# CLIENT PHOTO GALLERY
-# CLIENT PHOTO GALLERY    
-# CLIENT PHOTO GALLERY
-# CLIENT PHOTO GALLERY
-# CLIENT PHOTO GALLERY
-# CLIENT PHOTO GALLERY
-# CLIENT PHOTO GALLERY
 
 class ClientGalleryListView(ListView):
     model = ClientGallery
@@ -306,44 +306,50 @@ class ClientGalleryListView(ListView):
     permission_required = "client.view_client"
 
     def get_queryset(self):
-        return ClientGallery.objects.filter(client_id = self.kwargs['pk'])
+        return ClientGallery.objects.filter(client_id=self.kwargs["pk"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
 
+
 class ClientGalleryCreateView(BaseCreateView):
     model = ClientGallery
-    fields = ['title','image',]
+    fields = [
+        "title",
+        "image",
+    ]
     template_name = "client/gallery/create.html"
     permission_required = "client.add_client"
 
-
     def get_success_url(self):
-        return reverse_lazy(
-            f"client:gallery_list", kwargs={"pk": self.kwargs['pk']}
-        )
+        return reverse_lazy(f"client:gallery_list", kwargs={"pk": self.kwargs["pk"]})
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.instance.client = Client.objects.get(id=self.kwargs["pk"])
         return super().form_valid(form)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
 
+
 class ClientGalleryUpdateView(BaseUpdateView):
     model = ClientGallery
-    fields = ["title",]
+    fields = [
+        "title",
+    ]
     template_name = "client/gallery/update.html"
     permission_required = "client.change_client"
+
     def get_success_url(self):
         return reverse_lazy(
-            f"client:gallery_list", kwargs={"pk": self.kwargs['client_pk']}
+            f"client:gallery_list", kwargs={"pk": self.kwargs["client_pk"]}
         )
+
 
 class DeleteSelectedImagesView(View):
     def post(self, request, client_id):
@@ -357,16 +363,19 @@ class DeleteSelectedImagesView(View):
             messages.success(
                 request, f"تعداد {deleted_users_count[0]} تصویر با موفقیت حذف شدند."
             )  # Add success message
-        return redirect(reverse_lazy("client:gallery_list", kwargs={"pk": self.kwargs["client_id"]}))
+        return redirect(
+            reverse_lazy("client:gallery_list", kwargs={"pk": self.kwargs["client_id"]})
+        )
 
-    
-# CLIENT ATTACHMENTS
-# CLIENT ATTACHMENTS    
+
 # CLIENT ATTACHMENTS
 # CLIENT ATTACHMENTS
 # CLIENT ATTACHMENTS
 # CLIENT ATTACHMENTS
 # CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS
+
 
 class ClientAttachmentListView(ListView):
     model = ClientAttachment
@@ -375,13 +384,13 @@ class ClientAttachmentListView(ListView):
     permission_required = "client.view_client"
 
     def get_queryset(self):
-        return ClientAttachment.objects.filter(client_id = self.kwargs['pk'])
-    
+        return ClientAttachment.objects.filter(client_id=self.kwargs["pk"])
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
-    
+
 
 class ClientAttachmentDetailView(BaseDetailView):
     model = ClientAttachment
@@ -402,17 +411,16 @@ class ClientAttachmentCreateView(BaseCreateView):
     app_name = "client"
     url_name = "attachment_detail"
 
-
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         form.instance.client = Client.objects.get(id=self.kwargs["pk"])
         return super().form_valid(form)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
-    
+
 
 class ClientAttachmentUpdateView(BaseUpdateView):
     model = ClientAttachment
@@ -427,8 +435,9 @@ class ClientAttachmentUpdateView(BaseUpdateView):
     url_name = "attachment_detail"
 
 
-
-class ClientAttachmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class ClientAttachmentDeleteView(
+    LoginRequiredMixin, PermissionRequiredMixin, DeleteView
+):
     message = "با موفقیت از سیستم حذف شد"
     permission_required = "client.view_client"
     model = ClientAttachment
@@ -442,5 +451,5 @@ class ClientAttachmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, De
         self.object.delete()
         messages.success(self.request, self.message)
         client_id = self.object.client.id  # Assuming self.object is the model instance
-        url = reverse('client:attachment_list', kwargs={'pk': client_id})
+        url = reverse("client:attachment_list", kwargs={"pk": client_id})
         return HttpResponseRedirect(url)
