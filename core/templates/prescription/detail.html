@@ -18,7 +18,10 @@
         How to Use: {{ item.how_to_use }}<br>
         Repeat Interval: {{ item.repeat_interval }}<br>
         Repeat Period: {{ item.repeat_period }}<br>
+        <a href="{% url 'prescription:item_update' item.id%}">update</a>
       </li>
+      <hr>
+
     {% endfor %}
   </ul>
 

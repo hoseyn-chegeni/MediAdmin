@@ -8,6 +8,7 @@ from .views import (
     PrescriptionUpdateView,
     PrescriptionListView,
     PrescriptionCreateWithoutPkView,
+    PrescriptionItemUpdateView,
 )
 
 app_name = "prescription"
@@ -28,4 +29,6 @@ urlpatterns = [
     path(
         "update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="header_update"
     ),
+    path("item/update/<int:pk>/", PrescriptionItemUpdateView.as_view(), name="item_update"),
+
 ]

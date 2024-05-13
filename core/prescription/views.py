@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .models import PrescriptionHeader, Prescription
-from reception.models import Reception
+from .models import PrescriptionHeader, Prescription, PrescriptionItem
+
 from base.views import (
     BaseCreateView,
     BaseUpdateView,
@@ -126,3 +126,16 @@ class PrescriptionHeaderUpdateView(BaseUpdateView):
         )
 
 
+
+class PrescriptionItemUpdateView(BaseUpdateView):
+    model = PrescriptionItem
+    fields = "__all__"
+    template_name = "prescription/item/update.html"
+    permission_required = "prescription.change_prescription"
+
+    def get_success_url(self):
+        return reverse_lazy(
+            f"prescription:detail", kwargs={"pk": self.object.prescription.pk}
+        )
+class PrescriptionItemDeleteView(BaseDeleteView):
+    pass
