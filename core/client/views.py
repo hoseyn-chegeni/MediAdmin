@@ -387,3 +387,28 @@ class ClientAttachmentDetailView(BaseDetailView):
     model = ClientAttachment
     template_name = "client/attachment/detail.html"
     permission_required = "client.view_client"
+
+
+class ClientAttachmentCreateView(BaseCreateView):
+    model = ClientAttachment
+    fields = [
+        "title",
+        "type",
+        "description",
+        "attachments",
+    ]
+    template_name = "client/attachment/create.html"
+    permission_required = "client.view_client"
+    app_name = "client"
+    url_name = "attachment_detail"
+
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.client = Client.objects.get(id=self.kwargs["pk"])
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
+        return context
