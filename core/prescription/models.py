@@ -27,3 +27,14 @@ class PrescriptionHeader(models.Model):
 
     def __str__(self):
         return f"{self.doctor.first_name} {self.doctor.last_name}"
+    
+    
+class PrescriptionItem(models.Model):
+    prescription = models.ForeignKey('Prescription', on_delete = models.CASCADE)
+    medicine = models.CharField(max_length = 255) # نام دارو
+    quantity = models.PositiveIntegerField() #  تعداد
+    consumption_time =  models.CharField(max_length = 255) #  زمان مصرف
+    consumption_dose = models.CharField(max_length = 255) #   مقدار مصرف
+    how_to_use =  models.CharField(max_length = 255) #طریقه مصرف 
+    repeat_interval =  models.CharField(max_length = 255)  #فاصله زمانی تکرار
+    repeat_period =  models.PositiveIntegerField() # دوره تکراز
