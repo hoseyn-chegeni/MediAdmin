@@ -18,6 +18,7 @@ from .views import (
     ClientGalleryCreateView,
     ClientGalleryUpdateView,
     DeleteSelectedImagesView,
+    ClientAttachmentListView,
 )
 
 app_name = "client"
@@ -65,4 +66,5 @@ urlpatterns = [
     path("<int:pk>/gallery/add/", ClientGalleryCreateView.as_view(), name="gallery_add"),
     path("<int:client_pk>/gallery/update/<int:pk>/", ClientGalleryUpdateView.as_view(), name="gallery_update"),
     path("images/delete/", DeleteSelectedImagesView.as_view(), name="delete_selected_images"),
+    path("<int:pk>/attachment/", ClientAttachmentListView.as_view(), name="attachment_list"),
 ]

@@ -7,7 +7,7 @@ from base.views import (
     BaseUpdateView,
 )
 from django.views.generic import ListView
-from .models import Client, ClientGallery
+from .models import Client, ClientGallery, ClientAttachment
 from .filters import (
     ClientFilters,
     ClientReceptionHistoryFilter,
@@ -350,3 +350,21 @@ class DeleteSelectedImagesView(View):
         return redirect(
             f"client:list"
         )
+    
+
+
+class ClientAttachmentListView(ListView):
+    model = ClientAttachment
+    template_name = "client/attachment/list.html"
+    context_object_name = "attachments"
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        return ClientAttachment.objects.filter(client_id = self.kwargs['pk'])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["client"] = Client.objects.get(id=self.kwargs["pk"])
+        return context
+    
+
