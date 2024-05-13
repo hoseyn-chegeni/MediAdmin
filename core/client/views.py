@@ -6,7 +6,7 @@ from base.views import (
     BaseDetailView,
     BaseUpdateView,
 )
-from django.views.generic import ListView
+from django.views.generic import ListView, DeleteView
 from .models import Client, ClientGallery, ClientAttachment
 from .filters import (
     ClientFilters,
@@ -27,6 +27,7 @@ from planner.models import Session
 from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from planner.models import Session
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 # Create your views here.
@@ -426,3 +427,21 @@ class ClientAttachmentUpdateView(BaseUpdateView):
     app_name = "client"
     url_name = "attachment_detail"
 
+
+
+class ClientAttachmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    message = "با موفقیت از سیستم حذف شد"
+    permission_required = "client.view_client"
+    model = ClientAttachment
+
+    def get(self, request, *args, **kwargs):
+        # Get the object to be deleted
+        self.object = self.get_object()
+
+        # Perform the delete operation directly without displaying a confirmation template
+
+        self.object.delete()
+        messages.success(self.request, self.message)
+        client_id = self.object.client.id  # Assuming self.object is the model instance
+        url = reverse('client:attachment_list', kwargs={'pk': client_id})
+        return HttpResponseRedirect(url)

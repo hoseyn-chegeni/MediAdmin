@@ -22,6 +22,7 @@ from .views import (
     ClientAttachmentDetailView,
     ClientAttachmentCreateView,
     ClientAttachmentUpdateView,
+    ClientAttachmentDeleteView
 )
 
 app_name = "client"
@@ -75,4 +76,6 @@ urlpatterns = [
     path("attachment/detail/<int:pk>/", ClientAttachmentDetailView.as_view(), name="attachment_detail"),
     path("<int:pk>/attachments/create", ClientAttachmentCreateView.as_view(), name="attachment_create"),
     path("attachments/update/<int:pk>", ClientAttachmentUpdateView.as_view(), name="attachment_update"),
+    path("attachments/delete/<int:pk>", ClientAttachmentDeleteView.as_view(), name="attachment_delete"),
+
 ]
