@@ -289,9 +289,18 @@ class CreateClintFromSessionView(BaseCreateView):
         )
 
 
+
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY    
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+# CLIENT PHOTO GALLERY
+
 class ClientGalleryListView(ListView):
     model = ClientGallery
-    template_name = "client/gallery_list.html"
+    template_name = "client/gallery/list.html"
     context_object_name = "images"
     permission_required = "client.view_client"
 
@@ -306,7 +315,7 @@ class ClientGalleryListView(ListView):
 class ClientGalleryCreateView(BaseCreateView):
     model = ClientGallery
     fields = ['title','image',]
-    template_name = "client/add_photo.html"
+    template_name = "client/gallery/create.html"
     permission_required = "client.add_client"
 
 
@@ -328,7 +337,7 @@ class ClientGalleryCreateView(BaseCreateView):
 class ClientGalleryUpdateView(BaseUpdateView):
     model = ClientGallery
     fields = ["title",]
-    template_name = "client/update_photo.html"
+    template_name = "client/gallery/update.html"
     permission_required = "client.change_client"
     def get_success_url(self):
         return reverse_lazy(
@@ -351,7 +360,13 @@ class DeleteSelectedImagesView(View):
             f"client:list"
         )
     
-
+# CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS    
+# CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS
+# CLIENT ATTACHMENTS
 
 class ClientAttachmentListView(ListView):
     model = ClientAttachment
