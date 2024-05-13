@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .models import PrescriptionHeader, Prescription
 from reception.models import Reception
@@ -10,8 +10,7 @@ from base.views import (
     BaseListView,
 )
 from .filters import PrescriptionFilter
-
-
+from .forms import PrescriptionItemForm
 # Create your views here.
 class PrescriptionListView(BaseListView):
     model = Prescription
@@ -57,6 +56,17 @@ class PrescriptionDetailView(BaseDetailView):
     template_name = "prescription/detail.html"
     context_object_name = "prescription"
     permission_required = "prescription.view_prescription"
+
+    def post(self, request, *args, **kwargs):
+        form = PrescriptionItemForm(request.POST)
+        prescription = self.get_object()
+        if form.is_valid():
+            prescription_id = prescription.id
+            prescription = Prescription.objects.get(id=prescription_id)
+            prescription_item = form.save(commit=False)
+            prescription_item.prescription = prescription
+            prescription_item.save()
+        return super().get(request, *args, **kwargs)
 
 
 class PrescriptionUpdateView(BaseUpdateView):
@@ -114,3 +124,5 @@ class PrescriptionHeaderUpdateView(BaseUpdateView):
         return reverse_lazy(
             f"{self.app_name}:{self.url_name}", kwargs={"pk": self.object.doctor_id}
         )
+
+
