@@ -24,6 +24,7 @@
 {%block buttons%}
 <form action="{% url 'client:delete_selected_attachment' client.id %}" method="post" id="deleteForm">
   {% csrf_token %}
+  <a href="{% url 'client:attachment_create' client.id %}" class="btn btn-success me-2"> افزودن سند جدید</a>
   <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
 
 <!-- Delete button -->

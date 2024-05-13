@@ -88,7 +88,7 @@ urlpatterns = [
         name="attachment_list",
     ),
     path(
-        "<int:pk>/attachments/create",
+        "<int:pk>/attachments/create/",
         ClientAttachmentCreateView.as_view(),
         name="attachment_create",
     ),

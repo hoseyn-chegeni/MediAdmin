@@ -416,7 +416,12 @@ class ClientAttachmentCreateView(BaseCreateView):
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
 
-
+    def get_success_url(self):
+        client = Client.objects.get(id=self.kwargs["pk"])
+        return reverse_lazy(
+            "client:attachment_list", kwargs={"pk": client.id}
+        )
+    
 class ClientAttachmentUpdateView(BaseUpdateView):
     model = ClientAttachment
     fields = [
