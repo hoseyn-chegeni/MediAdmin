@@ -70,7 +70,7 @@ class OfficeExpenses(models.Model):
         on_delete=models.CASCADE,
         related_name="office_expenses",
     )
-    date = models.DateField()
+    date = models.CharField(max_length = 255)
     subject = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     recipient_name = models.CharField(max_length=255)

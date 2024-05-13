@@ -29,7 +29,7 @@
 
                     <div class="col-sm-6">
                         <label for="date" class="form-label">تاریخ: </label>
-                        <input type="text" class="form-control" id="date" placeholder="" value="{{object.date}}" name="date" >
+                        <input type="text" class="form-control" id="date" placeholder="" value="{{object.date}}" name="date" data-jdp>
                     </div>
     
                     <div class="col-sm-6">
@@ -72,5 +72,7 @@
 
     </main>
 </div>
-
+<script>
+  jalaliDatepicker.startWatch();
+</script>
 {%endblock%}
