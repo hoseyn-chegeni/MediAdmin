@@ -1,5 +1,6 @@
 <p>{{client}}</p>
 <a href="{% url 'client:attachment_create' client.id %}">add attachment</a>
 {%for i in attachments%}
-  <p>  {{i}}::::: <a href="{% url 'client:attachment_detail' i.id %}">detail</a></p>
+  <p>  {{i}}::::: <a href="{% url 'client:attachment_detail' i.id %}">detail</a>::
+     <a href="{% url 'client:attachment_update' i.id %}">update</a></p>
 {% endfor %}

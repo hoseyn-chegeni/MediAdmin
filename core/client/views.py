@@ -398,7 +398,7 @@ class ClientAttachmentCreateView(BaseCreateView):
         "attachments",
     ]
     template_name = "client/attachment/create.html"
-    permission_required = "client.view_client"
+    permission_required = "client.add_client"
     app_name = "client"
     url_name = "attachment_detail"
 
@@ -412,3 +412,17 @@ class ClientAttachmentCreateView(BaseCreateView):
         context = super().get_context_data(**kwargs)
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
         return context
+    
+
+class ClientAttachmentUpdateView(BaseUpdateView):
+    model = ClientAttachment
+    fields = [
+        "title",
+        "type",
+        "description",
+    ]
+    template_name = "client/attachment/create.html"
+    permission_required = "client.change_client"
+    app_name = "client"
+    url_name = "attachment_detail"
+
