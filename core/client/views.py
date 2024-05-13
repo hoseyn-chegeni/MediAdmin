@@ -394,18 +394,11 @@ class ClientAttachmentListView(BaseListView):
         return context
 
 
-class ClientAttachmentDetailView(BaseDetailView):
-    model = ClientAttachment
-    template_name = "client/attachment/detail.html"
-    permission_required = "client.view_client"
-
-
 class ClientAttachmentCreateView(BaseCreateView):
     model = ClientAttachment
     fields = [
         "title",
         "type",
-        "description",
         "attachments",
     ]
     template_name = "client/attachment/create.html"

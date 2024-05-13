@@ -53,7 +53,6 @@
       <span>{{i.created_at}}</span>
     </td>
   <td class="align-middle">
-      <a href="{% url 'client:attachment_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
     <a href="{% url 'client:attachment_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
     <a href="{{ i.attachments.url }}" download data-mdb-toggle="tooltip" title="دانلود"><i class="fas fa-download" ></i></a> <!-- Download button -->
 

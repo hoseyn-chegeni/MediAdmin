@@ -19,7 +19,6 @@ from .views import (
     ClientGalleryUpdateView,
     DeleteSelectedImagesView,
     ClientAttachmentListView,
-    ClientAttachmentDetailView,
     ClientAttachmentCreateView,
     ClientAttachmentUpdateView,
     ClientAttachmentDeleteView,
@@ -87,11 +86,6 @@ urlpatterns = [
         "<int:pk>/attachment/",
         ClientAttachmentListView.as_view(),
         name="attachment_list",
-    ),
-    path(
-        "attachment/detail/<int:pk>/",
-        ClientAttachmentDetailView.as_view(),
-        name="attachment_detail",
     ),
     path(
         "<int:pk>/attachments/create",
