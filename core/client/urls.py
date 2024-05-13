@@ -23,6 +23,7 @@ from .views import (
     ClientAttachmentCreateView,
     ClientAttachmentUpdateView,
     ClientAttachmentDeleteView,
+    DeleteSelectedAttachmentsView,
 )
 
 app_name = "client"
@@ -106,5 +107,10 @@ urlpatterns = [
         "attachments/delete/<int:pk>",
         ClientAttachmentDeleteView.as_view(),
         name="attachment_delete",
+    ),
+    path(
+        "<int:client_id>/attachment/delete/",
+        DeleteSelectedAttachmentsView.as_view(),
+        name="delete_selected_attachment",
     ),
 ]

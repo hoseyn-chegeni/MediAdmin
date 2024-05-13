@@ -455,3 +455,20 @@ class ClientAttachmentDeleteView(
         client_id = self.object.client.id  # Assuming self.object is the model instance
         url = reverse("client:attachment_list", kwargs={"pk": client_id})
         return HttpResponseRedirect(url)
+
+
+class DeleteSelectedAttachmentsView(View):
+    def post(self, request, client_id):
+        if request.method == "POST":
+            user_ids = request.POST.getlist(
+                "attachment_ids"
+            )  # Get the list of selected user IDs from the form
+            deleted_users_count = ClientAttachment.objects.filter(
+                id__in=user_ids
+            ).delete()  # Delete selected users
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} سند با موفقیت حذف شدند."
+            )  # Add success message
+        return redirect(
+            reverse_lazy("client:attachment_list", kwargs={"pk": self.kwargs["client_id"]})
+        )

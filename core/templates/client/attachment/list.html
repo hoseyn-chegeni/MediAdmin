@@ -22,6 +22,10 @@
 
 {%endblock%}
 {%block buttons%}
+<form action="{% url 'client:delete_selected_attachment' client.id %}" method="post" id="deleteForm">
+  {% csrf_token %}
+  <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+
 <!-- Delete button -->
 {%endblock%}
 {%block thead%}
@@ -35,7 +39,7 @@
 {%block tbody%}
 {%for i in attachments%}
 <tr class="fw-normal">
-  <td><input type="checkbox" name="client_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+  <td><input type="checkbox" name="attachment_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
   <th>
     <span class="ms-2">{{i.id}}</span>
   </th>
