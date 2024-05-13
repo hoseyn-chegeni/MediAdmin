@@ -427,12 +427,15 @@ class ClientAttachmentUpdateView(BaseUpdateView):
     fields = [
         "title",
         "type",
-        "description",
     ]
-    template_name = "client/attachment/create.html"
+    template_name = "client/attachment/update.html"
     permission_required = "client.change_client"
-    app_name = "client"
-    url_name = "attachment_detail"
+
+    def get_success_url(self):
+        attachment = self.get_object()
+        return reverse_lazy(
+            "client:attachment_list", kwargs={"pk":attachment.client.pk}
+        )
 
 
 class ClientAttachmentDeleteView(
