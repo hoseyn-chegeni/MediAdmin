@@ -4,7 +4,9 @@
 <br>
 <form action="{% url 'client:delete_selected_images'  client.id %}" method="post" id="deleteForm">
     {% csrf_token %}
+    <a href="{% url 'client:gallery_add' client.pk  %}" class="btn btn-primary me-2">افزودن تصویر جدید</a>
     <button type="button" class="btn btn-primary me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> 
+
 
 <div class="container" style="margin-bottom: 10%; margin-top: 10%;">
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -15,6 +17,9 @@
                     alt="Hollywood Sign on The Hill" />
                 <div class="card-body">
                     <h5 class="card-title"><input type="checkbox" name="image_ids" value="{{ image.id }}"> {{ image.title }}</h5>
+                    <hr>
+                    <a href="{% url 'client:gallery_update' client_pk=client.pk pk=image.pk %}" class="btn btn-primary me-2">ویرایش</a>
+
                 </div>
             </div>
         </div>
