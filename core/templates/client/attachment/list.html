@@ -1,7 +1,62 @@
-<p>{{client}}</p>
-<a href="{% url 'client:attachment_create' client.id %}">add attachment</a>
+{% extends 'base_list.html' %}
+{% block title %}لیست مستندات {{client}}{% endblock %}
+{%block list_title%}لیست مستندات {{client}}{%endblock%}
+{%block filter_field%}
+
+<div class="col-sm-6">
+  <label for="id_id" class="form-label">شماره سند</label>
+  <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="title" class="form-label">عنوان</label>
+  <input  class="form-control" type="text" name="title" step="any" id="title"value="{{ request.GET.title }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="type" class="form-label">نوع سند</label>
+  <input  class="form-control" type="text" name="type" step="any" id="type" value="{{ request.GET.type }}" >
+</div>
+
+
+
+{%endblock%}
+{%block buttons%}
+<!-- Delete button -->
+{%endblock%}
+{%block thead%}
+<th scope="col"></th>
+<th scope="col">شماره سند</th>
+<th scope="col">عنوان</th>
+<th scope="col">نوع سند</th>
+<th scope="col">تاریخ ایحاد</th>
+<th scope="col">اکشن ها</th>
+{%endblock%}
+{%block tbody%}
 {%for i in attachments%}
-  <p>  {{i}}::::: <a href="{% url 'client:attachment_detail' i.id %}">detail</a>::
-     <a href="{% url 'client:attachment_update' i.id %}">update</a>::
-     <a href="{% url 'client:attachment_delete' i.id %}">delete</a></p>
-{% endfor %}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="client_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <th>
+    <span class="ms-2">{{i.title}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.type}}</span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.created_at}}</span>
+    </td>
+  <td class="align-middle">
+      <a href="{% url 'client:attachment_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+    <a href="{% url 'client:attachment_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+  </td>
+</tr>
+{%endfor%}
+</form>
+
+{%endblock%}
+{%block delete_content%}
+مستندات انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}
