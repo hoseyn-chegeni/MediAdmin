@@ -346,7 +346,7 @@ class ClientGalleryUpdateView(BaseUpdateView):
         )
 
 class DeleteSelectedImagesView(View):
-    def post(self, request):
+    def post(self, request, client_id):
         if request.method == "POST":
             user_ids = request.POST.getlist(
                 "image_ids"
@@ -357,9 +357,8 @@ class DeleteSelectedImagesView(View):
             messages.success(
                 request, f"تعداد {deleted_users_count[0]} تصویر با موفقیت حذف شدند."
             )  # Add success message
-        return redirect(
-            f"client:list"
-        )
+        return redirect(reverse_lazy("client:gallery_list", kwargs={"pk": self.kwargs["client_id"]}))
+
     
 # CLIENT ATTACHMENTS
 # CLIENT ATTACHMENTS    
