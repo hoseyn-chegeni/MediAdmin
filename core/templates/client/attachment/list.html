@@ -1,4 +1,4 @@
 <p>{{client}}</p>
 {%for i in attachments%}
-  <p>  {{i}}</p>
+  <p>  {{i}}::::: <a href="{% url 'client:attachment_detail' i.id %}">detail</a></p>
 {% endfor %}

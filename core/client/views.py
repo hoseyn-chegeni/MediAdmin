@@ -383,3 +383,7 @@ class ClientAttachmentListView(ListView):
         return context
     
 
+class ClientAttachmentDetailView(BaseDetailView):
+    model = ClientAttachment
+    template_name = "client/attachment/detail.html"
+    permission_required = "client.view_client"
