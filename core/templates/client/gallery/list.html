@@ -7,7 +7,6 @@
     <a href="{% url 'client:gallery_add' client.pk  %}" class="btn btn-primary me-2">افزودن تصویر جدید</a>
     <button type="button" class="btn btn-primary me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> 
 
-
 <div class="container" style="margin-bottom: 10%; margin-top: 10%;">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for image in images %}
@@ -19,7 +18,7 @@
                     <h5 class="card-title"><input type="checkbox" name="image_ids" value="{{ image.id }}"> {{ image.title }}</h5>
                     <hr>
                     <a href="{% url 'client:gallery_update' client_pk=client.pk pk=image.pk %}" class="btn btn-primary me-2">ویرایش</a>
-
+                    <button class="btn btn-primary me-2" onclick="openImage('{{ image.image.url }}', event)">نمایش تصویر </button>
                 </div>
             </div>
         </div>
@@ -48,7 +47,7 @@
     </div>
 </div>
 
-  <script>
+<script>
     // Function to show delete button when checkboxes are selected
     document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
@@ -70,10 +69,15 @@
     document.getElementById('confirmDelete').addEventListener('click', function() {
         $('#deleteForm').submit();
     });
+
+    function openImage(imageUrl, event) {
+    event.preventDefault(); // Prevent form submission
+    window.open(imageUrl);
+}
+
 </script>
 
-  
-  </section>
+</section>
 <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Bootstrap JavaScript -->
