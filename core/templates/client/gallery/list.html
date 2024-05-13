@@ -12,8 +12,7 @@
         {% for image in images %}
         <div class="col">
             <div class="card h-100">
-                <img src="{{ image.image.url }}" class="card-img-top gallery-image"
-                    alt="Hollywood Sign on The Hill" />
+                <img src="{{ image.image.url }}" class="card-img-top gallery-image"/>
                 <div class="card-body">
                     <h5 class="card-title"><input type="checkbox" name="image_ids" value="{{ image.id }}"> {{ image.title }}</h5>
                     <hr>
