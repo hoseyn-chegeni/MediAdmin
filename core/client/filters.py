@@ -1,5 +1,5 @@
 import django_filters
-from .models import Client
+from .models import Client, ClientAttachment
 from django.db import models
 from reception.models import Reception
 from base.filters import BaseFilter
@@ -45,4 +45,16 @@ class ClientFinancialHistoryFilter(BaseFilter):
         fields = {
             "id": ["exact"],
             "invoice_number": ["exact"],
+        }
+
+
+class ClientAttachmentsFilter(BaseFilter):
+
+    class Meta:
+        model = ClientAttachment
+        fields = {
+            "id": ["exact"],
+            "title": ["exact"],
+            "type": ["exact"],
+
         }

@@ -12,6 +12,7 @@ from .filters import (
     ClientFilters,
     ClientReceptionHistoryFilter,
     ClientFinancialHistoryFilter,
+    ClientAttachmentsFilter,
 )
 from django.urls import reverse_lazy, reverse
 from reception.models import Reception
@@ -377,11 +378,12 @@ class DeleteSelectedImagesView(View):
 # CLIENT ATTACHMENTS
 
 
-class ClientAttachmentListView(ListView):
+class ClientAttachmentListView(BaseListView):
     model = ClientAttachment
     template_name = "client/attachment/list.html"
     context_object_name = "attachments"
     permission_required = "client.view_client"
+    filterset_class = ClientAttachmentsFilter
 
     def get_queryset(self):
         return ClientAttachment.objects.filter(client_id=self.kwargs["pk"])
