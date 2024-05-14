@@ -57,7 +57,6 @@ class PrescriptionCreateWithoutPkView(BaseCreateView):
 class PrescriptionDetailView(BaseDetailView):
     model = Prescription
     template_name = "prescription/detail.html"
-    context_object_name = "prescription"
     permission_required = "prescription.view_prescription"
 
 
@@ -190,7 +189,7 @@ class TemporaryPrescriptionDetailView(DetailView):
         if "note" in request.POST:
             self.save_prescription(prescription, request.POST.get("note"))
 
-        return HttpResponseRedirect(reverse('prescription:detail', args=[prescription.id]))
+        return HttpResponseRedirect(reverse('prescription:temp_detail', args=[prescription.id]))
 
     def save_prescription(self, prescription, notes):
         main_prescription = Prescription.objects.create(
@@ -209,6 +208,7 @@ class TemporaryPrescriptionDetailView(DetailView):
         main_prescription.save()
 
 
+
 def save_prescription(request, pk):
     temp_prescription = get_object_or_404(TemporaryPrescription, pk=pk)
     note = request.POST.get('note', '')
@@ -223,9 +223,14 @@ def save_prescription(request, pk):
     items = PrescriptionItem.objects.filter(prescription=temp_prescription)
     medication_list = []
     for item in items:
-        medication_list.append(f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period}\n")
+        medication_list.append(f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period} \n")
+        item.temporary_prescription = None
+        item.save()
 
     main_prescription.medication = "\n".join(medication_list)
     main_prescription.save()
 
-    return redirect('prescription:detail', pk=temp_prescription.pk)
+    temp_prescription.delete()
+
+    return redirect('prescription:detail', pk=main_prescription.pk)
+
