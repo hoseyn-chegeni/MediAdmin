@@ -105,4 +105,3 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                         status="در انتظار بررسی",
                         priority="بالا",
                     )
-

@@ -73,17 +73,19 @@ class ReceptionDetailView(BaseDetailView):
         reception = self.get_object()
         context["financial"] = reception.financial
 
-
         if TemporaryPrescription.objects.filter(reception_id=reception.id).exists():
-            context['temp_prescription'] = TemporaryPrescription.objects.get(reception_id=reception.id)
+            context["temp_prescription"] = TemporaryPrescription.objects.get(
+                reception_id=reception.id
+            )
         else:
-            context['temp_prescription'] = None
-
+            context["temp_prescription"] = None
 
         if Prescription.objects.filter(reception_id=reception.id).exists():
-            context['prescription'] = Prescription.objects.get(reception_id=reception.id)
+            context["prescription"] = Prescription.objects.get(
+                reception_id=reception.id
+            )
         else:
-            context['prescription'] = None
+            context["prescription"] = None
 
         return context
 

@@ -1,13 +1,67 @@
-<a href="{% url 'prescription:create_no_pk' %}">Add Prescription</a><br>
-<form action="" method="get">
-    {%csrf_token%}
-    {{filter.form.as_p}}
-    <input type="submit">
-</form>
+{% extends 'base_list.html' %}
+{% block title %}لیست  نسخه ها{% endblock %}
+{%block list_title%}لیست  نسخه ها{%endblock%}
+{%block filter_field%}
+<div class="row g-3">
+  <div class="col-sm-6">
+    <label for="id" class="form-label">ID</label>
+    <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+  </div>
+
+{%endblock%}
+{%block buttons%} 
+
+<a href="#" class="btn btn-success me-2">گزارشات</a>
+
+{%endblock%}
+{%block thead%}
+
+<th scope="col"> </th>
+<th scope="col">شماره نسخه</th>
+<th scope="col">شماره پذیرش</th>
+<th scope="col">نام بیمار</th>
+<th scope="col">کدملی</th>
+<th scope="col">نام پزشک</th>
+<th scope="col">تاریخ</th>
+<th scope="col">اکشن ها</th>
+
+{%endblock%}
+{%block tbody%} 
 {%for i in prescription%}
-  <p>  {{i}},
-      <a href="{% url 'prescription:detail' i.pk %}">Details</a>,
-      <a href="{% url 'prescription:update' i.pk %}">update</a>,
-      <a href="{% url 'prescription:delete' i.pk %}">Delete</a>
-    </p>
-{% endfor %}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="service_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.reception.id}}</span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.reception.client}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.reception.client.national_id}}</span>
+    </td>
+
+
+    <td class="align-middle">
+      <span>{{i.reception.service.doctor}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.reception.date}}</span>
+    </td>
+
+  <td class="align-middle">
+      <a href="{%url 'prescription:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+      <a href="{%url 'prescription:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+
+  </td>
+</tr>
+{%endfor%}
+{%endblock%}
+{%block delete_content%}
+نسخه های انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}
