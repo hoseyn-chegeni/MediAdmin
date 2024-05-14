@@ -1,27 +1,25 @@
 import django_filters
-from django_filters import FilterSet, DateFilter
 from .models import Prescription
-from django.db import models
 from base.filters import BaseFilter
-from django import forms
 
 
 class PrescriptionFilter(BaseFilter):
-
-    date = DateFilter(
-        field_name="date",
-        label="Date (yyyy-mm-dd)",
-        method="filter_by_date_field",
-        widget=forms.DateInput(attrs={"type": "date"}),
-    )
-
-    def filter_by_date_field(self, queryset, name, value):
-        return queryset.filter(date=value)
+    reception_id = django_filters.NumberFilter(field_name='reception__id')
+    name = django_filters.CharFilter(method="filter_by_name")
+    reception_client_national_id = django_filters.CharFilter(field_name='reception__client__national_id', lookup_expr='icontains')
+    reception_client_id = django_filters.NumberFilter(field_name='reception__client__id')
+    reception_service_doctor = django_filters.CharFilter(field_name='reception__service__doctor', lookup_expr='icontains')
+    reception_date = django_filters.DateFilter(field_name='reception__date')
 
     class Meta:
         model = Prescription
-        fields = {
-            "id": ["exact"],
-            "reception": ["exact"],
-            "medication": ["exact", "icontains"],
-        }
+        fields = [
+            'id',
+        ]
+
+
+
+    def filter_by_name(self, queryset, name, value):
+        return queryset.filter(reception__client__first_name__icontains=value) | queryset.filter(
+            reception__client__last_name__icontains=value
+        )
