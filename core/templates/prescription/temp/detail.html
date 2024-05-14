@@ -7,13 +7,17 @@
       <div class="card mb-4">
         <div class="card-body">
           <div class="card-text">
-            <div class="card-header"><strong>اطلاعات</strong></div>
-            <p class="card-text"><strong>نام بیمار:</strong>{{ prescription.reception.client }}</p>
-            <hr>
-            <p class="card-text"><strong>کدملی:</strong>{{ prescription.reception.client.national_id }}</p>
-            <hr>
-            <p class="card-text"><strong>نام پزشک:</strong>{{ object.reception.service.doctor }}</p>
-            <hr>
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="card-text"><strong>نام بیمار:</strong> {{ prescription.reception.client }}</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="card-text"><strong>کدملی:</strong> {{ prescription.reception.client.national_id }}</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="card-text"><strong>نام پزشک:</strong> {{ object.reception.service.doctor }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
