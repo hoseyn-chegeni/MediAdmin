@@ -19,7 +19,8 @@ from kavenegar import *
 from os import getenv
 from tasks.models import Task
 from planner.models import Session
-from prescription.models import TemporaryPrescription
+from prescription.models import TemporaryPrescription, Prescription
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -73,7 +74,19 @@ class ReceptionDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
         reception = self.get_object()
         context["financial"] = reception.financial
-        context['temp_prescription'] = TemporaryPrescription.objects.get(reception_id = reception.id)
+
+
+        if TemporaryPrescription.objects.filter(reception_id=reception.id).exists():
+            context['temp_prescription'] = TemporaryPrescription.objects.get(reception_id=reception.id)
+        else:
+            context['temp_prescription'] = None
+
+
+        if Prescription.objects.filter(reception_id=reception.id).exists():
+            context['prescription'] = Prescription.objects.get(reception_id=reception.id)
+        else:
+            context['prescription'] = None
+
         return context
 
 
