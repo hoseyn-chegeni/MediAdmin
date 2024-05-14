@@ -10,7 +10,7 @@ class Client(models.Model):
     last_name = models.CharField(max_length=100)
     fathers_name = models.CharField(max_length=100)
     national_id = models.CharField(max_length=100)
-    date_of_birth = models.CharField(max_length = 255)
+    date_of_birth = models.CharField(max_length=255)
     GENDER_CHOICES = (
         ("M", "Male"),
         ("F", "Female"),
@@ -55,6 +55,7 @@ class Client(models.Model):
         null=True,
         related_name="initial_session",
     )
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 

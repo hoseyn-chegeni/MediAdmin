@@ -34,13 +34,21 @@ urlpatterns = [
     path(
         "update/<int:pk>/", PrescriptionHeaderUpdateView.as_view(), name="header_update"
     ),
-    path("item/update/<int:pk>/", PrescriptionItemUpdateView.as_view(), name="item_update"),
-    path("item/delete/<int:pk>/", PrescriptionItemDeleteView.as_view(), name="item_delete"),
-
+    path(
+        "item/update/<int:pk>/",
+        PrescriptionItemUpdateView.as_view(),
+        name="item_update",
+    ),
+    path(
+        "item/delete/<int:pk>/",
+        PrescriptionItemDeleteView.as_view(),
+        name="item_delete",
+    ),
     path("temp_list/", TemporaryPrescriptionListView.as_view(), name="temp_list"),
-    path("temp_detail/<int:pk>/", TemporaryPrescriptionDetailView.as_view(), name="temp_detail"),
-    path('prescription/save/<int:pk>/', save_prescription, name='save'),
-
-
-
+    path(
+        "temp_detail/<int:pk>/",
+        TemporaryPrescriptionDetailView.as_view(),
+        name="temp_detail",
+    ),
+    path("prescription/save/<int:pk>/", save_prescription, name="save"),
 ]

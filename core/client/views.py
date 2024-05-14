@@ -418,10 +418,9 @@ class ClientAttachmentCreateView(BaseCreateView):
 
     def get_success_url(self):
         client = Client.objects.get(id=self.kwargs["pk"])
-        return reverse_lazy(
-            "client:attachment_list", kwargs={"pk": client.id}
-        )
-    
+        return reverse_lazy("client:attachment_list", kwargs={"pk": client.id})
+
+
 class ClientAttachmentUpdateView(BaseUpdateView):
     model = ClientAttachment
     fields = [
@@ -434,7 +433,7 @@ class ClientAttachmentUpdateView(BaseUpdateView):
     def get_success_url(self):
         attachment = self.get_object()
         return reverse_lazy(
-            "client:attachment_list", kwargs={"pk":attachment.client.pk}
+            "client:attachment_list", kwargs={"pk": attachment.client.pk}
         )
 
 
@@ -471,5 +470,7 @@ class DeleteSelectedAttachmentsView(View):
                 request, f"تعداد {deleted_users_count[0]} سند با موفقیت حذف شدند."
             )  # Add success message
         return redirect(
-            reverse_lazy("client:attachment_list", kwargs={"pk": self.kwargs["client_id"]})
+            reverse_lazy(
+                "client:attachment_list", kwargs={"pk": self.kwargs["client_id"]}
+            )
         )

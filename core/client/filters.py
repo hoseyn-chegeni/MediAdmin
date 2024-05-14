@@ -56,5 +56,4 @@ class ClientAttachmentsFilter(BaseFilter):
             "id": ["exact"],
             "title": ["exact"],
             "type": ["exact"],
-
         }

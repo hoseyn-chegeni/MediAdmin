@@ -11,6 +11,8 @@ import django_jalali.admin as jadmin
 
 class BarAdmin(admin.ModelAdmin):
     list_filter = (("date_of_birth", JDateFieldListFilter),)
+
+
 admin.site.register(Client, BarAdmin)
 admin.site.register(ClientGallery)
 admin.site.register(ClientAttachment)

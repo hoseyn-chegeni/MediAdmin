@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Prescription(models.Model):
     reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
@@ -27,17 +28,17 @@ class PrescriptionHeader(models.Model):
 
     def __str__(self):
         return f"{self.doctor.first_name} {self.doctor.last_name}"
-    
-    
+
+
 class PrescriptionItem(models.Model):
-    prescription = models.ForeignKey('TemporaryPrescription', on_delete = models.CASCADE)
-    medicine = models.CharField(max_length = 255) # نام دارو
-    quantity = models.PositiveIntegerField() #  تعداد
-    consumption_time =  models.CharField(max_length = 255) #  زمان مصرف
-    consumption_dose = models.CharField(max_length = 255) #   مقدار مصرف
-    how_to_use =  models.CharField(max_length = 255) #طریقه مصرف 
-    repeat_interval =  models.CharField(max_length = 255)  #فاصله زمانی تکرار
-    repeat_period =  models.PositiveIntegerField() # دوره تکراز
+    prescription = models.ForeignKey("TemporaryPrescription", on_delete=models.CASCADE)
+    medicine = models.CharField(max_length=255)  # نام دارو
+    quantity = models.PositiveIntegerField()  #  تعداد
+    consumption_time = models.CharField(max_length=255)  #  زمان مصرف
+    consumption_dose = models.CharField(max_length=255)  #   مقدار مصرف
+    how_to_use = models.CharField(max_length=255)  # طریقه مصرف
+    repeat_interval = models.CharField(max_length=255)  # فاصله زمانی تکرار
+    repeat_period = models.PositiveIntegerField()  # دوره تکراز
 
 
 class TemporaryPrescription(models.Model):

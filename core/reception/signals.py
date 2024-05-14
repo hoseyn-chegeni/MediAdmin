@@ -107,10 +107,7 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
                     )
 
 
-
 @receiver(post_save, sender=Reception)
 def create_prescription_for_reception(sender, instance, created, **kwargs):
     if created:
-        TemporaryPrescription.objects.create(
-            reception_id = instance.id
-        )
+        TemporaryPrescription.objects.create(reception_id=instance.id)
