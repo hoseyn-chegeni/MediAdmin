@@ -23,6 +23,5 @@ class PrescriptionFilter(BaseFilter):
         fields = {
             "id": ["exact"],
             "reception": ["exact"],
-            "diagnosis": ["exact", "icontains"],
             "medication": ["exact", "icontains"],
         }

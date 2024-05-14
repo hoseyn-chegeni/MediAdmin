@@ -6,7 +6,7 @@ from consumable.models import Inventory
 from financial.models import ConsumablePrice
 from tasks.models import Task
 from planner.models import Session
-from prescription.models import Prescription
+from prescription.models import TemporaryPrescription
 
 
 @receiver(post_save, sender=Reception)
@@ -111,6 +111,6 @@ def update_consumable_inventory(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Reception)
 def create_prescription_for_reception(sender, instance, created, **kwargs):
     if created:
-        Prescription.objects.create(
+        TemporaryPrescription.objects.create(
             reception_id = instance.id
         )

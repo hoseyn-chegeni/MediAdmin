@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
-from .models import PrescriptionHeader, Prescription, PrescriptionItem
-
+from .models import PrescriptionHeader, Prescription, PrescriptionItem, TemporaryPrescription
+from django.urls import reverse
 from base.views import (
     BaseCreateView,
     BaseUpdateView,
@@ -10,7 +10,7 @@ from base.views import (
     BaseListView,
 )
 from django.contrib import messages
-
+from django.views.generic import DetailView
 
 from .filters import PrescriptionFilter
 from .forms import PrescriptionItemForm
@@ -59,17 +59,6 @@ class PrescriptionDetailView(BaseDetailView):
     template_name = "prescription/detail.html"
     context_object_name = "prescription"
     permission_required = "prescription.view_prescription"
-
-    def post(self, request, *args, **kwargs):
-        form = PrescriptionItemForm(request.POST)
-        prescription = self.get_object()
-        if form.is_valid():
-            prescription_id = prescription.id
-            prescription = Prescription.objects.get(id=prescription_id)
-            prescription_item = form.save(commit=False)
-            prescription_item.prescription = prescription
-            prescription_item.save()
-        return super().get(request, *args, **kwargs)
 
 
 class PrescriptionUpdateView(BaseUpdateView):
@@ -138,7 +127,7 @@ class PrescriptionItemUpdateView(BaseUpdateView):
 
     def get_success_url(self):
         return reverse_lazy(
-            f"prescription:detail", kwargs={"pk": self.object.prescription.pk}
+            f"prescription:temp_detail", kwargs={"pk": self.object.prescription.pk}
         )
 class PrescriptionItemDeleteView(BaseDeleteView):
     model = PrescriptionItem
@@ -154,5 +143,89 @@ class PrescriptionItemDeleteView(BaseDeleteView):
         self.object.delete()
         messages.success(self.request, self.message)
         return HttpResponseRedirect( reverse_lazy(
-            f"prescription:detail", kwargs={"pk": self.object.prescription.pk}
+            f"prescription:temp_detail", kwargs={"pk": self.object.prescription.pk}
         ))
+    
+
+
+
+
+##################
+##################
+##################
+##################
+##################
+##################
+##################
+
+class TemporaryPrescriptionListView(BaseListView):
+    model = TemporaryPrescription
+    template_name = "prescription/temp/list.html"
+    context_object_name = "prescription"
+    filterset_class = 0
+    permission_required = "prescription.view_temporaryprescription"
+
+
+
+
+
+
+
+class TemporaryPrescriptionDetailView(DetailView):
+    model = TemporaryPrescription
+    template_name = "prescription/temp/detail.html"
+    context_object_name = "prescription"
+    permission_required = "prescription.view_temporaryprescription"
+
+    def post(self, request, *args, **kwargs):
+        prescription = self.get_object()
+
+        if "medicine" in request.POST:
+            form = PrescriptionItemForm(request.POST)
+            if form.is_valid():
+                prescription_item = form.save(commit=False)
+                prescription_item.prescription = prescription
+                prescription_item.save()
+
+        if "note" in request.POST:
+            self.save_prescription(prescription, request.POST.get("note"))
+
+        return HttpResponseRedirect(reverse('prescription:detail', args=[prescription.id]))
+
+    def save_prescription(self, prescription, notes):
+        main_prescription = Prescription.objects.create(
+            reception=prescription.reception,
+            medication='',
+            notes=notes,
+            created_by=prescription.created_by
+        )
+
+        items = PrescriptionItem.objects.filter(prescription=prescription)
+        medication_list = []
+        for item in items:
+            medication_list.append(f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period}")
+
+        main_prescription.medication = "\n".join(medication_list)
+        main_prescription.save()
+
+
+def save_prescription(request, pk):
+    temp_prescription = get_object_or_404(TemporaryPrescription, pk=pk)
+    note = request.POST.get('note', '')
+
+    main_prescription = Prescription.objects.create(
+        reception=temp_prescription.reception,
+        medication='',
+        notes=note,
+        created_by=temp_prescription.created_by
+    )
+
+    items = PrescriptionItem.objects.filter(prescription=temp_prescription)
+    medication_list = []
+    for item in items:
+        medication_list.append(f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period}\n")
+
+    main_prescription.medication = "\n".join(medication_list)
+    main_prescription.save()
+
+    return redirect('prescription:detail', pk=temp_prescription.pk)

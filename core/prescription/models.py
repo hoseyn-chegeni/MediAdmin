@@ -6,9 +6,8 @@ from django.db import models
 class Prescription(models.Model):
     reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-    diagnosis = models.TextField()
     medication = models.TextField()
-    instructions = models.TextField(blank=True, null=True)
+    notes = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
