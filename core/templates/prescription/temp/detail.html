@@ -1,54 +1,143 @@
-  <h1>Prescription Detail</h1>
-  <!-- Display prescription details -->
-  <p>Date: {{ prescription.date }}</p>
-  <p>Notes: {{ prescription.notes }}</p>
+{% extends 'base.html' %}
+{% block content%}
+<h2>اطلاعات نسخه</h2>
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-md-12 col-xl-10">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="card-text">
+            <div class="card-header"><strong>اطلاعات</strong></div>
+            <p class="card-text"><strong>نام بیمار:</strong>{{ prescription.reception.client }}</p>
+            <hr>
+            <p class="card-text"><strong>کدملی:</strong>{{ prescription.reception.client.national_id }}</p>
+            <hr>
+            <p class="card-text"><strong>نام پزشک:</strong>{{ object.reception.service.doctor }}</p>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- Display prescription items -->
-  <h2>Prescription Items</h2>
-  <ul>
-    {% for item in prescription.prescriptionitem_set.all %}
-      <li>
-        Medicine: {{ item.medicine }}<br>
-        Quantity: {{ item.quantity }}<br>
-        Consumption Time: {{ item.consumption_time }}<br>
-        Consumption Dose: {{ item.consumption_dose }}<br>
-        How to Use: {{ item.how_to_use }}<br>
-        Repeat Interval: {{ item.repeat_interval }}<br>
-        Repeat Period: {{ item.repeat_period }}<br>
-        <a href="{% url 'prescription:item_update' item.id %}">update</a>,    
-        <a href="{% url 'prescription:item_delete' item.id %}">delete</a>,
-      </li>
-      <hr>
-    {% endfor %}
-  </ul>
 
-  <!-- Prescription item creation form -->
-  <h2>Add Prescription Item</h2>
-  <form method="post">
-    {% csrf_token %}
-    <label for="medicine">Medicine:</label>
-    <input type="text" name="medicine" required><br>
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" required><br>
-    <label for="consumption_time">Consumption Time:</label>
-    <input type="text" name="consumption_time" required><br>
-    <label for="consumption_dose">Consumption Dose:</label>
-    <input type="text" name="consumption_dose" required><br>
-    <label for="how_to_use">How to Use:</label>
-    <input type="text" name="how_to_use" required><br>
-    <label for="repeat_interval">Repeat Interval:</label>
-    <input type="text" name="repeat_interval" required><br>
-    <label for="repeat_period">Repeat Period:</label>
-    <input type="number" name="repeat_period" required><br>
-    <button type="submit">Add Item</button>
-  </form>
+  <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                  <div class="card-body p-4 text-white">
+                      <form method="post">
+                          {% csrf_token %}
+                          <div class="card-header"><strong>افزودن دارو</strong></div>
+                          <div class="row g-3">
+                              <div class="col-sm-6">
+                                  <label for="medicine" class="form-label">نام دارو:</label>
+                                  <input class="form-control" type="text" name="medicine" required>
+                              </div>
 
-  <!-- Save Prescription Button -->
-  <h2>Save Prescription</h2>
-  <form method="post" action="{% url 'prescription:save' prescription.id %}">
-    {% csrf_token %}
-    <label for="note">Note:</label>
-    <textarea name="note" rows="4" cols="50"></textarea><br>
-    <button type="submit">Save Prescription</button>
-  </form>
+                              <div class="col-sm-6">
+                                  <label for="quantity" class="form-label">مقدار:</label>
+                                  <input class="form-control" type="number" name="quantity" required>
+                              </div>
 
+                              <div class="col-sm-6">
+                                  <label for="consumption_time" class="form-label">زمان مصرف:</label>
+                                  <input class="form-control" type="text" name="consumption_time" required>
+                              </div>
+
+                              <div class="col-sm-6">
+                                  <label for="consumption_dose" class="form-label">مقدار مصرف :</label>
+                                  <input class="form-control" type="text" name="consumption_dose" required>
+                              </div>
+
+                              <div class="col-sm-6">
+                                  <label for="how_to_use" class="form-label">طریقه مصرف:</label>
+                                  <input class="form-control" type="text" name="how_to_use" required>
+                              </div>
+
+                              <div class="col-sm-6">
+                                  <label for="repeat_interval" class="form-label">فاصله زمانی تکرار:</label>
+                                  <input class="form-control" type="text" name="repeat_interval" required>
+                              </div>
+
+                              <div class="col-sm-6">
+                                  <label for="repeat_period" class="form-label"> دوره تکرار:</label>
+                                  <input class="form-control" type="number" name="repeat_period" required>
+                              </div>
+
+                              <button class="w-100 btn btn-lg btn-outline-success" type="submit">افزودن دارو</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-10">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="card-header"><strong>اطلاعات داروهای ثبت شده</strong></div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">نام دارو</th>
+                                    <th scope="col">مقدار</th>
+                                    <th scope="col">زمان مصرف</th>
+                                    <th scope="col">مقدار مصرف</th>
+                                    <th scope="col">طریقه مصرف</th>
+                                    <th scope="col">فاصله زمانی تکرار</th>
+                                    <th scope="col">دوره تکرار</th>
+                                    <th scope="col">اکشن ها</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in prescription.prescriptionitem_set.all %}
+                                <tr class="fw-normal">
+                                    <td class="align-middle"><span>{{ i.id }}</span></td>
+                                    <td class="align-middle"><span>{{ i.medicine }}</span></td>
+                                    <td class="align-middle"><span>{{ i.quantity }}</span></td>
+                                    <td class="align-middle"><span>{{ i.consumption_time }}</span></td>
+                                    <td class="align-middle"><span>{{ i.consumption_dose }}</span></td>
+                                    <td class="align-middle"><span>{{ i.how_to_use }}</span></td>
+                                    <td class="align-middle"><span>{{ i.repeat_interval }}</span></td>
+                                    <td class="align-middle"><span>{{ i.repeat_period }}</span></td>
+                                    <td class="align-middle">
+                                        <a href="{% url 'prescription:item_update' i.id %}" data-mdb-toggle="tooltip" title="جزییات"><i class="fas fa-edit"></i></a>
+                                        <a href="{% url 'prescription:item_delete' i.id %}" data-mdb-toggle="tooltip" title="جزییات"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-12 col-xl-10">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <form method="post" action="{% url 'prescription:save' prescription.id %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="note" class="form-label">اطلاعات تکمیلی:</label>
+                                        <textarea class="form-control" name="note" rows="4" cols="50"></textarea>
+                                    </div>
+                                    <button class="w-100 btn btn-lg btn-outline-success" type="submit">ذخیره نسخه</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div></div></div>      
+{%endblock%}
