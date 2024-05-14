@@ -203,7 +203,7 @@ class TemporaryPrescriptionDetailView(DetailView):
         medication_list = []
         for item in items:
             medication_list.append(
-                f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period}"
+                f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period} \n"
             )
 
         main_prescription.medication = "\n".join(medication_list)
@@ -225,7 +225,7 @@ def save_prescription(request, pk):
     medication_list = []
     for item in items:
         medication_list.append(
-            f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period} \n"
+            f"{item.medicine} ({item.quantity}) - {item.consumption_time} - {item.consumption_dose} - {item.how_to_use} - {item.repeat_interval} - {item.repeat_period} ///"
         )
         item.temporary_prescription = None
         item.save()

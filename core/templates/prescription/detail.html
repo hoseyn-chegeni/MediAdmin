@@ -1,19 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl" lang="fa">  
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نسخه مراجعه کننده  {{object.reception.client}}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .prescription {
+      width: 70%;
+      margin: 20px auto;
+      padding: 20px;
+      position: relative;
+      border: 1px solid #ddd;
+      height: 800px;
+      padding-top: 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      padding-bottom: 0;
+    }
+
+    .header img {
+      width: 150px;
+    }
+
+    .header .doctor-info {
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .header .doctor-info h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #000;
+    }
+
+    .header .doctor-info p {
+      margin: 5px 0;
+      color: #666;
+    }
+
+    .header .doctor-info .specialty {
+      color: #00a7d0;
+    }
+
+    .prescription-details {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      padding: 20px;
+      padding-top: 0;
+    }
+
+    .prescription-details .left {
+      width: 10%;
+      text-align: center;
+    }
+
+    .prescription-details .left .rx-symbol {
+      font-size: 48px;
+      color: #000;
+      margin-top: 20px;
+    }
+
+    .prescription-details .right {
+      width: 85%;
+      padding-top: 20px;
+    }
+
+    .prescription-details .right .date {
+      margin-bottom: 20px;
+    }
+
+    .prescription-details .right .details p {
+      margin: 10px 0;
+    }
+
+    .prescription-details .right .details label {
+      font-weight: bold;
+    }
+
+    .divider {
+      border-left: 2px solid #00a7d0;
+      height: 400px;
+      position: absolute;
+      left: 80px;
+      top: 150px;
+    }
+
+    .medication {
+      margin-top: 50px;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .medication .medication-item {
+      margin-bottom: 20px;
+    }
+
+    .medication .medication-item span {
+      display: inline-block;
+      width: 150px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      padding-top: 0;
+      border-top: 2px solid #6c757d;
+    }
+
+    .footer .contact {
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .footer .contact p {
+      margin: 0;
+    }
+
+    .footer .address {
+      font-size: 14px;
+    }
+
+    .qr-code {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .signature {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.1;
+      z-index: -1;
+    }
+  </style>
+
 </head>
 <body>
-    <p>doctor = {{object.reception.service.doctor}}</p>
-    <hr>
-    <p>client = {{object.reception.client}}</p>
-    <hr>
-    <p>date = {{object.date}}</p>
-    <hr>
-    <p>medication = {{object.medication}}</p>
-    <hr>
-    <p>notes = {{object.notes}}</p>
+  <div class="prescription">
+    <div class="header">
+      <div class="doctor-info">
+        <h2>دکتر {{object.reception.service.doctor}}</h2>
+        <p class="specialty">متخصص {{object.reception.service.doctor.specialization}}</p>
+        <p>MBBS, MD Medicine, MDDS</p>
+        <p>Hospital or Department Name Here</p>
+      </div>
+    </div>
+
+    <div class="prescription-details">
+      <div class="left">
+        <div class="rx-symbol">℞</div>
+      </div>
+      <div class="divider"></div>
+      <div class="right">
+        <div class="date">
+
+        </div>
+        <div class="details">
+          <p><label for="name">نام بیمار:</label> {{object.reception.client}}</p>
+          <p><label for="age">تاریخ:</label> {{object.reception.date}}</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="medication">
+        <div class="medication-item">
+          <span></span> {{prescription.medication}}
+        </div>
+
+      </div>
+    <div class="footer">
+      <div class="address">
+        <p>123-456-7890, 456-456-8899</p>
+        <p>تهران تهرانسر خیابان سی ام </p>
+      </div>
+
+      </div>
+    </div>
+
+  </div>
 </body>
 </html>
