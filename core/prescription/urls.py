@@ -11,6 +11,7 @@ from .views import (
     PrescriptionItemUpdateView,
     PrescriptionItemDeleteView,
     TemporaryPrescriptionDetailView,
+    CreateTemporaryPrescription,
     save_prescription,
 )
 
@@ -49,4 +50,6 @@ urlpatterns = [
         name="temp_detail",
     ),
     path("prescription/save/<int:pk>/", save_prescription, name="save"),
+    path('create_temp_prescription/<int:reception_id>/', CreateTemporaryPrescription.as_view(), name='create_temp_prescription'),
+
 ]

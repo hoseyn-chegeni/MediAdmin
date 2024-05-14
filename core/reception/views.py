@@ -16,11 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
 from kavenegar import *
-from os import getenv
 from tasks.models import Task
 from planner.models import Session
 from prescription.models import TemporaryPrescription, Prescription
-from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.

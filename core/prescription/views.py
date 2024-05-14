@@ -19,7 +19,8 @@ from django.views.generic import DetailView
 
 from .filters import PrescriptionFilter
 from .forms import PrescriptionItemForm
-
+from reception.models import Reception
+from django.views.generic import View
 
 # Create your views here.
 class PrescriptionListView(BaseListView):
@@ -233,3 +234,19 @@ def save_prescription(request, pk):
     temp_prescription.delete()
 
     return redirect("prescription:detail", pk=main_prescription.pk)
+
+
+
+class CreateTemporaryPrescription(View):
+    def get(self, request, reception_id):
+        reception = get_object_or_404(Reception, pk=reception_id)
+        
+        # Create a new TemporaryPrescription instance
+        temp_prescription = TemporaryPrescription.objects.create(
+            reception=reception,
+            notes='',  # Set default value for notes
+            created_by=request.user  # Assuming the user is authenticated
+        )
+
+        # Redirect to the detail view of the newly created TemporaryPrescription
+        return redirect('prescription:temp_detail', pk=temp_prescription.pk)
