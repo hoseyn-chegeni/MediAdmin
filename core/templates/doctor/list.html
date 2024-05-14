@@ -76,7 +76,7 @@
 {%endblock%}
 {%block thead%}
 
-<th scope="col"></th>                    
+<th scope="col"><input type="checkbox" id="selectAll"></th>                   
 <th scope="col">ID</th>
 <th scope="col">نام</th>
 <th scope="col">نظام پزشکی</th>
@@ -90,7 +90,7 @@
 {%block tbody%}
 {%for i in doctor%}
 <tr class="fw-normal">
-  <td><input type="checkbox" name="doctor_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+  <td><input type="checkbox" name="doctor_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
 
   <th>
     <span class="ms-2">{{i.id}}</span>
@@ -128,6 +128,29 @@
   </td>
 </tr>
 {%endfor%}
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+  
 {%endblock%}
 {%block delete_content%}
 پزشکان انتخاب شده به طور کامل از سیستم حذف می شوند

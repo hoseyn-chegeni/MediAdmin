@@ -49,7 +49,7 @@ class PrescriptionDetailView(BaseDetailView):
 
 class PrescriptionUpdateView(BaseUpdateView):
     model = Prescription
-    fields = ['medication','notes']
+    fields = ["medication", "notes"]
     template_name = "prescription/update.html"
     app_name = "prescription"
     url_name = "detail"

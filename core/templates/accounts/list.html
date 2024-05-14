@@ -62,7 +62,7 @@
   <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
 {%endblock%}
 {%block thead%}
-<th scope="col"></th>
+<th scope="col"><input type="checkbox" id="selectAll"></th>
 <th scope="col">نام</th>
 <th scope="col">ایمیل</th>
 <th scope="col">کدملی</th>
@@ -72,7 +72,7 @@
 {%block tbody%}
 {%for i in users%}
 <tr class="fw-normal">       
-  <td><input type="checkbox" name="user_ids" value="{{ i.id }}"></td> <!-- Checkbox -->
+  <td><input type="checkbox" name="user_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
   <th>
     <img src="{{i.image.url}}"
       alt="avatar 1" style="width: 45px; height: auto;">
@@ -101,6 +101,33 @@
   </td>
 </tr>
 {%endfor%}
+
+
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+
+
+
 {%endblock%}
 {%block delete_content%}
 کاربران انتخاب شده به طور کامل از سیستم حذف می شوند
