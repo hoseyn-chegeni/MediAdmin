@@ -31,28 +31,6 @@ class PrescriptionListView(BaseListView):
     permission_required = "prescription.view_prescription"
 
 
-class PrescriptionCreateView(BaseCreateView):
-    model = Prescription
-    fields = [
-        "diagnosis",
-        "medication",
-        "instructions",
-    ]
-    template_name = "prescription/create.html"
-    app_name = "prescription"
-    url_name = "detail"
-    permission_required = "prescription.add_prescription"
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial["reception"] = self.kwargs["pk"]
-        return initial
-
-    def form_valid(self, form):
-        form.instance.reception_id = self.kwargs["pk"]
-        return super().form_valid(form)
-
-
 class PrescriptionCreateWithoutPkView(BaseCreateView):
     model = Prescription
     fields = "__all__"
