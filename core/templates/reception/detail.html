@@ -119,7 +119,7 @@
                      اکشن ها
                     </strong>   </div>
                 <div class="card-footer">
-                    <a href="{% url 'prescription:create' reception.pk %}" class="btn btn-success me-2">ایجاد نسخه</a>
+                    <a href="{% url 'prescription:temp_detail' temp_prescription.pk %}" class="btn btn-success me-2">نسخه نویسی</a>
                     <a href="{% url 'financial:invoice' financial.id%}" class="btn btn-success me-2">نمایش صورتحساب</a>
 
                     {%if reception.status == "WAITE"%}

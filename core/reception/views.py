@@ -19,6 +19,7 @@ from kavenegar import *
 from os import getenv
 from tasks.models import Task
 from planner.models import Session
+from prescription.models import TemporaryPrescription
 
 
 # Create your views here.
@@ -72,6 +73,7 @@ class ReceptionDetailView(BaseDetailView):
         context = super().get_context_data(**kwargs)
         reception = self.get_object()
         context["financial"] = reception.financial
+        context['temp_prescription'] = TemporaryPrescription.objects.get(reception_id = reception.id)
         return context
 
 
