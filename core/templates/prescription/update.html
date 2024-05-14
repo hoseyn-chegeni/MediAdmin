@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Instance</title>
-</head>
-<body>
-    <form method="post", enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content%}
+<h2>ویرایش نسخه {{object}}</h2>
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-12 col-xl-10">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <form method="post">
+                                    {% csrf_token %}
+
+                                    <div class="mb-3">
+                                        <label for="medication" class="form-label">اقلام دارویی:</label>
+                                        <textarea class="form-control" name="medication" rows="4" cols="50" >"{{object.medication}}"</textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="notes" class="form-label">اطلاعات تکمیلی:</label>
+                                        <textarea class="form-control" name="notes" rows="4" cols="50">{{ object.notes }}</textarea>
+                                    </div>
+                                    
+                                    <button class="w-100 btn btn-lg btn-outline-success" type="submit" >ویرایش نسخه</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div></div></div>      
+{%endblock%}
