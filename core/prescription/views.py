@@ -127,7 +127,9 @@ class PrescriptionHeaderUpdateView(BaseUpdateView):
 
 class PrescriptionItemUpdateView(BaseUpdateView):
     model = PrescriptionItem
-    fields = "__all__"
+    fields = [
+        'medicine','quantity','consumption_time','consumption_dose','how_to_use','repeat_interval','repeat_period',
+    ]
     template_name = "prescription/item/update.html"
     permission_required = "prescription.change_prescription"
 
