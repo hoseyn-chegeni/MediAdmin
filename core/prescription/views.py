@@ -164,13 +164,6 @@ class PrescriptionItemDeleteView(BaseDeleteView):
 ##################
 
 
-class TemporaryPrescriptionListView(BaseListView):
-    model = TemporaryPrescription
-    template_name = "prescription/temp/list.html"
-    context_object_name = "prescription"
-    filterset_class = 0
-    permission_required = "prescription.view_temporaryprescription"
-
 
 class TemporaryPrescriptionDetailView(DetailView):
     model = TemporaryPrescription

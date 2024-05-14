@@ -10,7 +10,6 @@ from .views import (
     PrescriptionCreateWithoutPkView,
     PrescriptionItemUpdateView,
     PrescriptionItemDeleteView,
-    TemporaryPrescriptionListView,
     TemporaryPrescriptionDetailView,
     save_prescription,
 )
@@ -44,7 +43,6 @@ urlpatterns = [
         PrescriptionItemDeleteView.as_view(),
         name="item_delete",
     ),
-    path("temp_list/", TemporaryPrescriptionListView.as_view(), name="temp_list"),
     path(
         "temp_detail/<int:pk>/",
         TemporaryPrescriptionDetailView.as_view(),
