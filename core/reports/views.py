@@ -378,27 +378,55 @@ class InsuranceReportsView(BaseListView):
 class ExportInsuranceExcelView(View):
     def get(self, request):
         # Get filtered users based on request parameters
-        insurance_filter = InsuranceFilter(
-            request.GET, queryset=Insurance.objects.all()
-        )
+        insurance_filter = UserFilter(request.GET, queryset=Insurance.objects.all())
         filtered_insurance = insurance_filter.qs
 
         # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_insurance.values()))
+        insurance_df = pd.DataFrame(list(filtered_insurance.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        # Convert filtered insurances queryset to DataFrame
+        insurance_df = pd.DataFrame(list(filtered_insurance.values()))
+        insurance_df.drop(
+            columns=[ "created_by_id",],
+            inplace=True,
+        )
+
+              # Rename columns
+        insurance_df.rename(
+            columns={
+                "name": "عنوان",
+                "policy_number": "شناسه ",
+                "insurance_company": "سازمان ارائه دهنده",
+                "deductible": "تخفیف",
+                "copay": "پرداخت مشترک(copay)",
+                "max_annual_coverage": "حداکثر پوشش سالانه",
+                "policy_type": "نوع سیاست گذاری",
+                "notes": "یادداشت",
+                "updated_at": "تاریخ آخرین ویرایش",
+                "created_at": "تاریخ ایجاد",
+            },
+            inplace=True,
+        )  
+
+
+        # Convert datetime columns to date
+        date_columns = insurance_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            insurance_df[date_column] = insurance_df[date_column].dt.date
 
+
+        # Add a new column 'created_by_email'
+        insurance_df["ایجاد کننده"] = filtered_insurance.values_list(
+            "created_by__email", flat=True
+        )
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="insurance_report.xlsx"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="insurance_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        insurance_df.to_csv(response, index=False)
 
         return response
-
 
 class InsuranceServiceReportsView(BaseListView):
     model = InsuranceService
