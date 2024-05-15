@@ -232,25 +232,53 @@ class DoctorReportsView(BaseListView):
 
 class ExportDoctorExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered doctors based on request parameters
         doctor_filter = DoctorFilter(request.GET, queryset=Doctor.objects.all())
-        filtered_doctor = doctor_filter.qs
+        filtered_doctors = doctor_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_doctor.values()))
+        # Convert filtered doctors queryset to DataFrame
+        doctors_df = pd.DataFrame(list(filtered_doctors.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        doctors_df.drop(
+            columns=["image", "created_by_id",],
+            inplace=True,
+        )
+
+
+        doctors_df.rename(
+            columns={
+                "first_name": "نام",
+                "last_name": "نام خانوادگی",
+                "email": "ایمیل",
+                "phone_number": "شماره تماس",
+                "address": "آدرس",
+                "specialization": "تخصص",
+                "registration_number": "شماره نظام پزشکی",
+                "is_active": "وضعیت",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        )
+
+
+        doctors_df["ایجاد کننده"] = filtered_doctors.values_list(
+            "created_by__email", flat=True
+        )
+        # Convert datetime columns to date
+        date_columns = doctors_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            doctors_df[date_column] = doctors_df[date_column].dt.date
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="doctor_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="doctor_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        doctors_df.to_csv(response, index=False)
 
         return response
+
 
 
 class FinancialReportsView(BaseListView):
