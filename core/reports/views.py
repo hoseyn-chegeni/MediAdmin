@@ -50,7 +50,7 @@ class ExportUsersCSVView(View):
         users_df = pd.DataFrame(list(filtered_users.values()))
 
         # Remove password column
-        users_df.drop(columns=["password", 'image','created_by_id'], inplace=True)
+        users_df.drop(columns=["password", "image", "created_by_id"], inplace=True)
 
         users_df.rename(
             columns={
@@ -72,8 +72,6 @@ class ExportUsersCSVView(View):
             },
             inplace=True,
         )
-
-
 
         # Convert datetime columns to date
         date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
@@ -112,8 +110,7 @@ class ExportEquipmentExcelView(View):
 
         # Convert filtered equipment queryset to DataFrame
         equipment_df = pd.DataFrame(list(filtered_equipment.values()))
-        equipment_df.drop(columns=['created_by_id'], inplace=True)
-
+        equipment_df.drop(columns=["created_by_id"], inplace=True)
 
         equipment_df.rename(
             columns={
@@ -242,10 +239,12 @@ class ExportDoctorExcelView(View):
         doctors_df = pd.DataFrame(list(filtered_doctors.values()))
 
         doctors_df.drop(
-            columns=["image", "created_by_id",],
+            columns=[
+                "image",
+                "created_by_id",
+            ],
             inplace=True,
         )
-
 
         doctors_df.rename(
             columns={
@@ -263,24 +262,24 @@ class ExportDoctorExcelView(View):
             inplace=True,
         )
 
-
         doctors_df["ایجاد کننده"] = filtered_doctors.values_list(
             "created_by__email", flat=True
         )
         # Convert datetime columns to date
-        date_columns = doctors_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = doctors_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             doctors_df[date_column] = doctors_df[date_column].dt.date
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="doctor_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="doctor_report.csv"'
 
         # Write DataFrame to CSV file and return response
         doctors_df.to_csv(response, index=False)
 
         return response
-
 
 
 class FinancialReportsView(BaseListView):
@@ -293,7 +292,9 @@ class FinancialReportsView(BaseListView):
 class ExportFinancialExcelView(View):
     def get(self, request):
         # Get filtered financial records based on request parameters
-        financial_filter = FinancialFilter(request.GET, queryset=Financial.objects.all())
+        financial_filter = FinancialFilter(
+            request.GET, queryset=Financial.objects.all()
+        )
         filtered_financial = financial_filter.qs
 
         # Convert filtered financial records queryset to DataFrame
@@ -344,28 +345,39 @@ class ExportFinancialExcelView(View):
         )
 
         filtered_financial = filtered_financial.annotate(
-            full_name=Concat('reception__service__doctor__first_name', Value(' '), 'reception__service__doctor__last_name', output_field=CharField())
+            full_name=Concat(
+                "reception__service__doctor__first_name",
+                Value(" "),
+                "reception__service__doctor__last_name",
+                output_field=CharField(),
+            )
         )
         # Add 'پزشک' column with doctor's name
-        financial_df["پزشک"] = filtered_financial.values_list(
+        financial_df["پزشک"] = filtered_financial.values_list("full_name", flat=True)
+
+        filtered_financial = filtered_financial.annotate(
+            full_name=Concat(
+                "reception__client__first_name",
+                Value(" "),
+                "reception__client__last_name",
+                output_field=CharField(),
+            )
+        )
+        # Add 'نام بیمار' column with client's name
+        financial_df["نام بیمار"] = filtered_financial.values_list(
             "full_name", flat=True
         )
 
-        filtered_financial = filtered_financial.annotate(
-            full_name=Concat('reception__client__first_name', Value(' '), 'reception__client__last_name', output_field=CharField())
-        )
-        # Add 'نام بیمار' column with client's name
-        financial_df["نام بیمار"] = filtered_financial.values_list("full_name", flat=True)
-
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="invoice_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="invoice_report.csv"'
 
         # Write DataFrame to CSV file and return response
-        financial_df.to_csv(response, index=False, encoding='utf-8-sig')  # Ensure correct encoding for Persian characters
+        financial_df.to_csv(
+            response, index=False, encoding="utf-8-sig"
+        )  # Ensure correct encoding for Persian characters
 
         return response
-
 
 
 class InsuranceReportsView(BaseListView):
@@ -387,11 +399,13 @@ class ExportInsuranceExcelView(View):
         # Convert filtered insurances queryset to DataFrame
         insurance_df = pd.DataFrame(list(filtered_insurance.values()))
         insurance_df.drop(
-            columns=[ "created_by_id",],
+            columns=[
+                "created_by_id",
+            ],
             inplace=True,
         )
 
-              # Rename columns
+        # Rename columns
         insurance_df.rename(
             columns={
                 "name": "عنوان",
@@ -406,14 +420,14 @@ class ExportInsuranceExcelView(View):
                 "created_at": "تاریخ ایجاد",
             },
             inplace=True,
-        )  
-
+        )
 
         # Convert datetime columns to date
-        date_columns = insurance_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = insurance_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             insurance_df[date_column] = insurance_df[date_column].dt.date
-
 
         # Add a new column 'created_by_email'
         insurance_df["ایجاد کننده"] = filtered_insurance.values_list(
@@ -427,6 +441,7 @@ class ExportInsuranceExcelView(View):
         insurance_df.to_csv(response, index=False)
 
         return response
+
 
 class InsuranceServiceReportsView(BaseListView):
     model = InsuranceService
@@ -447,7 +462,7 @@ class ExportInsuranceServiceExcelView(View):
         insurance_service_df = pd.DataFrame(list(filtered_insurance_service.values()))
 
         insurance_service_df.drop(
-            columns=[ "created_by_id","service_id","insurance_id"],
+            columns=["created_by_id", "service_id", "insurance_id"],
             inplace=True,
         )
 
@@ -459,13 +474,16 @@ class ExportInsuranceServiceExcelView(View):
                 "created_at": "تاریخ ایجاد",
             },
             inplace=True,
-        )  
+        )
 
         # Convert datetime columns to date
-        date_columns = insurance_service_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = insurance_service_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
-            insurance_service_df[date_column] = insurance_service_df[date_column].dt.date
-
+            insurance_service_df[date_column] = insurance_service_df[
+                date_column
+            ].dt.date
 
         insurance_service_df["نام سرویس"] = filtered_insurance_service.values_list(
             "service__name", flat=True
@@ -478,16 +496,16 @@ class ExportInsuranceServiceExcelView(View):
             "created_by__email", flat=True
         )
 
-
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="insurance_service_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = (
+            'attachment; filename="insurance_service_report.csv"'
+        )
 
         # Write DataFrame to CSV file and return response
         insurance_service_df.to_csv(response, index=False)
 
         return response
-
 
 
 class PrescriptionReportsView(BaseListView):
@@ -509,7 +527,9 @@ class ExportPrescriptionExcelView(View):
         prescriptions_df = pd.DataFrame(list(filtered_prescriptions.values()))
 
         prescriptions_df.drop(
-            columns=[ "created_by_id",],
+            columns=[
+                "created_by_id",
+            ],
             inplace=True,
         )
 
@@ -522,10 +542,12 @@ class ExportPrescriptionExcelView(View):
                 "created_at": "تاریخ ایجاد",
             },
             inplace=True,
-        )  
+        )
 
         # Convert datetime columns to date
-        date_columns = prescriptions_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = prescriptions_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             prescriptions_df[date_column] = prescriptions_df[date_column].dt.date
 
@@ -535,14 +557,15 @@ class ExportPrescriptionExcelView(View):
         )
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="prescription_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = (
+            'attachment; filename="prescription_report.csv"'
+        )
 
         # Write DataFrame to CSV file and return response
         prescriptions_df.to_csv(response, index=False)
 
         return response
-
 
 
 class ReceptionReportsView(BaseListView):
@@ -564,7 +587,13 @@ class ExportReceptionExcelView(View):
         receptions_df = pd.DataFrame(list(filtered_receptions.values()))
 
         receptions_df.drop(
-            columns=[ "created_by_id",'client_id','service_id','invoice_attachment',"reception_in_day"],
+            columns=[
+                "created_by_id",
+                "client_id",
+                "service_id",
+                "invoice_attachment",
+                "reception_in_day",
+            ],
             inplace=True,
         )
 
@@ -580,9 +609,11 @@ class ExportReceptionExcelView(View):
                 "session_id": "شناسه نوبت",
             },
             inplace=True,
-        )  
+        )
         # Convert datetime columns to date
-        date_columns = receptions_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = receptions_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             receptions_df[date_column] = receptions_df[date_column].dt.date
 
@@ -590,29 +621,38 @@ class ExportReceptionExcelView(View):
             "created_by__email", flat=True
         )
 
-                # Add 'سرویس ارایه شده' column with reception service
+        # Add 'سرویس ارایه شده' column with reception service
         receptions_df["سرویس ارایه شده"] = filtered_receptions.values_list(
             "service__name", flat=True
         )
 
         filtered_receptions = filtered_receptions.annotate(
-            full_name=Concat('service__doctor__first_name', Value(' '), 'service__doctor__last_name', output_field=CharField())
+            full_name=Concat(
+                "service__doctor__first_name",
+                Value(" "),
+                "service__doctor__last_name",
+                output_field=CharField(),
+            )
         )
         # Add 'پزشک' column with doctor's name
-        receptions_df["پزشک"] = filtered_receptions.values_list(
+        receptions_df["پزشک"] = filtered_receptions.values_list("full_name", flat=True)
+
+        filtered_receptions = filtered_receptions.annotate(
+            full_name=Concat(
+                "client__first_name",
+                Value(" "),
+                "client__last_name",
+                output_field=CharField(),
+            )
+        )
+        # Add 'نام بیمار' column with client's name
+        receptions_df["نام بیمار"] = filtered_receptions.values_list(
             "full_name", flat=True
         )
 
-        filtered_receptions = filtered_receptions.annotate(
-            full_name=Concat('client__first_name', Value(' '), 'client__last_name', output_field=CharField())
-        )
-        # Add 'نام بیمار' column with client's name
-        receptions_df["نام بیمار"] = filtered_receptions.values_list("full_name", flat=True)
-
-
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="reception_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="reception_report.csv"'
 
         # Write DataFrame to CSV file and return response
         receptions_df.to_csv(response, index=False)
@@ -637,10 +677,14 @@ class ExportServiceExcelView(View):
         services_df = pd.DataFrame(list(filtered_services.values()))
 
         services_df.drop(
-            columns=[ "created_by_id",'doctor_id','category_id','check_consumable_inventory',],
+            columns=[
+                "created_by_id",
+                "doctor_id",
+                "category_id",
+                "check_consumable_inventory",
+            ],
             inplace=True,
         )
-
 
         services_df.rename(
             columns={
@@ -659,37 +703,41 @@ class ExportServiceExcelView(View):
                 "recommendations": "توصیه ها",
             },
             inplace=True,
-        )  
+        )
 
-        date_columns = services_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = services_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
-                services_df[date_column] = services_df[date_column].dt.date
-
-
+            services_df[date_column] = services_df[date_column].dt.date
 
         services_df["ایجاد کننده"] = filtered_services.values_list(
             "created_by__email", flat=True
         )
 
         filtered_services = filtered_services.annotate(
-            full_name=Concat('doctor__first_name', Value(' '), 'doctor__last_name', output_field=CharField())
+            full_name=Concat(
+                "doctor__first_name",
+                Value(" "),
+                "doctor__last_name",
+                output_field=CharField(),
+            )
         )
         # Add 'پزشک' column with doctor's name
-        services_df["پزشک"] = filtered_services.values_list(
-            "full_name", flat=True
-        )
+        services_df["پزشک"] = filtered_services.values_list("full_name", flat=True)
         services_df["دسته بندی"] = filtered_services.values_list(
             "category__name", flat=True
         )
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="service_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="service_report.csv"'
 
         # Write DataFrame to CSV file and return response
         services_df.to_csv(response, index=False)
 
         return response
+
 
 class PackageReportsView(BaseListView):
     model = Package
@@ -731,18 +779,21 @@ class ClientSMSLogReportsView(BaseListView):
 class ExportClientSMSLogExcelView(View):
     def get(self, request):
         # Get filtered client SMS logs based on request parameters
-        client_sms_filter = ClientSMSLogFilter(request.GET, queryset=ClientSMSLog.objects.all())
+        client_sms_filter = ClientSMSLogFilter(
+            request.GET, queryset=ClientSMSLog.objects.all()
+        )
         filtered_client_sms = client_sms_filter.qs
 
         # Convert filtered client SMS logs queryset to DataFrame
         client_sms_df = pd.DataFrame(list(filtered_client_sms.values()))
 
-
         client_sms_df.drop(
-            columns=[ "client_id",'created_by_id',],
+            columns=[
+                "client_id",
+                "created_by_id",
+            ],
             inplace=True,
         )
-
 
         client_sms_df.rename(
             columns={
@@ -754,8 +805,7 @@ class ExportClientSMSLogExcelView(View):
                 "created_at": "تاریخ ارسال",
             },
             inplace=True,
-        )  
-
+        )
 
         # Convert datetime columns to date
         date_columns = client_sms_df.select_dtypes(
@@ -764,13 +814,17 @@ class ExportClientSMSLogExcelView(View):
         for date_column in date_columns:
             client_sms_df[date_column] = client_sms_df[date_column].dt.date
 
-
         client_sms_df["ایجاد کننده"] = filtered_client_sms.values_list(
             "created_by__email", flat=True
         )
 
         filtered_client_sms = filtered_client_sms.annotate(
-            full_name=Concat('client__first_name', Value(' '), 'client__last_name', output_field=CharField())
+            full_name=Concat(
+                "client__first_name",
+                Value(" "),
+                "client__last_name",
+                output_field=CharField(),
+            )
         )
         # Add 'پزشک' column with doctor's name
         client_sms_df["نام بیمار"] = filtered_client_sms.values_list(
@@ -778,13 +832,14 @@ class ExportClientSMSLogExcelView(View):
         )
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="sms_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="sms_report.csv"'
 
         # Write DataFrame to CSV file and return response
         client_sms_df.to_csv(response, index=False)
 
         return response
+
 
 class TaskReportsView(BaseListView):
     model = Task
@@ -802,12 +857,13 @@ class ExportTaskExcelView(View):
         # Convert filtered tasks queryset to DataFrame
         tasks_df = pd.DataFrame(list(filtered_tasks.values()))
 
-
         tasks_df.drop(
-            columns=[ "assign_to_id",'created_by_id',],
+            columns=[
+                "assign_to_id",
+                "created_by_id",
+            ],
             inplace=True,
         )
-
 
         tasks_df.rename(
             columns={
@@ -822,15 +878,12 @@ class ExportTaskExcelView(View):
                 "updated_at": "تاریخ آخرین ویرایش",
             },
             inplace=True,
-        )  
-
-
+        )
 
         # Convert datetime columns to date
         date_columns = tasks_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
             tasks_df[date_column] = tasks_df[date_column].dt.date
-
 
         tasks_df["ایجاد کننده"] = filtered_tasks.values_list(
             "created_by__email", flat=True
@@ -840,8 +893,8 @@ class ExportTaskExcelView(View):
             "assign_to__email", flat=True
         )
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="tasks_reports.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="tasks_reports.csv"'
 
         # Write DataFrame to CSV file and return response
         tasks_df.to_csv(response, index=False)
@@ -858,19 +911,24 @@ class ConsumableReportsView(BaseListView):
 
 
 class ExportConsumableExcelView(View):
-  def get(self, request):
+    def get(self, request):
         # Get filtered consumables based on request parameters
-        consumable_filter = ConsumableFilter(request.GET, queryset=ConsumableV2.objects.all())
+        consumable_filter = ConsumableFilter(
+            request.GET, queryset=ConsumableV2.objects.all()
+        )
         filtered_consumables = consumable_filter.qs
 
         # Convert filtered consumables queryset to DataFrame
         consumables_df = pd.DataFrame(list(filtered_consumables.values()))
 
         consumables_df.drop(
-            columns=[ "image",'created_by_id','category_id',],
+            columns=[
+                "image",
+                "created_by_id",
+                "category_id",
+            ],
             inplace=True,
         )
-
 
         consumables_df.rename(
             columns={
@@ -885,11 +943,12 @@ class ExportConsumableExcelView(View):
                 "updated_at": "تاریخ آخرین ویرایش",
             },
             inplace=True,
-        )  
-
+        )
 
         # Convert datetime columns to date
-        date_columns = consumables_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = consumables_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             consumables_df[date_column] = consumables_df[date_column].dt.date
 
@@ -901,10 +960,9 @@ class ExportConsumableExcelView(View):
             "category__name", flat=True
         )
 
-
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="consumable_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="consumable_report.csv"'
 
         # Write DataFrame to CSV file and return response
         consumables_df.to_csv(response, index=False)
@@ -930,10 +988,11 @@ class ExportSupplierExcelView(View):
         suppliers_df = pd.DataFrame(list(filtered_suppliers.values()))
 
         suppliers_df.drop(
-            columns=[ 'created_by_id',],
+            columns=[
+                "created_by_id",
+            ],
             inplace=True,
         )
-
 
         suppliers_df.rename(
             columns={
@@ -948,11 +1007,12 @@ class ExportSupplierExcelView(View):
                 "updated_at": "تاریخ آخرین ویرایش",
             },
             inplace=True,
-        ) 
-
+        )
 
         # Convert datetime columns to date
-        date_columns = suppliers_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = suppliers_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             suppliers_df[date_column] = suppliers_df[date_column].dt.date
 
@@ -960,17 +1020,14 @@ class ExportSupplierExcelView(View):
             "created_by__email", flat=True
         )
 
-
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="supplier_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="supplier_report.csv"'
 
         # Write DataFrame to CSV file and return response
         suppliers_df.to_csv(response, index=False)
 
         return response
-
-
 
 
 class OfficeExpensesReportsView(BaseListView):
@@ -992,10 +1049,9 @@ class ExportOfficeExpensesExcelView(View):
         office_expenses_df = pd.DataFrame(list(filtered_office_expenses.values()))
 
         office_expenses_df.drop(
-            columns=[ 'created_by_id',"user_id",'attachment'],
+            columns=["created_by_id", "user_id", "attachment"],
             inplace=True,
         )
-
 
         office_expenses_df.rename(
             columns={
@@ -1009,13 +1065,12 @@ class ExportOfficeExpensesExcelView(View):
                 "updated_at": "تاریخ آخرین ویرایش",
             },
             inplace=True,
-        ) 
-
-
-
+        )
 
         # Convert datetime columns to date
-        date_columns = office_expenses_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = office_expenses_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             office_expenses_df[date_column] = office_expenses_df[date_column].dt.date
 
@@ -1027,8 +1082,10 @@ class ExportOfficeExpensesExcelView(View):
             "user__email", flat=True
         )
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="office_expenses_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = (
+            'attachment; filename="office_expenses_report.csv"'
+        )
 
         # Write DataFrame to CSV file and return response
         office_expenses_df.to_csv(response, index=False)
