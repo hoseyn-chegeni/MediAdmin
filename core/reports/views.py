@@ -48,9 +48,29 @@ class ExportUsersCSVView(View):
         users_df = pd.DataFrame(list(filtered_users.values()))
 
         # Remove password column
-        users_df.drop(columns=['password'], inplace=True)
-        users_df.drop(columns=['image'], inplace=True)
-        users_df.drop(columns=['created_by_id'], inplace=True)
+        users_df.drop(columns=["password", 'image','created_by_id'], inplace=True)
+
+        users_df.rename(
+            columns={
+                "last_login": "تاریخ آخرین لاگین",
+                "is_superuser": "کاربر ادمین",
+                "is_staff": "راهبر سیستم",
+                "is_active": "وضعیت",
+                "date_joined": "تاریخ عضویت",
+                "email": "ایمیل",
+                "first_name": "نام",
+                "last_name": "نام خانوادگی",
+                "date_of_birth": "تاریخ تولد",
+                "national_id": "کدملی",
+                "phone_number": "شماره تماس",
+                "address": "آدرس",
+                "login_attempts": "تعداد دفعات لاگین",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        )
+
 
 
         # Convert datetime columns to date
@@ -59,20 +79,18 @@ class ExportUsersCSVView(View):
             users_df[date_column] = users_df[date_column].dt.date
 
         # Add a new column 'created_by_email'
-        users_df['created_by_email'] = filtered_users.values_list('created_by__email', flat=True)
+        users_df["ایجاد کننده"] = filtered_users.values_list(
+            "created_by__email", flat=True
+        )
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="user_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="user_report.csv"'
 
         # Write DataFrame to CSV file and return response
         users_df.to_csv(response, index=False)
 
         return response
-
-
-
-
 
 
 class EquipmentReportsView(BaseListView):
@@ -92,15 +110,39 @@ class ExportEquipmentExcelView(View):
 
         # Convert filtered equipment queryset to DataFrame
         equipment_df = pd.DataFrame(list(filtered_equipment.values()))
+        equipment_df.drop(columns=['created_by_id'], inplace=True)
 
+
+        equipment_df.rename(
+            columns={
+                "name": "نام",
+                "manufacturer": "سازنده",
+                "model": "مدل",
+                "serial_number": "شماره سریال",
+                "acquisition_date": "تاریخ بهره برداری",
+                "warranty_expiry_date": "تاریخ انقضا گارانتی",
+                "location": "لوکیشن",
+                "is_available": "در دسترس",
+                "description": "توضیحات",
+                "last_maintenance_date": "تاریخ آخرین تعمیر",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        )
+        equipment_df["ایجاد کننده"] = filtered_equipment.values_list(
+            "created_by__email", flat=True
+        )
         # Convert datetime columns to date
-        date_columns = equipment_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = equipment_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             equipment_df[date_column] = equipment_df[date_column].dt.date
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="equipment_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="equipment_report.csv"'
 
         # Write DataFrame to CSV file and return response
         equipment_df.to_csv(response, index=False)
@@ -123,47 +165,57 @@ class ExportClientExcelView(View):
 
         # Convert filtered clients queryset to DataFrame
         clients_df = pd.DataFrame(list(filtered_clients.values()))
-        clients_df.drop(columns=['image','insurance_id','created_by_id','initial_session_id'], inplace=True)
+        clients_df.drop(
+            columns=["image", "insurance_id", "created_by_id", "initial_session_id"],
+            inplace=True,
+        )
 
-        clients_df.rename(columns={'case_id': 'شماره پرونده',
-                                   'first_name':'نام',
-                                   'last_name':'نام خانوادگی',
-                                   'national_id':'کد ملی',
-                                   'fathers_name':'نام پدر',
-                                   'date_of_birth':'تاریخ تولد',
-                                   'gender':'جنسیت',
-                                   'phone_number':'شماره تماس',
-                                   'address':'آدرس',
-                                   'marital_status':'وضعیت تاهل',
-                                   'emergency_contact_name':'نام همراه ( شرایط اضطراری)',
-                                   'emergency_contact_number':'شماره تماس همراه',
-                                   'surgeries':'سابقه جراحی',
-                                   'allergies':'حساسیت',
-                                   'medical_history':'سوابق درمان',
-                                   'medications':'سوابق دارویی',
-                                   'smoker':'استعمال دخانیات',
-                                   'disease':'بیماری',
-                                   'created_at':'تاریخ ایجاد',
-                                   'updated_at':'تاریخ آخرین ویرایش',
-                                   'is_vip':'وضعیت',
-                                   'number_of_receptions':'تعداد دفعات مراجعه',
-                                   'last_reception_date':'تاریخ آخرین مراجعه',
-                                   'last_reception_reason':'علت آخرین مراجعه',
-                                   },
-                 inplace=True)
+        clients_df.rename(
+            columns={
+                "case_id": "شماره پرونده",
+                "first_name": "نام",
+                "last_name": "نام خانوادگی",
+                "national_id": "کد ملی",
+                "fathers_name": "نام پدر",
+                "date_of_birth": "تاریخ تولد",
+                "gender": "جنسیت",
+                "phone_number": "شماره تماس",
+                "address": "آدرس",
+                "marital_status": "وضعیت تاهل",
+                "emergency_contact_name": "نام همراه ( شرایط اضطراری)",
+                "emergency_contact_number": "شماره تماس همراه",
+                "surgeries": "سابقه جراحی",
+                "allergies": "حساسیت",
+                "medical_history": "سوابق درمان",
+                "medications": "سوابق دارویی",
+                "smoker": "استعمال دخانیات",
+                "disease": "بیماری",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+                "is_vip": "وضعیت",
+                "number_of_receptions": "تعداد دفعات مراجعه",
+                "last_reception_date": "تاریخ آخرین مراجعه",
+                "last_reception_reason": "علت آخرین مراجعه",
+            },
+            inplace=True,
+        )
 
         # Convert datetime columns to date
-        date_columns = clients_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        date_columns = clients_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
             clients_df[date_column] = clients_df[date_column].dt.date
 
         # Add created_by_email column
-        clients_df['ایجاد کننده'] = filtered_clients.values_list('created_by__email', flat=True)
-        clients_df['بیمه'] = filtered_clients.values_list('insurance__name', flat=True)
+        clients_df["ایجاد کننده"] = filtered_clients.values_list(
+            "created_by__email", flat=True
+        )
+        clients_df["بیمه"] = filtered_clients.values_list("insurance__name", flat=True)
 
         # Create a response object
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="client_report.csv"'
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = 'attachment; filename="client_report.csv"'
 
         # Write DataFrame to CSV file and return response
         clients_df.to_csv(response, index=False)

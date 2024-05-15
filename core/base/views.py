@@ -20,7 +20,8 @@ class BaseListView(LoginRequiredMixin, PermissionRequiredMixin, FilterView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.order_by('-created_at')
+        return queryset.order_by("-created_at")
+
 
 class BaseCreateView(
     LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView
