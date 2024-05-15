@@ -8,11 +8,15 @@ from asset.models import Equipment
 # Create your views here.
 
 class UserImportView(View):
-    template_name = "import/user.html"
+    template_name = "import.html"
     default_password = config("DEFAULT_PASSWORD")
 
+
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'name': 'کاربر',  # Add any variables you need here
+        }
+        return render(request, self.template_name,context=context)
 
     def post(self, request):
         if request.method == "POST" and request.FILES.get("file"):
@@ -65,10 +69,14 @@ class UserImportView(View):
 
 
 class EquipmentImportView(View):
-    template_name = "import/equipment.html"
+    template_name = "import.html"
 
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'name': 'تجهیزات پزشکی',  # Add any variables you need here
+        }
+
+        return render(request, self.template_name, context=context)
 
     def post(self, request):
         if request.method == "POST" and request.FILES.get("file"):
@@ -119,4 +127,5 @@ class EquipmentImportView(View):
                     f"There was an error importing the file. Please make sure the file format is correct.",
                 )
         return render(request, self.template_name)
+
 
