@@ -437,29 +437,57 @@ class InsuranceServiceReportsView(BaseListView):
 
 class ExportInsuranceServiceExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered insurance services based on request parameters
         insurance_service_filter = InsuranceServiceFilter(
             request.GET, queryset=InsuranceService.objects.all()
         )
         filtered_insurance_service = insurance_service_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_insurance_service.values()))
+        # Convert filtered insurance services queryset to DataFrame
+        insurance_service_df = pd.DataFrame(list(filtered_insurance_service.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
-        for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
-
-        # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = (
-            'attachment; filename="insurance_service_report.xlsx"'
+        insurance_service_df.drop(
+            columns=[ "created_by_id","service_id","insurance_id"],
+            inplace=True,
         )
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        insurance_service_df.rename(
+            columns={
+                "percentage": "درصد پوشش",
+                "notes": "یادداشت ",
+                "updated_at": "تاریخ آخرین ویرایش",
+                "created_at": "تاریخ ایجاد",
+            },
+            inplace=True,
+        )  
+
+        # Convert datetime columns to date
+        date_columns = insurance_service_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        for date_column in date_columns:
+            insurance_service_df[date_column] = insurance_service_df[date_column].dt.date
+
+
+        insurance_service_df["نام سرویس"] = filtered_insurance_service.values_list(
+            "service__name", flat=True
+        )
+        insurance_service_df["نام بیمه"] = filtered_insurance_service.values_list(
+            "insurance__name", flat=True
+        )
+        # Add a new column 'created_by_email'
+        insurance_service_df["ایجاد کننده"] = filtered_insurance_service.values_list(
+            "created_by__email", flat=True
+        )
+
+
+        # Create a response object
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="insurance_service_report.csv"'
+
+        # Write DataFrame to CSV file and return response
+        insurance_service_df.to_csv(response, index=False)
 
         return response
+
 
 
 class PrescriptionReportsView(BaseListView):
