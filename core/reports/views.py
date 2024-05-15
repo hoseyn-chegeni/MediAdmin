@@ -795,23 +795,56 @@ class TaskReportsView(BaseListView):
 
 class ExportTaskExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered tasks based on request parameters
         task_filter = TaskFilter(request.GET, queryset=Task.objects.all())
-        filtered_task = task_filter.qs
+        filtered_tasks = task_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_task.values()))
+        # Convert filtered tasks queryset to DataFrame
+        tasks_df = pd.DataFrame(list(filtered_tasks.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+
+        tasks_df.drop(
+            columns=[ "assign_to_id",'created_by_id',],
+            inplace=True,
+        )
+
+
+        tasks_df.rename(
+            columns={
+                "title": "عنوان تسک",
+                "description": "توضیحات",
+                "type": "نوع تسک",
+                "status": "وضعیت",
+                "priority": "فوریت",
+                "answer": "پاسخ کارشناس",
+                "reopen_message": "دلیل باز کردن مجدد",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        )  
+
+
+
+        # Convert datetime columns to date
+        date_columns = tasks_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            tasks_df[date_column] = tasks_df[date_column].dt.date
 
+
+        tasks_df["ایجاد کننده"] = filtered_tasks.values_list(
+            "created_by__email", flat=True
+        )
+
+        tasks_df["کارشناس بررسی کننده"] = filtered_tasks.values_list(
+            "assign_to__email", flat=True
+        )
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="tasks_reports.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="tasks_reports.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        tasks_df.to_csv(response, index=False)
 
         return response
 
