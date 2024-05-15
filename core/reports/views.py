@@ -586,13 +586,9 @@ class ExportReceptionExcelView(View):
         for date_column in date_columns:
             receptions_df[date_column] = receptions_df[date_column].dt.date
 
-
-
         receptions_df["ایجاد کننده"] = filtered_receptions.values_list(
             "created_by__email", flat=True
         )
-
-
 
                 # Add 'سرویس ارایه شده' column with reception service
         receptions_df["سرویس ارایه شده"] = filtered_receptions.values_list(
@@ -633,26 +629,67 @@ class ServiceReportsView(BaseListView):
 
 class ExportServiceExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered services based on request parameters
         service_filter = ServicesFilter(request.GET, queryset=Service.objects.all())
-        filtered_service = service_filter.qs
+        filtered_services = service_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_service.values()))
+        # Convert filtered services queryset to DataFrame
+        services_df = pd.DataFrame(list(filtered_services.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        services_df.drop(
+            columns=[ "created_by_id",'doctor_id','category_id','check_consumable_inventory',],
+            inplace=True,
+        )
+
+
+        services_df.rename(
+            columns={
+                "name": "عنوان",
+                "doctors_wage_percentage": " درصد سهم پزشک",
+                "description": "توضیحات",
+                "duration": "مدت زمان تقریبی",
+                "price": "مبلغ سرویس ",
+                "preparation_instructions": "دستورالعمل های آماده سازی",
+                "is_active": "وضعیت فعال بودن",
+                "therapeutic_measures": "اقدامات درمانی",
+                "appointment_per_day": "ظرفیت نوبت دهی در روز",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": " تاریخ آخرین ویرایش",
+                "documentation_requirements": "ملزومات مستندسازی",
+                "recommendations": "توصیه ها",
+            },
+            inplace=True,
+        )  
+
+        date_columns = services_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+                services_df[date_column] = services_df[date_column].dt.date
+
+
+
+        services_df["ایجاد کننده"] = filtered_services.values_list(
+            "created_by__email", flat=True
+        )
+
+        filtered_services = filtered_services.annotate(
+            full_name=Concat('doctor__first_name', Value(' '), 'doctor__last_name', output_field=CharField())
+        )
+        # Add 'پزشک' column with doctor's name
+        services_df["پزشک"] = filtered_services.values_list(
+            "full_name", flat=True
+        )
+        services_df["دسته بندی"] = filtered_services.values_list(
+            "category__name", flat=True
+        )
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="service_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="service_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        services_df.to_csv(response, index=False)
 
         return response
-
 
 class PackageReportsView(BaseListView):
     model = Package
