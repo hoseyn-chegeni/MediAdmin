@@ -1,4 +1,4 @@
-from django_filters import FilterSet, DateFilter, ChoiceFilter, CharFilter
+from django_filters import FilterSet, DateFilter, ChoiceFilter, CharFilter,OrderingFilter
 from datetime import datetime, timedelta
 from django import forms
 
@@ -43,3 +43,11 @@ class BaseFilter(FilterSet):
             return queryset.filter(
                 created_at__date__range=[start_of_month, end_of_month]
             )
+    order_by = OrderingFilter(
+        fields=(
+            ('created_at', 'created_at'),
+        ),
+        field_labels={
+            'created_at': 'Creation Date',
+        }
+    )
