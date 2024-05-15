@@ -499,29 +499,50 @@ class PrescriptionReportsView(BaseListView):
 
 class ExportPrescriptionExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered prescriptions based on request parameters
         prescription_filter = PrescriptionFilter(
             request.GET, queryset=Prescription.objects.all()
         )
-        filtered_prescription = prescription_filter.qs
+        filtered_prescriptions = prescription_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_prescription.values()))
+        # Convert filtered prescriptions queryset to DataFrame
+        prescriptions_df = pd.DataFrame(list(filtered_prescriptions.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
-        for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
-
-        # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = (
-            'attachment; filename="prescription_report.xlsx"'
+        prescriptions_df.drop(
+            columns=[ "created_by_id",],
+            inplace=True,
         )
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        prescriptions_df.rename(
+            columns={
+                "reception_id": "شناسه پذیرش",
+                "date": "تاریخ ",
+                "notes": "اطلاعات تکمیلی",
+                "updated_at": "تاریخ آخرین ویرایش",
+                "created_at": "تاریخ ایجاد",
+            },
+            inplace=True,
+        )  
+
+        # Convert datetime columns to date
+        date_columns = prescriptions_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        for date_column in date_columns:
+            prescriptions_df[date_column] = prescriptions_df[date_column].dt.date
+
+        # Add a new column 'created_by_email'
+        prescriptions_df["ایجاد کننده"] = filtered_prescriptions.values_list(
+            "created_by__email", flat=True
+        )
+
+        # Create a response object
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="prescription_report.csv"'
+
+        # Write DataFrame to CSV file and return response
+        prescriptions_df.to_csv(response, index=False)
 
         return response
+
 
 
 class ReceptionReportsView(BaseListView):
