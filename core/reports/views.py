@@ -858,28 +858,56 @@ class ConsumableReportsView(BaseListView):
 
 
 class ExportConsumableExcelView(View):
-    def get(self, request):
-        # Get filtered users based on request parameters
-        consumable_filter = ConsumableFilter(
-            request.GET, queryset=ConsumableV2.objects.all()
+  def get(self, request):
+        # Get filtered consumables based on request parameters
+        consumable_filter = ConsumableFilter(request.GET, queryset=ConsumableV2.objects.all())
+        filtered_consumables = consumable_filter.qs
+
+        # Convert filtered consumables queryset to DataFrame
+        consumables_df = pd.DataFrame(list(filtered_consumables.values()))
+
+        consumables_df.drop(
+            columns=[ "image",'created_by_id','category_id',],
+            inplace=True,
         )
-        filtered_consumable = consumable_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_consumable.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        consumables_df.rename(
+            columns={
+                "name": "عنوان",
+                "unit": "واحد اندازه گیری",
+                "minimum_stock_level": "حداقل سطح موجودی",
+                "usage_notes": "نحوه مصرف",
+                "storage_notes": "نحوه نگهداری",
+                "description": "توضیحات",
+                "reorder_quantity": "سطح موجودی برای یادآوری سفارش مجدد",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        )  
+
+
+        # Convert datetime columns to date
+        date_columns = consumables_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            consumables_df[date_column] = consumables_df[date_column].dt.date
+
+        consumables_df["ایجاد کننده"] = filtered_consumables.values_list(
+            "created_by__email", flat=True
+        )
+
+        consumables_df["دسته بندی"] = filtered_consumables.values_list(
+            "category__name", flat=True
+        )
+
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = (
-            'attachment; filename="consumable_report.xlsx"'
-        )
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="consumable_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        consumables_df.to_csv(response, index=False)
 
         return response
 
