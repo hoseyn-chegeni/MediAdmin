@@ -982,26 +982,55 @@ class OfficeExpensesReportsView(BaseListView):
 
 class ExportOfficeExpensesExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered office expenses based on request parameters
         office_expenses_filter = OfficeExpensesFilter(
             request.GET, queryset=OfficeExpenses.objects.all()
         )
         filtered_office_expenses = office_expenses_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_office_expenses.values()))
+        # Convert filtered office expenses queryset to DataFrame
+        office_expenses_df = pd.DataFrame(list(filtered_office_expenses.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
-        for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
-
-        # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = (
-            'attachment; filename="office_expenses_report.xlsx"'
+        office_expenses_df.drop(
+            columns=[ 'created_by_id',"user_id",'attachment'],
+            inplace=True,
         )
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+
+        office_expenses_df.rename(
+            columns={
+                "date": "تاریخ",
+                "subject": "عنوان",
+                "amount": "مبلغ",
+                "recipient_name": "نام دریافت کننده",
+                "payment_method": "نحوه پرداخت",
+                "description": "توضیحات",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        ) 
+
+
+
+
+        # Convert datetime columns to date
+        date_columns = office_expenses_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        for date_column in date_columns:
+            office_expenses_df[date_column] = office_expenses_df[date_column].dt.date
+
+        office_expenses_df["ایجاد کننده"] = filtered_office_expenses.values_list(
+            "created_by__email", flat=True
+        )
+
+        office_expenses_df["کاربر"] = filtered_office_expenses.values_list(
+            "user__email", flat=True
+        )
+        # Create a response object
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="office_expenses_report.csv"'
+
+        # Write DataFrame to CSV file and return response
+        office_expenses_df.to_csv(response, index=False)
 
         return response
