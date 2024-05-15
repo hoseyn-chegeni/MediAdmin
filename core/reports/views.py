@@ -117,23 +117,56 @@ class ClientReportsView(BaseListView):
 
 class ExportClientExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered clients based on request parameters
         client_filter = ClientFilters(request.GET, queryset=Client.objects.all())
-        filtered_client = client_filter.qs
+        filtered_clients = client_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_client.values()))
+        # Convert filtered clients queryset to DataFrame
+        clients_df = pd.DataFrame(list(filtered_clients.values()))
+        clients_df.drop(columns=['image','insurance_id','created_by_id','initial_session_id'], inplace=True)
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        clients_df.rename(columns={'case_id': 'شماره پرونده',
+                                   'first_name':'نام',
+                                   'last_name':'نام خانوادگی',
+                                   'national_id':'کد ملی',
+                                   'fathers_name':'نام پدر',
+                                   'date_of_birth':'تاریخ تولد',
+                                   'gender':'جنسیت',
+                                   'phone_number':'شماره تماس',
+                                   'address':'آدرس',
+                                   'marital_status':'وضعیت تاهل',
+                                   'emergency_contact_name':'نام همراه ( شرایط اضطراری)',
+                                   'emergency_contact_number':'شماره تماس همراه',
+                                   'surgeries':'سابقه جراحی',
+                                   'allergies':'حساسیت',
+                                   'medical_history':'سوابق درمان',
+                                   'medications':'سوابق دارویی',
+                                   'smoker':'استعمال دخانیات',
+                                   'disease':'بیماری',
+                                   'created_at':'تاریخ ایجاد',
+                                   'updated_at':'تاریخ آخرین ویرایش',
+                                   'is_vip':'وضعیت',
+                                   'number_of_receptions':'تعداد دفعات مراجعه',
+                                   'last_reception_date':'تاریخ آخرین مراجعه',
+                                   'last_reception_reason':'علت آخرین مراجعه',
+                                   },
+                 inplace=True)
+
+        # Convert datetime columns to date
+        date_columns = clients_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            clients_df[date_column] = clients_df[date_column].dt.date
+
+        # Add created_by_email column
+        clients_df['ایجاد کننده'] = filtered_clients.values_list('created_by__email', flat=True)
+        clients_df['بیمه'] = filtered_clients.values_list('insurance__name', flat=True)
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="client_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="client_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        clients_df.to_csv(response, index=False)
 
         return response
 
