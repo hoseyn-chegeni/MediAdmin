@@ -922,25 +922,55 @@ class SupplierReportsView(BaseListView):
 
 class ExportSupplierExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered suppliers based on request parameters
         supplier_filter = SupplierFilter(request.GET, queryset=Supplier.objects.all())
-        filtered_supplier = supplier_filter.qs
+        filtered_suppliers = supplier_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_supplier.values()))
+        # Convert filtered suppliers queryset to DataFrame
+        suppliers_df = pd.DataFrame(list(filtered_suppliers.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        suppliers_df.drop(
+            columns=[ 'created_by_id',],
+            inplace=True,
+        )
+
+
+        suppliers_df.rename(
+            columns={
+                "name": "عنوان",
+                "contact_person": "نام واسط",
+                "email": "ایمیل",
+                "phone_number": "شماره تلفن",
+                "address": "آدرس",
+                "city": "شهر",
+                "notes": "یادداشت",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+            },
+            inplace=True,
+        ) 
+
+
+        # Convert datetime columns to date
+        date_columns = suppliers_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            suppliers_df[date_column] = suppliers_df[date_column].dt.date
+
+        suppliers_df["ایجاد کننده"] = filtered_suppliers.values_list(
+            "created_by__email", flat=True
+        )
+
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="supplier_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="supplier_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        suppliers_df.to_csv(response, index=False)
 
         return response
+
+
 
 
 class OfficeExpensesReportsView(BaseListView):
