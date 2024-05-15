@@ -84,25 +84,26 @@ class EquipmentReportsView(BaseListView):
 
 class ExportEquipmentExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered equipment based on request parameters
         equipment_filter = EquipmentFilter(
             request.GET, queryset=Equipment.objects.all()
         )
         filtered_equipment = equipment_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_equipment.values()))
+        # Convert filtered equipment queryset to DataFrame
+        equipment_df = pd.DataFrame(list(filtered_equipment.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        # Convert datetime columns to date
+        date_columns = equipment_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            equipment_df[date_column] = equipment_df[date_column].dt.date
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="equipment_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="equipment_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        equipment_df.to_csv(response, index=False)
 
         return response
 
