@@ -6,4 +6,4 @@ class AccountsConfig(AppConfig):
     name = "accounts"
 
     def ready(self):
-        from .signals import send_sms_after_create_account
+        import accounts.signals

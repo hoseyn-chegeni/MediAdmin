@@ -17,6 +17,7 @@ class CustomUserAdmin(UserAdmin):
         "login_attempts",
         "created_at",
         "updated_at",
+        'national_id'
     )
     search_fields = ("email", "first_name", "last_name", "phone_number")
     readonly_fields = ("created_at", "updated_at")
@@ -33,6 +34,7 @@ class CustomUserAdmin(UserAdmin):
                     "phone_number",
                     "address",
                     "image",
+                    'national_id',
                 )
             },
         ),
