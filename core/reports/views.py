@@ -730,28 +730,61 @@ class ClientSMSLogReportsView(BaseListView):
 
 class ExportClientSMSLogExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
-        client_sms_filter = ClientSMSLogFilter(
-            request.GET, queryset=ClientSMSLog.objects.all()
-        )
+        # Get filtered client SMS logs based on request parameters
+        client_sms_filter = ClientSMSLogFilter(request.GET, queryset=ClientSMSLog.objects.all())
         filtered_client_sms = client_sms_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_client_sms.values()))
+        # Convert filtered client SMS logs queryset to DataFrame
+        client_sms_df = pd.DataFrame(list(filtered_client_sms.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+
+        client_sms_df.drop(
+            columns=[ "client_id",'created_by_id',],
+            inplace=True,
+        )
+
+
+        client_sms_df.rename(
+            columns={
+                "sender_number": "شماره ارسال کننده",
+                "receiver_number": "شماره مشترک",
+                "subject": " عنوان پیام",
+                "message_body": "متن پیام",
+                "status": "وضعیت ارسال",
+                "created_at": "تاریخ ارسال",
+            },
+            inplace=True,
+        )  
+
+
+        # Convert datetime columns to date
+        date_columns = client_sms_df.select_dtypes(
+            include=["datetime64[ns, Iran]"]
+        ).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            client_sms_df[date_column] = client_sms_df[date_column].dt.date
+
+
+        client_sms_df["ایجاد کننده"] = filtered_client_sms.values_list(
+            "created_by__email", flat=True
+        )
+
+        filtered_client_sms = filtered_client_sms.annotate(
+            full_name=Concat('client__first_name', Value(' '), 'client__last_name', output_field=CharField())
+        )
+        # Add 'پزشک' column with doctor's name
+        client_sms_df["نام بیمار"] = filtered_client_sms.values_list(
+            "full_name", flat=True
+        )
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="sms_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="sms_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        client_sms_df.to_csv(response, index=False)
 
         return response
-
 
 class TaskReportsView(BaseListView):
     model = Task
