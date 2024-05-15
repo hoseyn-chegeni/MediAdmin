@@ -27,6 +27,8 @@ from tasks.models import Task
 from tasks.filters import TaskFilter
 from consumable.models import ConsumableV2, Supplier
 from consumable.filters import ConsumableFilter, SupplierFilter
+from django.db.models.functions import Concat
+from django.db.models import CharField, Value
 
 
 # Create your views here.
@@ -290,27 +292,80 @@ class FinancialReportsView(BaseListView):
 
 class ExportFinancialExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
-        financial_filter = FinancialFilter(
-            request.GET, queryset=Financial.objects.all()
-        )
+        # Get filtered financial records based on request parameters
+        financial_filter = FinancialFilter(request.GET, queryset=Financial.objects.all())
         filtered_financial = financial_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_financial.values()))
+        # Convert filtered financial records queryset to DataFrame
+        financial_df = pd.DataFrame(list(filtered_financial.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
-        for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+        # Drop unnecessary columns
+        financial_df.drop(
+            columns=["attachment", "created_by_id", "doctor_id", "valid_insurance"],
+            inplace=True,
+        )
+
+        # Rename columns
+        financial_df.rename(
+            columns={
+                "invoice_number": "شماره صورتحساب",
+                "reception_id": "شناسه پذیرش",
+                "insurance_range": "درصد پوشش بیمه",
+                "discount": "تخفیف",
+                "insurance_amount": "مبلغ پوشش بیمه",
+                "date_issued": "تاریخ ایجاد",
+                "service_price": "مبلغ سرویس",
+                "service_tax": "مالیات سرویس",
+                "service_price_final": "مبلغ نهایی سرویس",
+                "consumable_price": "هزینه مواد مصرفی",
+                "consumable_tax": "مالیات مواد مصرفی",
+                "consumable_price_final": "مبلغ نهایی مواد مصرفی",
+                "total_amount": "مبلغ کل",
+                "final_amount": "مبلغ نهایی",
+                "payment_status": "وضعیت پرداخت",
+                "payment_received_date": "تاریخ پرداخت",
+                "doctors_wage": "سهم پزشک",
+                "revenue": "درآمد",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": "تاریخ آخرین ویرایش",
+                "coupon_id": "کد تخفیف",
+            },
+            inplace=True,
+        )
+
+        # Add 'ایجاد کننده' column with creator's email
+        financial_df["ایجاد کننده"] = filtered_financial.values_list(
+            "created_by__email", flat=True
+        )
+
+        # Add 'سرویس ارایه شده' column with reception service
+        financial_df["سرویس ارایه شده"] = filtered_financial.values_list(
+            "reception__service__name", flat=True
+        )
+
+        filtered_financial = filtered_financial.annotate(
+            full_name=Concat('reception__service__doctor__first_name', Value(' '), 'reception__service__doctor__last_name', output_field=CharField())
+        )
+        # Add 'پزشک' column with doctor's name
+        financial_df["پزشک"] = filtered_financial.values_list(
+            "full_name", flat=True
+        )
+
+        filtered_financial = filtered_financial.annotate(
+            full_name=Concat('reception__client__first_name', Value(' '), 'reception__client__last_name', output_field=CharField())
+        )
+        # Add 'نام بیمار' column with client's name
+        financial_df["نام بیمار"] = filtered_financial.values_list("full_name", flat=True)
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="invoice_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="invoice_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        financial_df.to_csv(response, index=False, encoding='utf-8-sig')  # Ensure correct encoding for Persian characters
 
         return response
+
 
 
 class InsuranceReportsView(BaseListView):
