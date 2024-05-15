@@ -554,25 +554,72 @@ class ReceptionReportsView(BaseListView):
 
 class ExportReceptionExcelView(View):
     def get(self, request):
-        # Get filtered users based on request parameters
+        # Get filtered receptions based on request parameters
         reception_filter = ReceptionFilter(
             request.GET, queryset=Reception.objects.all()
         )
-        filtered_reception = reception_filter.qs
+        filtered_receptions = reception_filter.qs
 
-        # Convert filtered users queryset to DataFrame
-        users_df = pd.DataFrame(list(filtered_reception.values()))
+        # Convert filtered receptions queryset to DataFrame
+        receptions_df = pd.DataFrame(list(filtered_receptions.values()))
 
-        date_columns = users_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
+        receptions_df.drop(
+            columns=[ "created_by_id",'client_id','service_id','invoice_attachment',"reception_in_day"],
+            inplace=True,
+        )
+
+        receptions_df.rename(
+            columns={
+                "status": "وضعیت",
+                "reason": "علت مراجعه ",
+                "payment_type": "نوع پرداخت",
+                "payment_status": "وضعیت پرداخت",
+                "date": "تاریخ ",
+                "created_at": "تاریخ ایجاد",
+                "updated_at": " تاریخ آخرین ویرایش",
+                "session_id": "شناسه نوبت",
+            },
+            inplace=True,
+        )  
+        # Convert datetime columns to date
+        date_columns = receptions_df.select_dtypes(include=["datetime64[ns, Iran]"]).columns
         for date_column in date_columns:
-            users_df[date_column] = users_df[date_column].dt.date
+            receptions_df[date_column] = receptions_df[date_column].dt.date
+
+
+
+        receptions_df["ایجاد کننده"] = filtered_receptions.values_list(
+            "created_by__email", flat=True
+        )
+
+
+
+                # Add 'سرویس ارایه شده' column with reception service
+        receptions_df["سرویس ارایه شده"] = filtered_receptions.values_list(
+            "service__name", flat=True
+        )
+
+        filtered_receptions = filtered_receptions.annotate(
+            full_name=Concat('service__doctor__first_name', Value(' '), 'service__doctor__last_name', output_field=CharField())
+        )
+        # Add 'پزشک' column with doctor's name
+        receptions_df["پزشک"] = filtered_receptions.values_list(
+            "full_name", flat=True
+        )
+
+        filtered_receptions = filtered_receptions.annotate(
+            full_name=Concat('client__first_name', Value(' '), 'client__last_name', output_field=CharField())
+        )
+        # Add 'نام بیمار' column with client's name
+        receptions_df["نام بیمار"] = filtered_receptions.values_list("full_name", flat=True)
+
 
         # Create a response object
-        response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment; filename="reception_report.xlsx"'
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="reception_report.csv"'
 
-        # Write DataFrame to Excel file and return response
-        users_df.to_excel(response, index=False)
+        # Write DataFrame to CSV file and return response
+        receptions_df.to_csv(response, index=False)
 
         return response
 
