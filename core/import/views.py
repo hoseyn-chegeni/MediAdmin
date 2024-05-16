@@ -10,6 +10,8 @@ from client.models import Client
 from consumable.models import ConsumableV2, Supplier
 from consumable.models import ConsumableCategory
 from doctor.models import Doctor
+from reception.models import Reception
+from financial.models import Financial
 # Create your views here.
 
 
@@ -440,6 +442,109 @@ class DoctorImportView(View):
                         _added += 1
                 messages.success(
                     self.request, f"تعداد {_added}تامین کنندکان با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+    
+
+
+class FinancialImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "صورتحساب", 
+            "import_sample":'/import/sample/financial_import_sample.csv',
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    invoice_number = row["شماره صورتحساب"]
+                    reception_id = row["شناسه پذیرش"]
+                    insurance_range = row["درصد پوشش بیمه"]
+                    discount = row["تخفیف"]
+                    insurance_amount = row["مبلغ پوشش بیمه"]
+                    service_price = row["مبلغ سرویس"]
+                    service_tax = row["مالیات سرویس"]
+                    service_price_final = row["مبلغ نهایی سرویس"]
+                    consumable_price = row["هزینه مواد مصرفی"]
+                    consumable_tax = row["مالیات مواد مصرفی"]
+                    consumable_price_final = row["مبلغ نهایی مواد مصرفی"]
+                    total_amount = row["مبلغ کل"]
+                    final_amount = row["مبلغ نهایی"]
+                    payment_status = row["وضعیت پرداخت"]
+                    payment_received_date = row["تاریخ پرداخت"]
+                    doctor_id = row["پزشک"]
+                    doctors_wage = row["سهم پزشک"]
+                    revenue = row["درآمد"]
+                    created_by_id = row["ایجاد کننده"]
+
+
+
+
+                    if created_by_id == '':
+                        created_by = None
+                    elif User.objects.filter(id = created_by_id).exists():
+                        created_by = User.objects.get(id = created_by_id)
+                    else:
+                        created_by = None
+
+                    if doctor_id == '':
+                        doctor = None
+                    elif Doctor.objects.filter(id = doctor_id).exists():
+                        doctor = Doctor.objects.get(id = doctor_id)
+                    else:
+                        doctor = None
+
+                    if reception_id == '':
+                        reception = None
+                    elif Reception.objects.filter(id = reception_id).exists():
+                        reception = Reception.objects.get(id = reception_id)
+                    else:
+                        reception = None
+
+                    financial, created = Financial.objects.get_or_create(
+                         
+                            invoice_number = invoice_number,
+                            reception =reception ,
+                            insurance_range =insurance_range ,
+                            discount =discount ,
+                            insurance_amount =insurance_amount ,
+                            service_price =service_price ,
+                            service_tax = service_tax,
+                            service_price_final = service_price_final,
+                            consumable_price = consumable_price,
+                            consumable_tax = consumable_tax,
+                            consumable_price_final =consumable_price_final ,
+                            total_amount = total_amount,
+                            final_amount =final_amount ,
+                            payment_status =payment_status ,
+                            payment_received_date =payment_received_date ,
+                            doctor = doctor,
+                            doctors_wage = doctors_wage,
+                            revenue =revenue ,
+                            created_by = created_by,
+                            
+                    )
+
+                    if created:
+                        financial.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added} صورتحساب با موفقیت به سیستم افزوده شد"
                 )
             else:
                 messages.error(
