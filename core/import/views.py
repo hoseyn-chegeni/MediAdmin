@@ -5,7 +5,8 @@ from accounts.models import User
 import csv
 from django.contrib import messages
 from asset.models import Equipment
-
+from insurance.models import Insurance
+from client.models import Client
 # Create your views here.
 
 
@@ -63,12 +64,12 @@ class UserImportView(View):
                         user.save()
                         users_added += 1
                 messages.success(
-                    self.request, f"{users_added} User(s) successfully added"
+                    self.request, f"تعداد {users_added} کاربر با موفقیت به سیستم افزوده شد"
                 )
             else:
                 messages.error(
                     self.request,
-                    f"There was an error importing the file. Please make sure the file format is correct.",
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
                 )
         return render(request, self.template_name)
 
@@ -125,10 +126,100 @@ class EquipmentImportView(View):
                     if created:
                         equipment.save()
                         _added += 1
-                messages.success(self.request, f"{_added} User(s) successfully added")
+                messages.success(
+                    self.request, f"تعداد {_added} تجهیزات پزشکی با موفقیت به سیستم افزوده شد"
+                )
             else:
                 messages.error(
                     self.request,
-                    f"There was an error importing the file. Please make sure the file format is correct.",
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+
+
+
+
+class ClientImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "بیماران", 
+            "import_sample":'/../attachments/import-sample/client_import_sample.csv'     
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    case_id = row["شماره پرونده"]
+                    first_name = row["نام"]
+                    last_name = row["نام خانوادگی"]
+                    fathers_name = row["نام پدر"]
+                    national_id = row["کد ملی"]
+                    date_of_birth = row["تاریخ تولد"]
+                    gender = row["جنسیت"]
+                    phone_number = row["شماره تماس"]
+                    address = row["آدرس"]
+                    marital_status = row["وضعیت تاهل"]
+                    emergency_contact_name = row["نام همراه ( شرایط اضطراری)"]
+                    emergency_contact_number = row["شماره تماس همراه"]
+                    surgeries = row["سابقه جراحی"]
+                    allergies = row["حساسیت"]
+                    medical_history = row["سوابق درمان"]
+                    medications = row["سوابق دارویی"]
+                    smoker = row["استعمال دخانیات"]
+                    disease = row["بیماری"]
+                    created_by_id = row["ایجاد کننده"]
+                    insurance_id = row["بیمه"]
+                    is_vip_str = row["VIP"]
+
+                    created_by = User.objects.get(id=created_by_id)
+                    insurance = Insurance.objects.get(id=insurance_id)
+
+                    is_vip = is_vip_str.strip() == "1"
+
+                    client, created = Client.objects.get_or_create(
+                            case_id = case_id,
+                            first_name = first_name , 
+                            last_name = last_name , 
+                            fathers_name = fathers_name , 
+                            national_id = national_id , 
+                            date_of_birth =date_of_birth , 
+                            gender = gender , 
+                            phone_number =phone_number , 
+                            address =address , 
+                            marital_status =marital_status , 
+                            emergency_contact_name =emergency_contact_name , 
+                            emergency_contact_number = emergency_contact_number , 
+                            surgeries = surgeries , 
+                            allergies = allergies , 
+                            medical_history = medical_history , 
+                            medications = medications , 
+                            smoker = smoker , 
+                            disease = disease , 
+                            insurance = insurance , 
+                            is_vip = is_vip,
+                            created_by = created_by
+                            
+                    )
+
+                    if created:
+                        client.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added}  بیمار با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
                 )
         return render(request, self.template_name)
