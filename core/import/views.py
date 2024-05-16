@@ -15,7 +15,9 @@ class UserImportView(View):
 
     def get(self, request):
         context = {
-            "name": "کاربر",  # Add any variables you need here
+            "name": "کاربر",
+            "import_sample":'/../attachments/import-sample/user_import_sample.csv'     
+
         }
         return render(request, self.template_name, context=context)
 
@@ -33,14 +35,17 @@ class UserImportView(View):
                     last_name = row["last_name"]
                     phone_number = row["phone_number"]
                     is_superuser_str = row["is_superuser"]
-                    is_staff = row["is_staff"]
-                    is_active = row["is_active"]
+                    is_staff_str = row["is_staff"]
+                    is_active_str = row["is_active"]
                     national_id = row["national_id"]
                     address = row["address"]
                     date_of_birth = row["date_of_birth"]
 
                     # Convert string to boolean based on 0 and 1 values
                     is_superuser = is_superuser_str.strip() == "1"
+                    is_staff = is_staff_str.strip() == "1"
+                    is_active = is_active_str.strip() == "1"
+
                     user, created = User.objects.get_or_create(
                         email=email,
                         first_name=first_name,
