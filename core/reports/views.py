@@ -411,7 +411,7 @@ class ExportInsuranceExcelView(View):
                 "name": "عنوان",
                 "policy_number": "شناسه ",
                 "insurance_company": "سازمان ارائه دهنده",
-                "deductible": "تخفیف",
+                "deductible": "قابل کسر",
                 "copay": "پرداخت مشترک(copay)",
                 "max_annual_coverage": "حداکثر پوشش سالانه",
                 "policy_type": "نوع سیاست گذاری",
