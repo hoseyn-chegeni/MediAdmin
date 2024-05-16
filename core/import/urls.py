@@ -9,6 +9,7 @@ from .views import (
     InsuranceImportView,
     ReceptionImportView,
     ServiceImportView,
+    TaskImportView
 )
 
 app_name = "import"
@@ -23,4 +24,6 @@ urlpatterns = [
     path("insurance/", InsuranceImportView.as_view(), name="insurance"),
     path("reception/", ReceptionImportView.as_view(), name="reception"),
     path("service/", ServiceImportView.as_view(), name="service"),
+    path("task/", TaskImportView.as_view(), name="task"),
+
 ]

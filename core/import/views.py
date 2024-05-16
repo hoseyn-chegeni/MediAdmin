@@ -13,6 +13,7 @@ from doctor.models import Doctor
 from reception.models import Reception
 from financial.models import Financial
 from services.models import Service, ServiceCategory
+from tasks.models import Task
 # Create your views here.
 
 
@@ -754,6 +755,77 @@ class ServiceImportView(View):
                         _added += 1
                 messages.success(
                     self.request, f"تعداد {_added}  سرویس  با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+    
+
+class TaskImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "تسک",
+            "import_sample": "/import/sample/task_import_sample.csv",
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    title = row["عنوان تسک"]
+                    type = row["نوع تسک"]
+                    status = row["وضعیت"]
+                    priority = row["فوریت"]
+                    description = row["توضیحات"]
+                    assign_to_id = row["کارشناس بررسی کننده"]
+                    answer = row["پاسخ کارشناس"]
+                    reopen_message = row["دلیل باز کردن مجدد"]
+                    created_by_id = row["ایجاد کننده"]
+
+                    if created_by_id == "":
+                        created_by = None
+                    elif User.objects.filter(id=created_by_id).exists():
+                        created_by = User.objects.get(id=created_by_id)
+                    else:
+                        created_by = None
+
+                    if assign_to_id == "":
+                        assign_to = None
+                    elif User.objects.filter(id=assign_to_id).exists():
+                        assign_to = User.objects.get(id=assign_to_id)
+                    else:
+                        assign_to = None
+
+
+                    task, created = Task.objects.get_or_create(
+                        title = title,
+                        type =type ,
+                        status = status,
+                        priority =priority ,
+                        description = description,
+                        assign_to =assign_to ,
+                        answer = answer,
+                        reopen_message = reopen_message,
+                        created_by=created_by,
+                    )
+
+                    if created:
+                        task.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added}  تسک  با موفقیت به سیستم افزوده شد"
                 )
             else:
                 messages.error(
