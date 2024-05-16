@@ -73,7 +73,8 @@ class EquipmentImportView(View):
 
     def get(self, request):
         context = {
-            "name": "تجهیزات پزشکی",  # Add any variables you need here
+            "name": "تجهیزات پزشکی", 
+            "import_sample":'/../attachments/import-sample/equipment_import_sample.csv'     
         }
 
         return render(request, self.template_name, context=context)
