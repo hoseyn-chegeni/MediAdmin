@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import UserImportView, EquipmentImportView, ClientImportView, ConsumableImportView, SupplierImportView, DoctorImportView
+from .views import (
+    UserImportView,
+    EquipmentImportView,
+    ClientImportView,
+    ConsumableImportView,
+    SupplierImportView,
+    DoctorImportView,
+    InsuranceImportView,
+)
 
 app_name = "import"
 
@@ -10,4 +18,6 @@ urlpatterns = [
     path("consumable/", ConsumableImportView.as_view(), name="consumable"),
     path("supplier/", SupplierImportView.as_view(), name="supplier"),
     path("doctor/", DoctorImportView.as_view(), name="doctor"),
+    path("insurance/", InsuranceImportView.as_view(), name="insurance"),
+
 ]
