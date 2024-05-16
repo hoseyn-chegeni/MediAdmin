@@ -7,7 +7,7 @@ from django.contrib import messages
 from asset.models import Equipment
 from insurance.models import Insurance
 from client.models import Client
-from consumable.models import ConsumableV2
+from consumable.models import ConsumableV2, Supplier
 from consumable.models import ConsumableCategory
 # Create your views here.
 
@@ -304,6 +304,72 @@ class ConsumableImportView(View):
                         _added += 1
                 messages.success(
                     self.request, f"تعداد {_added}  مواد مصرفی با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+    
+
+class SupplierImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "تامین کنندکان", 
+            "import_sample":'/import/sample/supplier_import_sample.csv',
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    name = row["عنوان"]
+                    contact_person = row["نام واسط"]
+                    email = row["ایمیل"]
+                    phone_number = row["شماره تلفن"]
+                    address = row["آدرس"]
+                    city = row["شهر"]
+                    notes = row["یادداشت"]
+                    created_by_id = row["ایجاد کننده"]
+
+
+
+                    if created_by_id == '':
+                        created_by = None
+                    elif User.objects.filter(id = created_by_id).exists():
+                        created_by = User.objects.get(id = created_by_id)
+                    else:
+                        created_by = None
+
+
+                    supplier, created = Supplier.objects.get_or_create(
+                         
+                            name  = name,
+                            contact_person =contact_person ,
+                            email =email ,
+                            phone_number = phone_number,
+                            address = address,
+                            city = city,
+                            notes = notes,
+                            created_by = created_by,
+                            
+                    )
+
+                    if created:
+                        supplier.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added}تامین کنندکان با موفقیت به سیستم افزوده شد"
                 )
             else:
                 messages.error(
