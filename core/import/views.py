@@ -9,6 +9,7 @@ from insurance.models import Insurance
 from client.models import Client
 from consumable.models import ConsumableV2, Supplier
 from consumable.models import ConsumableCategory
+from doctor.models import Doctor
 # Create your views here.
 
 
@@ -367,6 +368,75 @@ class SupplierImportView(View):
 
                     if created:
                         supplier.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added}تامین کنندکان با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+    
+
+class DoctorImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "پزشکان", 
+            "import_sample":'/import/sample/doctor_import_sample.csv',
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    first_name = row["نام"]
+                    last_name = row["نام خانوادگی"]
+                    email = row["ایمیل"]
+                    phone_number = row["شماره تماس"]
+                    address = row["آدرس"]
+                    specialization = row["تخصص"]
+                    registration_number = row["شماره نظام پزشکی"]
+                    is_active_str = row["وضعیت فعال بودن"]
+                    created_by_id = row["ایجاد کننده"]
+
+                    is_active = is_active_str.strip() == "1"
+
+
+                    if created_by_id == '':
+                        created_by = None
+                    elif User.objects.filter(id = created_by_id).exists():
+                        created_by = User.objects.get(id = created_by_id)
+                    else:
+                        created_by = None
+
+
+                    doctor, created = Doctor.objects.get_or_create(
+                         
+                            email =email ,
+                            phone_number = phone_number,
+                            address = address,
+                            first_name = first_name,
+                            last_name = last_name,
+                            specialization = specialization,
+                            registration_number = registration_number,
+                            is_active = is_active,                         
+                            created_by = created_by,
+                            
+                    )
+
+                    if created:
+                        doctor.save()
                         _added += 1
                 messages.success(
                     self.request, f"تعداد {_added}تامین کنندکان با موفقیت به سیستم افزوده شد"
