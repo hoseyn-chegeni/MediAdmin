@@ -12,7 +12,7 @@ from consumable.models import ConsumableCategory
 from doctor.models import Doctor
 from reception.models import Reception
 from financial.models import Financial
-from services.models import Service
+from services.models import Service, ServiceCategory
 # Create your views here.
 
 
@@ -665,6 +665,95 @@ class ReceptionImportView(View):
                         _added += 1
                 messages.success(
                     self.request, f"تعداد {_added}  پذیرش  با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+
+
+
+class ServiceImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "سرویس",
+            "import_sample": "/import/sample/service_import_sample.csv",
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    name = row["عنوان"]
+                    doctor_id = row["شناسه پزشک"]
+                    doctors_wage_percentage = row["درصد سهم پزشک"]
+                    description = row["توضیحات"]
+                    category_id = row["شناسه دسته بندی"]
+                    duration = row["مدت زمان تقریبی"]
+                    price = row["مبلغ سرویس"]
+                    preparation_instructions = row["دستورالعمل های آماده سازی"]
+                    documentation_requirements = row["ملزومات مستندسازی"]
+                    is_active_str = row["وضعیت فعال بودن"]
+                    therapeutic_measures = row["اقدامات درمانی"]
+                    recommendations = row["توصیه ها"]
+                    appointment_per_day = row["ظرفیت نوبت دهی در روز"]
+                    created_by_id = row["ایجاد کننده"]
+
+                    if created_by_id == "":
+                        created_by = None
+                    elif User.objects.filter(id=created_by_id).exists():
+                        created_by = User.objects.get(id=created_by_id)
+                    else:
+                        created_by = None
+
+                    if doctor_id == "":
+                        doctor = None
+                    elif Doctor.objects.filter(id=doctor_id).exists():
+                        doctor = Doctor.objects.get(id=doctor_id)
+                    else:
+                        doctor = None
+
+                    if category_id == "":
+                        category = None
+                    elif ServiceCategory.objects.filter(id=category_id).exists():
+                        category = ServiceCategory.objects.get(id=category_id)
+                    else:
+                        category = None
+                    is_active = is_active_str.strip() == "1"
+
+                    service, created = Service.objects.get_or_create(
+                        name = name,
+                        doctor =doctor,
+                        doctors_wage_percentage = doctors_wage_percentage,
+                        description =description ,
+                        category =category ,
+                        duration = duration,
+                        price =price ,
+                        preparation_instructions = preparation_instructions,
+                        documentation_requirements =documentation_requirements ,
+                        is_active = is_active,
+                        therapeutic_measures = therapeutic_measures,
+                        recommendations = recommendations,
+                        appointment_per_day =appointment_per_day ,
+                        created_by=created_by,
+                    )
+
+                    if created:
+                        service.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added}  سرویس  با موفقیت به سیستم افزوده شد"
                 )
             else:
                 messages.error(
