@@ -19,8 +19,7 @@ class UserImportView(View):
     def get(self, request):
         context = {
             "name": "کاربر",
-            "import_sample":'/../attachments/import-sample/user_import_sample.csv'     
-
+            "import_sample":'/import/sample/user_import_sample.csv',
         }
         return render(request, self.template_name, context=context)
 
@@ -82,7 +81,7 @@ class EquipmentImportView(View):
     def get(self, request):
         context = {
             "name": "تجهیزات پزشکی", 
-            "import_sample":'/../attachments/import-sample/equipment_import_sample.csv'     
+            "import_sample":'/import/sample/equipment_import_sample.csv',
         }
 
         return render(request, self.template_name, context=context)
@@ -147,7 +146,7 @@ class ClientImportView(View):
     def get(self, request):
         context = {
             "name": "بیماران", 
-            "import_sample":'/../attachments/import-sample/client_import_sample.csv'     
+            "import_sample":'/import/sample/client_import_sample.csv',
         }
 
         return render(request, self.template_name, context=context)
@@ -183,8 +182,19 @@ class ClientImportView(View):
                     insurance_id = row["بیمه"]
                     is_vip_str = row["VIP"]
 
-                    created_by = User.objects.get(id=created_by_id)
-                    insurance = Insurance.objects.get(id=insurance_id)
+                    if created_by_id == '':
+                        created_by = None
+                    elif User.objects.filter(id = created_by_id).exists():
+                        created_by = User.objects.get(id = created_by_id)
+                    else:
+                        created_by = None
+
+                    if insurance_id == '':
+                        insurance = None
+                    elif Insurance.objects.filter(id = insurance_id).exists():
+                        insurance = User.objects.get(id = insurance_id)
+                    else:
+                        insurance = None
 
                     is_vip = is_vip_str.strip() == "1"
 
@@ -233,7 +243,7 @@ class ConsumableImportView(View):
     def get(self, request):
         context = {
             "name": "مواد مصرفی", 
-            "import_sample":'/import/sample/consumable_import_sample.csv'     
+            "import_sample":'/import/sample/consumable_import_sample.csv',
         }
 
         return render(request, self.template_name, context=context)
@@ -258,8 +268,23 @@ class ConsumableImportView(View):
                     created_by_id = row["ایجاد کننده"]
 
 
-                    created_by = User.objects.get(id=created_by_id)
-                    category = ConsumableCategory.objects.get(id = category_id)
+
+                    if created_by_id == '':
+                        created_by = None
+                    elif User.objects.filter(id = created_by_id).exists():
+                        created_by = User.objects.get(id = created_by_id)
+                    else:
+                        created_by = None
+
+
+                    if category_id == '':
+                        category = None
+                    elif ConsumableCategory.objects.filter(id = category_id).exists():
+                        category = ConsumableCategory.objects.get(id = category_id)
+                    else:
+                        category = None
+
+
                     consumable, created = ConsumableV2.objects.get_or_create(
                          
                             name  = name,
