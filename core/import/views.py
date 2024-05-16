@@ -12,7 +12,7 @@ from consumable.models import ConsumableCategory
 from doctor.models import Doctor
 from reception.models import Reception
 from financial.models import Financial
-
+from services.models import Service
 # Create your views here.
 
 
@@ -591,6 +591,80 @@ class InsuranceImportView(View):
                         _added += 1
                 messages.success(
                     self.request, f"تعداد {_added}  بیمه  با موفقیت به سیستم افزوده شد"
+                )
+            else:
+                messages.error(
+                    self.request,
+                    f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
+                )
+        return render(request, self.template_name)
+
+
+
+class ReceptionImportView(View):
+    template_name = "import.html"
+
+    def get(self, request):
+        context = {
+            "name": "پذیرش",
+            "import_sample": "/import/sample/reception_import_sample.csv",
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        if request.method == "POST" and request.FILES.get("file"):
+            file = request.FILES["file"]
+            if file.name.endswith(".csv"):
+                _added = 0
+                decoded_file = file.read().decode("utf-8")
+                csv_data = csv.DictReader(decoded_file.splitlines(), delimiter=",")
+
+                for row in csv_data:
+                    client_id = row["شناسه بیمار"]
+                    service_id = row["شناسه سرویس"]
+                    status = row["وضعیت"]
+                    reason = row["علت مراجعه"]
+                    payment_type = row["نوع پرداخت"]
+                    payment_status = row["وضعیت پرداخت"]
+                    created_by_id = row["ایجاد کننده"]
+
+                    if created_by_id == "":
+                        created_by = None
+                    elif User.objects.filter(id=created_by_id).exists():
+                        created_by = User.objects.get(id=created_by_id)
+                    else:
+                        created_by = None
+
+                    if client_id == "":
+                        client = None
+                    elif Client.objects.filter(id=client_id).exists():
+                        client = Client.objects.get(id=client_id)
+                    else:
+                        client = None
+
+                    if service_id == "":
+                        service = None
+                    elif Service.objects.filter(id=service_id).exists():
+                        service = Service.objects.get(id=service_id)
+                    else:
+                        service = None
+
+                    reception, created = Reception.objects.get_or_create(
+                        client = client, 
+                        service =service , 
+                        status = status, 
+                        reason =reason , 
+                        payment_type = payment_type, 
+                        payment_status = payment_status, 
+                        created_by=created_by,
+                    )
+
+                    if created:
+                        reception.save()
+                        _added += 1
+                messages.success(
+                    self.request, f"تعداد {_added}  پذیرش  با موفقیت به سیستم افزوده شد"
                 )
             else:
                 messages.error(
