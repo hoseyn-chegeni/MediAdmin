@@ -593,6 +593,7 @@ class ExportReceptionExcelView(View):
                 "service_id",
                 "invoice_attachment",
                 "reception_in_day",
+                "date",
             ],
             inplace=True,
         )
@@ -603,7 +604,7 @@ class ExportReceptionExcelView(View):
                 "reason": "علت مراجعه ",
                 "payment_type": "نوع پرداخت",
                 "payment_status": "وضعیت پرداخت",
-                "date": "تاریخ ",
+                "jalali_date": "تاریخ ",
                 "created_at": "تاریخ ایجاد",
                 "updated_at": " تاریخ آخرین ویرایش",
                 "session_id": "شناسه نوبت",
