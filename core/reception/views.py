@@ -17,9 +17,9 @@ from django.contrib import messages
 from django.urls import reverse
 from kavenegar import *
 from tasks.models import Task
-from planner.models import Session
+from planner.models import Session, JalaliDateHandler
 from prescription.models import TemporaryPrescription, Prescription
-
+from datetime import date
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -47,9 +47,11 @@ class ReceptionCreateView(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
+        jalali = JalaliDateHandler.objects.get(date = date.today())
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
+        form.instance.jalali_date = jalali.jalali_date
         if service.check_consumable_inventory == True:
             for i in service.serviceconsumable_set.all():
                 if i.consumable.quantity < int(i.dose):
@@ -109,8 +111,11 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
     def form_valid(self, form):
         # Set the client for the reception
         form.instance.client = Client.objects.get(id=self.kwargs["pk"])
+        jalali = JalaliDateHandler.objects.get(date = date.today())
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
+        service = form.instance.service
+        form.instance.jalali_date = jalali.jalali_date
         service = form.instance.service
         if service.check_consumable_inventory == True:
             for i in service.serviceconsumable_set.all():
