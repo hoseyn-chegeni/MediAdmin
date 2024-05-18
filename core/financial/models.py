@@ -14,7 +14,7 @@ class Financial(models.Model):
     discount = models.PositiveIntegerField(default=0)
     insurance_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     date_issued = models.DateField(auto_now_add=True)
-
+    jalali_date_issued = models.CharField(max_length = 255)
     service_price = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
