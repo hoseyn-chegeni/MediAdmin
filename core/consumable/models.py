@@ -54,7 +54,7 @@ class Inventory(models.Model):
         "Supplier", on_delete=models.SET_NULL, blank=True, null=True
     )
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    purchase_date = models.DateField()
+    purchase_date = models.CharField(max_length = 255)
     purchase_cost = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="images/", blank=True)
