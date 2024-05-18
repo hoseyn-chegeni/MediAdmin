@@ -39,12 +39,12 @@
 
                       <div class="col-sm-6">
                         <label for="acquisition_date" class="form-label"> تاریخ شروع استفاده از دستگاه</label>
-                        <input type="text" class="form-control" id="acquisition_date" placeholder="" value="{{object.acquisition_date}}" name="acquisition_date" >
+                        <input type="text" class="form-control" id="acquisition_date" placeholder="" value="{{object.acquisition_date}}" name="acquisition_date" data-jdp>
                       </div>
 
                       <div class="col-sm-6">
                         <label for="warranty_expiry_date" class="form-label">تاریخ اتمام گارانتی</label>
-                        <input type="text" class="form-control" id="warranty_expiry_date" placeholder="" value="{{object.warranty_expiry_date}}" name="warranty_expiry_date" >
+                        <input type="date" class="form-control" id="warranty_expiry_date" placeholder="" value="{{object.warranty_expiry_date}}" name="warranty_expiry_date" >
                       </div>
 
                       <div class="col-sm-6">
@@ -58,7 +58,7 @@
                       </div>
                       <div class="col-sm-6">
                         <label for="last_maintenance_date" class="form-label">تاریخ آخرین تعمیر</label>
-                        <input type="text" class="form-control" id="last_maintenance_date" placeholder="" value="{{object.last_maintenance_date}}" name="last_maintenance_date" >
+                        <input type="text" class="form-control" id="last_maintenance_date" placeholder="" value="{{object.last_maintenance_date}}" name="last_maintenance_date" data-jdp >
                       </div>
 
 
@@ -81,5 +81,7 @@
 
     </main>
 </div>
-
+<script>
+  jalaliDatepicker.startWatch();
+</script>
 {%endblock%}
