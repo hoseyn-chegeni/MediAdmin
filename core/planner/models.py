@@ -95,3 +95,9 @@ class DeletedSession(models.Model):
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
+class JalaliDateHandler(models.Model):
+    date = models.DateField()
+    jalali_date = jmodels.jDateField()
