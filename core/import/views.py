@@ -629,6 +629,7 @@ class ReceptionImportView(View):
                     payment_type = row["نوع پرداخت"]
                     payment_status = row["وضعیت پرداخت"]
                     created_by_id = row["ایجاد کننده"]
+                    jalali_date = row['تاریخ پذیرش']
 
                     if created_by_id == "":
                         created_by = None
@@ -659,6 +660,7 @@ class ReceptionImportView(View):
                         payment_type = payment_type, 
                         payment_status = payment_status, 
                         created_by=created_by,
+                        jalali_date = jalali_date
                     )
 
                     if created:
