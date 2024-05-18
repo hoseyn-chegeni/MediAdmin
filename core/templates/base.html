@@ -335,7 +335,7 @@ Auto
 <li><a class="dropdown-item" href="{% url 'two_factor:profile' %}"> مدیریت امنیت حساب کاربری</a></li>
 </ul>
 </li>
-
+{%if perms.accounts.view_user%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت کاربران
@@ -354,9 +354,9 @@ Auto
 <li><a class="dropdown-item" href="{% url 'permissions:group_list' %}"> مدیریت  نقش ها</a></li>
 </ul>
 </li>        
+{%endif%}
 
-
-
+{% if perms.client.view_client%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت بیماران
@@ -372,8 +372,9 @@ Auto
 </li>
 <li><a class="dropdown-item" href="{% url 'notification:sms_list' %}">مدیریت پیامک های ارسال شده به بیماران</a></li>
 </ul>
-</li>      
-  
+</li>  
+{%endif%}    
+{%if perms.planner.view_month%}
 <li class="nav-item dropdown">            
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 نوبت دهی 
@@ -394,8 +395,8 @@ Auto
   <li><a class="dropdown-item" href="{% url 'planner:today_list' %}">لیست نوبت های رزرو شده امروز</a></li>
   </ul>
   </li>    
-
-  
+{%endif%}
+{%if perms.reception.view_reception%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 پذیرش
@@ -408,9 +409,9 @@ Auto
 <li><a class="dropdown-item" href="{% url 'reception:create' %}">پذیرش بیمار جدید</a></li>
 </ul>
 </li>   
+{%endif %}
 
-
-
+{%if perms.financial.view_financial%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت مالی
@@ -435,8 +436,8 @@ Auto
 <li><a class="dropdown-item" href="{% url 'services:update_service_prices' %}"> افزایش قیمت دسته ای سرویس ها</a></li>
 </ul>
 </li> 
-
-
+{% endif %}
+{% if perms.doctor.view_doctor%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 پزشکان 
@@ -448,7 +449,8 @@ Auto
 </li>
 <li><a class="dropdown-item" href="{% url 'doctor:create' %}">افزودن پزشک</a></li>
 </ul>
-
+{%endif %}
+{%if perms.services.view_service%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت سرویس ها
@@ -472,9 +474,9 @@ Auto
 <li><a class="dropdown-item" href="{% url 'services:update_service_prices' %}"> افزایش قیمت دسته ای سرویس ها</a></li>
 </ul>
 </li> 
+{% endif %}
 
-
-
+{% if perms.prescription.view_prescription%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت نسخه ها
@@ -484,8 +486,8 @@ Auto
 <li>
 </ul>
 </li>
-
-
+{%endif%}
+{%if perms.accounts.view_reports%}
 <li class="nav-item dropdown">            
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت تسک ها
@@ -585,8 +587,8 @@ Auto
     <li><a class="dropdown-item" href="{% url 'reports:office_expenses_reports' %}">هزینه های مطب</a></li>
 </li>
 </ul>
-
-
+{% endif %}
+{% if perms.accounts.view_import%}
 <li class="nav-item dropdown">            
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
   بارگذاری منابع
@@ -645,9 +647,9 @@ Auto
   </ul>
   </li> 
 
+{%endif%}
 
-
-
+{% if perms.consumable.view_consumable%}
 <li class="nav-item dropdown">            
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     انبار داری
@@ -681,7 +683,8 @@ Auto
     
     </ul>
     </li> 
-
+{% endif %}
+{% if perms.insurance.view_insurance%}
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت بیمه ها
@@ -694,6 +697,7 @@ Auto
 <li><a class="dropdown-item" href="{% url 'insurance:create' %}">ایجاد بیمه جدید</a></li>
 </ul>
 </li> 
+{% endif %}
 <li class="nav-item">
   <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">خروج</a>
   </li>
