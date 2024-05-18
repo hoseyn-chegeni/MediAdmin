@@ -302,7 +302,7 @@ class ExportFinancialExcelView(View):
 
         # Drop unnecessary columns
         financial_df.drop(
-            columns=["attachment", "created_by_id", "doctor_id", "valid_insurance"],
+            columns=["attachment", "created_by_id", "doctor_id", "valid_insurance",'date_issued'],
             inplace=True,
         )
 
@@ -314,7 +314,7 @@ class ExportFinancialExcelView(View):
                 "insurance_range": "درصد پوشش بیمه",
                 "discount": "تخفیف",
                 "insurance_amount": "مبلغ پوشش بیمه",
-                "date_issued": "تاریخ ایجاد",
+                "jalali_date_issued": "تاریخ ایجاد",
                 "service_price": "مبلغ سرویس",
                 "service_tax": "مالیات سرویس",
                 "service_price_final": "مبلغ نهایی سرویس",
