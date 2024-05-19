@@ -961,6 +961,8 @@ class ExportConsumableExcelView(View):
             "category__name", flat=True
         )
 
+        consumables_df["موجودی"] = [consumable.quantity for consumable in filtered_consumables]
+
         # Create a response object
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = 'attachment; filename="consumable_report.csv"'
