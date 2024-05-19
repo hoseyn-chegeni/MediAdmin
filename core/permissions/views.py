@@ -5,7 +5,6 @@ from base.views import (
     BaseDeleteView,
     BaseDetailView,
     BaseUpdateView,
-    BaseListView,
 )
 from accounts.models import User
 from .filters import PermissionFilters, GroupFilter

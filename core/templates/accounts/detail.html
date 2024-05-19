@@ -17,13 +17,19 @@
             <h5 class="my-3">{{user.last_name}}{{user.first_name}}</h5>
             <p class="text-muted mb-1">{{user.email}}</p>
             <div class="d-flex justify-content-center mb-2">
+              {% if perms.accounts.change_user%}
               <a href="{% url 'accounts:user_update' user.id %}" class="btn btn-primary">ویرایش</a>
+              {%endif%}
+              {% if perms.accounts.activation%}
               {% if user.is_active%}
               <a href="#" data-toggle="modal" data-target="#suspendModal"  title="تعلیق" class="btn btn-outline-primary ms-1" >تعلیق</a>
             {%else%}
             <a href="#" data-toggle="modal" data-target="#reactiveModal"  title="فعال سازی مجدد" class="btn btn-outline-primary ms-1" >فعال سازی مجدد</a>
             {%endif%}
+            {%endif%}
+            {% if perms.accounts.delete_user%}
               <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" class="btn btn-outline-primary ms-1" >حذف</a>
+            {%endif%}
             </div>
           </div>
         </div>

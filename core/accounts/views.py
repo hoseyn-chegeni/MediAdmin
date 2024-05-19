@@ -25,12 +25,10 @@ from doctor.models import Doctor
 from insurance.models import Insurance
 from prescription.models import Prescription
 from services.models import Service
-from itertools import chain
-from operator import attrgetter
 from tasks.models import Task
 from django.contrib.auth import login
 from django.shortcuts import redirect
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from consumable.models import ConsumableV2, Supplier
 
 from django.contrib.auth import logout
@@ -46,11 +44,10 @@ class UserListView(BaseListView):
     permission_required = "accounts.view_user"
 
 
-class UserDetailView(BaseDetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "accounts/detail.html"
     context_object_name = "user"
-    permission_required = "accounts.view_user"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
