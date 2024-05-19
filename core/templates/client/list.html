@@ -82,9 +82,15 @@
 {%block buttons%}
 <form action="{% url 'client:delete_selected_clients' %}" method="post" id="deleteForm">
   {% csrf_token %}
+  {% if perms.client.add_client%}
 <a href="{% url 'client:create' %}" class="btn btn-success me-2"> افزودن بیمار جدید</a>
+{% endif %}
+{% if perms.accounts.view_reports%}
 <a href="{% url 'reports:client_reports' %}" class="btn btn-success me-2">گزارشات</a>
-<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+{% endif%}
+{% if perms.client.delete_client %}
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> 
+{%endif%}
 {%endblock%}
 {%block thead%}
 <th scope="col"><input type="checkbox" id="selectAll"></th>
@@ -131,10 +137,13 @@
 
   <td class="align-middle">
       <a href="{%url 'client:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+      {% if perms.client.change_client%}
     <a href="{%url 'client:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
     <a href="{%url 'client:edit_health_history' i.id %}" data-mdb-toggle="tooltip" title="Update Health History"><i class="fas fa-stethoscope"></i></a>
     <a href="{%url 'notification:send_sms' i.id %}" data-mdb-toggle="tooltip" title="send sms"><i class="fas fa-sms"></i></a>
     <a href="{%url 'reception:reception_create_using_profile' i.id %}" data-mdb-toggle="tooltip" title="Add Reception"><i class="fas fa-user-md"></i></a>
+    {% endif %}
+
   </td>
 </tr>
 {%endfor%}
