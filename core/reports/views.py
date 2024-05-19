@@ -272,6 +272,10 @@ class ExportDoctorExcelView(View):
         for date_column in date_columns:
             doctors_df[date_column] = doctors_df[date_column].dt.date
 
+        doctors_df["تعداد سرویس"] = [doctor.services for doctor in filtered_doctors]
+        doctors_df["تعداد کل پذیرش های انجام شده"] = [doctor.total_reception_count for doctor in filtered_doctors]
+
+
         # Create a response object
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = 'attachment; filename="doctor_report.csv"'
