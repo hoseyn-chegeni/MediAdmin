@@ -344,6 +344,7 @@ Auto
 </li>
 <li><a class="dropdown-item" href="{% url 'accounts:user_list' %}"> لیست کاربران</a></li>
 <li>
+  {%if perms.accounts.change_user%}
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'accounts:user_create' %}">ایجاد کاربر جدید</a></li>
@@ -352,6 +353,7 @@ Auto
 <li><a class="dropdown-item" href="{% url 'permissions:list' %}"> مدیریت سطح دسترسی</a></li>
 <hr class="dropdown-divider">
 <li><a class="dropdown-item" href="{% url 'permissions:group_list' %}"> مدیریت  نقش ها</a></li>
+{%endif%}
 </ul>
 </li>        
 {%endif%}
@@ -363,14 +365,18 @@ Auto
 </a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="{% url 'client:list' %}"> لیست بیماران</a></li>
+{% if perms.client.add_client%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'client:create' %}">ایجاد بیمار جدید</a></li>
+{%endif%}
+{% if perms.client.view_sms%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'notification:sms_list' %}">مدیریت پیامک های ارسال شده به بیماران</a></li>
+{%endif%}
 </ul>
 </li>  
 {%endif%}    
@@ -403,10 +409,12 @@ Auto
 </a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="{% url 'reception:list' %}">لیست  پذیرش ها</a></li>
+{%if perms.reception.add_reception%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'reception:create' %}">پذیرش بیمار جدید</a></li>
+{% endif %}
 </ul>
 </li>   
 {%endif %}
@@ -422,14 +430,18 @@ Auto
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'financial:unpaid_list' %}">لیست صورتحساب های پرداخت نشده</a></li>
+{% if financial.view_officeexpenses%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'financial:office_expenses_list' %}">لیست هزینه های مطب </a></li>
 <li>
+  {% endif %}
+  {% if financial.add_officeexpenses%}
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'financial:office_expenses_create' %}">ثیت هزینه جدید برای مطب</a></li>
+{%endif%}
 <li>
 <hr class="dropdown-divider">
 </li>
@@ -444,10 +456,12 @@ Auto
 </a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="{% url 'doctor:list' %}">  لیست پزشکان</a></li>
+{% if perms.doctor.add_doctor%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'doctor:create' %}">افزودن پزشک</a></li>
+  {% endif %}
 </ul>
 {%endif %}
 {%if perms.services.view_service%}
@@ -457,21 +471,29 @@ Auto
 </a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="{% url 'services:list' %}">  لیست سرویس ها</a></li>
+{%if perms.service.view_package%}
 <li>
 <hr class="dropdown-divider">
 <li><a class="dropdown-item" href="{% url 'services:package_list' %}">لیست پکیح ها</a></li>
+{%endif%}
+{% if perms.service.add_service%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'services:create' %}">ایجاد سرویس جدید</a></li>
+{%endif%}
+{%if perms.service.view_servicecategory%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'services:category_list' %}">مدیریت دسته بندی سرویس ها</a></li>
+{%endif%}
+{% if perms.service.add_service%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'services:update_service_prices' %}"> افزایش قیمت دسته ای سرویس ها</a></li>
+{% endif %}
 </ul>
 </li> 
 {% endif %}
@@ -487,22 +509,25 @@ Auto
 </ul>
 </li>
 {%endif%}
-{%if perms.accounts.view_reports%}
+{% if perms.tasks.view_task%}
 <li class="nav-item dropdown">            
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 مدیریت تسک ها
   </a>
   <ul class="dropdown-menu">
   <li><a class="dropdown-item" href="{% url 'tasks:list' %}">لیست تسک ها </a></li>
+  {% if perms.tasks.add_task%}
   <li>
   <hr class="dropdown-divider">
   </li>
   <li><a class="dropdown-item" href="{% url 'tasks:create' %}">ایجاد تسک جدید</a></li>
-  <li>
-
+  {%endif%}
 
   </ul>
   </li> 
+  {%endif%}
+
+  {%if perms.accounts.view_reports%}
 
 <li class="nav-item dropdown">            
 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -649,7 +674,7 @@ Auto
 
 {%endif%}
 
-{% if perms.consumable.view_consumable%}
+{% if perms.consumable.view_consumablev2%}
 <li class="nav-item dropdown">            
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     انبار داری
@@ -661,21 +686,27 @@ Auto
         <hr class="dropdown-divider">
         </li>
         <li><a class="dropdown-item" href="{% url 'consumable:category_list'%}">مدیریت دسته بندی مواد مصرفی</a></li>
+        {%if perms.consumable.view_supplier%}
         <li>
             <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item" href="{% url 'consumable:supplier_list' %}">لیست تامین کنندگان</a></li>
+            {%endif%}
+            {%if perms.consumable.add_supplier%}
             <li>
             <hr class="dropdown-divider">
             </li>
             </li>
             <li><a class="dropdown-item" href="{% url 'consumable:supplier_create' %}">ایجاد تامین کننده جدید</a></li>
+            {%endif%}
+            {%if perms.asset.view_equipment%}
+
             <li>
               <hr class="dropdown-divider">
               </li>
             <li><a class="dropdown-item" href="{% url 'asset:equipment_list' %}">لیست  تجهیزات پزشکی</a></li>
             <li>
-            
+            {%endif%}
             <li>
             <hr class="dropdown-divider">
             </li>
@@ -691,10 +722,13 @@ Auto
 </a>
 <ul class="dropdown-menu">
 <li><a class="dropdown-item" href="{% url 'insurance:list' %}">لیست بیمه ها </a></li>
+{% if perms.insurance.add_insurance%}
+
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'insurance:create' %}">ایجاد بیمه جدید</a></li>
+{%endif%}
 </ul>
 </li> 
 {% endif %}
