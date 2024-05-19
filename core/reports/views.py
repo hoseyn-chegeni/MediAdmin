@@ -733,7 +733,11 @@ class ExportServiceExcelView(View):
         services_df["دسته بندی"] = filtered_services.values_list(
             "category__name", flat=True
         )
-
+        # Add the properties to the DataFrame
+        services_df["تعداد پذیرش امروز"] = [service.today_reception_count for service in filtered_services]
+        services_df["تعداد پذیرش کل"] = [service.total_reception_count for service in filtered_services]
+        services_df["تعداد پذیرش در انتظار امروز"] = [service.waiting_receptions_today for service in filtered_services]
+        services_df["تعداد مراجعین"] = [service.client_count for service in filtered_services]
         # Create a response object
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = 'attachment; filename="service_report.csv"'
