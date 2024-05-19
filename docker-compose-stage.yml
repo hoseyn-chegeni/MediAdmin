@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    image: redis:7.0.11-alpine
+
+  backend:
+    container_name: django
+    build:
+      context: ./core
+    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    volumes:
+      - ./core:/usr/src/app
+      - static_volume:/app/static/
+      - media_volume:/app/media/
+    expose:
+      - "8000"
+    depends_on:
+      - redis
+
+  celery:
+    container_name: celery
+    build:
+      context: ./core
+    command: celery --app=core worker -l INFO 
+    volumes:
+      - ./core:/usr/src/app
+    depends_on:
+      - redis
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/home/app/static/
+      - media_volume:/home/app/media/
+    depends_on:
+      - redis
+      - backend
+
+volumes:
+  static_volume:
+  media_volume:
