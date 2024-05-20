@@ -55,10 +55,15 @@
 <div class="mb-4">
   <form action="{% url 'consumable:delete_selected_consumable' %}" method="post" id="deleteForm">
     {% csrf_token %}
+    {% if perms.consumable.add_consumablev2%}
   <a href="{% url 'consumable:create' %}" class="btn btn-success"> افزودن مواد مصرفی جدید</a>
+  {%endif%}
+  {% if perms.accounts.view_reports%}
   <a href="{% url 'reports:consumable_reports'%}" class="btn btn-success me-2">گزارشات</a>
-  <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
-
+  {%endif%}
+  {%if perms.consumable.delete_consumablev2%}
+  <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button>
+  {%endif%}
 {%endblock%}
 {%block thead%}
 <th scope="col"><input type="checkbox" id="selectAll"></th>
@@ -89,7 +94,9 @@
 
   <td class="align-middle">
     <a href="{%url 'consumable:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+    {%if perms.consumable.change_consumablev2%}
     <a href="{%url 'consumable:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+    {%endif%}
   </td>
 </tr>
 {%endfor%}
