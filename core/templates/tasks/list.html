@@ -74,10 +74,15 @@
 {%block buttons%} 
 <form action="{% url 'tasks:delete_selected_tasks' %}" method="post" id="deleteForm">
   {% csrf_token %}
+  {% if perms.tasks.add_task%}
 <a href="{% url 'tasks:create' %}" class="btn btn-success me-2">ایجاد تسک جدید</a>
+{%endif%}
+{%if perms.accounts.view_reports%}
 <a href="{% url 'reports:tasks_reports' %}" class="btn btn-success me-2">گزارشات</a>
+{%endif%}
+{%if perms.tasks.delete_task%}
 <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
-
+{%endif%}
 
 {%endblock%}
 {%block thead%}
@@ -143,8 +148,9 @@
 
   <td class="align-middle">
       <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات تسک"> <i class="fas fa-info-circle"></i></a>
+      {%if perms.tasks.change_task%}
       <a href="{%url 'tasks:update' i.id %}" data-mdb-toggle="tooltip" title="ویرارش"><i class="fas fa-edit" ></i></a>
-
+{%endif %}
   </td>
 </tr>
 {%endfor%}
