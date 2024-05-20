@@ -71,10 +71,18 @@
 {%block buttons%} 
 <form action="{% url 'services:delete_selected_services' %}" method="post" id="deleteForm">
   {% csrf_token %}
+  {% if perms.services.add_service%}
 <a href="{% url 'services:create' %}" class="btn btn-success me-2">ایجاد سرویس جدید</a>
+{% endif %}
+{% if perms.accounts.view_reports%}
 <a href="{% url 'reports:service_reports' %}" class="btn btn-success me-2">گزارشات</a>
+{% endif %}
+{% if perms.services.change_service%}
 <a href="{% url 'services:update_service_prices' %}"class="btn btn-success me-2">افزایش قیمت دسته ای سرویس ها</a>
+{% endif %}
+{% if perms.services.delete_service%}
 <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+{% endif %}
 
 {%endblock%}
 {%block thead%}
@@ -146,9 +154,13 @@
 
   <td class="align-middle">
       <a href="{%url 'services:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+      {% if perms.service.change_service%}
       <a href="{%url 'services:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
       <a href="{% url 'services:appointment_config' i.pk %}" data-mdb-toggle="tooltip" title="Appointment Config"><i class="fas fa-cog" ></i></a>
+      {%endif%}
+      {% if perms.planner.view_month%}
       <a href="{% url 'planner:calendar' i.pk %}" data-mdb-toggle="tooltip" title="Appointment"><i class="fas fa-calendar" ></i></a>
+      {% endif %}
       <a href="{% url 'services:queue' i.pk %}" data-mdb-toggle="tooltip" title="Waiting Queue"><i class="fas fa-list" ></i></a>
   </td>
 </tr>
