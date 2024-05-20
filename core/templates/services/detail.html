@@ -60,18 +60,23 @@
         <div class="card mb-4">
           <div class="card-body">
               <div class="card-text">
+                {% if perms.services.change_service%}
           <a href="{% url 'services:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
           <a href="{% url 'services:appointment_config' object.id%}" class="btn btn-success me-2">تنظیمات</a>
           <a href="{% url 'services:service_consumable_create' object.id%}" class="btn btn-success me-2">افزودن مواد مصرفی</a>
-          <a href="{% url 'services:queue' object.id%}" class="btn btn-success me-2">صف انتظار سرویس</a>
-          <a href="{% url 'planner:calendar' object.id%}" class="btn btn-success me-2">نویت دهی</a>
-
           {% if object.is_active == True%}
           <a href="#" data-toggle="modal" data-target="#suspendModal"  class="btn btn-success me-2" title="suspend" >تعلیق سرویس</a>
           {%else%}
           <a href="#" data-toggle="modal" data-target="#reactiveModal"  class="btn btn-success me-2" title="reactive" >فعال سازی مجدد</a>
           {%endif%}
+          {% endif %}
+          <a href="{% url 'services:queue' object.id%}" class="btn btn-success me-2">صف انتظار سرویس</a>
+{% if perms.planner.view_month%}
+          <a href="{% url 'planner:calendar' object.id%}" class="btn btn-success me-2">نویت دهی</a>
+{%endif %}
+{% if perms.services.delete_service%}
           <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+          {%endif%}
       </div>
 </div>
 </div>
@@ -157,7 +162,7 @@
       </div>
 </div>
 
-
+{% if perms.asset.view_equipment%}
       <div class="container mt-4">
         <h2>تجهیزات پزشکی
         </h2>
@@ -208,7 +213,8 @@
             </div>
           </div>
 </div>
-
+{%endif %}
+{% if perms.insurance.view_insurance%}
           <div class="container mt-4">
             <h2>لیست بیمه های پوشش دهنده</h2>
             <br>
@@ -259,7 +265,8 @@
               </div>
 
 </div>
-
+{% endif %}
+{% if perms.client.view_client%}
               <div class="container mt-4">
                 <h2>لیست بیمارانی که از این سرویس استفاده نموده اند
                 </h2>
@@ -314,7 +321,8 @@
                     </div>
                   </div>
 </div>
-
+{% endif %}
+{% if perms.recpeiton.view_reception%}
 <div class="container mt-4">
   <h2> پذیرش های انجام شده این سروریس
   </h2>
@@ -374,6 +382,7 @@
       </div>
     </div>
 </div>
+{%endif %}
       <!-- DELETE MODALS -->
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
