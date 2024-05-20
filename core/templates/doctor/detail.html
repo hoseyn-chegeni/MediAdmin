@@ -19,14 +19,20 @@
             <p class="text-muted mb-1">{{object.phone_number}}</p>
             <br>
             <div class="d-flex justify-content-center mb-2">
+              {% if perms.services.add_service%}
               <a href="#" class="btn btn-primary">ثبت سرویس </a>
+              {% endif %}
+              {% if perms.doctor.change_doctor%}
               <a href="{% url 'doctor:update' object.id %}" class="btn btn-outline-primary ms-1">ویرایش</a>
               {% if prescription %}
                 <a href="{% url 'prescription:header_update' prescription.id %}" class="btn btn-outline-primary ms-1">ویرایش سرنسخه</a>
                 {% else %}
                     <a href="{% url 'prescription:header_create' doctor.pk %}" class="btn btn-outline-primary ms-1">افزودن سرنسخه</a>
                 {% endif %}
+                {% endif %}
+{% if perms.doctor.delete_doctor%}
               <a href="#" data-toggle="modal" data-target="#exampleModal"  title="Delete" class="btn btn-outline-primary ms-1" >حذف</a>
+{% endif %}
             </div>
           </div>
         </div>
@@ -88,10 +94,10 @@
               </div>
               <div class="col-sm-9">
                 {% if object.is_active%}
-                <p class="text-muted mb-0">فعال <a href="#" data-toggle="modal" data-target="#SuspendModal"  title="Delete" class="btn btn-outline-primary ms-1" >غیرفعال سازی </a>
+                <p class="text-muted mb-0">فعال {% if perms.doctor.change_doctor%}<a href="#" data-toggle="modal" data-target="#SuspendModal"  title="Delete" class="btn btn-outline-primary ms-1" >غیرفعال سازی </a>{% endif %}
                 </p>
                 {%else%}
-                <p class="text-muted mb-0">غیرفعال <a href="#" data-toggle="modal" data-target="#ReactiveModal"  title="Delete" class="btn btn-outline-primary ms-1" >فعال سازی مجدد</a>
+                <p class="text-muted mb-0">غیرفعال {% if perms.doctor.change_doctor%}<a href="#" data-toggle="modal" data-target="#ReactiveModal"  title="Delete" class="btn btn-outline-primary ms-1" >فعال سازی مجدد</a>{%endif%}
                 </p>
               {%endif%}
               </div>
@@ -128,8 +134,9 @@
               </div>
              </div>
 
-
         <div class="row">
+          {% if perms.reception.view_reception%}
+
           <div class="col-md-6">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
@@ -143,7 +150,8 @@
               </div>
             </div>
           </div>
-          
+  {% endif %}
+  {% if perms.services.view_service%}        
           <div class="col-md-6">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
@@ -158,6 +166,7 @@
               </div>
             </div>
           </div>
+  {% endif %}
         </div>
       </div>
     </div>
