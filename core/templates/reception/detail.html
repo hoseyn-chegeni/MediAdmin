@@ -119,6 +119,7 @@
                      اکشن ها
                     </strong>   </div>
                 <div class="card-footer">
+                    {% if perms.prescription.view_prescription%}
                     {% if prescription%}
                     <a href="{% url 'prescription:detail' prescription.pk %}" class="btn btn-success me-2">نسخه </a>
                     {%else%}
@@ -128,16 +129,23 @@
                            <a href="{% url 'prescription:temp_detail' temp_prescription.id %}" class="btn btn-success me-2">نسخه نویسی</a>
                         {% endif %}
                     {%endif%}
+                    {% endif %}
+                    {% if perms.financial.view_financial%}
                     <a href="{% url 'financial:invoice' financial.id%}" class="btn btn-success me-2">نمایش صورتحساب</a>
-
+                    {% endif %}
+                    
+                    {% if perms.reception.change_reception%}
+                    <a href="{% url 'reception:update' reception.id%}" class="btn btn-success me-2">ویرایش</a>
                     {%if reception.status == "WAITE"%}
                     <a href="#" data-toggle="modal" data-target="#exampleModal2"  class="btn btn-success me-2" title="Complete Reception">اتمام پذیرش</a>
                     {%endif%}
+                    {% endif %}
                     {% if reception.appointment%}
                     <a href="{% url 'booking:detail' reception.appointment.pk %}" class="btn btn-success me-2">مشاهده جزییات نوبت رزرو شده</a>
                     {%endif%}
-                    <a href="{% url 'reception:update' reception.id%}" class="btn btn-success me-2">ویرایش</a>
+                    {% if perms.reception.delete_reception%}
                     <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete">حذف</a>
+                {% endif %}
                 </div>
             </div>
         </div>
