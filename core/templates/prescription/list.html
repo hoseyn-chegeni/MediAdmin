@@ -63,9 +63,9 @@
 
 {%endblock%}
 {%block buttons%} 
-
+{%if perms.accounts.view_reports%}
 <a href="{% url 'reports:prescription_reports' %}" class="btn btn-success me-2">گزارشات</a>
-
+{%endif%}
 {%endblock%}
 {%block thead%}
 
@@ -108,9 +108,10 @@
     </td>
 
   <td class="align-middle">
-      <a href="{%url 'prescription:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+      <a href="{%url 'prescription:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+      {% if perms.prescription.change_prescription%}
       <a href="{%url 'prescription:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
-
+{%endif%}
   </td>
 </tr>
 {%endfor%}
