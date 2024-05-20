@@ -17,10 +17,15 @@
             <h5 class="my-3">{{client.last_name}}{{client.first_name}}</h5>
             <p class="text-muted mb-1">{{client.national_id}}</p>
             <div class="d-flex justify-content-center mb-3">
+              {% if perms.reception.add_reception%}
               <a href="{% url 'reception:reception_create_using_profile' client.id %}" class="btn btn-primary btn-sm">ثبت پذیرش</a>
+              {%endif%}
+              {% if perms.client.change_client%}
               <a href="{% url 'client:update' client.id %}" class="btn btn-outline-primary btn-sm ms-1">ویرایش</a>
               <a href="{% url 'client:edit_health_history' client.id %}" class="btn btn-outline-primary btn-sm ms-1">سوابق بیماری</a>
               <a href="{%url 'notification:send_sms' client.id %}" class="btn btn-outline-primary btn-sm ms-1">ارسال پیام</a>
+              {%endif%}
+
              
           </div>
           <div class="d-flex justify-content-center mb-3">
@@ -153,9 +158,9 @@
                 </div>
                 <div class="col-sm-9">
                   {%if client.is_vip%}
-                  <p class="text-muted mb-0">VIP : <a href="#" data-toggle="modal" data-target="#removevipModal" class="btn btn-outline-primary ms-1">خارج ساختن از حالت بیمار ویژه</a></p>
+                  <p class="text-muted mb-0">VIP  {% if perms.client.change_client%}: <a href="#" data-toggle="modal" data-target="#removevipModal" class="btn btn-outline-primary ms-1">خارج ساختن از حالت بیمار ویژه</a>{%endif%}</p>
                   {%else%}
-                  <p class="text-muted mb-0">اشتراک معمولی :   <a href="#" data-toggle="modal" data-target="#vipModal" class="btn btn-outline-primary ms-1">عضویت در بیماران ویژه</a></p>
+                  <p class="text-muted mb-0">اشتراک معمولی {% if perms.client.change_client%}:   <a href="#" data-toggle="modal" data-target="#vipModal" class="btn btn-outline-primary ms-1">عضویت در بیماران ویژه</a>{%endif%}</p>
                 {%endif%}
                 </div>
               </div>
@@ -243,6 +248,7 @@
           </div>
         </div>
         <div class="row">
+          {%if perms.reception.view_reception%}
           <div class="col-md-6">
             <div class="card mt-4">
               <div class="card-body">
@@ -256,8 +262,8 @@
               </div>
             </div>
           </div>
-
-
+{%endif%}
+{% if perms.financial.view_financial%}
           <div class="col-md-6">
             <div class="card mt-4">
               <div class="card-body">
@@ -271,7 +277,7 @@
               </div>
             </div>
           </div>
-
+{%endif%}
 
           <div class="col-md-6">
             <div class="card mt-4">
