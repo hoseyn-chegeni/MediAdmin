@@ -51,12 +51,17 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-text">
+              {% if perms.consumable.change_inventory%}
             <a href="{% url 'consumable:inventory_update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+            {%endif%}
             <a href="{% url 'consumable:detail' object.consumable.id%}" class="btn btn-success me-2">مشاهده محصول</a>
-            <a href="#" class="btn btn-success me-2">مشاهده تامین کننده</a>
-
+            {% if perms.consumable.view_supplier%}
+            <a href="{%url 'consumable:supplier_detail' object.supplier.id %}" class="btn btn-success me-2">مشاهده تامین کننده</a>
+            {%endif%}
+            {% if perms.consumable.delete_inventory%}
             <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
-        </div>
+        {%endif%}
+          </div>
 </div>
 </div>
 
