@@ -49,9 +49,15 @@
 {%block buttons%} 
 <form action="{% url 'reception:delete_selected_reception' %}" method="post" id="deleteForm">
   {% csrf_token %}
+  {% if perms.reception.add_reception%}
 <a href="{% url 'reception:create' %}" class="btn btn-success me-2">ایجاد پذیرش جدید</a>
+{% endif %}
+{% if perms.accounts.view_reports%}
 <a href="{% url 'reports:reception_reports' %}" class="btn btn-success me-2">گزارشات</a>
+{% endif %}
+{% if perms.reception.delete_reception%}
 <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> 
+{% endif %}
 {%endblock%}
 {%block thead%}
 
@@ -109,8 +115,9 @@
 
   <td class="align-middle">
       <a href="{%url 'reception:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+     {% if perms.reception.change_reception%}
       <a href="{%url 'reception:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
-
+{% endif %}
   </td>
 </tr>
 {%endfor%}
