@@ -49,6 +49,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-text">
+                  {%if perms.tasks.change_task%}
             {%if not object.assign_to%}
             <a href="#" data-toggle="modal" data-target="#AssignModal"  class="btn btn-success me-2" >اختصاص تسک به من</a>
             <a href="{% url 'tasks:assign_to' object.id%}" class="btn btn-success me-2">اختصاص تسک به ...</a>
@@ -67,7 +68,10 @@
         {%endif%}
 
             <a href="{% url 'tasks:update' object.id%}" class="btn btn-success me-2">ویرایش</a>
+          {%endif%}
+          {%if perms.tasks.delete_task%}
             <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete" >حذف</a>
+            {%endif%}
         </div>
 
 
@@ -135,7 +139,8 @@
 
 </div>
 
-
+</div>
+</div>
     <!-- jQuery (needed for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap JavaScript -->
