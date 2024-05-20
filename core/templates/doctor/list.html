@@ -70,9 +70,15 @@
 {%block buttons%} 
 <form action="{% url 'doctor:delete_selected_doctors' %}" method="post" id="deleteForm">
   {% csrf_token %}
+  {% if perms.doctor.add_doctor%}
 <a href="{% url 'doctor:create' %}" class="btn btn-success me-2"> افزودن پزشک جدید</a>
+{% endif %}
+{% if perms.accounts.view_reports%}
 <a href="{% url 'reports:doctor_reports' %}" class="btn btn-success me-2">گزارشات</a>
-<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+{% endif %}
+{% if perms.doctor.delete.doctor%}
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button>
+{% endif %}
 {%endblock%}
 {%block thead%}
 
@@ -123,8 +129,10 @@
 
 
   <td class="align-middle">
-      <a href="{%url 'doctor:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
-    <a href="{%url 'doctor:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+      <a href="{%url 'doctor:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+      {% if perms.doctor.change_doctor%}
+    <a href="{%url 'doctor:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+    {% endif %}
   </td>
 </tr>
 {%endfor%}
