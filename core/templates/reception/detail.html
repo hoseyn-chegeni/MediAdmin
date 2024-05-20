@@ -140,9 +140,6 @@
                     <a href="#" data-toggle="modal" data-target="#exampleModal2"  class="btn btn-success me-2" title="Complete Reception">اتمام پذیرش</a>
                     {%endif%}
                     {% endif %}
-                    {% if reception.appointment%}
-                    <a href="{% url 'booking:detail' reception.appointment.pk %}" class="btn btn-success me-2">مشاهده جزییات نوبت رزرو شده</a>
-                    {%endif%}
                     {% if perms.reception.delete_reception%}
                     <a href="#" data-toggle="modal" data-target="#exampleModal"  class="btn btn-success me-2" title="Delete">حذف</a>
                 {% endif %}
