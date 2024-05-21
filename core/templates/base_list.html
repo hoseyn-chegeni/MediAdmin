@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
-{% block title %} لیست کاربران{% endblock %}
+{% load static%}
+{% block title %}{% endblock %}
 
 {%block content%}
 <div class="container" style="padding-bottom: 100%;">
@@ -7,8 +8,7 @@
     <section class="vh-100 gradient-custom-2" >
         <div class="container py-5 h-100">
           <div class="text-center pt-3 pb-2">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
-              alt="Check" width="60">
+            <img src="{% static 'SVG-01.svg' %}"  width="150">
             <h2 class="my-4">{%block list_title%}{%endblock%}</h2>
           </div>
           <div class="row d-flex justify-content-center align-items-center h-100">
