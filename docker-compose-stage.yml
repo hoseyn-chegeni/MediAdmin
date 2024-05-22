@@ -6,7 +6,7 @@ services:
     image: redis:7.0.11-alpine
 
   backend:
-    container_name: django
+    container_name: backend
     build:
       context: ./core
     command: gunicorn core.wsgi --bind 0.0.0.0:8000
