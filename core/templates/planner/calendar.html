@@ -45,7 +45,7 @@
                             <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-warning ms-1">نمایش</a>
                             {% else %}
                             {% comment %} Check if the day is in the future {% endcomment %}
-                            {% if day.christ_date.day > today.day %}
+                            <!-- {% if day.christ_date.day > today.day %} -->
                             <h5><span class="badge bg-success rounded-pill">{{ day.session_count }} / {{ service.appointment_per_day }}</span></h5>
                             <hr>
                             <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-success ms-1">نمایش</a>
@@ -54,7 +54,7 @@
                             <h5><span class="badge bg-secondary rounded-pill">{{ day.session_count }} / {{ service.appointment_per_day }}</span></h5>
                             <hr>
                             <a href="{% url 'planner:list' service.id day.id %}" class="btn btn-outline-secondary ms-1">نمایش</a>
-                            {% endif %}
+                            <!-- {% endif %} -->
                             {% endif %}
                         </div>
                     </div>
