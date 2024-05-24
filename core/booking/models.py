@@ -17,3 +17,7 @@ def validate_current_month(value):
 
 def validate_max_appointments_per_day(value):
     pass
+
+
+class Appointment(models.Model):
+    name = models.TextField()

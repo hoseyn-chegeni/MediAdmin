@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                     "consumable",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="consumable.ConsumableV2",
+                        to="asset.consumable",
                     ),
                 ),
                 (
