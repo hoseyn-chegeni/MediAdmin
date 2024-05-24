@@ -23,3 +23,6 @@ class Equipment(models.Model):
 
     def __str__(self):
         return self.name
+
+class Consumable(models.Model):
+    name = models.TextField()
