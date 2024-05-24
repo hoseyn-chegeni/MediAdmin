@@ -18,8 +18,8 @@ services:
       - "8000"
     depends_on:
       - redis
-    # env_file:
-    #   - ./core/.env
+    env_file:
+      - ./core/.env
 
 
 
