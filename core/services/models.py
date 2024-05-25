@@ -42,7 +42,7 @@ class Service(models.Model):
     recommendations = models.TextField(blank=True)  # توصیه ها
     # suggested_prescription = 0
     appointment_per_day = models.PositiveIntegerField(default=3)
-    off_days = models.ManyToManyField("planner.WeekDay", blank=True)
+    off_days = models.ManyToManyField('OffDay', blank = True)
     medical_equipment = models.ManyToManyField("asset.Equipment", blank=True)
     check_consumable_inventory = models.BooleanField(default=True)
 

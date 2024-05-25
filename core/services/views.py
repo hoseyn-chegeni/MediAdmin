@@ -41,8 +41,37 @@ class ServiceCreateView(BaseCreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
+    
 
 
+class ServiceCreateWithDocIDView(BaseCreateView):
+    model = Service
+    fields = '__all__'
+    template_name = "services/create_with_doc_id.html"
+    app_name = "services"
+    url_name = "detail"
+    permission_required = "services.add_service"
+
+    def get_initial(self):
+        initial = super().get_initial()
+        # Set the initial client value to the client whose profile page the user is on
+        initial["doctor"] = self.kwargs[
+            "pk"
+        ]  # Assuming client's pk is passed in the URL
+        return initial
+
+    def form_valid(self, form):
+        # Set the client for the reception
+        form.instance.created_by = self.request.user
+        form.instance.doctor = Doctor.objects.get(pk = self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])
+        return context
+
+    
 class ServiceDetailView(BaseDetailView):
     model = Service
     template_name = "services/detail.html"

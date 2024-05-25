@@ -20,7 +20,7 @@
             <br>
             <div class="d-flex justify-content-center mb-2">
               {% if perms.services.add_service%}
-              <a href="#" class="btn btn-primary">ثبت سرویس </a>
+              <a href="{% url 'services:create_with_doc_id' object.id%}" class="btn btn-primary">ثبت سرویس </a>
               {% endif %}
               {% if perms.doctor.change_doctor%}
               <a href="{% url 'doctor:update' object.id %}" class="btn btn-outline-primary ms-1">ویرایش</a>
