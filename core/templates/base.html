@@ -528,22 +528,6 @@ Auto
   </li> 
   {%endif%}
 
-
-  {% if perms.accounts.view_reports%}
-  <li class="nav-item dropdown">            
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-  داده های بصری
-    </a>
-    <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'planner:appointments_chart' %}">چارت نوبت دهی</a></li>
-    <li>
-      <hr class="dropdown-divider">
-      </li>
-      <li><a class="dropdown-item" href="{% url 'planner:sessions_per_doctor_chart' %}">تعداد نوبت دهی بر حسب پزشک</a></li>
-    </ul>
-    </li> 
-    {%endif%}
-
   {%if perms.accounts.view_reports%}
 
 <li class="nav-item dropdown">            
