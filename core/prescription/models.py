@@ -45,7 +45,9 @@ class PrescriptionItem(models.Model):
 
 
 class TemporaryPrescription(models.Model):
-    reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE)
+    reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE, blank = True, null = True)
+    name = models.CharField(max_length = 255, blank = True, null = True)
+    national_id = models.CharField(max_length = 255, blank = True,null = True)
     notes = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
