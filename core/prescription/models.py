@@ -5,9 +5,7 @@ from django.db import models
 
 
 class Prescription(models.Model):
-    reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE, blank = True, null = True)
-    name = models.CharField(max_length = 255, blank = True, null = True)
-    national_id = models.CharField(max_length = 255, blank = True,null = True)
+    reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     jalali_date = models.CharField(max_length = 255)
     medication = models.TextField()
@@ -45,9 +43,7 @@ class PrescriptionItem(models.Model):
 
 
 class TemporaryPrescription(models.Model):
-    reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE, blank = True, null = True)
-    name = models.CharField(max_length = 255, blank = True, null = True)
-    national_id = models.CharField(max_length = 255, blank = True,null = True)
+    reception = models.ForeignKey("reception.Reception", on_delete=models.CASCADE)
     notes = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

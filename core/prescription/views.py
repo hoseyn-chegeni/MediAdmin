@@ -241,3 +241,6 @@ class CreateTemporaryPrescription(View):
 
         # Redirect to the detail view of the newly created TemporaryPrescription
         return redirect("prescription:temp_detail", pk=temp_prescription.pk)
+    
+
+
