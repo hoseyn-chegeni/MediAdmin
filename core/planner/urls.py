@@ -8,7 +8,7 @@ from .views import (
     TotalSessionListView,
     TotalDeletedSessionListView,
     TodaySessionListView,
-    appointments_chart,
+    appointments_chart,sessions_per_doctor_chart
 )
 
 app_name = "planner"
@@ -35,5 +35,6 @@ urlpatterns = [
     ),
     path("list/today/", TodaySessionListView.as_view(), name="today_list"),
     path('appointments-chart/', appointments_chart, name='appointments_chart'),
+    path('sessions-per-doctor-chart/', sessions_per_doctor_chart, name='sessions_per_doctor_chart'),
 
 ]

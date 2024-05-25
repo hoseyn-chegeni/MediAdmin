@@ -114,6 +114,18 @@
 <br>
 <br>
 <br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">تعداد نوبت های در انتظار برای هر پزشک</h5>
+                    <canvas id="sessionsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
@@ -123,5 +135,39 @@
             minLength: 2
         });
     });
+</script>
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "planner:sessions_per_doctor_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create chart
+            var labels = data.labels;
+            var data = data.data;
+
+            // Create chart using Chart.js
+            var ctx = document.getElementById('sessionsChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'تعداد رزور ها',
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
 </script>
 {%endblock%}
