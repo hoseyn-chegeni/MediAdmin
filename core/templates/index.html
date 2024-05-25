@@ -119,6 +119,20 @@
         <div class="col-md-8">
             <div class="card mt-5">
                 <div class="card-body">
+                    <h5 class="card-title">تعداد نوبت‌ها برای هر سرویس در هفت روز آینده</h5>
+                    <canvas id="appointmentsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
                     <h5 class="card-title">تعداد نوبت های در انتظار برای هر پزشک</h5>
                     <canvas id="sessionsChart"></canvas>
                 </div>
@@ -158,6 +172,46 @@
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+
+<script>
+    fetch('{% url "planner:appointments_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            var labels = data.dates;
+            var datasets = [];
+
+            // Define an array of colors for each line
+            var colors = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'];
+
+            data.chart_data.forEach((service_data, index) => {
+                datasets.push({
+                    label: service_data.service,
+                    data: service_data.appointments,
+                    backgroundColor: colors[index], // Use a different color for each line
+                    borderColor: colors[index], // Use the same color for border to match
+                    borderWidth: 1
+                });
+            });
+
+            var ctx = document.getElementById('appointmentsChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
                 },
                 options: {
                     scales: {

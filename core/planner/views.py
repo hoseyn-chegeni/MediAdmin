@@ -196,6 +196,7 @@ from django.shortcuts import render
 from django.utils.timezone import now
 from datetime import timedelta
 
+
 def appointments_chart(request):
     end_date = now().date() + timedelta(days=7)
     start_date = now().date()
@@ -213,14 +214,7 @@ def appointments_chart(request):
             data['appointments'].append(count)
         chart_data.append(data)
     
-    context = {
-        'chart_data': chart_data,
-        'dates': [(start_date + timedelta(days=day)).strftime('%Y-%m-%d') for day in range(7)]
-    }
-
-    return render(request, 'appointments_chart.html', context)
-
-
+    return JsonResponse({'chart_data': chart_data, 'dates': [(start_date + timedelta(days=day)).strftime('%Y-%m-%d') for day in range(7)]})
 
 def sessions_per_doctor_chart(request):
     # Query sessions per doctor with status "در انتظار"
