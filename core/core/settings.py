@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "planner",
     "django_jalali",
     "import",
+    "charts",
 ]
 
 MIDDLEWARE = [

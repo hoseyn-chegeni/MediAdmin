@@ -44,5 +44,7 @@ urlpatterns = (
         path("consumable/", include("consumable.urls")),
         path("planner/", include("planner.urls")),
         path("import/", include("import.urls")),
+        path("charts/", include("charts.urls")),
+
     ]
 )
