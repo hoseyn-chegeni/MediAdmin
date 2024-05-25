@@ -81,19 +81,18 @@ class SessionCreateView(BaseCreateView):
         form.instance.day = day
         form.instance.service = service
 
-        # Check if there is an existing session for the client, day, and service
-        existing_session = Session.objects.filter(
-            day=day, service=service, client=form.instance.client
-        ).exists()
-        if existing_session:
-            form.add_error(
-                None,
-                f"نوبت از پیش برای این بیمار در این روز برای این سرویس ثبت شده است",
-            )
-            return self.form_invalid(form)
+        # Check if there is an existing session for the client, day, and servi
 
         form.instance.status = "در انتظار"
         if form.instance.client:
+            existing_session = Session.objects.filter(
+            day=day, service=service, client=form.instance.client).exists()
+            if existing_session:
+                form.add_error(
+                    None,
+                    f"نوبت از پیش برای این بیمار در این روز برای این سرویس ثبت شده است",
+                )
+                return self.form_invalid(form)
             form.instance.first_name = form.instance.client.first_name
             form.instance.last_name = form.instance.client.last_name
             form.instance.national_id = form.instance.client.national_id
@@ -187,3 +186,34 @@ class TodaySessionListView(BaseListView):
 
     def get_queryset(self):
         return Session.objects.filter(day__date=datetime.now())
+
+
+# views.py
+
+from django.shortcuts import render
+from django.utils.timezone import now
+from datetime import timedelta
+
+def appointments_chart(request):
+    end_date = now().date() + timedelta(days=7)
+    start_date = now().date()
+    services = Service.objects.all()
+    chart_data = []
+
+    for service in services:
+        data = {
+            'service': service.name,
+            'appointments': []
+        }
+        for day in range(7):
+            date = start_date + timedelta(days=day)
+            count = Session.objects.filter(service=service, day__christ_date=date).count()
+            data['appointments'].append(count)
+        chart_data.append(data)
+    
+    context = {
+        'chart_data': chart_data,
+        'dates': [(start_date + timedelta(days=day)).strftime('%Y-%m-%d') for day in range(7)]
+    }
+
+    return render(request, 'appointments_chart.html', context)

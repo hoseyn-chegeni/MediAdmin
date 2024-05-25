@@ -527,6 +527,18 @@ Auto
   </li> 
   {%endif%}
 
+
+  {% if perms.accounts.view_reports%}
+  <li class="nav-item dropdown">            
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  داده های بصری
+    </a>
+    <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{% url 'planner:appointments_chart' %}">چارت نوبت دهی</a></li>
+    </ul>
+    </li> 
+    {%endif%}
+
   {%if perms.accounts.view_reports%}
 
 <li class="nav-item dropdown">            
