@@ -83,7 +83,18 @@ class DoctorDetailView(BaseDetailView):
 
 class DoctorCreateView(BaseCreateView):
     model = Doctor
-    fields = "__all__"
+    fields = [
+        'first_name',
+        'last_name',
+        'email',
+        'phone_number',
+        'address',
+        'specialization',
+        'registration_number',
+        'is_active',
+        "image",
+        "user",
+    ]
     template_name = "doctor/create.html"
     app_name = "doctor"
     url_name = "detail"

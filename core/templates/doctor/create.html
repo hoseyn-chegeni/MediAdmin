@@ -63,6 +63,18 @@
                     <label class="form-label" for="customFile">تصویر</label>
                     <input type="file" class="form-control" id="customFile" name="image" />
                     </div>
+
+
+                    <div class="col-sm-6">
+                        <label  for="client"> کاربر برای لاگین:</label>
+                        <select  class="form-select" name="user" required="" id="user">
+                          <option value="" selected="">---------</option>
+                        {% for i in form.user.field.queryset%}
+                          <option value="{{i.id}}">{{i}}</option>
+                          {%endfor%}
+                        </select>
+                        </div>
+
                             </div>
                             <button class="w-100 btn btn-lg btn-outline-success mt-3" type="submit">ثبت</button>
                         </form>
