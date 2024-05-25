@@ -152,7 +152,7 @@
 </script>
 <script>
     // Fetch data using AJAX
-    fetch('{% url "planner:sessions_per_doctor_chart" %}')
+    fetch('{% url "charts:sessions_per_doctor_chart" %}')
         .then(response => response.json())
         .then(data => {
             // Data received, create chart
@@ -187,7 +187,7 @@
 
 
 <script>
-    fetch('{% url "planner:appointments_chart" %}')
+    fetch('{% url "charts:appointments_chart" %}')
         .then(response => response.json())
         .then(data => {
             var labels = data.dates;
