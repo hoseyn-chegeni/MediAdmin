@@ -5,7 +5,7 @@ from planner.models import Session
 from services.models import Service
 from django.db.models import Count
 from django.http import JsonResponse
-
+from reception.models import Reception
 # Create your views here.
 
 
@@ -47,3 +47,15 @@ def sessions_per_doctor_chart(request):
     }
     # Return the data as JSON response
     return JsonResponse(chart_data)
+
+
+def service_reception_counts(request):
+    # Get the count of receptions for each service
+    reception_counts = Reception.objects.values('service__name').annotate(count=Count('id'))
+    
+    data = {
+        'labels': [item['service__name'] for item in reception_counts],
+        'data': [item['count'] for item in reception_counts]
+    }
+
+    return JsonResponse(data)
