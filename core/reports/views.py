@@ -1135,7 +1135,8 @@ class PerformanceManagementReportView(TemplateView):
         context['completed_appointments'] = Session.objects.filter(status = "پذیرش شده").count()
         context['missed_appointments'] = Session.objects.filter(status = "عدم مراجعه").count()
         context['cancelled_appointments'] = DeletedSession.objects.all().count()
-
+        #CLIENTS
+        context['total_clients'] = Client.objects.all().count()
 
 
 
