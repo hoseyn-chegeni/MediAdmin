@@ -1138,9 +1138,13 @@ class PerformanceManagementReportView(TemplateView):
         #CLIENTS
         total_clients = Client.objects.all().count()
         clients_with_multiple_receptions = Client.objects.annotate(reception_count=Count('reception')).filter(reception_count__gte=2).count()
+        total_receptions = Reception.objects.count()
+
         context['total_clients'] = total_clients
         context['new_clients'] = Client.objects.filter(created_at__gte=one_month_ago).count()
         context['client_retention'] = (clients_with_multiple_receptions / total_clients) * 100 if total_clients > 0 else 0
+        context['average_receptions_per_client'] = (total_receptions / total_clients) if total_clients > 0 else 0
+
 
 
 
