@@ -187,6 +187,19 @@
     </div>
 </div>
 
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">تعداد مشتریان ثبت‌نام شده در 10 روز گذشته</h5>
+                    <canvas id="clientsLast10DaysChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 
@@ -620,6 +633,50 @@
                             title: {
                                 display: true,
                                 text: 'تعداد فاکتورها'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "charts:clients_last_10_days" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create chart
+            var ctx = document.getElementById('clientsLast10DaysChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'تعداد مشتریان',
+                        data: data.data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(192, 75, 130, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'تاریخ'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'تعداد مشتریان'
                             },
                             beginAtZero: true
                         }

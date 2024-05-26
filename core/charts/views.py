@@ -247,3 +247,19 @@ def invoices_last_10_days(request):
     data = [count for count in date_invoices.values()]
 
     return JsonResponse({'labels': labels, 'data': data})
+
+
+
+def clients_last_10_days(request):
+    end_date = now().date()
+    start_date = end_date - timedelta(days=9)
+    
+    date_clients = {}
+    for i in range(10):
+        date = start_date + timedelta(days=i)
+        date_clients[date] = Client.objects.filter(created_at__date=date).count()
+
+    labels = [date.strftime('%Y-%m-%d') for date in date_clients.keys()]
+    data = [count for count in date_clients.values()]
+
+    return JsonResponse({'labels': labels, 'data': data})
