@@ -1169,6 +1169,7 @@ class PerformanceManagementReportView(TemplateView):
         total_invoices = Financial.objects.all().count()
         context['total_invoices'] = total_invoices
         context['paid_invoices'] = Financial.objects.filter(payment_status = "پرداخت شده").count()
+        context['unpaid_invoices'] = Financial.objects.filter(payment_status = "پرداخت نشده").count()
 
 
         return context
