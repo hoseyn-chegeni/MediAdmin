@@ -1153,6 +1153,8 @@ class PerformanceManagementReportView(TemplateView):
         context['new_consumable'] = ConsumableV2.objects.filter(created_at__gte=one_month_ago).count()
         context['expired_items'] = Inventory.objects.filter(status = "منقضی شده").count()
         context['total_expenditure'] = Inventory.objects.aggregate(total_cost=Sum('purchase_cost'))['total_cost']
+        #SUPPLIERS
+        context['total_suppliers'] = Supplier.objects.all().count()
 
 
         return context
