@@ -1115,20 +1115,20 @@ class PerformanceManagementReportView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        one_month_ago = now() - timedelta(days=30)
         # USERS METRICS 
         context['total_users'] = User.objects.all().count()
         context['active_users'] = User.objects.filter(is_active = True).count()
         context['accounts_suspensions'] = User.objects.filter(is_active = False).count()
-        one_month_ago = now() - timedelta(days=30)
         context['inactive_accounts'] = User.objects.filter(last_login__lt=one_month_ago).count()
         context['new_users'] = User.objects.filter(created_at__gte=one_month_ago).count()
 
         #EQUIPMENTS METRICS
         total_equipment =  Equipment.objects.all().count()
         context['total_equipment'] = total_equipment
-        in_use_equipment_count = Equipment.objects.filter(is_user=True).count()
+        in_use_equipment_count = Equipment.objects.filter(is_use=True).count()
         context['equipment_utilization'] = (in_use_equipment_count / total_equipment) * 100 if total_equipment > 0 else 0
-
+        context['new_equipment'] = Equipment.objects.filter(created_at__gte=one_month_ago).count()
 
 
 
