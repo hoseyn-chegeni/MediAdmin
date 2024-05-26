@@ -1177,5 +1177,7 @@ class PerformanceManagementReportView(TemplateView):
         context['average_invoice_value'] = Financial.objects.aggregate(avg_value=Avg('final_amount'))['avg_value']
         context['total_invoice_amount'] = Financial.objects.aggregate(total_amount=Sum('final_amount'))['total_amount']
         context['average_invoices_per_client'] = Financial.objects.values('reception__client').annotate(num_invoices=Count('id')).aggregate(average_invoices=Coalesce(Avg('num_invoices', output_field=IntegerField()), 0))['average_invoices']
-
+        #OFFICE EXPENSES
+        total_expenses = OfficeExpenses.objects.all().count()
+        context['total_expenses'] = total_expenses
         return context
