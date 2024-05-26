@@ -7,6 +7,7 @@ from .views import (
     user_group_distribution_chart,
     appointment_service_chart,
     client_gender_distribution,
+    client_vip_distribution,
 )
 
 app_name = "charts"
@@ -39,5 +40,6 @@ urlpatterns = [
         name="daily_appointments_chart",
     ),
     path("client_gender_distribution-chart/", client_gender_distribution, name="client_gender_distribution"),
+    path("client_vip_distribution-chart/", client_vip_distribution, name="client_vip_distribution"),
 
 ]

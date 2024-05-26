@@ -147,3 +147,11 @@ def client_gender_distribution(request):
 
     data = {"male": male_count, "female": female_count}
     return JsonResponse(data)
+
+
+def client_vip_distribution(request):
+    vip_count = Client.objects.filter(is_vip=True).count()
+    non_vip_count = Client.objects.filter(is_vip=False).count()
+
+    data = {'VIP': vip_count, 'Non-VIP': non_vip_count}
+    return JsonResponse(data)
