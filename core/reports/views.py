@@ -1180,4 +1180,7 @@ class PerformanceManagementReportView(TemplateView):
         #OFFICE EXPENSES
         total_expenses = OfficeExpenses.objects.all().count()
         context['total_expenses'] = total_expenses
+        #PRESCRIPTION
+        total_prescription = Prescription.objects.all().count()
+        context['total_prescription'] = total_prescription
         return context
