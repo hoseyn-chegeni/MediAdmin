@@ -335,3 +335,15 @@ def task_priority_chart(request):
         'labels': labels,
         'data': counts
     })
+
+def task_status_chart(request):
+    # Count the number of tasks for each status
+    status_counts = Task.objects.values('status').annotate(count=Count('id'))
+
+    labels = [item['status'] for item in status_counts]
+    counts = [item['count'] for item in status_counts]
+
+    return JsonResponse({
+        'labels': labels,
+        'data': counts
+    })
