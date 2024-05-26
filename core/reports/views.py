@@ -33,7 +33,7 @@ from django.views.generic.base import TemplateView
 from django.utils.timezone import now
 from datetime import timedelta
 from planner.models import Session, DeletedSession
-
+from django.db.models import Count
 # Create your views here.
 class UserReportsView(BaseListView):
     model = User
@@ -1136,8 +1136,11 @@ class PerformanceManagementReportView(TemplateView):
         context['missed_appointments'] = Session.objects.filter(status = "عدم مراجعه").count()
         context['cancelled_appointments'] = DeletedSession.objects.all().count()
         #CLIENTS
-        context['total_clients'] = Client.objects.all().count()
+        total_clients = Client.objects.all().count()
+        clients_with_multiple_receptions = Client.objects.annotate(reception_count=Count('reception')).filter(reception_count__gte=2).count()
+        context['total_clients'] = total_clients
         context['new_clients'] = Client.objects.filter(created_at__gte=one_month_ago).count()
+        context['client_retention'] = (clients_with_multiple_receptions / total_clients) * 100 if total_clients > 0 else 0
 
 
 
