@@ -33,7 +33,7 @@ from django.views.generic.base import TemplateView
 from django.utils.timezone import now
 from datetime import timedelta
 from planner.models import Session, DeletedSession
-from django.db.models import Count, Sum, F
+from django.db.models import Count, Sum, F, Avg
 from django.db.models import Q
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -1170,6 +1170,7 @@ class PerformanceManagementReportView(TemplateView):
         context['total_invoices'] = total_invoices
         context['paid_invoices'] = Financial.objects.filter(payment_status = "پرداخت شده").count()
         context['unpaid_invoices'] = Financial.objects.filter(payment_status = "پرداخت نشده").count()
-
+        context['average_invoice_value'] = Financial.objects.aggregate(avg_value=Avg('final_amount'))['avg_value']
+        
 
         return context
