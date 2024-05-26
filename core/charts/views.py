@@ -200,3 +200,18 @@ def invoices_by_service(request):
         data['counts'].append(count)
 
     return JsonResponse(data)
+
+
+
+def invoices_by_payment_method(request):
+    payment_methods = dict(Reception.PAYMENT_TYPE_CHOICES)
+    data = {
+        'labels': list(payment_methods.values()),
+        'counts': []
+    }
+
+    for method in payment_methods.keys():
+        count = Financial.objects.filter(reception__payment_type=method).count()
+        data['counts'].append(count)
+
+    return JsonResponse(data)
