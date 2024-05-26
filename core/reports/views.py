@@ -1185,6 +1185,7 @@ class PerformanceManagementReportView(TemplateView):
         context['total_prescription'] = total_prescription
         context['average_prescriptions_per_doctor'] =  total_prescription / total_doctors if total_doctors > 0 else 0
         context['new_prescription'] = Prescription.objects.filter(created_at__gte=one_month_ago).count()
+        context['average_prescriptions_per_client'] =  total_prescription / total_clients if total_doctors > 0 else 0
 
 
         return context
