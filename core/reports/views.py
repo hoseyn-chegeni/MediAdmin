@@ -1137,6 +1137,7 @@ class PerformanceManagementReportView(TemplateView):
         context['cancelled_appointments'] = DeletedSession.objects.all().count()
         #CLIENTS
         context['total_clients'] = Client.objects.all().count()
+        context['new_clients'] = Client.objects.filter(created_at__gte=one_month_ago).count()
 
 
 
