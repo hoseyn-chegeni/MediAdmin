@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from reception.models import Reception
 from django.contrib.auth.models import Group
 from client.models import Client
-
+from consumable.models import ConsumableCategory
 # Create your views here.
 
 
@@ -168,3 +168,18 @@ def clients_by_insurance_chart(request):
                 insurance_providers[insurance_provider] = 1
 
     return JsonResponse(insurance_providers)
+
+
+
+def consumable_categories_distribution(request):
+    categories = ConsumableCategory.objects.all()
+    data = {
+        'labels': [],
+        'counts': []
+    }
+
+    for category in categories:
+        data['labels'].append(category.name)
+        data['counts'].append(category.consumable_count)
+
+    return JsonResponse(data)
