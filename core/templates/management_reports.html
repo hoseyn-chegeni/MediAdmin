@@ -2,290 +2,430 @@
 
 {% block content%}
 <div class="container">
-<h2>performance management report</h2>
+<h1>گزارش مدیریتی عملکرد کلینیک</h1>
 <!-- USERS -->
-<p>total user = {{total_users}}</p>
-<p>active user = {{active_users}}</p>
-<p>accounts suspensions = {{accounts_suspensions}}</p>
-<p> inactive_accounts = {{inactive_accounts}}</p>
-<p>new users = {{new_users}}</p>
-<!-- EQUIPMENTS -->
-<p>total_equipment = {{total_equipment}}</p>
-<p>equipment_utilization = {{equipment_utilization}} %</p>
-<p>new_equipment = {{new_equipment}}</p>
-<!-- APPOINTMENTS -->
-<p>total_appointments = {{total_appointments}}</p>
-<p>Completed Appointments = {{completed_appointments}}</p>
-<p> missed_appointments = {{missed_appointments}}</p>
-<p> cancelled_appointments = {{cancelled_appointments}}</p>
-<!-- CLIENTS -->
-<p>total_clients = {{total_clients}}</p>
-<p>new_clients = {{new_clients}}</p>
-<p>client_retention = {{client_retention}}</p>
-<p>average_receptions_per_client = {{average_receptions_per_client}}</p>
-<!-- CONSUMABLES -->
-<p>total_consumables = {{total_consumables}}</p>
-<p>low_stock_items = {{low_stock_items}}</p>
-<p>new_consumable = {{new_consumable}}</p>
-<p>expired_items = {{expired_items}}</p>
-<p>total_expenditure = {{total_expenditure}}</p>
-<!-- SUPPLIERS -->
-<p>total_suppliers = {{total_suppliers}}</p>
-<p>new_suppliers = {{new_suppliers}}</p>
-<!-- DOCTORS -->
-<p>total_doctors = {{total_doctors}}</p>
-<p>new_doctors = {{new_doctors}}</p>
-<p>average_appointments_per_doctor = {{average_appointments_per_doctor}}</p>
-<!-- INVOICE -->
-<p>total_invoices = {{total_invoices}}</p>
-<p>paid_invoices = {{paid_invoices}}</p>
-<p>unpaid_invoices = {{unpaid_invoices}}</p>
-<p>average_invoice_value = {{average_invoice_value}}</p>
-<p>total_invoice_amount = {{total_invoice_amount}}</p>
-<p>average_invoices_per_client = {{average_invoices_per_client}}</p>
-<!-- OFFICE EXPENSES -->
-<p>total_expenses = {{total_expenses}}</p>
-<!-- PRESCRIPTION -->
-<p>total_prescription= {{total_prescription}}</p>
-<p>average_prescriptions_per_doctor= {{average_prescriptions_per_doctor}}</p>
-<p>new_prescription= {{new_prescription}}</p>
-<p>average_prescriptions_per_client= {{average_prescriptions_per_client}}</p>
-<!-- RECEPTION -->
-<p>total_reception= {{total_reception}}</p>
-<!-- SERVICE -->
-<p>total_service= {{total_service}}</p>
-<p>new_service= {{new_service}}</p>
-<!-- TASk -->
-<p>total_task= {{total_task}}</p>
-<p>completed_task= {{completed_task}}</p>
-<p>pending_task= {{pending_task}}</p>
-<p>average_tasks_per_user= {{average_tasks_per_user}}</p>
-</div>
 <hr>
-<hr>
-<hr>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+<br>
+<br>
+<br>
+<div class="container mt-4">
+    <h3>کاربران سیستم</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">User Group Distribution</h5>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل کاربران سیستم:</strong> {{total_users}}</p>
+                        <hr>
+                        <p class="card-text"><strong>کاربران فعال:</strong> {{active_users}}</p>
+                        <hr>
+                        <p class="card-text"><strong>کاربران معلق:</strong> {{accounts_suspensions}}</p>
+                        <hr>
+                        <p class="card-text"><strong>کاربران لاگین نکرده در ماه گذشته: </strong> {{inactive_accounts}}</p>
+                        <hr>
+                        <p class="card-text"><strong>کاربران افزوده شده در ماه گذشته: </strong> {{new_users}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6>توزیع کاربران بر اساس نقش</h6>
                     <canvas id="userGroupChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<canvas id="appointmentTypesChart"></canvas>
-<canvas id="dailyAppointmentsChart"></canvas>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+<hr>
+<div class="container mt-4">
+    <h3>تجهیزات پزشکی</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">توزیع جنسیت مشتریان</h5>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل تجهیزات ثبت شده در سیستم:</strong> {{total_equipment}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تعداد تجهیزات در حال استفاده:</strong> {{equipment_utilization}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تجهیزات افزوده شده در ماه گذشته:</strong> {{new_equipment}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<div class="container mt-4">
+    <h3>نوبت دهی</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل نوبت های ثبت شده در سیستم:</strong> {{total_appointments}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تعداد کل نوبت های پذیرش شده :</strong> {{completed_appointments}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تعداد کل نوبت های مراجعه نشده:</strong> {{missed_appointments}}</p>
+                        <hr>
+                        <p class="card-text"><strong> تعداد کل نوبت های لغو شده : </strong> {{cancelled_appointments}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <h6>نمودار رشد نوبت دهی در ۱۰ روز گذشته</h6>
+            <canvas id="dailyAppointmentsChart"></canvas>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6>توزیع نوبت ها بر اساس سرویس </h6>
+                    <canvas id="appointmentTypesChart"></canvas>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+ <hr>
+
+<div class="container mt-4">
+    <h3>بیماران</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل بیماران ثبت شده در سیستم:</strong> {{total_clients}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تعداد کل بیماران ثبت شده در ماه گذشته:</strong> {{new_clients}}</p>
+                        <hr>
+                        <p class="card-text"><strong>درصد بیمارانی که مجددا در کلینیک پذیرش شده اند:</strong> {{client_retention}}</p>
+                        <hr>
+                        <p class="card-text"><strong>میانگین پذیرش به ازای بیمار:  </strong> {{average_receptions_per_client}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <h5 class="card-title">تعداد مشتریان بر اساس بیمه تحت پوشش</h5>
+            <canvas id="insuranceProviderChart"></canvas>
+
+            <hr>
+            <h5 class="card-title">تعداد مشتریان ثبت‌نام شده در 10 روز گذشته</h5>
+            <canvas id="clientsLast10DaysChart"></canvas>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 80%; width: 80%;">
+                    <h5 class="card-title">توزیع مشتریان VIP</h5>
+                    <canvas id="vipChart" ></canvas>
+                    <hr>
+                    <h5 class="card-title">توزیع بیماران بر حسب جنسیت</h5>
                     <canvas id="genderChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+<div class="container mt-4">
+    <h3>مواد مصرفی</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">توزیع مشتریان VIP</h5>
-                    <canvas id="vipChart"></canvas>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل مواد مصرفی ثبت شده در سیستم:</strong> {{total_consumables}}</p>
+                        <hr>
+                        <p class="card-text"><strong>آیتم های موجودی پایین:</strong> {{low_stock_items}}</p>
+                        <hr>
+                        <p class="card-text"><strong> تعداد موجودی های تاریخ مصرف گذشته:</strong> {{expired_items}}</p>
+                        <hr>
+                        <p class="card-text"><strong>هزینه‌ کل خریداری مواد مصرفی:  </strong> {{total_expenditure}}</p>
+                        <hr>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">تعداد مشتریان بر اساس ارائه دهنده بیمه</h5>
-                    <canvas id="insuranceProviderChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">توزیع دسته‌های مصرفی</h5>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 80%; width: 80%;">
+                    <h5 class="card-title">توزیع دسته بندی مواد مصرفی</h5>
                     <canvas id="consumableCategoriesChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
+<div class="container mt-4">
+    <h3>تامین کنندگان</h3>
+    <br>
 
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">تعداد فاکتورها بر اساس خدمات</h5>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل تامین کنندگان ثبت شده در سیستم:</strong> {{total_suppliers}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تامین کنندگان افزوده شده به سیستم در ماه جدید:</strong> {{new_suppliers}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+</div>
+</div>
+<hr>
+
+<div class="container mt-4">
+    <h3>پزشکان</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل  پزشکان ثبت شده در سیستم:</strong> {{total_doctors}}</p>
+                        <hr>
+                        <p class="card-text"><strong> پزشکان افزوده شده در ماه گذشته:</strong> {{new_doctors}}</p>
+                        <hr>
+                        <p class="card-text"><strong>میانگین نوبت های ثبت شده بر حسب پزشک:</strong> {{average_appointments_per_doctor}}</p>
+
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+<hr>
+<div class="container mt-4">
+    <h3>صورتحساب ها</h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل  صورتحساب های ثبت شده در سیستم:</strong> {{total_invoices}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تعداد کل  صورتحساب های  پرداخت شده در سیستم:</strong> {{paid_invoices}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تعداد کل  صورتحساب های  پرداخت نشده در سیستم:</strong> {{unpaid_invoices}}</p>
+                        <hr>
+                        <p class="card-text"><strong>میانگین ارزش صورتحساب ها:  </strong> {{average_invoice_value}}</p>
+                        <hr>
+                        <p class="card-text"><strong>مجموع مبلغ کل صورتحساب ها:  </strong> {{total_invoice_amount}}</p>
+                        <hr>
+                        <p class="card-text"><strong>میانگین تعداد  صورتحساب ها بر حسب بیماران:  </strong> {{average_invoices_per_client}}</p>
+                    </div>
+                </div>
+            </div>
+                <div style="height: 65%; width: 65%;">
+                <h5 class="card-title">توزیع روش‌های پرداخت</h5>
+                <canvas id="invoicesByPaymentMethodChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">تعداد صورتحساب بر اساس خدمات</h5>
                     <canvas id="invoicesByServiceChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">توزیع روش‌های پرداخت</h5>
-                    <canvas id="invoicesByPaymentMethodChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">تعداد هزینه‌های اداری در 10 روز گذشته</h5>
-                    <canvas id="expensesLast10DaysChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">تعداد فاکتورهای صادر شده در 10 روز گذشته</h5>
+                    <hr>
+                    <h5 class="card-title">تعداد صورتحساب های صادر شده در 10 روز گذشته</h5>
                     <canvas id="invoicesLast10DaysChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
 
+<div class="container mt-4">
+    <h3>صورتحساب ها</h3>
+    <br>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">تعداد مشتریان ثبت‌نام شده در 10 روز گذشته</h5>
-                    <canvas id="clientsLast10DaysChart"></canvas>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل هزینه‌ های ثبت شده برای مطب در سیستم:</strong> {{total_expenses}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">تعداد هزینه‌های ثبت شده در 10 روز گذشته</h5>
+                    <canvas id="expensesLast10DaysChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
 
+<div class="container mt-4">
+    <h3>نسخه ها</h3>
+    <br>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">توزیع پذیرش‌ها بر اساس سرویس‌ها</h5>
-                    <canvas id="receptionsByServiceChart"></canvas>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل نسخه های ثبت شده در سیستم:</strong> {{total_prescription}}</p>
+                        <hr>
+                        <p class="card-text"><strong> میانگین تعداد نسخه بر حسب پزشک:</strong> {{average_prescriptions_per_doctor}}</p>
+                        <hr>
+                        <p class="card-text"><strong> نسخه های افزوده شده در ماه گذشته :</strong> {{new_prescription}}</p>
+                        <hr>
+                        <p class="card-text"><strong> میانگین تعداد نسخه بر حسب بیمار:</strong> {{average_prescriptions_per_client}}</p>
+
+                    </div>
                 </div>
+
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
 
+<div class="container mt-4">
+    <h3>پذیرش </h3>
+    <br>
 
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Number of Receptions for the Last 10 Days</h5>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل پذیرش های ثبت شده در سیستم:</strong> {{total_reception}}</p>
+                    </div>
+                </div>
+            </div>
+            <h5 class="card-title">توزیع پذیرش‌ها بر اساس سرویس‌ها</h5>
+            <canvas id="receptionsByServiceChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">نمودار رشد پذیرش ها در ۱۰ روز گذشته</h5>
                     <canvas id="receptionsChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">Number of Clients by Reception Count</h5>
+                    <h5 class="card-title">مقایسه بیمارانی  حفظ شده و بیمارانی که دیگر مراجعه نکردند  </h5>
                     <canvas id="clientReceptionChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+
+<div class="container mt-4">
+    <h3>سرویس ها </h3>
+    <br>
+
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Services with Most Receptions</h5>
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل سرویس های ثبت شده در سیستم:</strong> {{total_service}}</p>
+                        <hr>
+                        <p class="card-text"><strong>سرویس های افزوده شده در ماه گذشته:</strong> {{new_service}}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">محبوب ترین سرویس های ارایه شده</h5>
                     <canvas id="serviceReceptionChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
+</div>
+<hr>
+<div class="container mt-4">
+    <h3>تسک ها </h3>
+    <br>
 
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
+    <div class="row">
+        <!-- Card for basic service details -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p class="card-text"><strong>تعداد کل تسک های ثبت شده در سیستم:</strong> {{total_task}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تسک های تکمیل شده:</strong> {{completed_task}}</p>
+                        <hr>
+                        <p class="card-text"><strong>تسک های  متوقف شده (Pending):</strong> {{pending_task}}</p>
+                         <hr>
+                        <p class="card-text"><strong>میانگین تعداد کار ها بر اساس کاربران:</strong> {{average_tasks_per_user}}</p>
+                    </div>
+                </div>
+            </div>
+            <h5 class="card-title">Task Distribution by Status</h5>
+            <canvas id="taskStatusChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Task Distribution by Priority</h5>
                     <canvas id="taskPriorityChart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
 </div>
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h5 class="card-title">Task Distribution by Status</h5>
-                    <canvas id="taskStatusChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-
-
+<hr>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 
@@ -307,20 +447,20 @@
                     datasets: [{
                         data: data,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(153, 102, 255, 0.5)',
-                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 206, 86,1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 159, 64,1)',
                         ],
                         borderWidth: 1
                     }]
@@ -367,7 +507,7 @@
                             'rgba(54, 162, 235, 1)',
                             'rgba(255, 206, 86, 1)',
                             'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
+                            'rgba(153, 102, 255,1)',
                             'rgba(255, 159, 64, 1)'
                         ],
                         borderWidth: 1
@@ -399,7 +539,7 @@
                         label: 'Daily Appointments',
                         data: data,
                         fill: false,
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderColor: 'rgba(75, 192, 192, 0.4)',
                         borderWidth: 2
                     }]
                 },
@@ -429,7 +569,7 @@
                     datasets: [{
                         label: 'توزیع جنسیت',
                         data: counts,
-                        backgroundColor: ['#FF6384', '#36A2EB'], // Red for male, blue for female
+                        backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)',], // Red for male, blue for female
                         borderWidth: 1
                     }]
                 }
@@ -455,7 +595,7 @@
                     datasets: [{
                         label: 'توزیع مشتریان VIP',
                         data: counts,
-                        backgroundColor: ['#FF6384', '#36A2EB'], // Red for VIP, blue for non-VIP
+                        backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)',], // Red for VIP, blue for non-VIP
                         borderWidth: 1
                     }]
                 }
@@ -514,12 +654,12 @@
                         label: 'توزیع مصرفی‌ها',
                         data: data.counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
@@ -600,12 +740,12 @@
                         label: 'توزیع روش‌های پرداخت',
                         data: data.counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
@@ -655,7 +795,7 @@
                     datasets: [{
                         label: 'تعداد هزینه‌ها',
                         data: data.data,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1,
                         fill: false
@@ -700,7 +840,7 @@
                     datasets: [{
                         label: 'تعداد فاکتورها',
                         data: data.data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1,
                         fill: false
@@ -744,7 +884,7 @@
                     datasets: [{
                         label: 'تعداد مشتریان',
                         data: data.data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
                         borderColor: 'rgba(192, 75, 130, 1)',
                         borderWidth: 1,
                         fill: false
@@ -790,12 +930,12 @@
                         label: 'تعداد پذیرش‌ها',
                         data: data.data,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
@@ -831,7 +971,7 @@
                     datasets: [{
                         label: 'Number of Receptions',
                         data: counts,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }]
@@ -865,8 +1005,8 @@
                         label: 'Number of Clients',
                         data: counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)'
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
@@ -903,7 +1043,7 @@
                     datasets: [{
                         label: 'Number of Receptions',
                         data: counts,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }]
@@ -937,9 +1077,9 @@
                     datasets: [{
                         data: counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
@@ -978,10 +1118,10 @@
                     datasets: [{
                         data: counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
