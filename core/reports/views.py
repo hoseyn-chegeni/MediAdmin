@@ -1109,8 +1109,9 @@ class ExportOfficeExpensesExcelView(View):
 
 
 class PerformanceManagementReportView(TemplateView):
-    template_name = 'reports/management_reports.html'
+    template_name = 'management_reports.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['total_user'] = User.objects.all().count()
         return context
