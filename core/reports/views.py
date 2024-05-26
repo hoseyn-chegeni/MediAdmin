@@ -1132,6 +1132,7 @@ class PerformanceManagementReportView(TemplateView):
         context['new_equipment'] = Equipment.objects.filter(created_at__gte=one_month_ago).count()
         #APPOINTMENTS 
         context['total_appointments'] = Session.objects.all().count()
+        context['completed_appointments'] = Session.objects.filter(status = "پذیرش شده").count()
 
 
 
