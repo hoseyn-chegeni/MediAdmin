@@ -14,6 +14,7 @@ from reception.models import Reception
 from financial.models import Financial
 from services.models import Service, ServiceCategory
 from tasks.models import Task
+
 # Create your views here.
 
 
@@ -601,7 +602,6 @@ class InsuranceImportView(View):
         return render(request, self.template_name)
 
 
-
 class ReceptionImportView(View):
     template_name = "import.html"
 
@@ -629,7 +629,7 @@ class ReceptionImportView(View):
                     payment_type = row["نوع پرداخت"]
                     payment_status = row["وضعیت پرداخت"]
                     created_by_id = row["ایجاد کننده"]
-                    jalali_date = row['تاریخ پذیرش']
+                    jalali_date = row["تاریخ پذیرش"]
 
                     if created_by_id == "":
                         created_by = None
@@ -653,14 +653,14 @@ class ReceptionImportView(View):
                         service = None
 
                     reception, created = Reception.objects.get_or_create(
-                        client = client, 
-                        service =service , 
-                        status = status, 
-                        reason =reason , 
-                        payment_type = payment_type, 
-                        payment_status = payment_status, 
+                        client=client,
+                        service=service,
+                        status=status,
+                        reason=reason,
+                        payment_type=payment_type,
+                        payment_status=payment_status,
                         created_by=created_by,
-                        jalali_date = jalali_date
+                        jalali_date=jalali_date,
                     )
 
                     if created:
@@ -675,7 +675,6 @@ class ReceptionImportView(View):
                     f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
                 )
         return render(request, self.template_name)
-
 
 
 class ServiceImportView(View):
@@ -736,19 +735,19 @@ class ServiceImportView(View):
                     is_active = is_active_str.strip() == "1"
 
                     service, created = Service.objects.get_or_create(
-                        name = name,
-                        doctor =doctor,
-                        doctors_wage_percentage = doctors_wage_percentage,
-                        description =description ,
-                        category =category ,
-                        duration = duration,
-                        price =price ,
-                        preparation_instructions = preparation_instructions,
-                        documentation_requirements =documentation_requirements ,
-                        is_active = is_active,
-                        therapeutic_measures = therapeutic_measures,
-                        recommendations = recommendations,
-                        appointment_per_day =appointment_per_day ,
+                        name=name,
+                        doctor=doctor,
+                        doctors_wage_percentage=doctors_wage_percentage,
+                        description=description,
+                        category=category,
+                        duration=duration,
+                        price=price,
+                        preparation_instructions=preparation_instructions,
+                        documentation_requirements=documentation_requirements,
+                        is_active=is_active,
+                        therapeutic_measures=therapeutic_measures,
+                        recommendations=recommendations,
+                        appointment_per_day=appointment_per_day,
                         created_by=created_by,
                     )
 
@@ -764,7 +763,7 @@ class ServiceImportView(View):
                     f"هنگام وارد کردن فایل خطایی روی داده است. لطفا مطمئن شوید که فرمت فایل درست است..",
                 )
         return render(request, self.template_name)
-    
+
 
 class TaskImportView(View):
     template_name = "import.html"
@@ -810,16 +809,15 @@ class TaskImportView(View):
                     else:
                         assign_to = None
 
-
                     task, created = Task.objects.get_or_create(
-                        title = title,
-                        type =type ,
-                        status = status,
-                        priority =priority ,
-                        description = description,
-                        assign_to =assign_to ,
-                        answer = answer,
-                        reopen_message = reopen_message,
+                        title=title,
+                        type=type,
+                        status=status,
+                        priority=priority,
+                        description=description,
+                        assign_to=assign_to,
+                        answer=answer,
+                        reopen_message=reopen_message,
                         created_by=created_by,
                     )
 

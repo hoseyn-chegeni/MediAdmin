@@ -38,7 +38,6 @@ from django.db.models import Q
 from django.db.models.functions import Coalesce
 
 
-
 # Create your views here.
 class UserReportsView(BaseListView):
     model = User
@@ -281,8 +280,9 @@ class ExportDoctorExcelView(View):
             doctors_df[date_column] = doctors_df[date_column].dt.date
 
         doctors_df["تعداد سرویس"] = [doctor.services for doctor in filtered_doctors]
-        doctors_df["تعداد کل پذیرش های انجام شده"] = [doctor.total_reception_count for doctor in filtered_doctors]
-
+        doctors_df["تعداد کل پذیرش های انجام شده"] = [
+            doctor.total_reception_count for doctor in filtered_doctors
+        ]
 
         # Create a response object
         response = HttpResponse(content_type="text/csv")
@@ -314,7 +314,13 @@ class ExportFinancialExcelView(View):
 
         # Drop unnecessary columns
         financial_df.drop(
-            columns=["attachment", "created_by_id", "doctor_id", "valid_insurance",'date_issued'],
+            columns=[
+                "attachment",
+                "created_by_id",
+                "doctor_id",
+                "valid_insurance",
+                "date_issued",
+            ],
             inplace=True,
         )
 
@@ -742,10 +748,18 @@ class ExportServiceExcelView(View):
             "category__name", flat=True
         )
         # Add the properties to the DataFrame
-        services_df["تعداد پذیرش امروز"] = [service.today_reception_count for service in filtered_services]
-        services_df["تعداد پذیرش کل"] = [service.total_reception_count for service in filtered_services]
-        services_df["تعداد پذیرش در انتظار امروز"] = [service.waiting_receptions_today for service in filtered_services]
-        services_df["تعداد مراجعین"] = [service.client_count for service in filtered_services]
+        services_df["تعداد پذیرش امروز"] = [
+            service.today_reception_count for service in filtered_services
+        ]
+        services_df["تعداد پذیرش کل"] = [
+            service.total_reception_count for service in filtered_services
+        ]
+        services_df["تعداد پذیرش در انتظار امروز"] = [
+            service.waiting_receptions_today for service in filtered_services
+        ]
+        services_df["تعداد مراجعین"] = [
+            service.client_count for service in filtered_services
+        ]
         # Create a response object
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = 'attachment; filename="service_report.csv"'
@@ -977,7 +991,9 @@ class ExportConsumableExcelView(View):
             "category__name", flat=True
         )
 
-        consumables_df["موجودی"] = [consumable.quantity for consumable in filtered_consumables]
+        consumables_df["موجودی"] = [
+            consumable.quantity for consumable in filtered_consumables
+        ]
 
         # Create a response object
         response = HttpResponse(content_type="text/csv")
@@ -1112,93 +1128,159 @@ class ExportOfficeExpensesExcelView(View):
         return response
 
 
-
-
-
-
 class PerformanceManagementReportView(TemplateView):
-    template_name = 'management_reports.html'
+    template_name = "management_reports.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         one_month_ago = now() - timedelta(days=30)
-        # USERS METRICS 
-        total_users =  User.objects.all().count()
-        context['total_users'] =total_users
-        context['active_users'] = User.objects.filter(is_active = True).count()
-        context['accounts_suspensions'] = User.objects.filter(is_active = False).count()
-        context['inactive_accounts'] = User.objects.filter(last_login__lt=one_month_ago).count()
-        context['new_users'] = User.objects.filter(created_at__gte=one_month_ago).count()
+        # USERS METRICS
+        total_users = User.objects.all().count()
+        context["total_users"] = total_users
+        context["active_users"] = User.objects.filter(is_active=True).count()
+        context["accounts_suspensions"] = User.objects.filter(is_active=False).count()
+        context["inactive_accounts"] = User.objects.filter(
+            last_login__lt=one_month_ago
+        ).count()
+        context["new_users"] = User.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
 
-        #EQUIPMENTS METRICS
-        total_equipment =  Equipment.objects.all().count()
-        context['total_equipment'] = total_equipment
+        # EQUIPMENTS METRICS
+        total_equipment = Equipment.objects.all().count()
+        context["total_equipment"] = total_equipment
         in_use_equipment_count = Equipment.objects.filter(is_use=True).count()
-        context['equipment_utilization'] = (in_use_equipment_count / total_equipment) * 100 if total_equipment > 0 else 0
-        context['new_equipment'] = Equipment.objects.filter(created_at__gte=one_month_ago).count()
-        #APPOINTMENTS 
-        context['total_appointments'] = Session.objects.all().count()
-        context['completed_appointments'] = Session.objects.filter(status = "پذیرش شده").count()
-        context['missed_appointments'] = Session.objects.filter(status = "عدم مراجعه").count()
-        context['cancelled_appointments'] = DeletedSession.objects.all().count()
-        #CLIENTS
+        context["equipment_utilization"] = (
+            (in_use_equipment_count / total_equipment) * 100
+            if total_equipment > 0
+            else 0
+        )
+        context["new_equipment"] = Equipment.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        # APPOINTMENTS
+        context["total_appointments"] = Session.objects.all().count()
+        context["completed_appointments"] = Session.objects.filter(
+            status="پذیرش شده"
+        ).count()
+        context["missed_appointments"] = Session.objects.filter(
+            status="عدم مراجعه"
+        ).count()
+        context["cancelled_appointments"] = DeletedSession.objects.all().count()
+        # CLIENTS
         total_clients = Client.objects.all().count()
-        clients_with_multiple_receptions = Client.objects.annotate(reception_count=Count('reception')).filter(reception_count__gte=2).count()
+        clients_with_multiple_receptions = (
+            Client.objects.annotate(reception_count=Count("reception"))
+            .filter(reception_count__gte=2)
+            .count()
+        )
         total_receptions = Reception.objects.count()
 
-        context['total_clients'] = total_clients
-        context['new_clients'] = Client.objects.filter(created_at__gte=one_month_ago).count()
-        context['client_retention'] = (clients_with_multiple_receptions / total_clients) * 100 if total_clients > 0 else 0
-        context['average_receptions_per_client'] = (total_receptions / total_clients) if total_clients > 0 else 0
-        #CONSUMABLES
-        context['total_consumables'] = ConsumableV2.objects.all().count()
-        context['low_stock_items'] = ConsumableV2.objects.annotate(
-            current_quantity=Sum('inventory__quantity', filter=Q(inventory__status="در انبار"))
-        ).filter(current_quantity__lt=F('minimum_stock_level')).count()
-        context['new_consumable'] = ConsumableV2.objects.filter(created_at__gte=one_month_ago).count()
-        context['expired_items'] = Inventory.objects.filter(status = "منقضی شده").count()
-        context['total_expenditure'] = Inventory.objects.aggregate(total_cost=Sum('purchase_cost'))['total_cost']
-        #SUPPLIERS
-        context['total_suppliers'] = Supplier.objects.all().count()
-        context['new_suppliers'] = Supplier.objects.filter(created_at__gte=one_month_ago).count()
-        #DOCTORS
-        doctors = Doctor.objects.annotate(appointment_count=Count('service__session')).filter(is_active=True)
+        context["total_clients"] = total_clients
+        context["new_clients"] = Client.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        context["client_retention"] = (
+            (clients_with_multiple_receptions / total_clients) * 100
+            if total_clients > 0
+            else 0
+        )
+        context["average_receptions_per_client"] = (
+            (total_receptions / total_clients) if total_clients > 0 else 0
+        )
+        # CONSUMABLES
+        context["total_consumables"] = ConsumableV2.objects.all().count()
+        context["low_stock_items"] = (
+            ConsumableV2.objects.annotate(
+                current_quantity=Sum(
+                    "inventory__quantity", filter=Q(inventory__status="در انبار")
+                )
+            )
+            .filter(current_quantity__lt=F("minimum_stock_level"))
+            .count()
+        )
+        context["new_consumable"] = ConsumableV2.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        context["expired_items"] = Inventory.objects.filter(status="منقضی شده").count()
+        context["total_expenditure"] = Inventory.objects.aggregate(
+            total_cost=Sum("purchase_cost")
+        )["total_cost"]
+        # SUPPLIERS
+        context["total_suppliers"] = Supplier.objects.all().count()
+        context["new_suppliers"] = Supplier.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        # DOCTORS
+        doctors = Doctor.objects.annotate(
+            appointment_count=Count("service__session")
+        ).filter(is_active=True)
         total_doctors = Doctor.objects.all().count()
         total_appointments = sum(doctor.appointment_count for doctor in doctors)
-        average_appointments_per_doctor = total_appointments / total_doctors if total_doctors > 0 else 0
+        average_appointments_per_doctor = (
+            total_appointments / total_doctors if total_doctors > 0 else 0
+        )
 
-        context['total_doctors'] = total_doctors
-        context['new_doctors'] = Doctor.objects.filter(created_at__gte=one_month_ago).count()
-        context['average_appointments_per_doctor'] = average_appointments_per_doctor
-        #INVOICE
+        context["total_doctors"] = total_doctors
+        context["new_doctors"] = Doctor.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        context["average_appointments_per_doctor"] = average_appointments_per_doctor
+        # INVOICE
         total_invoices = Financial.objects.all().count()
-        context['total_invoices'] = total_invoices
-        context['paid_invoices'] = Financial.objects.filter(payment_status = "پرداخت شده").count()
-        context['unpaid_invoices'] = Financial.objects.filter(payment_status = "پرداخت نشده").count()
-        context['average_invoice_value'] = Financial.objects.aggregate(avg_value=Avg('final_amount'))['avg_value']
-        context['total_invoice_amount'] = Financial.objects.aggregate(total_amount=Sum('final_amount'))['total_amount']
-        context['average_invoices_per_client'] = Financial.objects.values('reception__client').annotate(num_invoices=Count('id')).aggregate(average_invoices=Coalesce(Avg('num_invoices', output_field=IntegerField()), 0))['average_invoices']
-        #OFFICE EXPENSES
+        context["total_invoices"] = total_invoices
+        context["paid_invoices"] = Financial.objects.filter(
+            payment_status="پرداخت شده"
+        ).count()
+        context["unpaid_invoices"] = Financial.objects.filter(
+            payment_status="پرداخت نشده"
+        ).count()
+        context["average_invoice_value"] = Financial.objects.aggregate(
+            avg_value=Avg("final_amount")
+        )["avg_value"]
+        context["total_invoice_amount"] = Financial.objects.aggregate(
+            total_amount=Sum("final_amount")
+        )["total_amount"]
+        context["average_invoices_per_client"] = (
+            Financial.objects.values("reception__client")
+            .annotate(num_invoices=Count("id"))
+            .aggregate(
+                average_invoices=Coalesce(
+                    Avg("num_invoices", output_field=IntegerField()), 0
+                )
+            )["average_invoices"]
+        )
+        # OFFICE EXPENSES
         total_expenses = OfficeExpenses.objects.all().count()
-        context['total_expenses'] = total_expenses
-        #PRESCRIPTION
+        context["total_expenses"] = total_expenses
+        # PRESCRIPTION
         total_prescription = Prescription.objects.all().count()
-        context['total_prescription'] = total_prescription
-        context['average_prescriptions_per_doctor'] =  total_prescription / total_doctors if total_doctors > 0 else 0
-        context['new_prescription'] = Prescription.objects.filter(created_at__gte=one_month_ago).count()
-        context['average_prescriptions_per_client'] =  total_prescription / total_clients if total_doctors > 0 else 0
-        #RECEPTION
+        context["total_prescription"] = total_prescription
+        context["average_prescriptions_per_doctor"] = (
+            total_prescription / total_doctors if total_doctors > 0 else 0
+        )
+        context["new_prescription"] = Prescription.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        context["average_prescriptions_per_client"] = (
+            total_prescription / total_clients if total_doctors > 0 else 0
+        )
+        # RECEPTION
         total_reception = Reception.objects.all().count()
-        context['total_reception'] = total_reception
-        #SERIVCE
+        context["total_reception"] = total_reception
+        # SERIVCE
         total_service = Service.objects.all().count()
-        context['total_service'] = total_service
-        context['new_service'] = Service.objects.filter(created_at__gte=one_month_ago).count()
-        # TASK 
+        context["total_service"] = total_service
+        context["new_service"] = Service.objects.filter(
+            created_at__gte=one_month_ago
+        ).count()
+        # TASK
         total_task = Task.objects.all().count()
-        context['total_task'] = total_task
-        context['completed_task'] = Task.objects.filter(status ="انجام شده").count()
-        context['pending_task'] = Task.objects.filter(status ="توقف کار").count()
-        context['average_tasks_per_user'] = total_task / total_clients if total_users > 0 else 0
+        context["total_task"] = total_task
+        context["completed_task"] = Task.objects.filter(status="انجام شده").count()
+        context["pending_task"] = Task.objects.filter(status="توقف کار").count()
+        context["average_tasks_per_user"] = (
+            total_task / total_clients if total_users > 0 else 0
+        )
 
         return context

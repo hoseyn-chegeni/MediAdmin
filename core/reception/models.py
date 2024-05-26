@@ -24,7 +24,7 @@ class Reception(models.Model):
     )
     payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS_CHOICES)
     date = models.DateField(auto_now_add=True)
-    jalali_date = models.CharField(max_length = 100)
+    jalali_date = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(

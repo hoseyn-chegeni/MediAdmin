@@ -84,14 +84,14 @@ class DoctorDetailView(BaseDetailView):
 class DoctorCreateView(BaseCreateView):
     model = Doctor
     fields = [
-        'first_name',
-        'last_name',
-        'email',
-        'phone_number',
-        'address',
-        'specialization',
-        'registration_number',
-        'is_active',
+        "first_name",
+        "last_name",
+        "email",
+        "phone_number",
+        "address",
+        "specialization",
+        "registration_number",
+        "is_active",
         "image",
         "user",
     ]

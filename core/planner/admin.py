@@ -12,8 +12,11 @@ import django_jalali.admin as jadmin
 
 class BarAdmin(admin.ModelAdmin):
     list_filter = (("date", JDateFieldListFilter),)
+
+
 class HandlerAdmin(admin.ModelAdmin):
     list_filter = (("jalali_date", JDateFieldListFilter),)
+
 
 admin.site.register(Day, BarAdmin)
 admin.site.register(Month)

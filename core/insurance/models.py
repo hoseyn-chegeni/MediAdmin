@@ -20,7 +20,7 @@ class Insurance(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
 class InsuranceService(models.Model):
     service = models.ForeignKey("services.Service", on_delete=models.CASCADE)

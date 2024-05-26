@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             model_name="prescription",
             name="reception",
             field=models.ForeignKey(
-                default= 1,
+                default=1,
                 on_delete=django.db.models.deletion.CASCADE,
                 to="reception.reception",
             ),

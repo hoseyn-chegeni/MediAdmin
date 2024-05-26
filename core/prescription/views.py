@@ -23,6 +23,8 @@ from reception.models import Reception
 from django.views.generic import View
 from planner.models import JalaliDateHandler
 from datetime import date
+
+
 # Create your views here.
 class PrescriptionListView(BaseListView):
     model = Prescription
@@ -42,11 +44,12 @@ class PrescriptionCreateWithoutPkView(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
-        jalali = JalaliDateHandler.objects.get(date = date.today())
+        jalali = JalaliDateHandler.objects.get(date=date.today())
         form.instance.jalali_date = jalali.jalali_date
 
         return super().form_valid(form)
-    
+
+
 class PrescriptionDetailView(BaseDetailView):
     model = Prescription
     template_name = "prescription/detail.html"
@@ -241,6 +244,3 @@ class CreateTemporaryPrescription(View):
 
         # Redirect to the detail view of the newly created TemporaryPrescription
         return redirect("prescription:temp_detail", pk=temp_prescription.pk)
-    
-
-

@@ -22,29 +22,26 @@ from django.conf.urls.static import static
 from two_factor.urls import urlpatterns as tf_urls
 
 
-urlpatterns = (
-    [
-        path("admin/", admin.site.urls),
-        path("", include(tf_urls)),
-        path("index/", include("index.urls")),
-        path("accounts/", include("accounts.urls")),
-        path("client/", include("client.urls")),
-        path("reception/", include("reception.urls")),
-        path("insurance/", include("insurance.urls")),
-        path("services/", include("services.urls")),
-        path("asset/", include("asset.urls")),
-        path("doctor/", include("doctor.urls")),
-        path("prescription/", include("prescription.urls")),
-        path("financial/", include("financial.urls")),
-        path("booking/", include("booking.urls")),
-        path("notification/", include("notification.urls")),
-        path("permissions/", include("permissions.urls")),
-        path("reports/", include("reports.urls")),
-        path("tasks/", include("tasks.urls")),
-        path("consumable/", include("consumable.urls")),
-        path("planner/", include("planner.urls")),
-        path("import/", include("import.urls")),
-        path("charts/", include("charts.urls")),
-
-    ]
-)
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include(tf_urls)),
+    path("index/", include("index.urls")),
+    path("accounts/", include("accounts.urls")),
+    path("client/", include("client.urls")),
+    path("reception/", include("reception.urls")),
+    path("insurance/", include("insurance.urls")),
+    path("services/", include("services.urls")),
+    path("asset/", include("asset.urls")),
+    path("doctor/", include("doctor.urls")),
+    path("prescription/", include("prescription.urls")),
+    path("financial/", include("financial.urls")),
+    path("booking/", include("booking.urls")),
+    path("notification/", include("notification.urls")),
+    path("permissions/", include("permissions.urls")),
+    path("reports/", include("reports.urls")),
+    path("tasks/", include("tasks.urls")),
+    path("consumable/", include("consumable.urls")),
+    path("planner/", include("planner.urls")),
+    path("import/", include("import.urls")),
+    path("charts/", include("charts.urls")),
+]

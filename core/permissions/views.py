@@ -11,8 +11,9 @@ from .filters import PermissionFilters, GroupFilter
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+
 # Create your views here.
-class PermissionsListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
+class PermissionsListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Permission
     template_name = "permission/list.html"
     context_object_name = "permission"
@@ -61,7 +62,7 @@ class AssignPermissionsView(BaseUpdateView):
 
 
 # GROUP VIEWS HERE.
-class GroupListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
+class GroupListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Group
     template_name = "permission/group/list.html"
     context_object_name = "group"

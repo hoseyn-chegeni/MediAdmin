@@ -33,7 +33,7 @@ from .views import (
     DeleteSelectedServicesView,
     DeleteSelectedPackageView,
     DeleteSelectedServiceCategoryView,
-    ServiceCreateWithDocIDView
+    ServiceCreateWithDocIDView,
 )
 
 app_name = "services"
@@ -42,7 +42,11 @@ urlpatterns = [
     path("list/", ServiceListView.as_view(), name="list"),
     path("detail/<int:pk>/", ServiceDetailView.as_view(), name="detail"),
     path("create/", ServiceCreateView.as_view(), name="create"),
-    path("create_with_doc_id/<int:pk>/", ServiceCreateWithDocIDView.as_view(), name="create_with_doc_id"),
+    path(
+        "create_with_doc_id/<int:pk>/",
+        ServiceCreateWithDocIDView.as_view(),
+        name="create_with_doc_id",
+    ),
     path("update/<int:pk>/", ServiceUpdateView.as_view(), name="update"),
     path(
         "appointment_config/<int:pk>/",

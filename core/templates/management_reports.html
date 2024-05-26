@@ -78,7 +78,18 @@
 </div>
 <canvas id="appointmentTypesChart"></canvas>
 <canvas id="dailyAppointmentsChart"></canvas>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">توزیع جنسیت مشتریان</h5>
+                    <canvas id="genderChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     // Fetch data using AJAX
     fetch('{% url "charts:user_group_distribution_chart" %}')
@@ -200,4 +211,32 @@
         })
         .catch(error => console.error('Error fetching data:', error));
 </script>
+
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "charts:client_gender_distribution" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create chart
+            var labels = Object.keys(data);
+            var counts = Object.values(data);
+
+            // Create chart using Chart.js
+            var ctx = document.getElementById('genderChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'توزیع جنسیت',
+                        data: counts,
+                        backgroundColor: ['#FF6384', '#36A2EB'], // Red for male, blue for female
+                        borderWidth: 1
+                    }]
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
 {%endblock%}

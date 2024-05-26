@@ -19,7 +19,14 @@ class Doctor(models.Model):
     image = models.ImageField(
         upload_to="images", default="images/default.png", blank=True, null=True
     )
-    user = models.OneToOneField('accounts.User', on_delete = models.CASCADE, related_name = 'doctor_login', blank = True, null = True)
+    user = models.OneToOneField(
+        "accounts.User",
+        on_delete=models.CASCADE,
+        related_name="doctor_login",
+        blank=True,
+        null=True,
+    )
+
     @property
     def services(self):
         return self.service_set.all().count()

@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['185.206.94.9', '0.0.0.0', '127.0.0.1']
+ALLOWED_HOSTS = ["185.206.94.9", "0.0.0.0", "127.0.0.1"]
 
 
 # Application definition
@@ -161,7 +161,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 if not DEBUG:
     MEDIA_ROOT = "/app/media/"
 

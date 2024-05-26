@@ -88,7 +88,8 @@ class SessionCreateView(BaseCreateView):
         form.instance.status = "در انتظار"
         if form.instance.client:
             existing_session = Session.objects.filter(
-            day=day, service=service, client=form.instance.client).exists()
+                day=day, service=service, client=form.instance.client
+            ).exists()
             if existing_session:
                 form.add_error(
                     None,
@@ -188,4 +189,3 @@ class TodaySessionListView(BaseListView):
 
     def get_queryset(self):
         return Session.objects.filter(day__date=datetime.now())
-

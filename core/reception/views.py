@@ -21,6 +21,7 @@ from planner.models import Session, JalaliDateHandler
 from prescription.models import TemporaryPrescription, Prescription
 from datetime import date
 
+
 # Create your views here.
 class ReceptionListView(BaseListView):
     model = Reception
@@ -47,7 +48,7 @@ class ReceptionCreateView(BaseCreateView):
 
     def form_valid(self, form):
         # Set the client for the reception
-        jalali = JalaliDateHandler.objects.get(date = date.today())
+        jalali = JalaliDateHandler.objects.get(date=date.today())
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service
@@ -111,7 +112,7 @@ class ReceptionCreateViewUsingProfile(BaseCreateView):
     def form_valid(self, form):
         # Set the client for the reception
         form.instance.client = Client.objects.get(id=self.kwargs["pk"])
-        jalali = JalaliDateHandler.objects.get(date = date.today())
+        jalali = JalaliDateHandler.objects.get(date=date.today())
         form.instance.created_by = self.request.user
         form.instance.status = "WAITE"
         service = form.instance.service

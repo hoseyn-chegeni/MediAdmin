@@ -158,5 +158,9 @@ urlpatterns = [
         ExportOfficeExpensesExcelView.as_view(),
         name="export_office_expenses_excel",
     ),
-    path('performance_management_report/', PerformanceManagementReportView.as_view(), name='performance_management_report')
+    path(
+        "performance_management_report/",
+        PerformanceManagementReportView.as_view(),
+        name="performance_management_report",
+    ),
 ]

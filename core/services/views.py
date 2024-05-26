@@ -41,12 +41,11 @@ class ServiceCreateView(BaseCreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
-    
 
 
 class ServiceCreateWithDocIDView(BaseCreateView):
     model = Service
-    fields = '__all__'
+    fields = "__all__"
     template_name = "services/create_with_doc_id.html"
     app_name = "services"
     url_name = "detail"
@@ -63,7 +62,7 @@ class ServiceCreateWithDocIDView(BaseCreateView):
     def form_valid(self, form):
         # Set the client for the reception
         form.instance.created_by = self.request.user
-        form.instance.doctor = Doctor.objects.get(pk = self.kwargs['pk'])
+        form.instance.doctor = Doctor.objects.get(pk=self.kwargs["pk"])
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -71,7 +70,7 @@ class ServiceCreateWithDocIDView(BaseCreateView):
         context["doctor"] = Doctor.objects.get(id=self.kwargs["pk"])
         return context
 
-    
+
 class ServiceDetailView(BaseDetailView):
     model = Service
     template_name = "services/detail.html"
