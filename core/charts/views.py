@@ -9,7 +9,7 @@ from reception.models import Reception
 from django.contrib.auth.models import Group
 from client.models import Client
 from consumable.models import ConsumableCategory
-from financial.models import Financial
+from financial.models import Financial, OfficeExpenses
 # Create your views here.
 
 
@@ -215,3 +215,19 @@ def invoices_by_payment_method(request):
         data['counts'].append(count)
 
     return JsonResponse(data)
+
+
+
+def expenses_last_10_days(request):
+    end_date = now().date()
+    start_date = end_date - timedelta(days=9)
+    
+    date_expenses = {}
+    for i in range(10):
+        date = start_date + timedelta(days=i)
+        date_expenses[date] = OfficeExpenses.objects.filter(date=date.strftime('%Y-%m-%d')).count()
+
+    labels = [date.strftime('%Y-%m-%d') for date in date_expenses.keys()]
+    data = [count for count in date_expenses.values()]
+
+    return JsonResponse({'labels': labels, 'data': data})

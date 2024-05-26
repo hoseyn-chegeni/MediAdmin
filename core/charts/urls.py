@@ -12,6 +12,7 @@ from .views import (
     consumable_categories_distribution,
     invoices_by_service,
     invoices_by_payment_method,
+    expenses_last_10_days,
 )
 
 app_name = "charts"
@@ -49,5 +50,6 @@ urlpatterns = [
     path("consumable_categories_distribution/", consumable_categories_distribution, name="consumable_categories_distribution"),
     path("invoices_by_service/", invoices_by_service, name="invoices_by_service"),
     path("invoices_by_payment_method/", invoices_by_payment_method, name="invoices_by_payment_method"),
+    path("expenses_last_10_days/", expenses_last_10_days, name="expenses_last_10_days"),
 
 ]
