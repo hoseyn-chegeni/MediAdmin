@@ -1157,8 +1157,14 @@ class PerformanceManagementReportView(TemplateView):
         context['total_suppliers'] = Supplier.objects.all().count()
         context['new_suppliers'] = Supplier.objects.filter(created_at__gte=one_month_ago).count()
         #DOCTORS
-        context['total_doctors'] = Doctor.objects.all().count()
+        doctors = Doctor.objects.annotate(appointment_count=Count('service__session')).filter(is_active=True)
+        total_doctors = Doctor.objects.all().count()
+        total_appointments = sum(doctor.appointment_count for doctor in doctors)
+        average_appointments_per_doctor = total_appointments / total_doctors if total_doctors > 0 else 0
+
+        context['total_doctors'] = total_doctors
         context['new_doctors'] = Doctor.objects.filter(created_at__gte=one_month_ago).count()
+        context['average_appointments_per_doctor'] = average_appointments_per_doctor
 
 
         return context
