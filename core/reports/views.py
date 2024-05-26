@@ -1197,6 +1197,7 @@ class PerformanceManagementReportView(TemplateView):
         total_task = Task.objects.all().count()
         context['total_task'] = total_task
         context['completed_task'] = Task.objects.filter(status ="انجام شده").count()
+        context['pending_task'] = Task.objects.filter(status ="توقف کار").count()
 
 
         return context
