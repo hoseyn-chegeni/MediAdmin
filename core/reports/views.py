@@ -1190,10 +1190,12 @@ class PerformanceManagementReportView(TemplateView):
         total_reception = Reception.objects.all().count()
         context['total_reception'] = total_reception
         #SERIVCE
-        total_service = Reception.objects.all().count()
+        total_service = Service.objects.all().count()
         context['total_service'] = total_service
         context['new_service'] = Service.objects.filter(created_at__gte=one_month_ago).count()
-
+        # TASK 
+        total_task = Task.objects.all().count()
+        context['total_task'] = total_task
 
 
         return context
