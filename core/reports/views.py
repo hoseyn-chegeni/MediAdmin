@@ -1155,6 +1155,7 @@ class PerformanceManagementReportView(TemplateView):
         context['total_expenditure'] = Inventory.objects.aggregate(total_cost=Sum('purchase_cost'))['total_cost']
         #SUPPLIERS
         context['total_suppliers'] = Supplier.objects.all().count()
+        context['new_suppliers'] = Supplier.objects.filter(created_at__gte=one_month_ago).count()
 
 
         return context
