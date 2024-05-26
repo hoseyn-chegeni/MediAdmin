@@ -217,6 +217,18 @@
 
 
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">Number of Receptions for the Last 10 Days</h5>
+                    <canvas id="receptionsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
@@ -748,4 +760,35 @@
         .catch(error => console.error('Error fetching data:', error));
 </script>
 
+<script>
+    fetch('{% url "charts:receptions_last_10_days_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            var dates = data.receptions_data.map(item => item.date);
+            var counts = data.receptions_data.map(item => item.count);
+
+            var ctx = document.getElementById('receptionsChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Number of Receptions',
+                        data: counts,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
 {%endblock%}

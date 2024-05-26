@@ -278,3 +278,17 @@ def receptions_by_service(request):
             labels.append(service.name)
     
     return JsonResponse({'labels': labels, 'data': data})
+
+
+def receptions_last_10_days_chart(request):
+    end_date = now().date()
+    start_date = end_date - timedelta(days=9)  # Last 10 days
+    dates = [start_date + timedelta(days=i) for i in range(10)]
+    
+    receptions_data = []
+
+    for date in dates:
+        count = Reception.objects.filter(date=date).count()
+        receptions_data.append({"date": date.strftime("%Y-%m-%d"), "count": count})
+
+    return JsonResponse({"receptions_data": receptions_data})
