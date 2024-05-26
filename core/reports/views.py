@@ -1115,4 +1115,6 @@ class PerformanceManagementReportView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['total_users'] = User.objects.all().count()
         context['active_users'] = User.objects.filter(is_active = True).count()
+        context['accounts_suspensions'] = User.objects.filter(is_active = False).count()
+
         return context
