@@ -32,7 +32,7 @@ from django.db.models import CharField, Value
 from django.views.generic.base import TemplateView
 from django.utils.timezone import now
 from datetime import timedelta
-from planner.models import Session
+from planner.models import Session, DeletedSession
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -1134,7 +1134,7 @@ class PerformanceManagementReportView(TemplateView):
         context['total_appointments'] = Session.objects.all().count()
         context['completed_appointments'] = Session.objects.filter(status = "پذیرش شده").count()
         context['missed_appointments'] = Session.objects.filter(status = "عدم مراجعه").count()
-
+        context['cancelled_appointments'] = DeletedSession.objects.all().count()
 
 
 
