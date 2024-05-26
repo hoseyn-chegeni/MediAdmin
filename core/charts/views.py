@@ -100,3 +100,30 @@ def appointment_service_chart(request):
 
     # Return the data as JSON response
     return JsonResponse(chart_data)
+
+
+
+def daily_appointments_chart(request):
+    # Calculate date range for the next 10 days
+    start_date = now().date()
+    end_date = start_date + timedelta(days=9)  # Next 10 days
+    date_range = [start_date + timedelta(days=i) for i in range(10)]
+
+    # Query appointments per day
+    appointments_per_day = []
+    for date in date_range:
+        count = Session.objects.filter(day__christ_date=date).count()
+        appointments_per_day.append(count)
+
+    # Prepare data for the chart
+    labels = [date.strftime('%Y-%m-%d') for date in date_range]
+    data = appointments_per_day
+
+    # Create a dictionary to hold the data
+    chart_data = {
+        'labels': labels,
+        'data': data,
+    }
+
+    # Return the data as JSON response
+    return JsonResponse(chart_data)
