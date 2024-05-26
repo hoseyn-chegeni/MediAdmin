@@ -25,7 +25,7 @@ from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from tasks.models import Task
 from tasks.filters import TaskFilter
-from consumable.models import ConsumableV2, Supplier
+from consumable.models import ConsumableV2, Supplier, Inventory
 from consumable.filters import ConsumableFilter, SupplierFilter
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value
@@ -1151,6 +1151,7 @@ class PerformanceManagementReportView(TemplateView):
             current_quantity=Sum('inventory__quantity', filter=Q(inventory__status="در انبار"))
         ).filter(current_quantity__lt=F('minimum_stock_level')).count()
         context['new_consumable'] = ConsumableV2.objects.filter(created_at__gte=one_month_ago).count()
+        context['expired_items'] = Inventory.objects.filter(status = "منقضی شده").count()
 
 
 
