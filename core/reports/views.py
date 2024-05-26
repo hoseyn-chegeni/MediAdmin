@@ -1150,7 +1150,7 @@ class PerformanceManagementReportView(TemplateView):
         context['low_stock_items'] = ConsumableV2.objects.annotate(
             current_quantity=Sum('inventory__quantity', filter=Q(inventory__status="در انبار"))
         ).filter(current_quantity__lt=F('minimum_stock_level')).count()
-
+        context['new_consumable'] = ConsumableV2.objects.filter(created_at__gte=one_month_ago).count()
 
 
 
