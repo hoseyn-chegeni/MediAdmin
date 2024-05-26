@@ -263,3 +263,18 @@ def clients_last_10_days(request):
     data = [count for count in date_clients.values()]
 
     return JsonResponse({'labels': labels, 'data': data})
+
+
+
+def receptions_by_service(request):
+    services = Service.objects.all()
+    data = []
+    labels = []
+    
+    for service in services:
+        count = Reception.objects.filter(service=service).count()
+        if count > 0:
+            data.append(count)
+            labels.append(service.name)
+    
+    return JsonResponse({'labels': labels, 'data': data})
