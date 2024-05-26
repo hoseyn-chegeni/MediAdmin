@@ -1156,6 +1156,9 @@ class PerformanceManagementReportView(TemplateView):
         #SUPPLIERS
         context['total_suppliers'] = Supplier.objects.all().count()
         context['new_suppliers'] = Supplier.objects.filter(created_at__gte=one_month_ago).count()
+        #DOCTORS
+        context['total_doctors'] = Doctor.objects.all().count()
+        context['new_doctors'] = Doctor.objects.filter(created_at__gte=one_month_ago).count()
 
 
         return context
