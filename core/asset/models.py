@@ -13,7 +13,7 @@ class Equipment(models.Model):
     warranty_expiry_date = models.DateField()
     location = models.CharField(max_length=100)
     is_available = models.BooleanField(default=True)
-    is_user = models.BooleanField(default=False)
+    is_use = models.BooleanField(default=False)
 
     description = models.TextField(blank=True, null=True)
     last_maintenance_date = models.CharField(max_length = 255, blank = True, null = True)  # بازدید دوره ای
