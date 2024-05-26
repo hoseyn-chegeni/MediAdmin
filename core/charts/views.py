@@ -79,3 +79,24 @@ def user_group_distribution_chart(request):
 
     # Return the data as JSON response
     return JsonResponse(chart_data)
+
+
+def appointment_service_chart(request):
+    # Query appointments per service
+    appointments_per_service = (
+        Service.objects.annotate(appointment_count=Count('session'))
+        .values('name', 'appointment_count')
+    )
+
+    # Prepare data for the chart
+    labels = [entry['name'] for entry in appointments_per_service]
+    data = [entry['appointment_count'] for entry in appointments_per_service]
+
+    # Create a dictionary to hold the data
+    chart_data = {
+        'labels': labels,
+        'data': data,
+    }
+
+    # Return the data as JSON response
+    return JsonResponse(chart_data)
