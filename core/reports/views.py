@@ -1123,7 +1123,8 @@ class PerformanceManagementReportView(TemplateView):
         context = super().get_context_data(**kwargs)
         one_month_ago = now() - timedelta(days=30)
         # USERS METRICS 
-        context['total_users'] = User.objects.all().count()
+        total_users =  User.objects.all().count()
+        context['total_users'] =total_users
         context['active_users'] = User.objects.filter(is_active = True).count()
         context['accounts_suspensions'] = User.objects.filter(is_active = False).count()
         context['inactive_accounts'] = User.objects.filter(last_login__lt=one_month_ago).count()
@@ -1198,6 +1199,6 @@ class PerformanceManagementReportView(TemplateView):
         context['total_task'] = total_task
         context['completed_task'] = Task.objects.filter(status ="انجام شده").count()
         context['pending_task'] = Task.objects.filter(status ="توقف کار").count()
-
+        context['average_tasks_per_user'] = total_task / total_clients if total_users > 0 else 0
 
         return context
