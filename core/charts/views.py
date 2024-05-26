@@ -231,3 +231,19 @@ def expenses_last_10_days(request):
     data = [count for count in date_expenses.values()]
 
     return JsonResponse({'labels': labels, 'data': data})
+
+
+
+def invoices_last_10_days(request):
+    end_date = now().date()
+    start_date = end_date - timedelta(days=9)
+    
+    date_invoices = {}
+    for i in range(10):
+        date = start_date + timedelta(days=i)
+        date_invoices[date] = Financial.objects.filter(date_issued=date).count()
+
+    labels = [date.strftime('%Y-%m-%d') for date in date_invoices.keys()]
+    data = [count for count in date_invoices.values()]
+
+    return JsonResponse({'labels': labels, 'data': data})
