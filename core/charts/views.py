@@ -292,3 +292,18 @@ def receptions_last_10_days_chart(request):
         receptions_data.append({"date": date.strftime("%Y-%m-%d"), "count": count})
 
     return JsonResponse({"receptions_data": receptions_data})
+
+
+
+def client_reception_chart(request):
+    # Count the number of receptions per client
+    client_reception_counts = Reception.objects.values('client').annotate(total_receptions=Count('id'))
+    
+    # Count the number of clients with 1 or less reception and 2 or more receptions
+    clients_with_one_or_less_reception = sum(1 for item in client_reception_counts if item['total_receptions'] <= 1)
+    clients_with_two_or_more_receptions = sum(1 for item in client_reception_counts if item['total_receptions'] >= 2)
+    
+    return JsonResponse({
+        'labels': ['1 or Less Reception', '2 or More Receptions'],
+        'data': [clients_with_one_or_less_reception, clients_with_two_or_more_receptions]
+    })

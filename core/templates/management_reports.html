@@ -230,6 +230,20 @@
     </div>
 </div>
 
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">Number of Clients by Reception Count</h5>
+                    <canvas id="clientReceptionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 
@@ -791,4 +805,44 @@
         })
         .catch(error => console.error('Error fetching data:', error));
 </script>
+
+
+<script>
+    fetch('{% url "charts:client_reception_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            var labels = data.labels;
+            var counts = data.data;
+
+            var ctx = document.getElementById('clientReceptionChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Clients',
+                        data: counts,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
 {%endblock%}
