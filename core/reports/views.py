@@ -32,6 +32,7 @@ from django.db.models import CharField, Value
 from django.views.generic.base import TemplateView
 from django.utils.timezone import now
 from datetime import timedelta
+from planner.models import Session
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -1129,6 +1130,8 @@ class PerformanceManagementReportView(TemplateView):
         in_use_equipment_count = Equipment.objects.filter(is_use=True).count()
         context['equipment_utilization'] = (in_use_equipment_count / total_equipment) * 100 if total_equipment > 0 else 0
         context['new_equipment'] = Equipment.objects.filter(created_at__gte=one_month_ago).count()
+        #APPOINTMENTS 
+        context['total_appointments'] = Session.objects.all().count()
 
 
 
