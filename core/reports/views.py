@@ -30,6 +30,8 @@ from consumable.filters import ConsumableFilter, SupplierFilter
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value
 from django.views.generic.base import TemplateView
+from django.utils.timezone import now
+from datetime import timedelta
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -1116,5 +1118,10 @@ class PerformanceManagementReportView(TemplateView):
         context['total_users'] = User.objects.all().count()
         context['active_users'] = User.objects.filter(is_active = True).count()
         context['accounts_suspensions'] = User.objects.filter(is_active = False).count()
+        #INACTIVE ACCOUNTS
+        one_month_ago = now() - timedelta(days=30)
+        context['inactive_accounts'] = User.objects.filter(last_login__lt=one_month_ago).count()
+
+
 
         return context
