@@ -307,3 +307,17 @@ def client_reception_chart(request):
         'labels': ['1 or Less Reception', '2 or More Receptions'],
         'data': [clients_with_one_or_less_reception, clients_with_two_or_more_receptions]
     })
+
+
+
+def service_reception_chart(request):
+    # Count the number of receptions per service
+    service_reception_counts = Reception.objects.values('service__name').annotate(total_receptions=Count('id')).order_by('-total_receptions')[:5]
+    
+    labels = [item['service__name'] for item in service_reception_counts]
+    counts = [item['total_receptions'] for item in service_reception_counts]
+    
+    return JsonResponse({
+        'labels': labels,
+        'data': counts
+    })
