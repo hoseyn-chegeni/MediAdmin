@@ -52,20 +52,49 @@ urlpatterns = [
         daily_appointments_chart,
         name="daily_appointments_chart",
     ),
-    path("client_gender_distribution/", client_gender_distribution, name="client_gender_distribution"),
-    path("client_vip_distribution/", client_vip_distribution, name="client_vip_distribution"),
-    path("clients_by_insurance_chart/", clients_by_insurance_chart, name="clients_by_insurance_chart"),
-    path("consumable_categories_distribution/", consumable_categories_distribution, name="consumable_categories_distribution"),
+    path(
+        "client_gender_distribution/",
+        client_gender_distribution,
+        name="client_gender_distribution",
+    ),
+    path(
+        "client_vip_distribution/",
+        client_vip_distribution,
+        name="client_vip_distribution",
+    ),
+    path(
+        "clients_by_insurance_chart/",
+        clients_by_insurance_chart,
+        name="clients_by_insurance_chart",
+    ),
+    path(
+        "consumable_categories_distribution/",
+        consumable_categories_distribution,
+        name="consumable_categories_distribution",
+    ),
     path("invoices_by_service/", invoices_by_service, name="invoices_by_service"),
-    path("invoices_by_payment_method/", invoices_by_payment_method, name="invoices_by_payment_method"),
+    path(
+        "invoices_by_payment_method/",
+        invoices_by_payment_method,
+        name="invoices_by_payment_method",
+    ),
     path("expenses_last_10_days/", expenses_last_10_days, name="expenses_last_10_days"),
     path("invoices_last_10_days/", invoices_last_10_days, name="invoices_last_10_days"),
     path("clients_last_10_days/", clients_last_10_days, name="clients_last_10_days"),
     path("receptions_by_service/", receptions_by_service, name="receptions_by_service"),
-    path("receptions_last_10_days_chart/", receptions_last_10_days_chart, name="receptions_last_10_days_chart"),
-    path("client_reception_chart/", client_reception_chart, name="client_reception_chart"),
-    path("service_reception_chart/", service_reception_chart, name="service_reception_chart"),
+    path(
+        "receptions_last_10_days_chart/",
+        receptions_last_10_days_chart,
+        name="receptions_last_10_days_chart",
+    ),
+    path(
+        "client_reception_chart/", client_reception_chart, name="client_reception_chart"
+    ),
+    path(
+        "service_reception_chart/",
+        service_reception_chart,
+        name="service_reception_chart",
+    ),
     path("task_priority_chart/", task_priority_chart, name="task_priority_chart"),
     path("task_status_chart/", task_status_chart, name="task_status_chart"),
-
 ]

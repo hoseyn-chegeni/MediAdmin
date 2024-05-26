@@ -11,6 +11,7 @@ from client.models import Client
 from consumable.models import ConsumableCategory
 from financial.models import Financial, OfficeExpenses
 from tasks.models import Task
+
 # Create your views here.
 
 
@@ -155,7 +156,7 @@ def client_vip_distribution(request):
     vip_count = Client.objects.filter(is_vip=True).count()
     non_vip_count = Client.objects.filter(is_vip=False).count()
 
-    data = {'VIP': vip_count, 'Non-VIP': non_vip_count}
+    data = {"VIP": vip_count, "Non-VIP": non_vip_count}
     return JsonResponse(data)
 
 
@@ -172,120 +173,106 @@ def clients_by_insurance_chart(request):
     return JsonResponse(insurance_providers)
 
 
-
 def consumable_categories_distribution(request):
     categories = ConsumableCategory.objects.all()
-    data = {
-        'labels': [],
-        'counts': []
-    }
+    data = {"labels": [], "counts": []}
 
     for category in categories:
-        data['labels'].append(category.name)
-        data['counts'].append(category.consumable_count)
+        data["labels"].append(category.name)
+        data["counts"].append(category.consumable_count)
 
     return JsonResponse(data)
-
 
 
 def invoices_by_service(request):
     services = Service.objects.all()
-    data = {
-        'labels': [],
-        'counts': []
-    }
+    data = {"labels": [], "counts": []}
 
     for service in services:
-        data['labels'].append(service.name)
+        data["labels"].append(service.name)
         count = Financial.objects.filter(reception__service=service).count()
-        data['counts'].append(count)
+        data["counts"].append(count)
 
     return JsonResponse(data)
-
 
 
 def invoices_by_payment_method(request):
     payment_methods = dict(Reception.PAYMENT_TYPE_CHOICES)
-    data = {
-        'labels': list(payment_methods.values()),
-        'counts': []
-    }
+    data = {"labels": list(payment_methods.values()), "counts": []}
 
     for method in payment_methods.keys():
         count = Financial.objects.filter(reception__payment_type=method).count()
-        data['counts'].append(count)
+        data["counts"].append(count)
 
     return JsonResponse(data)
-
 
 
 def expenses_last_10_days(request):
     end_date = now().date()
     start_date = end_date - timedelta(days=9)
-    
+
     date_expenses = {}
     for i in range(10):
         date = start_date + timedelta(days=i)
-        date_expenses[date] = OfficeExpenses.objects.filter(date=date.strftime('%Y-%m-%d')).count()
+        date_expenses[date] = OfficeExpenses.objects.filter(
+            date=date.strftime("%Y-%m-%d")
+        ).count()
 
-    labels = [date.strftime('%Y-%m-%d') for date in date_expenses.keys()]
+    labels = [date.strftime("%Y-%m-%d") for date in date_expenses.keys()]
     data = [count for count in date_expenses.values()]
 
-    return JsonResponse({'labels': labels, 'data': data})
-
+    return JsonResponse({"labels": labels, "data": data})
 
 
 def invoices_last_10_days(request):
     end_date = now().date()
     start_date = end_date - timedelta(days=9)
-    
+
     date_invoices = {}
     for i in range(10):
         date = start_date + timedelta(days=i)
         date_invoices[date] = Financial.objects.filter(date_issued=date).count()
 
-    labels = [date.strftime('%Y-%m-%d') for date in date_invoices.keys()]
+    labels = [date.strftime("%Y-%m-%d") for date in date_invoices.keys()]
     data = [count for count in date_invoices.values()]
 
-    return JsonResponse({'labels': labels, 'data': data})
-
+    return JsonResponse({"labels": labels, "data": data})
 
 
 def clients_last_10_days(request):
     end_date = now().date()
     start_date = end_date - timedelta(days=9)
-    
+
     date_clients = {}
     for i in range(10):
         date = start_date + timedelta(days=i)
         date_clients[date] = Client.objects.filter(created_at__date=date).count()
 
-    labels = [date.strftime('%Y-%m-%d') for date in date_clients.keys()]
+    labels = [date.strftime("%Y-%m-%d") for date in date_clients.keys()]
     data = [count for count in date_clients.values()]
 
-    return JsonResponse({'labels': labels, 'data': data})
-
+    return JsonResponse({"labels": labels, "data": data})
 
 
 def receptions_by_service(request):
     services = Service.objects.all()
     data = []
     labels = []
-    
+
     for service in services:
         count = Reception.objects.filter(service=service).count()
         if count > 0:
             data.append(count)
             labels.append(service.name)
-    
-    return JsonResponse({'labels': labels, 'data': data})
+
+    return JsonResponse({"labels": labels, "data": data})
 
 
 def receptions_last_10_days_chart(request):
     end_date = now().date()
     start_date = end_date - timedelta(days=9)  # Last 10 days
     dates = [start_date + timedelta(days=i) for i in range(10)]
-    
+
     receptions_data = []
 
     for date in dates:
@@ -295,55 +282,60 @@ def receptions_last_10_days_chart(request):
     return JsonResponse({"receptions_data": receptions_data})
 
 
-
 def client_reception_chart(request):
     # Count the number of receptions per client
-    client_reception_counts = Reception.objects.values('client').annotate(total_receptions=Count('id'))
-    
-    # Count the number of clients with 1 or less reception and 2 or more receptions
-    clients_with_one_or_less_reception = sum(1 for item in client_reception_counts if item['total_receptions'] <= 1)
-    clients_with_two_or_more_receptions = sum(1 for item in client_reception_counts if item['total_receptions'] >= 2)
-    
-    return JsonResponse({
-        'labels': ['1 or Less Reception', '2 or More Receptions'],
-        'data': [clients_with_one_or_less_reception, clients_with_two_or_more_receptions]
-    })
+    client_reception_counts = Reception.objects.values("client").annotate(
+        total_receptions=Count("id")
+    )
 
+    # Count the number of clients with 1 or less reception and 2 or more receptions
+    clients_with_one_or_less_reception = sum(
+        1 for item in client_reception_counts if item["total_receptions"] <= 1
+    )
+    clients_with_two_or_more_receptions = sum(
+        1 for item in client_reception_counts if item["total_receptions"] >= 2
+    )
+
+    return JsonResponse(
+        {
+            "labels": ["1 or Less Reception", "2 or More Receptions"],
+            "data": [
+                clients_with_one_or_less_reception,
+                clients_with_two_or_more_receptions,
+            ],
+        }
+    )
 
 
 def service_reception_chart(request):
     # Count the number of receptions per service
-    service_reception_counts = Reception.objects.values('service__name').annotate(total_receptions=Count('id')).order_by('-total_receptions')[:5]
-    
-    labels = [item['service__name'] for item in service_reception_counts]
-    counts = [item['total_receptions'] for item in service_reception_counts]
-    
-    return JsonResponse({
-        'labels': labels,
-        'data': counts
-    })
+    service_reception_counts = (
+        Reception.objects.values("service__name")
+        .annotate(total_receptions=Count("id"))
+        .order_by("-total_receptions")[:5]
+    )
+
+    labels = [item["service__name"] for item in service_reception_counts]
+    counts = [item["total_receptions"] for item in service_reception_counts]
+
+    return JsonResponse({"labels": labels, "data": counts})
 
 
 def task_priority_chart(request):
     # Count the number of tasks for each priority
-    priority_counts = Task.objects.values('priority').annotate(count=Count('id'))
+    priority_counts = Task.objects.values("priority").annotate(count=Count("id"))
 
-    labels = [item['priority'] for item in priority_counts]
-    counts = [item['count'] for item in priority_counts]
+    labels = [item["priority"] for item in priority_counts]
+    counts = [item["count"] for item in priority_counts]
 
-    return JsonResponse({
-        'labels': labels,
-        'data': counts
-    })
+    return JsonResponse({"labels": labels, "data": counts})
+
 
 def task_status_chart(request):
     # Count the number of tasks for each status
-    status_counts = Task.objects.values('status').annotate(count=Count('id'))
+    status_counts = Task.objects.values("status").annotate(count=Count("id"))
 
-    labels = [item['status'] for item in status_counts]
-    counts = [item['count'] for item in status_counts]
+    labels = [item["status"] for item in status_counts]
+    counts = [item["count"] for item in status_counts]
 
-    return JsonResponse({
-        'labels': labels,
-        'data': counts
-    })
+    return JsonResponse({"labels": labels, "data": counts})
