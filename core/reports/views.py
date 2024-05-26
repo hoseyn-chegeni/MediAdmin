@@ -33,8 +33,12 @@ from django.views.generic.base import TemplateView
 from django.utils.timezone import now
 from datetime import timedelta
 from planner.models import Session, DeletedSession
-from django.db.models import Count, Sum, F, Avg
+from django.db.models import Count, Sum, F, Avg, IntegerField
 from django.db.models import Q
+from django.db.models.functions import Coalesce
+
+
+
 # Create your views here.
 class UserReportsView(BaseListView):
     model = User
@@ -1172,5 +1176,6 @@ class PerformanceManagementReportView(TemplateView):
         context['unpaid_invoices'] = Financial.objects.filter(payment_status = "پرداخت نشده").count()
         context['average_invoice_value'] = Financial.objects.aggregate(avg_value=Avg('final_amount'))['avg_value']
         context['total_invoice_amount'] = Financial.objects.aggregate(total_amount=Sum('final_amount'))['total_amount']
+        context['average_invoices_per_client'] = Financial.objects.values('reception__client').annotate(num_invoices=Count('id')).aggregate(average_invoices=Coalesce(Avg('num_invoices', output_field=IntegerField()), 0))['average_invoices']
 
         return context
