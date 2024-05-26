@@ -1165,6 +1165,10 @@ class PerformanceManagementReportView(TemplateView):
         context['total_doctors'] = total_doctors
         context['new_doctors'] = Doctor.objects.filter(created_at__gte=one_month_ago).count()
         context['average_appointments_per_doctor'] = average_appointments_per_doctor
+        #INVOICE
+        total_invoices = Financial.objects.all().count()
+        context['total_invoices'] = total_invoices
+        context['paid_invoices'] = Financial.objects.filter(payment_status = "پرداخت شده").count()
 
 
         return context
