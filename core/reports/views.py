@@ -33,7 +33,8 @@ from django.views.generic.base import TemplateView
 from django.utils.timezone import now
 from datetime import timedelta
 from planner.models import Session, DeletedSession
-from django.db.models import Count
+from django.db.models import Count, Sum, F
+from django.db.models import Q
 # Create your views here.
 class UserReportsView(BaseListView):
     model = User
@@ -1146,6 +1147,9 @@ class PerformanceManagementReportView(TemplateView):
         context['average_receptions_per_client'] = (total_receptions / total_clients) if total_clients > 0 else 0
         #CONSUMABLES
         context['total_consumables'] = ConsumableV2.objects.all().count()
+        context['low_stock_items'] = ConsumableV2.objects.annotate(
+            current_quantity=Sum('inventory__quantity', filter=Q(inventory__status="در انبار"))
+        ).filter(current_quantity__lt=F('minimum_stock_level')).count()
 
 
 
