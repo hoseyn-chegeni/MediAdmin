@@ -1171,6 +1171,6 @@ class PerformanceManagementReportView(TemplateView):
         context['paid_invoices'] = Financial.objects.filter(payment_status = "پرداخت شده").count()
         context['unpaid_invoices'] = Financial.objects.filter(payment_status = "پرداخت نشده").count()
         context['average_invoice_value'] = Financial.objects.aggregate(avg_value=Avg('final_amount'))['avg_value']
-        
+        context['total_invoice_amount'] = Financial.objects.aggregate(total_amount=Sum('final_amount'))['total_amount']
 
         return context
