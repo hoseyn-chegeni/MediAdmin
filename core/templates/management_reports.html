@@ -103,6 +103,24 @@
         </div>
     </div>
 </div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">تعداد مشتریان بر اساس ارائه دهنده بیمه</h5>
+                    <canvas id="insuranceProviderChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+
+
 <script>
     // Fetch data using AJAX
     fetch('{% url "charts:user_group_distribution_chart" %}')
@@ -272,6 +290,40 @@
                         backgroundColor: ['#FF6384', '#36A2EB'], // Red for VIP, blue for non-VIP
                         borderWidth: 1
                     }]
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "charts:clients_by_insurance_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create chart
+            var labels = Object.keys(data);
+            var counts = Object.values(data);
+
+            // Create chart using Chart.js
+            var ctx = document.getElementById('insuranceProviderChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'تعداد مشتریان',
+                        data: counts,
+                        backgroundColor: '#4BC0C0',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             });
         })

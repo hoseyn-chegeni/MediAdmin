@@ -155,3 +155,16 @@ def client_vip_distribution(request):
 
     data = {'VIP': vip_count, 'Non-VIP': non_vip_count}
     return JsonResponse(data)
+
+
+def clients_by_insurance_chart(request):
+    insurance_providers = {}
+    for client in Client.objects.all():
+        if client.insurance:
+            insurance_provider = client.insurance.name
+            if insurance_provider in insurance_providers:
+                insurance_providers[insurance_provider] += 1
+            else:
+                insurance_providers[insurance_provider] = 1
+
+    return JsonResponse(insurance_providers)
