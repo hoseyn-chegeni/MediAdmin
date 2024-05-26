@@ -6,6 +6,7 @@ from services.models import Service
 from django.db.models import Count
 from django.http import JsonResponse
 from reception.models import Reception
+from django.contrib.auth.models import Group
 # Create your views here.
 
 
@@ -59,3 +60,22 @@ def service_reception_counts(request):
     }
 
     return JsonResponse(data)
+
+
+
+def user_group_distribution_chart(request):
+    # Query user groups and count the number of users in each group
+    groups = Group.objects.annotate(user_count=Count('user'))
+
+    # Prepare data for the pie chart
+    labels = [group.name for group in groups]
+    data = [group.user_count for group in groups]
+
+    # Create a dictionary to hold the data
+    chart_data = {
+        'labels': labels,
+        'data': data,
+    }
+
+    # Return the data as JSON response
+    return JsonResponse(chart_data)

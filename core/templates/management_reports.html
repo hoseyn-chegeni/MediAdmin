@@ -1,3 +1,7 @@
+{% extends 'base.html'%}
+
+{% block content%}
+<div class="container">
 <h2>performance management report</h2>
 <!-- USERS -->
 <p>total user = {{total_users}}</p>
@@ -56,3 +60,68 @@
 <p>completed_task= {{completed_task}}</p>
 <p>pending_task= {{pending_task}}</p>
 <p>average_tasks_per_user= {{average_tasks_per_user}}</p>
+</div>
+<hr>
+<hr>
+<hr>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">User Group Distribution</h5>
+                    <canvas id="userGroupChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "charts:user_group_distribution_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create pie chart
+            var labels = data.labels;
+            var data = data.data;
+
+            // Create chart using Chart.js
+            var ctx = document.getElementById('userGroupChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+{%endblock%}
