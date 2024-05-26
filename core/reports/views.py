@@ -1144,6 +1144,8 @@ class PerformanceManagementReportView(TemplateView):
         context['new_clients'] = Client.objects.filter(created_at__gte=one_month_ago).count()
         context['client_retention'] = (clients_with_multiple_receptions / total_clients) * 100 if total_clients > 0 else 0
         context['average_receptions_per_client'] = (total_receptions / total_clients) if total_clients > 0 else 0
+        #CONSUMABLES
+        context['total_consumables'] = ConsumableV2.objects.all().count()
 
 
 
