@@ -9,6 +9,7 @@ from reception.models import Reception
 from django.contrib.auth.models import Group
 from client.models import Client
 from consumable.models import ConsumableCategory
+from financial.models import Financial
 # Create your views here.
 
 
@@ -181,5 +182,21 @@ def consumable_categories_distribution(request):
     for category in categories:
         data['labels'].append(category.name)
         data['counts'].append(category.consumable_count)
+
+    return JsonResponse(data)
+
+
+
+def invoices_by_service(request):
+    services = Service.objects.all()
+    data = {
+        'labels': [],
+        'counts': []
+    }
+
+    for service in services:
+        data['labels'].append(service.name)
+        count = Financial.objects.filter(reception__service=service).count()
+        data['counts'].append(count)
 
     return JsonResponse(data)

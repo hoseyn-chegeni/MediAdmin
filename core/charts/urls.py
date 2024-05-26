@@ -9,7 +9,8 @@ from .views import (
     client_gender_distribution,
     client_vip_distribution,
     clients_by_insurance_chart,
-    consumable_categories_distribution
+    consumable_categories_distribution,
+    invoices_by_service,
 )
 
 app_name = "charts"
@@ -45,5 +46,6 @@ urlpatterns = [
     path("client_vip_distribution/", client_vip_distribution, name="client_vip_distribution"),
     path("clients_by_insurance_chart/", clients_by_insurance_chart, name="clients_by_insurance_chart"),
     path("consumable_categories_distribution/", consumable_categories_distribution, name="consumable_categories_distribution"),
+    path("invoices_by_service/", invoices_by_service, name="invoices_by_service"),
 
 ]

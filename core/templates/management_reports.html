@@ -131,6 +131,20 @@
     </div>
 </div>
 
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">تعداد فاکتورها بر اساس خدمات</h5>
+                    <canvas id="invoicesByServiceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 
@@ -389,6 +403,38 @@
                                     return `${tooltipItem.label}: ${tooltipItem.raw}`;
                                 }
                             }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "charts:invoices_by_service" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create chart
+            var ctx = document.getElementById('invoicesByServiceChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'تعداد فاکتورها',
+                        data: data.counts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }
