@@ -1124,7 +1124,12 @@ class PerformanceManagementReportView(TemplateView):
         context['new_users'] = User.objects.filter(created_at__gte=one_month_ago).count()
 
         #EQUIPMENTS METRICS
-        context['total_eqiupment'] = Equipment.objects.all().count()
+        total_equipment =  Equipment.objects.all().count()
+        context['total_equipment'] = total_equipment
+        in_use_equipment_count = Equipment.objects.filter(is_user=True).count()
+        context['equipment_utilization'] = (in_use_equipment_count / total_equipment) * 100 if total_equipment > 0 else 0
+
+
 
 
 
