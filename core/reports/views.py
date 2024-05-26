@@ -1118,9 +1118,9 @@ class PerformanceManagementReportView(TemplateView):
         context['total_users'] = User.objects.all().count()
         context['active_users'] = User.objects.filter(is_active = True).count()
         context['accounts_suspensions'] = User.objects.filter(is_active = False).count()
-        #INACTIVE ACCOUNTS
         one_month_ago = now() - timedelta(days=30)
         context['inactive_accounts'] = User.objects.filter(last_login__lt=one_month_ago).count()
+        context['new_users'] = User.objects.filter(created_at__gte=one_month_ago).count()
 
 
 
