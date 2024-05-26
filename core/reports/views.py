@@ -29,7 +29,7 @@ from consumable.models import ConsumableV2, Supplier
 from consumable.filters import ConsumableFilter, SupplierFilter
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value
-
+from django.views.generic.base import TemplateView
 
 # Create your views here.
 class UserReportsView(BaseListView):
@@ -1102,3 +1102,15 @@ class ExportOfficeExpensesExcelView(View):
         office_expenses_df.to_csv(response, index=False)
 
         return response
+
+
+
+
+
+
+class PerformanceManagementReportView(TemplateView):
+    template_name = 'reports/management_reports.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
