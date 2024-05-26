@@ -10,6 +10,7 @@ from django.contrib.auth.models import Group
 from client.models import Client
 from consumable.models import ConsumableCategory
 from financial.models import Financial, OfficeExpenses
+from tasks.models import Task
 # Create your views here.
 
 
@@ -317,6 +318,19 @@ def service_reception_chart(request):
     labels = [item['service__name'] for item in service_reception_counts]
     counts = [item['total_receptions'] for item in service_reception_counts]
     
+    return JsonResponse({
+        'labels': labels,
+        'data': counts
+    })
+
+
+def task_priority_chart(request):
+    # Count the number of tasks for each priority
+    priority_counts = Task.objects.values('priority').annotate(count=Count('id'))
+
+    labels = [item['priority'] for item in priority_counts]
+    counts = [item['count'] for item in priority_counts]
+
     return JsonResponse({
         'labels': labels,
         'data': counts

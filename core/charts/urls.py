@@ -19,6 +19,7 @@ from .views import (
     receptions_last_10_days_chart,
     client_reception_chart,
     service_reception_chart,
+    task_priority_chart,
 )
 
 app_name = "charts"
@@ -63,5 +64,6 @@ urlpatterns = [
     path("receptions_last_10_days_chart/", receptions_last_10_days_chart, name="receptions_last_10_days_chart"),
     path("client_reception_chart/", client_reception_chart, name="client_reception_chart"),
     path("service_reception_chart/", service_reception_chart, name="service_reception_chart"),
+    path("task_priority_chart/", task_priority_chart, name="task_priority_chart"),
 
 ]
