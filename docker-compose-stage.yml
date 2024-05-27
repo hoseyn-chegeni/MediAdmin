@@ -9,11 +9,13 @@ services:
     container_name: backend
     build:
       context: ./core
-    command: sh -c "python3 manage.py migrate && gunicorn core.wsgi --bind 0.0.0.0:8000"
+    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate && gunicorn core.wsgi --bind 0.0.0.0:8000"
     volumes:
       - ./core:/usr/src/app
       - static_volume:/app/static/
       - media_volume:/app/media/
+      - db_data:/usr/src/app/db
+
     expose:
       - "8000"
     depends_on:
@@ -52,3 +54,4 @@ services:
 volumes:
   static_volume:
   media_volume:
+  db_data:
