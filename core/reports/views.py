@@ -1280,7 +1280,7 @@ class PerformanceManagementReportView(TemplateView):
         context["completed_task"] = Task.objects.filter(status="انجام شده").count()
         context["pending_task"] = Task.objects.filter(status="توقف کار").count()
         context["average_tasks_per_user"] = (
-            total_task / total_clients if total_users > 0 else 0
+            total_task / total_clients if total_task > 0 else 0
         )
 
         return context
