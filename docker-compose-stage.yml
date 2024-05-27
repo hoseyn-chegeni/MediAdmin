@@ -9,7 +9,7 @@ services:
     container_name: backend
     build:
       context: ./core
-    command: python manage.py migrate --noinput && gunicorn core.wsgi --bind 0.0.0.0:8000
+    command:  gunicorn core.wsgi --bind 0.0.0.0:8000
     volumes:
       - ./core:/usr/src/app
       - static_volume:/app/static/
