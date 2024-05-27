@@ -9,7 +9,7 @@ services:
     container_name: backend
     build:
       context: ./core
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    command: python manage.py migrate --noinput && gunicorn core.wsgi --bind 0.0.0.0:8000
     volumes:
       - ./core:/usr/src/app
       - static_volume:/app/static/
@@ -20,6 +20,9 @@ services:
       - redis
     env_file:
       - ./core/.env
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
 
 
 
