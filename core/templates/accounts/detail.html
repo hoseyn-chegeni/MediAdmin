@@ -191,7 +191,9 @@
            
           </div>
         </div>
+      
         <div class="row">
+          {% if perms.accounts.view_role%}
           <div class="col-md-6">
             <div class="card mt-4">
               <div class="card-body">
@@ -205,8 +207,8 @@
               </div>
             </div>
           </div>
-
-
+{%endif%}
+          {% if perms.accounts.view_perms%}
           <div class="col-md-6">
             <div class="card mt-4">
               <div class="card-body">
@@ -220,7 +222,7 @@
               </div>
             </div>
           </div>
-          
+          {%endif%}
           <div class="col-md-6">
             <div class="card mt-4">
               <div class="card-body">
@@ -234,6 +236,7 @@
               </div>
             </div>
           </div>
+
 
           <div class="col-md-6">
             <div class="card mt-4">
@@ -252,6 +255,7 @@
       </div>
     </div>
   </div>
+
 </section>
 
 
