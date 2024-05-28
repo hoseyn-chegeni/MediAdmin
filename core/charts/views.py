@@ -3,7 +3,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 from planner.models import Session
 from services.models import Service
-from django.db.models import Count
+from django.db.models import Count, Sum, F
 from django.http import JsonResponse
 from reception.models import Reception
 from django.contrib.auth.models import Group
@@ -11,7 +11,7 @@ from client.models import Client
 from consumable.models import ConsumableCategory
 from financial.models import Financial, OfficeExpenses
 from tasks.models import Task
-from consumable.models import Supplier
+from consumable.models import Supplier, Inventory
 # Create your views here.
 
 
@@ -350,3 +350,20 @@ def suppliers_by_city_chart(request):
     counts = [item['count'] for item in city_counts]
 
     return JsonResponse({'cities': cities, 'counts': counts})
+
+
+def inventory_value_by_supplier_chart(request):
+    # Aggregate total value of inventory for each supplier
+    suppliers = Supplier.objects.annotate(
+        total_value=Sum(F('inventory__quantity') * F('inventory__price'))
+    ).order_by('-total_value')[:5]
+
+    chart_data = []
+    for supplier in suppliers:
+        total_value = supplier.total_value or 0
+        chart_data.append({
+            'supplier': supplier.name,
+            'total_value': total_value
+        })
+
+    return JsonResponse(chart_data, safe=False)
