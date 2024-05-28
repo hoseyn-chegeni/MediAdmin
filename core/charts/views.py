@@ -12,6 +12,7 @@ from consumable.models import ConsumableCategory
 from financial.models import Financial, OfficeExpenses
 from tasks.models import Task
 from consumable.models import Supplier, Inventory
+from doctor.models import Doctor
 # Create your views here.
 
 
@@ -367,3 +368,14 @@ def inventory_value_by_supplier_chart(request):
         })
 
     return JsonResponse(chart_data, safe=False)
+
+
+def doctors_by_specialty_chart(request):
+    specialties = Doctor.objects.values('specialization').annotate(count=Count('id'))
+    chart_data = []
+    for specialty in specialties:
+        chart_data.append({
+            'specialization': specialty['specialization'],
+            'count': specialty['count']
+        })
+    return JsonResponse({'chart_data': chart_data})
