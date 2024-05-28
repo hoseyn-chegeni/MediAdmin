@@ -18,9 +18,7 @@ class User(AbstractUser):
         max_length=15, verbose_name="Phone Number", blank=True, null=True
     )
     address = models.TextField(blank=True, null=True)
-    image = models.ImageField(
-        upload_to="images/", default="media/images/default.png", blank=True, null=True
-    )
+    image = models.ImageField(upload_to="images/", blank=True, null=True)
     login_attempts = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -79,8 +79,8 @@
 {%endblock%}
 {%block thead%}
 <th scope="col"><input type="checkbox" id="selectAll"></th>
-<th scope="col">تصویر</th>
 <th scope="col">شناسه کاربر</th>
+<th scope="col">تصویر</th>
 <th scope="col">نام</th>
 <th scope="col">ایمیل</th>
 <th scope="col">کدملی</th>
@@ -92,12 +92,17 @@
 <tr class="fw-normal">       
   <td><input type="checkbox" name="user_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
   <th>
-    <img src="{{i.image.url}}"
-      alt="avatar 1" style="width: 45px; height: auto;">
-  </th>
-  <th>
     <span class="ms-2">{{i.id}}</span>
   </th>
+  <th>
+    {% if i.image%}
+    <img src="{{i.image.url}}"
+      alt="avatar 1" style="width: 45px; height: auto;">
+  {%else%}
+  <span>فاقد تصویر</span>
+  {%endif%}
+  </th>
+
   <th>
     <span class="ms-2">{{i.first_name}} {{i.last_name}}</span>
   </th>
