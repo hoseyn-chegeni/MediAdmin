@@ -99,19 +99,27 @@
     <img src="{{i.image.url}}"
       alt="avatar 1" style="width: 45px; height: auto;">
   {%else%}
-  <span>فاقد تصویر</span>
+  <span class="badge rounded-pill bg-secondary">فاقد تصویر</span>
   {%endif%}
   </th>
 
   <th>
+    {% if i.last_name and i.first_name%}
     <span class="ms-2">{{i.first_name}} {{i.last_name}}</span>
+    {%else%} 
+    <span>-</span>
+    {%endif%}
   </th>
   <td class="align-middle">
     <span>{{i.email}}</span>
   </td>
-  <td class="align-middle">
-    <span>{{i.national_id}}</span>
-  </td>
+  <th>
+    {% if i.national_id%}
+    <span class="ms-2">{{i.first_name}} {{i.last_name}}</span>
+    {%else%} 
+    <span>-</span>
+    {%endif%}
+  </th>
   <td class="align-middle">
     {% if i.is_active == True %}
     <span class="badge bg-success rounded-pill"> فعال </span>
@@ -120,7 +128,11 @@
     {% endif %}
   </td>
   <td class="align-middle">
+    {% if i.last_login%}
       <span>{{i.last_login}}</span>
+    {%else%}
+    <span>-</span>
+  {%endif%}
     </td>
   <td class="align-middle">
     <a href="{%url 'accounts:user_detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
