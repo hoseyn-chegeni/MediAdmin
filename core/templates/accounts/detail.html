@@ -22,6 +22,9 @@
               {% if perms.accounts.change_user%}
               <a href="{% url 'accounts:user_update' user.id %}" class="btn btn-primary">ویرایش</a>
               {%endif%}
+              {% if request.user == user%}
+              <a href="{% url 'accounts:change_password' %}" class="btn btn-outline-primary ms-1">تغییر رمز عبور</a>
+            {%endif%}
               {% if perms.accounts.activation%}
               {% if user.is_active%}
               <a href="#" data-toggle="modal" data-target="#suspendModal"  title="تعلیق" class="btn btn-outline-primary ms-1" >تعلیق</a>
