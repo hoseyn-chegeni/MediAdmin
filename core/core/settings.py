@@ -72,6 +72,8 @@ INSTALLED_APPS = [
     "django_jalali",
     "import",
     "charts",
+    "trash",
+
 ]
 
 MIDDLEWARE = [

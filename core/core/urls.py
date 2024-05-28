@@ -44,4 +44,6 @@ urlpatterns = [
     path("planner/", include("planner.urls")),
     path("import/", include("import.urls")),
     path("charts/", include("charts.urls")),
+    path("trash/", include("trash.urls")),
+
 ]
