@@ -136,6 +136,7 @@ class EditHealthHistoryView(BaseUpdateView):
         "medications",
         "smoker",
         "disease",
+        "high_risk",
     ]
     app_name = "client"
     url_name = "detail"

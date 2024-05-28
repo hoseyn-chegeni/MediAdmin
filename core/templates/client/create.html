@@ -118,6 +118,15 @@
                       </div> 
 
 
+                      <div class="col-sm-6">
+                        <label for="high_risk">هشدار پرونده بیمار </label>
+                        <select class="form-select" name="high_risk" id="high_risk">
+                            {% for choice in form.high_risk.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
 
                     <div class="col-sm-6">
                         <label for="insurance">بیمه</label>

@@ -66,6 +66,17 @@
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
+            {% if client.high_risk%}
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">هشدار بیماری:</p>
+              </div>
+              <div class="col-sm-9">
+             <h5><span class="badge bg-danger rounded-pill">{{client.high_risk}}</span></h5>
+              </div>
+            </div>
+            <hr>
+            {%endif%}
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">شماره پرونده :</p>
