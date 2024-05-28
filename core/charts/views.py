@@ -11,7 +11,7 @@ from client.models import Client
 from consumable.models import ConsumableCategory
 from financial.models import Financial, OfficeExpenses
 from tasks.models import Task
-
+from consumable.models import Supplier
 # Create your views here.
 
 
@@ -339,3 +339,14 @@ def task_status_chart(request):
     counts = [item["count"] for item in status_counts]
 
     return JsonResponse({"labels": labels, "data": counts})
+
+
+def suppliers_by_city_chart(request):
+    # Query to get the count of suppliers in each city
+    city_counts = Supplier.objects.values('city').annotate(count=Count('id'))
+
+    # Extract city names and counts
+    cities = [item['city'] for item in city_counts]
+    counts = [item['count'] for item in city_counts]
+
+    return JsonResponse({'cities': cities, 'counts': counts})

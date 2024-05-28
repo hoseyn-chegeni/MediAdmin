@@ -201,8 +201,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" style="height: 80%; width: 80%;">
+                    <h5 class="card-title">Number of Suppliers by City</h5>
+                    <canvas id="suppliersByCityChart"></canvas>
+                </div>
+            </div>
+        </div>
 
-        
 </div>
 </div>
 <hr>
@@ -1131,6 +1138,38 @@
                             'rgba(255, 206, 86, 1)',
                             'rgba(75, 192, 192, 1)',
                         ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+<script>
+    fetch('{% url "charts:suppliers_by_city_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            var cities = data.cities;
+            var counts = data.counts;
+
+            var ctx = document.getElementById('suppliersByCityChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cities,
+                    datasets: [{
+                        label: 'Number of Suppliers',
+                        data: counts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     }]
                 },
