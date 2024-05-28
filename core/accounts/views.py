@@ -1,6 +1,6 @@
 from .models import User
 from django.urls import reverse_lazy, reverse
-from .forms import CustomUserCreationForm,UserUpdateForm
+from .forms import CustomUserCreationForm, UserUpdateForm
 from .filters import UserFilter, UserSentSMSFilter, UserSMSFilter
 from base.views import (
     BaseCreateView,
