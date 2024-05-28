@@ -1,6 +1,6 @@
 from .models import User
 from django.urls import reverse_lazy, reverse
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm,UserUpdateForm
 from .filters import UserFilter, UserSentSMSFilter, UserSMSFilter
 from base.views import (
     BaseCreateView,
@@ -98,7 +98,7 @@ class UserCreateView(BaseCreateView):
 
 class UserUpdateView(BaseUpdateView):
     model = User
-    fields = "__all__"
+    form_class = UserUpdateForm
     template_name = "accounts/update.html"
     app_name = "accounts"
     url_name = "user_detail"
