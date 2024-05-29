@@ -423,7 +423,8 @@
                     <h5 class="card-title">محبوب ترین سرویس های ارایه شده</h5>
                     <canvas id="serviceReceptionChart"></canvas>
                     <hr>
-                    <h5 class="card-title">Service Cancellations: The Number of Cancellations per Service</h5>
+                    <h5 class="card-title">تعداد نوبت های لغو شده به ازای هر سرویس
+                    </h5>
                     <canvas id="serviceCancellationsChart"></canvas>
                 </div>
             </div>
@@ -1572,7 +1573,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Cancellations',
+                        label: 'نوبت های لغو شده',
                         data: chartData,
                         backgroundColor: colors.slice(0, labels.length), // Use the array of colors
                         borderColor: colors.slice(0, labels.length).map(color => color.replace('0.2', '1')), // Use the same colors with full opacity for border
