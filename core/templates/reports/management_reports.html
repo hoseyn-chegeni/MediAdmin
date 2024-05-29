@@ -488,7 +488,10 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل سرویس های ثبت شده در سیستم:</strong> {{total_service}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل سرویس های ثبت شده در سیستم:  {{total_service}}</strong>
+                            <a href="{% url 'services:list' %}"  class="btn btn-outline-secondary btn-sm">لیست سرویس ها</a>
+                        </p>
                         <hr>
                         <p class="card-text"><strong>سرویس های افزوده شده در ماه گذشته:</strong> {{new_service}}</p>
 
@@ -523,23 +526,32 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل تسک های ثبت شده در سیستم:</strong> {{total_task}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل تسک های ثبت شده در سیستم: {{total_task}}</strong>
+                            <a href="{% url 'tasks:list' %}"  class="btn btn-outline-secondary btn-sm">لیست تسک ها</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تسک های تکمیل شده:</strong> {{completed_task}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تسک های تکمیل شده: {{completed_task}}</strong> 
+                            <a href="{% url 'tasks:completed_list' %}"  class="btn btn-outline-secondary btn-sm">لیست تسک های تکمیل شده</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تسک های  متوقف شده (Pending):</strong> {{pending_task}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تسک های  متوقف شده (Pending): {{pending_task}}</strong>
+                            <a href="{% url 'tasks:pending_list' %}"  class="btn btn-outline-secondary btn-sm">لیست تسک های متوقف شده</a>
+                        </p>
                          <hr>
                         <p class="card-text"><strong>میانگین تعداد کار ها بر اساس کاربران:</strong> {{average_tasks_per_user}}</p>
                     </div>
                 </div>
             </div>
-            <h5 class="card-title">Task Distribution by Status</h5>
+            <h5 class="card-title">توزیع تسک ها بر اساس وضعیت</h5>
             <canvas id="taskStatusChart"></canvas>
         </div>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Task Distribution by Priority</h5>
+                    <h5 class="card-title">توزیع تسک ها بر اساس فوریت</h5>
                     <canvas id="taskPriorityChart"></canvas>
                 </div>
             </div>

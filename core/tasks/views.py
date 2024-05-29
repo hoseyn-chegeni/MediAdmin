@@ -159,3 +159,34 @@ class DeleteSelectedTasksView(View):
             )  # Get the list of selected user IDs from the form
             Task.objects.filter(id__in=tasks_ids).delete()  # Delete selected users
         return redirect("tasks:list")
+
+
+
+#############################
+#############################
+#############################
+######## REPORT LIST ########
+#############################
+#############################
+#############################
+    
+class CompletedTaskListView(BaseListView):
+    model = Task
+    template_name = "tasks/reports/completed_list.html"
+    context_object_name = "tasks"
+    filterset_class = TaskFilter
+    permission_required = "tasks.view_task"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status="انجام شده")
+
+
+class PendingTaskListView(BaseListView):
+    model = Task
+    template_name = "tasks/reports/pending_list.html"
+    context_object_name = "tasks"
+    filterset_class = TaskFilter
+    permission_required = "tasks.view_task"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status="توقف کار")
