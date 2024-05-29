@@ -396,3 +396,19 @@ def inventory_chart(request):
             "suppliers": [supplier.name for supplier in suppliers],
         }
     )
+
+
+def doctor_consultations_chart(request):
+    doctors = Doctor.objects.all()
+    chart_data = []
+
+    for doctor in doctors:
+        count = Reception.objects.filter(service__doctor=doctor).count()
+        chart_data.append({"doctor": f"{doctor.first_name} {doctor.last_name}", "reception_count": count})
+
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
+        }
+    )
