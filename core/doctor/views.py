@@ -20,7 +20,8 @@ from django.urls import reverse_lazy
 from django.db.models import Count
 from reception.filters import ReceptionFilter
 from services.filters import ServicesFilter
-
+from django.utils.timezone import now
+from datetime import timedelta
 
 # Create your views here.
 class DoctorListView(BaseListView):
@@ -198,3 +199,24 @@ class DeleteSelectedDoctorsView(View):
             )  # Get the list of selected user IDs from the form
             Doctor.objects.filter(id__in=user_ids).delete()  # Delete selected users
         return redirect("doctor:list")
+
+
+#############################
+#############################
+#############################
+######## REPORT LIST ########
+#############################
+#############################
+#############################
+
+
+class NewDoctorsListView(BaseListView):
+    model = Doctor
+    template_name = "doctor/reports/new_list.html"
+    context_object_name = "doctor"
+    filterset_class = DoctorFilter
+    permission_required = "doctor.view_doctor"
+
+    def get_queryset(self):
+        one_month_ago = now() - timedelta(days=30)
+        return super().get_queryset().filter(created_at__gte=one_month_ago)

@@ -10,6 +10,7 @@ from .views import (
     DoctorReceptionHistoryListView,
     DoctorServicesListView,
     DeleteSelectedDoctorsView,
+    NewDoctorsListView,
 )
 
 app_name = "doctor"
@@ -33,4 +34,6 @@ urlpatterns = [
         DeleteSelectedDoctorsView.as_view(),
         name="delete_selected_doctors",
     ),
+    path("doctor/new_list/", NewDoctorsListView.as_view(), name="new_list"),
+
 ]

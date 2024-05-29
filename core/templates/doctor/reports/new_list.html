@@ -1,0 +1,160 @@
+{% extends 'base_list.html' %}
+{% block title %}لیست پزشکان افزوده شده در ماه گذشته{% endblock %}
+{%block list_title%}لیست پزشکان افزوده شده در ماه گذشته{%endblock%}
+{%block filter_field%}
+<div class="col-sm-6">
+  <label for="id_id" class="form-label">ID</label>
+  <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+</div>
+
+
+<div class="col-sm-6">
+  <label for="name" class="form-label">نام</label>
+  <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="email__icontains" class="form-label">ایمیل</label>
+  <input  class="form-control" type="text" name="email__icontains" step="any" id="email__icontains" value="{{ request.GET.email__icontains }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="specialization__icontains" class="form-label">تخصص</label>
+  <input  class="form-control" type="text" name="specialization__icontains" step="any" id="specialization__icontains" value="{{ request.GET.specialization__icontains }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="registration_number" class="form-label">شماره نظام پزشکی</label>
+  <input  class="form-control" type="text" name="registration_number" step="any" id="registration_number" value="{{ request.GET.registration_number}}" >
+</div>
+
+
+<div class="col-sm-6">
+  <label for="phone_number" class="form-label">شماره تماس</label>
+  <input  class="form-control" type="text" name="phone_number" step="any" id="phone_number" value="{{ request.GET.phone_number}}" >
+</div>
+
+<div class="col-sm-6">
+  <label  for="is_active">فعال</label>
+  <select  class="form-select" name="is_active"  id="is_active">
+    <option value="" selected="">---------</option>
+    <option value="true">بله</option>
+    <option value="false">خیر</option>
+  </select>
+  </div>
+
+  <div class="col-sm-6">
+    <label for="date" class="form-label">تاریخ</label>
+    <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+  </div>
+
+  <div class="col-sm-6">
+    <label for="date_range">محدوده زمانی</label>
+    <select class="form-select" name="date_range" id="date_range">
+      <option value="" selected>---------</option>
+      <option value="today">امروز</option>
+      <option value="this_week">هفته گذشته</option>
+      <option value="this_month">ماه گذشته</option>
+    </select>
+  </div>
+
+
+  <div class="col-sm-6">
+    <label for="created_by_email" class="form-label">ایجاد کننده</label>
+    <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+  </div>
+
+
+
+{%endblock%}
+{%block buttons%} 
+<form action="{% url 'doctor:delete_selected_doctors' %}" method="post" id="deleteForm">
+  {% csrf_token %}
+  <a href="{% url 'reports:performance_management_report' %}" class="btn btn-success me-2">بازگشت به صفحه گزارش عملکرد</a>
+{% if perms.doctor.delete.doctor%}
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button>
+{% endif %}
+{%endblock%}
+{%block thead%}
+
+<th scope="col"><input type="checkbox" id="selectAll"></th>                   
+<th scope="col">ID</th>
+<th scope="col">نام</th>
+<th scope="col">نظام پزشکی</th>
+<th scope="col">تخصص</th>
+<th scope="col">وضعیت</th>
+<th scope="col">تعداد سرویس </th>
+<th scope="col">تعداد  پذیرش </th>
+<th scope="col">اکشن ها</th>
+
+{%endblock%}
+{%block tbody%}
+{%for i in doctor%}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="doctor_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
+
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.first_name}} {{i.last_name}}</span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.registration_number}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.specialization}}</span>
+    </td>
+
+    <td class="align-middle">
+      {% if i.is_active == True %}
+      <span class="badge bg-success rounded-pill"> فعال </span>
+      {% else %}
+      <span class="badge bg-danger rounded-pill"> غیرفعال </span>
+      {% endif %}
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.services}}</span>
+    </td>
+    <td class="align-middle">
+      <span>{{i.total_reception_count}}</span>
+    </td>
+
+
+  <td class="align-middle">
+      <a href="{%url 'doctor:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+      {% if perms.doctor.change_doctor%}
+    <a href="{%url 'doctor:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+    {% endif %}
+  </td>
+</tr>
+{%endfor%}
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+  
+{%endblock%}
+{%block delete_content%}
+پزشکان انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}
