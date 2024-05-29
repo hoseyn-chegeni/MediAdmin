@@ -237,7 +237,7 @@ class DeleteSelectedUsersView(View):
 
 class ActiveUserListView(BaseListView):
     model = User
-    template_name = "accounts/report/active_list.html"
+    template_name = "accounts/reports/active_list.html"
     context_object_name = "users"
     filterset_class = UserFilter
     permission_required = "accounts.view_user"
@@ -248,7 +248,7 @@ class ActiveUserListView(BaseListView):
 
 class SuspendUserListView(BaseListView):
     model = User
-    template_name = "accounts/report/suspend_list.html"
+    template_name = "accounts/reports/suspend_list.html"
     context_object_name = "users"
     filterset_class = UserFilter
     permission_required = "accounts.view_user"
@@ -259,7 +259,7 @@ class SuspendUserListView(BaseListView):
 
 class InActiveForMonthUserListVIew(BaseListView):
     model = User
-    template_name = "accounts/report/in_active_list.html"
+    template_name = "accounts/reports/in_active_list.html"
     context_object_name = "users"
     filterset_class = UserFilter
     permission_required = "accounts.view_user"
@@ -271,7 +271,7 @@ class InActiveForMonthUserListVIew(BaseListView):
 
 class NewUserListView(BaseListView):
     model = User
-    template_name = "accounts/report/new_list.html"
+    template_name = "accounts/reports/new_list.html"
     context_object_name = "users"
     filterset_class = UserFilter
     permission_required = "accounts.view_user"

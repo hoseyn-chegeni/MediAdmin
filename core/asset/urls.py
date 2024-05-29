@@ -6,6 +6,8 @@ from .views import (
     EquipmentListView,
     EquipmentUpdateView,
     DeleteSelectedEquipmentView,
+    InUseEquipmentsView,
+    NewEquipmentsView
 )
 
 app_name = "asset"
@@ -34,4 +36,7 @@ urlpatterns = [
         DeleteSelectedEquipmentView.as_view(),
         name="delete_selected_equipment",
     ),
+    path("equipment/in_use_list/", InUseEquipmentsView.as_view(), name="in_use_list"),
+    path("equipment/new_list/", NewEquipmentsView.as_view(), name="new_list"),
+
 ]

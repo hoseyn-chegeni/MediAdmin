@@ -1149,7 +1149,7 @@ class PerformanceManagementReportView(TemplateView):
         # EQUIPMENTS METRICS
         total_equipment = Equipment.objects.all().count()
         context["total_equipment"] = total_equipment
-        in_use_equipment_count = Equipment.objects.filter(is_use=True).count()
+        in_use_equipment_count = Equipment.objects.filter(in_use=True).count()
         context["equipment_utilization"] = (
             (in_use_equipment_count / total_equipment) * 100
             if total_equipment > 0

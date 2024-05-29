@@ -1,0 +1,118 @@
+{% extends 'base_list.html' %}
+{% block title %}لیست تجهیزات پزشکی افزوده شده در ماه گذشته{% endblock %}
+{%block list_title%}لیست تجهیزات پزشکی افزوده شده در ماه گذشته{%endblock%}
+{%block filter_field%}
+<div class="col-sm-6">
+  <label for="id_id" class="form-label">Id</label>
+  <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+</div>
+<div class="col-sm-6">
+  <label for="name" class="form-label">نام</label>
+  <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+</div>
+<div class="col-sm-6">
+  <label for="manufacturer" class="form-label">تولید کننده</label>
+  <input  class="form-control" type="text" name="manufacturer" step="any" id="manufacturer" value="{{ request.GET.manufacturer }}" >
+</div>
+<div class="col-sm-6">
+  <label for="serial_number" class="form-label">شماره سریال</label>
+  <input  class="form-control" type="text" name="serial_number" step="any" id="serial_number" value="{{ request.GET.serial_number }}" >
+</div>
+<div class="col-sm-6">
+  <label for="location" class="form-label">لوکیشن</label>
+  <input  class="form-control" type="text" name="location" step="any" id="location" value="{{ request.GET.location }}" >
+</div>
+<div class="col-sm-6">
+  <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+  </label>
+  <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+</div>
+<div class="col-sm-6">
+  <label for="acquisition_date" class="form-label">تاریخ شروع استفاده از دستگاه</label>
+  <input  class="form-control" type="date" name="acquisition_date" step="any" id="acquisition_date" value="{{ request.GET.acquisition_date }}" >
+</div>
+<div class="col-sm-6">
+  <label for="date" class="form-label">تاریخ</label>
+  <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+</div>
+<div class="col-sm-6">
+  <label for="date_range">محدوده زمانی</label>
+  <select class="form-select" name="date_range" id="date_range">
+    <option value="" selected>---------</option>
+    <option value="today">امروز</option>
+    <option value="this_week">هفته گذشته</option>
+    <option value="this_month">ماه گذشته</option>
+  </select>
+</div>
+{%endblock%}
+{%block buttons%} 
+<form action="{% url 'asset:delete_selected_equipment' %}" method="post" id="deleteForm">
+  {% csrf_token %}
+<a href="{% url 'reports:performance_management_report'%}" class="btn btn-success me-2">بازگشت به صفحه گزارش عملکرد</a>
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+{%endblock%}
+{%block thead%}
+<th scope="col"><input type="checkbox" id="selectAll"></th>
+<th scope="col">ID</th>
+<th scope="col">نام</th>
+<th scope="col">تولید کننده</th>
+<th scope="col">شماره سریال</th>
+<th scope="col">لوکیشن</th>
+<th scope="col">اکشن ها</th>
+{%endblock%}
+{%block tbody%}
+{%for i in equipment%}
+<tr class="fw-normal">       
+  <td><input type="checkbox" name="equipment_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
+  <td class="align-middle">
+    <span>{{i.id}}</span>
+  </td>
+  <td class="align-middle">
+    <span>{{i.name}}</span>
+  </td>
+  <td class="align-middle">
+    <span> {{i.manufacturer}} </span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.serial_number}}</span>
+    </td>
+    <td class="align-middle">
+      <span>{{i.serial_number}}</span>
+    </td>
+  <td class="align-middle">
+    <a href="{%url 'asset:equipment_detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+    <a href="{%url 'asset:equipment_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
+  </td>
+</tr>
+{%endfor%}
+
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+  
+
+  
+  
+{%endblock%}
+{%block delete_content%}
+موارد انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}

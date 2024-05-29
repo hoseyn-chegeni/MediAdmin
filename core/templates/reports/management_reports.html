@@ -68,11 +68,20 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل تجهیزات ثبت شده در سیستم:</strong> {{total_equipment}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل تجهیزات ثبت شده در سیستم: {{total_equipment}}</strong> 
+                            <a href="{% url 'asset:equipment_list' %}"  class="btn btn-outline-secondary btn-sm">لیست تجهیزات پزشکی</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تعداد تجهیزات در حال استفاده:</strong> {{equipment_utilization}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد تجهیزات در حال استفاده: {{equipment_utilization}}</strong>
+                            <a href="{% url 'asset:in_use_list' %}"  class="btn btn-outline-secondary btn-sm">لیست دستگاه های در حال استفاده</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تجهیزات افزوده شده در ماه گذشته:</strong> {{new_equipment}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تجهیزات افزوده شده در ماه گذشته: {{new_equipment}}</strong>
+                            <a href="{% url 'asset:new_list' %}"  class="btn btn-outline-secondary btn-sm">لیست تجهیزات افزوده شده در ماه گذشته</a>
+                        </p>
                     </div>
                 </div>
             </div>
