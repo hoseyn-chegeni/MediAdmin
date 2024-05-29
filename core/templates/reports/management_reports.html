@@ -100,13 +100,25 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل نوبت های ثبت شده در سیستم:</strong> {{total_appointments}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل نوبت های ثبت شده در سیستم: {{total_appointments}}</strong>
+                            <a href="{% url 'planner:total_list' %}"  class="btn btn-outline-secondary btn-sm">لیست نوبت های ثبت شده</a>
+                            </p>
                         <hr>
-                        <p class="card-text"><strong>تعداد کل نوبت های پذیرش شده :</strong> {{completed_appointments}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل نوبت های پذیرش شده : {{completed_appointments}}</strong> 
+                            <a href="{% url 'planner:complete_list' %}"  class="btn btn-outline-secondary btn-sm">لیست نوبت های پذیرش شده</a>
+                            </p>
                         <hr>
-                        <p class="card-text"><strong>تعداد کل نوبت های مراجعه نشده:</strong> {{missed_appointments}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل نوبت های مراجعه نشده: {{missed_appointments}}</strong>
+                            <a href="{% url 'planner:non_referral_list' %}"  class="btn btn-outline-secondary btn-sm">لیست نوبت های مراجعه شده</a>
+                            </p>
                         <hr>
-                        <p class="card-text"><strong> تعداد کل نوبت های لغو شده : </strong> {{cancelled_appointments}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong> تعداد کل نوبت های لغو شده : {{cancelled_appointments}}</strong>
+                            <a href="{% url 'planner:total_deleted_list' %}"  class="btn btn-outline-secondary btn-sm">لیست نوبت های لغو شده</a>
+                        </p>
                         <hr>
                     </div>
                 </div>

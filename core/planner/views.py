@@ -189,3 +189,34 @@ class TodaySessionListView(BaseListView):
 
     def get_queryset(self):
         return Session.objects.filter(day__date=datetime.now())
+
+
+
+#############################
+#############################
+#############################
+######## REPORT LIST ########
+#############################
+#############################
+#############################
+
+
+class CompleteSessionListView(BaseListView):
+    model = Session
+    template_name = "planner/reports/complete_list.html"
+    context_object_name = "session"
+    filterset_class = SessionFilters
+    permission_required = "planner.view_session"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status="پذیرش شده")
+
+class NonReferralSessionListView(BaseListView):
+    model = Session
+    template_name = "planner/reports/non_referral_list.html"
+    context_object_name = "session"
+    filterset_class = SessionFilters
+    permission_required = "planner.view_session"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status="عدم مراجعه")

@@ -1,0 +1,189 @@
+{% extends 'base.html'%}
+{% block title %}لیست نوبت های مراجعه نشده{% endblock %}
+
+{%block content%}
+<div class="container" style="padding-bottom: 70%;">
+    <section class="vh-100 gradient-custom-2">
+        <div class="container py-5 h-100">
+          <div class="text-center pt-3 pb-2">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+              alt="Check" width="60">
+            <h2 class="my-4">لیست نوبت های مراجعه نشده</h2>
+          </div>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-10">
+              <div class="card mask-custom">
+                <div class="card-body p-4 text-white">
+                  <form class="table text-white mb-0" method="get">
+                    {%csrf_token%}
+                    <div class="row g-3">
+                      <div class="col-sm-6">
+                        <label for="id_id" class="form-label">ID</label>
+                        <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+                      </div>
+        
+                      <div class="col-sm-6">
+                        <label for="client_id" class="form-label">شماره پرونده بیمار</label>
+                        <input  class="form-control" type="number" name="client_id" step="any" id="client_id"value="{{ request.GET.client_id }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="name" class="form-label">نام بیمار</label>
+                        <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="national_id" class="form-label">کدملی بیمار</label>
+                        <input   class="form-control" type="text" name="national_id" step="any" id="national_id" value="{{ request.GET.national_id }}">
+                      </div>
+
+                        <div class="col-sm-6">
+                          <label for="day_date" class="form-label">تاریخ</label>
+                          <input   class="form-control" type="text" name="day_date" step="any" id="day_date" value="{{ request.GET.day_date }}" data-jdp>
+                        </div>
+  
+            
+                        <div class="col-sm-6">
+                          <label  for="service"> سرویس:</label>
+                          <select  class="form-select" name="service"  id="service">
+                            <option value="" selected="">---------</option>
+                          {% for i in filter.form.service.field.queryset%}
+                            <option value="{{i.id}}">{{i}}</option>
+                            {%endfor%}
+                          </select>
+                          </div>
+
+                          <div class="col-sm-6">
+                            <label for="doctor" class="form-label">نام پزشک</label>
+                            <input  class="form-control" type="text" name="doctor" step="any" id="doctor" value="{{ request.GET.doctor }}" >
+                          </div>
+
+                        <div class="col-sm-6">
+                          <label for="created_by_email" class="form-label">ایمیل ایجاد کننده</label>
+                          <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label  for="has_client"> پرونده پزشکی:</label>
+                          <select  class="form-select" name="has_client"  id="has_client">
+                            <option value="" selected="">نمایش همه ی بیماران</option>
+                            <option value="true">نمایش بیماران دارای پرونده</option>
+                            <option value="false">نمایش بیماران فاقد پرونده</option>
+                          </select>
+                          </div>
+
+                      <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
+                    </form>
+                    <div class="mb-4">
+                    <a href="{% url 'planner:service_card' %}" class="btn btn-success me-2">مشاهده تقویم نوبت دهی </a>
+                    <a href="{% url 'reports:performance_management_report' %}" class="btn btn-success me-2">بازگشت به صفحه گزارش عملکرد</a>
+                    </div>
+
+                  <table class="table text-white mb-0">
+                    <thead>
+                      <tr>    
+                        <th scope="col">ID</th>
+                        <th scope="col">شماره پرونده بیمار</th>
+                        <th scope="col">نام </th>
+                        <th scope="col">کدملی</th>
+                        <th scope="col">شماره همراه</th>
+                        <th scope="col">تاریخ</th>
+                        <th scope="col">سرویس</th>
+                        <th scope="col">اکشن</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for i in session%}
+                      <tr class="fw-normal">
+                        <th>
+                          <span class="ms-2">{{i.id}}</span>
+                        </th>
+                        <td class="align-middle">
+                          {% if i.client%}
+                          <span>{{i.client.id}}</span>
+                          {%else%}
+                          <span class="badge bg-secondary rounded-pill">فاقد پرونده</span>
+                          {% endif %}
+                        </td>
+                        <td class="align-middle">
+                          <span>{{i.get_full_name}}</span>
+                          </td>
+
+                          <td class="align-middle">
+                            <span>{{i.national_id}}</span>
+                            </td>
+
+                            <td class="align-middle">
+                              <span>{{i.phone_number}}</span>
+                              </td>
+                              <td class="align-middle">
+                                <span>{{i.day.mock_date}}</span>
+                              </td>
+                              <td class="align-middle">
+                                <span>{{i.service}}</span>
+                              </td>
+
+
+
+
+                              <td class="align-middle">
+                                <span>
+                                  {% if i.client %}
+                                  <a href="{%url 'client:detail' i.client.id%}" class="btn btn-outline-success btn-sm">جزییات بیمار</a>
+                                  {%else%}
+                                  <a href="{% url 'client:create_from_session' i.id %}" class="btn btn-outline-success btn-sm">ایجاد پرونده</a>
+                                {% endif %}
+                              </span>
+                              </td>
+                      </tr>
+                      {%endfor%}
+
+                      </tbody>
+                  </table>
+    
+      
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">قبلی</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</a>
+                        </li>
+                
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">بعدی</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </section>
+</div>
+<script>
+  jalaliDatepicker.startWatch();
+</script>
+{%endblock%}
