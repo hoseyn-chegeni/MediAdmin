@@ -414,6 +414,8 @@
                     </div>
                 </div>
             </div>
+            <h5 class="card-title">مجموع درآمد حاصل از هر سرویس</h5>
+            <canvas id="serviceRevenueChart"></canvas>
         </div>
         <div class="col-md-6">
             <div class="card">
@@ -1078,7 +1080,7 @@
                     datasets: [{
                         label: 'Number of Receptions',
                         data: counts,
-                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }]
@@ -1495,4 +1497,50 @@
         })
         .catch(error => console.error('Error fetching data:', error));
 </script>
+
+<script>
+    // Fetch data using AJAX
+    fetch('{% url "charts:service_revenue_chart" %}')
+        .then(response => response.json())
+        .then(data => {
+            // Data received, create chart
+            var labels = data.services;
+            var chartData = data.chart_data.map(item => item.revenue);
+
+            // Define an array of colors for each bar
+            var colors = [
+                'rgba(255, 99, 132, 0.2)', 
+                'rgba(54, 162, 235, 0.2)', 
+                'rgba(255, 206, 86, 0.2)', 
+                'rgba(75, 192, 192, 0.2)', 
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ];
+
+            // Create chart using Chart.js
+            var ctx = document.getElementById('serviceRevenueChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'درآمد',
+                        data: chartData,
+                        backgroundColor: colors.slice(0, labels.length), // Use the array of colors
+                        borderColor: colors.slice(0, labels.length).map(color => color.replace('0.2', '1')), // Use the same colors with full opacity for border
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
 {%endblock%}

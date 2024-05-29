@@ -468,3 +468,20 @@ def top_expenses_chart(request):
             "subjects": [expense.subject for expense in top_expenses],
         }
     )
+def service_revenue_chart(request):
+    services = Service.objects.all()
+    chart_data = []
+
+    for service in services:
+        total_revenue = Reception.objects.filter(service=service).aggregate(total_revenue=Sum('service__price'))['total_revenue'] or 0
+        chart_data.append({
+            "service": service.name,
+            "revenue": total_revenue
+        })
+
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "services": [service.name for service in services],
+        }
+    )
