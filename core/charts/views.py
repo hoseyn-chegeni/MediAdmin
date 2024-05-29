@@ -412,3 +412,20 @@ def doctor_consultations_chart(request):
             "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
         }
     )
+
+
+def doctor_revenue_chart(request):
+    doctors = Doctor.objects.all()
+    chart_data = []
+
+    for doctor in doctors:
+        receptions = Reception.objects.filter(service__doctor=doctor)
+        total_revenue = sum(reception.service.price for reception in receptions if reception.service and reception.service.price)
+        chart_data.append({"doctor": f"{doctor.first_name} {doctor.last_name}", "total_revenue": total_revenue})
+
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
+        }
+    )
