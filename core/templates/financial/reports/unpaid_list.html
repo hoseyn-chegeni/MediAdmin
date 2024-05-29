@@ -1,0 +1,122 @@
+{% extends 'base_list.html' %}
+{% block title %}لیست صورتحساب های پرداخت نشده{% endblock %}
+{%block list_title%}لیست صورتحساب های پرداخت نشده{%endblock%}
+{%block filter_field%}
+<div class="col-sm-6">
+  <label for="id" class="form-label">ID</label>
+  <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+</div>
+  <div class="col-sm-6">
+    <label for="invoice_number" class="form-label">شماره صورتحساب</label>
+    <input  class="form-control" type="text" name="invoice_number" step="any" id="invoice_number"value="{{ request.GET.invoice_number }}" >
+  </div>
+    <div class="col-sm-6">
+      <label for="reception_id" class="form-label">شماره پذیرش</label>
+      <input  class="form-control" type="number" name="reception_id" step="any" id="reception_id"value="{{ request.GET.reception_id }}" >
+    </div>
+    <div class="col-sm-6">
+      <label for="client" class="form-label">بیمار</label>
+      <input  class="form-control" type="text" name="client" step="any" id="client"value="{{ request.GET.client }}" >
+    </div>
+      <div class="col-sm-6">
+        <label for="coupon" class="form-label">عنوان تخفیف</label>
+        <input  class="form-control" type="text" name="coupon" step="any" id="coupon"value="{{ request.GET.coupon }}" >
+      </div>
+        <div class="col-sm-6">
+          <label for="service" class="form-label">نام سرویس</label>
+          <input  class="form-control" type="text" name="service" step="any" id="service"value="{{ request.GET.service }}" >
+        </div>
+          <div class="col-sm-6">
+            <label for="doctor" class="form-label">نام پزشک</label>
+            <input  class="form-control" type="text" name="doctor" step="any" id="doctor"value="{{ request.GET.doctor }}" >
+          </div>
+  <div class="col-sm-6">
+      <label for="date" class="form-label">تاریخ</label>
+      <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+    </div>
+<div class="col-sm-6">
+  <label for="date_range">محدوده زمانی</label>
+  <select class="form-select" name="date_range" id="date_range">
+    <option value="" selected>---------</option>
+    <option value="today">امروز</option>
+    <option value="this_week">هفته گذشته</option>
+    <option value="this_month">ماه گذشته</option>
+  </select>
+</div>
+
+
+{%endblock%}
+{%block buttons%} 
+<form action="{% url 'financial:delete_selected_financial' %}" method="post" id="deleteForm">
+  {% csrf_token %}
+  <a href="{% url 'reports:performance_management_report' %}" class="btn btn-success me-2">بازگشت به صفحه گزارش عملکرد</a>
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+{%endblock%}
+{%block thead%}
+
+<th scope="col"><input type="checkbox" id="selectAll"></th>
+<th scope="col">شماره صورتحساب</th>
+<th scope="col">شماره پذیرش</th>
+<th scope="col">نام بیمار</th>
+<th scope="col">نام سرویس</th>
+<th scope="col">تاریخ</th>
+<th scope="col">مبلغ نهایی</th>
+<th scope="col">اکشن ها</th>
+
+{%endblock%}
+{%block tbody%}
+{%for i in financial%}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="financial_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.reception.id}}</span>
+  </td>
+  <td class="align-middle">
+    <span>{{i.reception.client}}</span>
+  </td>
+  <td class="align-middle">
+    <span>{{i.reception.service}}</span>
+  </td>
+    <td class="align-middle">
+      <span>{{i.created_at.date}}</span>
+    </td>
+    <td class="align-middle">
+      <span>{{i.final_amount}}</span>
+    </td>
+  <td class="align-middle">
+      <a href="{%url 'financial:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات"> <i class="fas fa-info-circle"></i></a>
+      <a href="{%url 'financial:invoice' i.id %}" data-mdb-toggle="tooltip" title="نمایش صورتحساب"><i class="fas fa-file-invoice" ></i></a>
+  </td>
+</tr>
+{%endfor%}
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+  
+  
+{%endblock%} 
+{%block delete_content%}
+صورتحساب های انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}

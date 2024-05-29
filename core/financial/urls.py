@@ -14,6 +14,9 @@ from .views import (
     DeleteSelectedOfficeExpensesView,
     UpdatePaymentStatusView,
     UnpaidInvoiceListView,
+    PaidInvoiceListView,
+    UnPaidInvoiceListView,
+
 )
 
 app_name = "financial"
@@ -66,4 +69,7 @@ urlpatterns = [
         DeleteSelectedOfficeExpensesView.as_view(),
         name="delete_selected_office_expenses",
     ),
+    path("paid_list/", PaidInvoiceListView.as_view(), name="paid_list"),
+    path("unpaid_list/", UnPaidInvoiceListView.as_view(), name="unpaid_list"),
+
 ]

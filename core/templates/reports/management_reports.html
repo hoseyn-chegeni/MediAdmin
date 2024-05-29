@@ -337,11 +337,20 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل  صورتحساب های ثبت شده در سیستم:</strong> {{total_invoices}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل  صورتحساب های ثبت شده در سیستم: {{total_invoices}}</strong> 
+                            <a href="{% url 'financial:list' %}"  class="btn btn-outline-secondary btn-sm">لیست صورتحساب ها</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تعداد کل  صورتحساب های  پرداخت شده در سیستم:</strong> {{paid_invoices}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل  صورتحساب های  پرداخت شده در سیستم: {{paid_invoices}}</strong>
+                            <a href="{% url 'financial:paid_list' %}"  class="btn btn-outline-secondary btn-sm">لیست صورتحساب های پرداخت شده</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تعداد کل  صورتحساب های  پرداخت نشده در سیستم:</strong> {{unpaid_invoices}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل  صورتحساب های  پرداخت نشده در سیستم: {{unpaid_invoices}}</strong>
+                            <a href="{% url 'financial:unpaid_list' %}"  class="btn btn-outline-secondary btn-sm">لیست صورتحساب های پرداخت نشده</a>
+                        </p>
                         <hr>
                         <p class="card-text"><strong>میانگین ارزش صورتحساب ها:  </strong> {{average_invoice_value}}</p>
                         <hr>
