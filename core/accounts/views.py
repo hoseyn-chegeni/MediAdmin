@@ -30,9 +30,10 @@ from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views.generic import View, DetailView
 from consumable.models import ConsumableV2, Supplier
-
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.utils.timezone import now
+from datetime import timedelta
 
 
 # Create your views here.
@@ -223,3 +224,58 @@ class DeleteSelectedUsersView(View):
                 request, f"تعداد {deleted_users_count[0]} کاربر با موفقیت حذف شدند."
             )  # Add success message
         return redirect("accounts:user_list")
+
+
+#############################
+#############################
+#############################
+######## REPORT LIST ########
+#############################
+#############################
+#############################
+
+
+class ActiveUserListView(BaseListView):
+    model = User
+    template_name = "accounts/report/active_list.html"
+    context_object_name = "users"
+    filterset_class = UserFilter
+    permission_required = "accounts.view_user"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
+class SuspendUserListView(BaseListView):
+    model = User
+    template_name = "accounts/report/suspend_list.html"
+    context_object_name = "users"
+    filterset_class = UserFilter
+    permission_required = "accounts.view_user"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=False)
+
+
+class InActiveForMonthUserListVIew(BaseListView):
+    model = User
+    template_name = "accounts/report/in_active_list.html"
+    context_object_name = "users"
+    filterset_class = UserFilter
+    permission_required = "accounts.view_user"
+
+    def get_queryset(self):
+        one_month_ago = now() - timedelta(days=30)
+        return super().get_queryset().filter(last_login__lt=one_month_ago)
+
+
+class NewUserListView(BaseListView):
+    model = User
+    template_name = "accounts/report/new_list.html"
+    context_object_name = "users"
+    filterset_class = UserFilter
+    permission_required = "accounts.view_user"
+
+    def get_queryset(self):
+        one_month_ago = now() - timedelta(days=30)
+        return super().get_queryset().filter(created_at__gte=one_month_ago)

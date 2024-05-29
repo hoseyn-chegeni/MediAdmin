@@ -1175,7 +1175,7 @@ class PerformanceManagementReportView(TemplateView):
             .count()
         )
         total_receptions = Reception.objects.count()
-        no_risk_client = Client.objects.filter(high_risk = None).count() 
+        no_risk_client = Client.objects.filter(high_risk=None).count()
 
         context["total_clients"] = total_clients
         context["new_clients"] = Client.objects.filter(
@@ -1189,7 +1189,7 @@ class PerformanceManagementReportView(TemplateView):
         context["average_receptions_per_client"] = (
             (total_receptions / total_clients) if total_clients > 0 else 0
         )
-        context['high_risk_clients'] = total_clients - no_risk_client
+        context["high_risk_clients"] = total_clients - no_risk_client
         # CONSUMABLES
         context["total_consumables"] = ConsumableV2.objects.all().count()
         context["low_stock_items"] = (

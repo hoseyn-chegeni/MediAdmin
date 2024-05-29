@@ -13,6 +13,7 @@ from financial.models import Financial, OfficeExpenses
 from tasks.models import Task
 from consumable.models import Supplier, Inventory
 from doctor.models import Doctor
+
 # Create your views here.
 
 
@@ -344,41 +345,37 @@ def task_status_chart(request):
 
 def suppliers_by_city_chart(request):
     # Query to get the count of suppliers in each city
-    city_counts = Supplier.objects.values('city').annotate(count=Count('id'))
+    city_counts = Supplier.objects.values("city").annotate(count=Count("id"))
 
     # Extract city names and counts
-    cities = [item['city'] for item in city_counts]
-    counts = [item['count'] for item in city_counts]
+    cities = [item["city"] for item in city_counts]
+    counts = [item["count"] for item in city_counts]
 
-    return JsonResponse({'cities': cities, 'counts': counts})
+    return JsonResponse({"cities": cities, "counts": counts})
 
 
 def inventory_value_by_supplier_chart(request):
     # Aggregate total value of inventory for each supplier
     suppliers = Supplier.objects.annotate(
-        total_value=Sum(F('inventory__quantity') * F('inventory__price'))
-    ).order_by('-total_value')[:5]
+        total_value=Sum(F("inventory__quantity") * F("inventory__price"))
+    ).order_by("-total_value")[:5]
 
     chart_data = []
     for supplier in suppliers:
         total_value = supplier.total_value or 0
-        chart_data.append({
-            'supplier': supplier.name,
-            'total_value': total_value
-        })
+        chart_data.append({"supplier": supplier.name, "total_value": total_value})
 
     return JsonResponse(chart_data, safe=False)
 
 
 def doctors_by_specialty_chart(request):
-    specialties = Doctor.objects.values('specialization').annotate(count=Count('id'))
+    specialties = Doctor.objects.values("specialization").annotate(count=Count("id"))
     chart_data = []
     for specialty in specialties:
-        chart_data.append({
-            'specialization': specialty['specialization'],
-            'count': specialty['count']
-        })
-    return JsonResponse({'chart_data': chart_data})
+        chart_data.append(
+            {"specialization": specialty["specialization"], "count": specialty["count"]}
+        )
+    return JsonResponse({"chart_data": chart_data})
 
 
 def inventory_chart(request):
@@ -404,12 +401,19 @@ def doctor_consultations_chart(request):
 
     for doctor in doctors:
         count = Reception.objects.filter(service__doctor=doctor).count()
-        chart_data.append({"doctor": f"{doctor.first_name} {doctor.last_name}", "reception_count": count})
+        chart_data.append(
+            {
+                "doctor": f"{doctor.first_name} {doctor.last_name}",
+                "reception_count": count,
+            }
+        )
 
     return JsonResponse(
         {
             "chart_data": chart_data,
-            "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
+            "doctors": [
+                f"{doctor.first_name} {doctor.last_name}" for doctor in doctors
+            ],
         }
     )
 
@@ -420,16 +424,26 @@ def doctor_revenue_chart(request):
 
     for doctor in doctors:
         receptions = Reception.objects.filter(service__doctor=doctor)
-        total_revenue = sum(reception.service.price for reception in receptions if reception.service and reception.service.price)
-        chart_data.append({"doctor": f"{doctor.first_name} {doctor.last_name}", "total_revenue": total_revenue})
+        total_revenue = sum(
+            reception.service.price
+            for reception in receptions
+            if reception.service and reception.service.price
+        )
+        chart_data.append(
+            {
+                "doctor": f"{doctor.first_name} {doctor.last_name}",
+                "total_revenue": total_revenue,
+            }
+        )
 
     return JsonResponse(
         {
             "chart_data": chart_data,
-            "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
+            "doctors": [
+                f"{doctor.first_name} {doctor.last_name}" for doctor in doctors
+            ],
         }
     )
-
 
 
 def doctor_wage_chart(request):
@@ -438,29 +452,38 @@ def doctor_wage_chart(request):
 
     for doctor in doctors:
         receptions = Reception.objects.filter(service__doctor=doctor)
-        total_wage = sum((reception.service.price * (reception.service.doctors_wage_percentage / 100)) for reception in receptions if reception.service and reception.service.price)
-        chart_data.append({"doctor": f"{doctor.first_name} {doctor.last_name}", "total_wage": total_wage})
+        total_wage = sum(
+            (
+                reception.service.price
+                * (reception.service.doctors_wage_percentage / 100)
+            )
+            for reception in receptions
+            if reception.service and reception.service.price
+        )
+        chart_data.append(
+            {
+                "doctor": f"{doctor.first_name} {doctor.last_name}",
+                "total_wage": total_wage,
+            }
+        )
 
     return JsonResponse(
         {
             "chart_data": chart_data,
-            "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
+            "doctors": [
+                f"{doctor.first_name} {doctor.last_name}" for doctor in doctors
+            ],
         }
     )
 
 
-
-
 def top_expenses_chart(request):
     # Fetch the top 5 highest expenses
-    top_expenses = OfficeExpenses.objects.order_by('-amount')[:5]
+    top_expenses = OfficeExpenses.objects.order_by("-amount")[:5]
     chart_data = []
 
     for expense in top_expenses:
-        chart_data.append({
-            "subject": expense.subject,
-            "amount": float(expense.amount)
-        })
+        chart_data.append({"subject": expense.subject, "amount": float(expense.amount)})
 
     return JsonResponse(
         {
@@ -468,16 +491,20 @@ def top_expenses_chart(request):
             "subjects": [expense.subject for expense in top_expenses],
         }
     )
+
+
 def service_revenue_chart(request):
     services = Service.objects.all()
     chart_data = []
 
     for service in services:
-        total_revenue = Reception.objects.filter(service=service).aggregate(total_revenue=Sum('service__price'))['total_revenue'] or 0
-        chart_data.append({
-            "service": service.name,
-            "revenue": total_revenue
-        })
+        total_revenue = (
+            Reception.objects.filter(service=service).aggregate(
+                total_revenue=Sum("service__price")
+            )["total_revenue"]
+            or 0
+        )
+        chart_data.append({"service": service.name, "revenue": total_revenue})
 
     return JsonResponse(
         {
@@ -489,16 +516,26 @@ def service_revenue_chart(request):
 
 def service_cancellations_chart(request):
     # Aggregate the number of cancellations per service
-    cancellations = DeletedSession.objects.values('service__name').annotate(count=Count('id')).order_by('-count')
+    cancellations = (
+        DeletedSession.objects.values("service__name")
+        .annotate(count=Count("id"))
+        .order_by("-count")
+    )
     chart_data = []
 
     for cancellation in cancellations:
-        chart_data.append({
-            "service": cancellation['service__name'],
-            "cancellations": cancellation['count']
-        })
+        chart_data.append(
+            {
+                "service": cancellation["service__name"],
+                "cancellations": cancellation["count"],
+            }
+        )
 
-    return JsonResponse({
-        "chart_data": chart_data,
-        "services": [cancellation['service__name'] for cancellation in cancellations],
-    })
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "services": [
+                cancellation["service__name"] for cancellation in cancellations
+            ],
+        }
+    )

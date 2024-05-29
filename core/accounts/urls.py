@@ -13,6 +13,10 @@ from .views import (
     LoginAsUserView,
     DeleteSelectedUsersView,
     logout_view,
+    NewUserListView,
+    ActiveUserListView,
+    InActiveForMonthUserListVIew,
+    SuspendUserListView,
 )
 
 app_name = "accounts"
@@ -41,4 +45,12 @@ urlpatterns = [
     path(
         "users/delete/", DeleteSelectedUsersView.as_view(), name="delete_selected_users"
     ),
+    path("user/active_list/", ActiveUserListView.as_view(), name="active_list"),
+    path(
+        "user/in_active_list/",
+        InActiveForMonthUserListVIew.as_view(),
+        name="in_active_list",
+    ),
+    path("user/suspend_list/", SuspendUserListView.as_view(), name="suspend_list"),
+    path("user/new_list/", NewUserListView.as_view(), name="new_list"),
 ]

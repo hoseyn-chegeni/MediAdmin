@@ -18,15 +18,30 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل کاربران سیستم:</strong> {{total_users}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل کاربران سیستم:{{total_users}}</strong> 
+                            <a href="{% url 'accounts:user_list' %}"  class="btn btn-outline-secondary btn-sm">لیست کاربران</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>کاربران فعال:</strong> {{active_users}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>کاربران فعال:{{active_users}}</strong>
+                            <a href="{% url 'accounts:active_list' %}"  class="btn btn-outline-secondary btn-sm">لیست کاربران فعال</a>
+                            </p>
                         <hr>
-                        <p class="card-text"><strong>کاربران معلق:</strong> {{accounts_suspensions}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>کاربران معلق: {{accounts_suspensions}}</strong> 
+                            <a href="{% url 'accounts:suspend_list' %}"  class="btn btn-outline-secondary btn-sm">لیست کاربران معلق</a>
+                            </p>
                         <hr>
-                        <p class="card-text"><strong>کاربران لاگین نکرده در ماه گذشته: </strong> {{inactive_accounts}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>کاربران لاگین نکرده در ماه گذشته: {{inactive_accounts}}</strong>
+                            <a href="{% url 'accounts:in_active_list' %}"  class="btn btn-outline-secondary btn-sm">لیست کاربران لاگین نکرده در ماه گذشته </a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>کاربران افزوده شده در ماه گذشته: </strong> {{new_users}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>کاربران افزوده شده در ماه گذشته: {{new_users}}</strong> 
+                            <a href="{% url 'accounts:new_list' %}"  class="btn btn-outline-secondary btn-sm">لیست کاربران افزوده شده در ماه گذشته </a>
+                            </p>
                     </div>
                 </div>
             </div>
