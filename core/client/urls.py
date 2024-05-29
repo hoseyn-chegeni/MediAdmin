@@ -114,5 +114,9 @@ urlpatterns = [
     path("new_list/", NewClientListView.as_view(), name="new_list"),
     path("high_risks/", HighRiskClientListView.as_view(), name="high_risks"),
     path("follow_up/", FollowUpClientListView.as_view(), name="follow_up"),
-    path("single_reception/", SingleReceptionClientListView.as_view(), name="single_reception"),
+    path(
+        "single_reception/",
+        SingleReceptionClientListView.as_view(),
+        name="single_reception",
+    ),
 ]

@@ -35,6 +35,14 @@ urlpatterns = [
         name="total_deleted_list",
     ),
     path("list/today/", TodaySessionListView.as_view(), name="today_list"),
-    path("session/complete_list/", CompleteSessionListView.as_view(), name="complete_list"),
-    path("session/non_referral_list/", NonReferralSessionListView.as_view(), name="non_referral_list"),
+    path(
+        "session/complete_list/",
+        CompleteSessionListView.as_view(),
+        name="complete_list",
+    ),
+    path(
+        "session/non_referral_list/",
+        NonReferralSessionListView.as_view(),
+        name="non_referral_list",
+    ),
 ]

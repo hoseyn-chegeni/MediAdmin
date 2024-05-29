@@ -191,7 +191,6 @@ class TodaySessionListView(BaseListView):
         return Session.objects.filter(day__date=datetime.now())
 
 
-
 #############################
 #############################
 #############################
@@ -210,6 +209,7 @@ class CompleteSessionListView(BaseListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(status="پذیرش شده")
+
 
 class NonReferralSessionListView(BaseListView):
     model = Session

@@ -14,6 +14,8 @@ from django.contrib import messages
 from django.db.models import Q, F, Sum
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
+from django.utils.timezone import now
+from datetime import timedelta
 
 # Create your views here.
 
@@ -299,7 +301,8 @@ class DeleteSelectedSupplierView(View):
 #############################
 #############################
 #############################
-    
+
+
 class LowStockItemListView(BaseListView):
     model = ConsumableV2
     template_name = "consumable/reports/low_stock_list.html"
@@ -309,24 +312,34 @@ class LowStockItemListView(BaseListView):
 
     def get_queryset(self):
         # Annotate each consumable with the current quantity in stock
-        return super().get_queryset().annotate(
+        return (
+            super()
+            .get_queryset()
+            .annotate(
                 current_quantity=Sum(
                     "inventory__quantity", filter=Q(inventory__status="در انبار")
                 )
-            ).filter(current_quantity__lt=F("minimum_stock_level"))
-        
-    
+            )
+            .filter(current_quantity__lt=F("minimum_stock_level"))
+        )
+
+
 class ExpiredItemListView(ListView):
     model = Inventory
     template_name = "consumable/reports/expired_list.html"
     context_object_name = "inventory"
 
     def get_queryset(self):
-            return super().get_queryset().filter(status="منقضی شده")
-    
+        return super().get_queryset().filter(status="منقضی شده")
+
+
 class NewSupplierListView(BaseListView):
     model = Supplier
     template_name = "consumable/reports/new_supplier_list.html"
     context_object_name = "supplier"
     filterset_class = SupplierFilter
     permission_required = "consumable.view_supplier"
+
+    def get_queryset(self):
+        one_month_ago = now() - timedelta(days=30)
+        return super().get_queryset().filter(created_at__gte=one_month_ago)

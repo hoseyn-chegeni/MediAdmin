@@ -33,6 +33,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models import Count
 
+
 # Create your views here.
 class ClientListView(BaseListView):
     model = Client
@@ -478,6 +479,7 @@ class DeleteSelectedAttachmentsView(View):
             )
         )
 
+
 #############################
 #############################
 #############################
@@ -485,7 +487,7 @@ class DeleteSelectedAttachmentsView(View):
 #############################
 #############################
 #############################
-    
+
 
 class NewClientListView(BaseListView):
     model = Client
@@ -497,7 +499,7 @@ class NewClientListView(BaseListView):
     def get_queryset(self):
         one_month_ago = now() - timedelta(days=30)
         return super().get_queryset().filter(created_at__gte=one_month_ago)
-    
+
 
 class FollowUpClientListView(BaseListView):
     model = Client
@@ -507,7 +509,13 @@ class FollowUpClientListView(BaseListView):
     permission_required = "client.view_client"
 
     def get_queryset(self):
-        return super().get_queryset().annotate(reception_count=Count("reception")).filter(reception_count__gte=2)
+        return (
+            super()
+            .get_queryset()
+            .annotate(reception_count=Count("reception"))
+            .filter(reception_count__gte=2)
+        )
+
 
 class SingleReceptionClientListView(BaseListView):
     model = Client
@@ -517,7 +525,13 @@ class SingleReceptionClientListView(BaseListView):
     permission_required = "client.view_client"
 
     def get_queryset(self):
-        return super().get_queryset().annotate(reception_count=Count("reception")).filter(reception_count__lte=1)
+        return (
+            super()
+            .get_queryset()
+            .annotate(reception_count=Count("reception"))
+            .filter(reception_count__lte=1)
+        )
+
 
 class HighRiskClientListView(BaseListView):
     model = Client

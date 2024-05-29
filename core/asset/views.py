@@ -15,6 +15,7 @@ from django.views.generic import View
 from django.utils.timezone import now
 from datetime import timedelta
 
+
 # Medical Equipment Views Here.
 class EquipmentListView(BaseListView):
     model = Equipment
@@ -71,7 +72,6 @@ class DeleteSelectedEquipmentView(View):
         return redirect("asset:equipment_list")
 
 
-
 #############################
 #############################
 #############################
@@ -79,7 +79,7 @@ class DeleteSelectedEquipmentView(View):
 #############################
 #############################
 #############################
-    
+
 
 class InUseEquipmentsView(BaseListView):
     model = Equipment
@@ -90,7 +90,8 @@ class InUseEquipmentsView(BaseListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(in_use=True)
-    
+
+
 class NewEquipmentsView(BaseListView):
     template_name = "asset/equipment/reports/new_list.html"
     context_object_name = "equipment"
