@@ -29,7 +29,9 @@ from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from planner.models import Session
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models import Count
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -475,3 +477,54 @@ class DeleteSelectedAttachmentsView(View):
                 "client:attachment_list", kwargs={"pk": self.kwargs["client_id"]}
             )
         )
+
+#############################
+#############################
+#############################
+######## REPORT LIST ########
+#############################
+#############################
+#############################
+    
+
+class NewClientListView(BaseListView):
+    model = Client
+    template_name = "client/reports/new_list.html"
+    context_object_name = "clients"
+    filterset_class = ClientFilters
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        one_month_ago = now() - timedelta(days=30)
+        return super().get_queryset().filter(created_at__gte=one_month_ago)
+    
+
+class FollowUpClientListView(BaseListView):
+    model = Client
+    template_name = "client/reports/follow_up_list.html"
+    context_object_name = "clients"
+    filterset_class = ClientFilters
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        return super().get_queryset().annotate(reception_count=Count("reception")).filter(reception_count__gte=2)
+
+class SingleReceptionClientListView(BaseListView):
+    model = Client
+    template_name = "client/reports/single_reception_list.html"
+    context_object_name = "clients"
+    filterset_class = ClientFilters
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        return super().get_queryset().annotate(reception_count=Count("reception")).filter(reception_count__lte=1)
+
+class HighRiskClientListView(BaseListView):
+    model = Client
+    template_name = "client/reports/high_risk_list.html"
+    context_object_name = "clients"
+    filterset_class = ClientFilters
+    permission_required = "client.view_client"
+
+    def get_queryset(self):
+        return super().get_queryset().exclude(high_risk__isnull=True)

@@ -149,15 +149,28 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل بیماران ثبت شده در سیستم:</strong> {{total_clients}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل بیماران ثبت شده در سیستم: {{total_clients}}</strong>
+                            <a href="{% url 'client:list' %}"  class="btn btn-outline-secondary btn-sm">لیست بیماران</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>تعداد کل بیماران ثبت شده در ماه گذشته:</strong> {{new_clients}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل بیماران ثبت شده در ماه گذشته: {{new_clients}}</strong> 
+                            <a href="{% url 'client:new_list' %}"  class="btn btn-outline-secondary btn-sm">لیست بیماران افزوده شده در ماه گذشته</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>درصد بیمارانی که مجددا در کلینیک پذیرش شده اند:</strong> {{client_retention}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>درصد بیماران با بیش از ۲ پذیرش : {{client_retention}}</strong>
+                            <a href="{% url 'client:single_reception' %}"  class="btn btn-outline-secondary btn-sm"> بیماران تک پذیرشی</a>
+                            <a href="{% url 'client:follow_up' %}"  class="btn btn-outline-secondary btn-sm"> بیماران چند پذیرشی</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>میانگین پذیرش به ازای بیمار:  </strong> {{average_receptions_per_client}}</p>
+                        <p class="card-text"><strong>میانگین پذیرش به ازای بیمار:{{average_receptions_per_client}} </strong></p>
                         <hr>
-                        <p class="card-text"><strong>تعداد بیماران با شرایط  خاص:  </strong> {{high_risk_clients}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد بیماران شرایط  خاص: {{high_risk_clients}} </strong>
+                            <a href="{% url 'client:high_risks' %}"  class="btn btn-outline-secondary btn-sm">لیست بیماران شرایط خاص</a>
+                        </p>
                         <hr>
                     </div>
                 </div>

@@ -1,0 +1,173 @@
+{% extends 'base_list.html' %}
+{% block title %}لیست بیمارانی که مجددا در کلینیک پذیرش شده اند{% endblock %}
+{%block list_title%}لیست بیمارانی که مجددا در کلینیک پذیرش شده اند{%endblock%}
+{%block filter_field%}
+<div class="col-sm-6">
+  <label for="id_id" class="form-label">شماره پرونده</label>
+  <input  class="form-control" type="number" name="id" step="any" id="id_id"value="{{ request.GET.id }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="case_id" class="form-label">شماره پرونده دستی</label>
+  <input  class="form-control" type="text" name="case_id" step="any" id="case_id" value="{{ request.GET.case_id }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="national_id" class="form-label">کد ملی</label>
+  <input  class="form-control" type="text" name="national_id" step="any" id="national_id" value="{{ request.GET.national_id }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="name" class="form-label">نام</label>
+  <input  class="form-control" type="text" name="name" step="any" id="name" value="{{ request.GET.name }}" >
+</div>
+
+<div class="col-sm-6">
+  <label for="phone_number" class="form-label">شماره تماس</label>
+  <input  class="form-control" type="text" name="phone_number" step="any" id="phone_number" value="{{ request.GET.phone_number}}" >
+</div>
+
+<div class="col-sm-6">
+  <label  for="is_vip">VIP</label>
+  <select  class="form-select" name="is_vip"  id="is_vip">
+    <option value="" selected="">---------</option>
+    <option value="true">بله</option>
+    <option value="false">خیر</option>
+  </select>
+  </div>
+
+  <div class="col-sm-6">
+    <label  for="gender">جنسیت</label>
+    <select  class="form-select" name="gender"  id="gender">
+      <option value="" selected="">---------</option>
+      <option value="M">مرد</option>
+      <option value="F">زن</option>
+    </select>
+    </div>
+
+
+
+    <div class="col-sm-6">
+      <label for="insurance">بیمه</label>
+      <select class="form-select" name="insurance" id="insurance">
+        <option value="" selected>---------</option>
+        {% for i in filter.form.insurance.field.queryset %}
+          <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+    <div class="col-sm-6">
+      <label for="date" class="form-label">تاریخ</label>
+      <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+    </div>
+
+    <div class="col-sm-6">
+      <label for="date_range">محدوده زمانی</label>
+      <select class="form-select" name="date_range" id="date_range">
+        <option value="" selected>---------</option>
+        <option value="today">امروز</option>
+        <option value="this_week">هفته گذشته</option>
+        <option value="this_month">ماه گذشته</option>
+      </select>
+    </div>
+
+
+    <div class="col-sm-6">
+      <label for="created_by_email" class="form-label">ایجاد کننده</label>
+      <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+    </div>
+{%endblock%}
+{%block buttons%}
+<form action="{% url 'client:delete_selected_clients' %}" method="post" id="deleteForm">
+  {% csrf_token %}
+  <a href="{% url 'reports:performance_management_report' %}" class="btn btn-success me-2">بازگشت به صفحه گزارش عملکرد</a>
+{% if perms.client.delete_client %}
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> 
+{%endif%}
+{%endblock%}
+{%block thead%}
+<th scope="col"><input type="checkbox" id="selectAll"></th>
+<th scope="col">شماره پرونده </th>
+<th scope="col">شماره پرونده دستی</th>
+<th scope="col">نام</th>
+<th scope="col">کدملی</th>
+<th scope="col">تعداد دفعات مراجعه</th>
+<th scope="col">تاریخ آخرین مراجعه</th>
+<th scope="col">علت آخرین مراجعه</th>
+<th scope="col">اکشن ها</th>
+{%endblock%}
+{%block tbody%}
+{%for i in clients%}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="client_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <th>
+    <span class="ms-2">{{i.case_id}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.first_name}} {{i.last_name}}</span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.national_id}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.number_of_receptions}}</span>
+    </td>
+
+
+    <td class="align-middle">
+      <span>{{i.last_reception_date}}</span>
+    </td>
+
+
+    <td class="align-middle">
+      <span>{{i.last_reception_reason}}</span>
+    </td>
+
+
+  <td class="align-middle">
+      <a href="{%url 'client:detail' i.id %}" data-mdb-toggle="tooltip" title="Detail"> <i class="fas fa-info-circle"></i></a>
+      {% if perms.client.change_client%}
+    <a href="{%url 'client:update' i.id %}" data-mdb-toggle="tooltip" title="Update"><i class="fas fa-edit" ></i></a>
+    <a href="{%url 'client:edit_health_history' i.id %}" data-mdb-toggle="tooltip" title="Update Health History"><i class="fas fa-stethoscope"></i></a>
+    <a href="{%url 'notification:send_sms' i.id %}" data-mdb-toggle="tooltip" title="send sms"><i class="fas fa-sms"></i></a>
+    {%endif%}
+    {% if perms.reception.add_reception %}
+    <a href="{%url 'reception:reception_create_using_profile' i.id %}" data-mdb-toggle="tooltip" title="Add Reception"><i class="fas fa-user-md"></i></a>
+    {% endif %}
+
+  </td>
+</tr>
+{%endfor%}
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+  
+{%endblock%}
+{%block delete_content%}
+بیماران انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}
