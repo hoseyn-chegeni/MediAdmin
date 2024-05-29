@@ -390,7 +390,10 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل هزینه‌ های ثبت شده برای مطب در سیستم:</strong> {{total_expenses}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل هزینه‌ های ثبت شده برای مطب در سیستم: {{total_expenses}}</strong>
+                            <a href="{% url 'financial:office_expenses_list' %}"  class="btn btn-outline-secondary btn-sm">لیست هزینه‌ های کلینیک</a>
+                         </p>
                     </div>
                 </div>
             </div>
