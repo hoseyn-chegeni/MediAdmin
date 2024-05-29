@@ -447,3 +447,24 @@ def doctor_wage_chart(request):
             "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
         }
     )
+
+
+
+
+def top_expenses_chart(request):
+    # Fetch the top 5 highest expenses
+    top_expenses = OfficeExpenses.objects.order_by('-amount')[:5]
+    chart_data = []
+
+    for expense in top_expenses:
+        chart_data.append({
+            "subject": expense.subject,
+            "amount": float(expense.amount)
+        })
+
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "subjects": [expense.subject for expense in top_expenses],
+        }
+    )
