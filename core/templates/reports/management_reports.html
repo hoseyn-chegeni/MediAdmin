@@ -453,7 +453,10 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل پذیرش های ثبت شده در سیستم:</strong> {{total_reception}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل پذیرش های ثبت شده در سیستم:  {{total_reception}}</strong>
+                            <a href="{% url 'reception:list' %}"  class="btn btn-outline-secondary btn-sm">لیست پذیرش ها</a>
+                        </p>
                     </div>
                 </div>
             </div>
