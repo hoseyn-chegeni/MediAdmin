@@ -22,6 +22,8 @@ from .views import (
     InventoryCreateWithPKView,
     DeleteSelectedSupplierView,
     DeleteSelectedCategoryView,
+    LowStockItemListView,
+    ExpiredItemListView,
 )
 
 app_name = "consumable"
@@ -110,4 +112,7 @@ urlpatterns = [
         DeleteSelectedSupplierView.as_view(),
         name="delete_selected_supplier",
     ),
+    path("low_stock_list/", LowStockItemListView.as_view(), name="low_stock_list"),
+    path("expired_list/", ExpiredItemListView.as_view(), name="expired_list"),
+
 ]

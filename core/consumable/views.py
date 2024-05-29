@@ -11,13 +11,11 @@ from django.views.generic import ListView
 from .filters import ConsumableFilter, ConsumableCategoryFilter, SupplierFilter
 from django.views import View
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, F, Sum
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
-
 # Create your views here.
-# Consumable Views.
 
 
 class ConsumableListView(BaseListView):
@@ -292,3 +290,36 @@ class DeleteSelectedSupplierView(View):
                 f"تعداد {deleted_users_count[0]} تامین کننده با موفقیت حذف شدند.",
             )  # Add success message
         return redirect("consumable:supplier_list")
+
+
+#############################
+#############################
+#############################
+######## REPORT LIST ########
+#############################
+#############################
+#############################
+    
+class LowStockItemListView(BaseListView):
+    model = ConsumableV2
+    template_name = "consumable/reports/low_stock_list.html"
+    context_object_name = "consumables"
+    filterset_class = ConsumableFilter
+    permission_required = "consumable.view_consumablev2"
+
+    def get_queryset(self):
+        # Annotate each consumable with the current quantity in stock
+        return super().get_queryset().annotate(
+                current_quantity=Sum(
+                    "inventory__quantity", filter=Q(inventory__status="در انبار")
+                )
+            ).filter(current_quantity__lt=F("minimum_stock_level"))
+        
+    
+class ExpiredItemListView(ListView):
+    model = Inventory
+    template_name = "consumable/reports/expired_list.html"
+    context_object_name = "inventory"
+
+    def get_queryset(self):
+            return super().get_queryset().filter(status="منقضی شده")

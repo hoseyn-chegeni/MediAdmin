@@ -208,11 +208,20 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل مواد مصرفی ثبت شده در سیستم:</strong> {{total_consumables}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل مواد مصرفی ثبت شده در سیستم: {{total_consumables}}</strong> 
+                            <a href="{% url 'consumable:list' %}"  class="btn btn-outline-secondary btn-sm">لیست مواد مصرفی</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong>آیتم های موجودی پایین:</strong> {{low_stock_items}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>آیتم های موجودی پایین:  {{low_stock_items}}</strong>
+                            <a href="{% url 'consumable:low_stock_list' %}"  class="btn btn-outline-secondary btn-sm">لیست آیتم های موجودی پایین</a>
+                        </p>
                         <hr>
-                        <p class="card-text"><strong> تعداد موجودی های تاریخ مصرف گذشته:</strong> {{expired_items}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong> تعداد موجودی های تاریخ مصرف گذشته: {{expired_items}}</strong> 
+                            <a href="{% url 'consumable:expired_list' %}"  class="btn btn-outline-secondary btn-sm">لیست  موجودی های تاریخ مصرف گذشته</a>
+                        </p>
                         <hr>
                         <p class="card-text"><strong>هزینه‌ کل خریداری مواد مصرفی:  </strong> {{total_expenditure}}</p>
                         <hr>
