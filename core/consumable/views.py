@@ -323,3 +323,10 @@ class ExpiredItemListView(ListView):
 
     def get_queryset(self):
             return super().get_queryset().filter(status="منقضی شده")
+    
+class NewSupplierListView(BaseListView):
+    model = Supplier
+    template_name = "consumable/reports/new_supplier_list.html"
+    context_object_name = "supplier"
+    filterset_class = SupplierFilter
+    permission_required = "consumable.view_supplier"

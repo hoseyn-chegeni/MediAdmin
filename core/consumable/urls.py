@@ -24,6 +24,7 @@ from .views import (
     DeleteSelectedCategoryView,
     LowStockItemListView,
     ExpiredItemListView,
+    NewSupplierListView,
 )
 
 app_name = "consumable"
@@ -114,5 +115,5 @@ urlpatterns = [
     ),
     path("low_stock_list/", LowStockItemListView.as_view(), name="low_stock_list"),
     path("expired_list/", ExpiredItemListView.as_view(), name="expired_list"),
-
+    path("new_supplier/", NewSupplierListView.as_view(), name="new_supplier"),
 ]
