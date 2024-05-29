@@ -423,7 +423,10 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="card-text">
-                        <p class="card-text"><strong>تعداد کل نسخه های ثبت شده در سیستم:</strong> {{total_prescription}}</p>
+                        <p class="card-text d-flex justify-content-between align-items-center">
+                            <strong>تعداد کل نسخه های ثبت شده در سیستم: {{total_prescription}}</strong>
+                            <a href="{% url 'prescription:list' %}"  class="btn btn-outline-secondary btn-sm">لیست نسخه ها</a>
+                        </p>
                         <hr>
                         <p class="card-text"><strong> میانگین تعداد نسخه بر حسب پزشک:</strong> {{average_prescriptions_per_doctor}}</p>
                         <hr>
