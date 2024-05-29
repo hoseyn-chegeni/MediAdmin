@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils.timezone import now
 from datetime import timedelta
-from planner.models import Session
+from planner.models import Session, DeletedSession
 from services.models import Service
 from django.db.models import Count, Sum, F
 from django.http import JsonResponse
@@ -485,3 +485,20 @@ def service_revenue_chart(request):
             "services": [service.name for service in services],
         }
     )
+
+
+def service_cancellations_chart(request):
+    # Aggregate the number of cancellations per service
+    cancellations = DeletedSession.objects.values('service__name').annotate(count=Count('id')).order_by('-count')
+    chart_data = []
+
+    for cancellation in cancellations:
+        chart_data.append({
+            "service": cancellation['service__name'],
+            "cancellations": cancellation['count']
+        })
+
+    return JsonResponse({
+        "chart_data": chart_data,
+        "services": [cancellation['service__name'] for cancellation in cancellations],
+    })

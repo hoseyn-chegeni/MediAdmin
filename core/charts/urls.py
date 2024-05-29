@@ -30,6 +30,7 @@ from .views import (
    doctor_wage_chart,
    top_expenses_chart,
    service_revenue_chart,
+   service_cancellations_chart,
 )
 
 app_name = "charts"
@@ -115,5 +116,6 @@ urlpatterns = [
     path("doctor_wage_chart/", doctor_wage_chart, name="doctor_wage_chart"),
     path("top_expenses_chart/", top_expenses_chart, name="top_expenses_chart"),
     path("service_revenue_chart/", service_revenue_chart, name="service_revenue_chart"),
+    path("service_cancellations_chart/", service_cancellations_chart, name="service_cancellations_chart"),
 
 ]
