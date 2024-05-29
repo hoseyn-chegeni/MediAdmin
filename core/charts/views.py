@@ -379,3 +379,20 @@ def doctors_by_specialty_chart(request):
             'count': specialty['count']
         })
     return JsonResponse({'chart_data': chart_data})
+
+
+def inventory_chart(request):
+    # Aggregate the number of inventory items per supplier
+    suppliers = Supplier.objects.all()
+    chart_data = []
+
+    for supplier in suppliers:
+        count = Inventory.objects.filter(supplier=supplier).count()
+        chart_data.append({"supplier": supplier.name, "inventory_count": count})
+
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "suppliers": [supplier.name for supplier in suppliers],
+        }
+    )
