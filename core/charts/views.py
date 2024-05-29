@@ -429,3 +429,21 @@ def doctor_revenue_chart(request):
             "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
         }
     )
+
+
+
+def doctor_wage_chart(request):
+    doctors = Doctor.objects.all()
+    chart_data = []
+
+    for doctor in doctors:
+        receptions = Reception.objects.filter(service__doctor=doctor)
+        total_wage = sum((reception.service.price * (reception.service.doctors_wage_percentage / 100)) for reception in receptions if reception.service and reception.service.price)
+        chart_data.append({"doctor": f"{doctor.first_name} {doctor.last_name}", "total_wage": total_wage})
+
+    return JsonResponse(
+        {
+            "chart_data": chart_data,
+            "doctors": [f"{doctor.first_name} {doctor.last_name}" for doctor in doctors],
+        }
+    )
