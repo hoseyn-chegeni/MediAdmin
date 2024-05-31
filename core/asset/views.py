@@ -14,7 +14,7 @@ from django.contrib import messages
 from django.views.generic import View
 from django.utils.timezone import now
 from datetime import timedelta
-
+from .forms import EquipmentForm
 
 # Medical Equipment Views Here.
 class EquipmentListView(BaseListView):
@@ -33,7 +33,7 @@ class EquipmentDetailView(BaseDetailView):
 
 class EquipmentCreateView(BaseCreateView):
     model = Equipment
-    fields = "__all__"
+    form_class = EquipmentForm
     template_name = "asset/equipment/create.html"
     app_name = "asset"
     url_name = "equipment_detail"
@@ -42,7 +42,7 @@ class EquipmentCreateView(BaseCreateView):
 
 class EquipmentUpdateView(BaseUpdateView):
     model = Equipment
-    fields = "__all__"
+    form_class = EquipmentForm
     template_name = "asset/equipment/update.html"
     app_name = "asset"
     url_name = "equipment_detail"
