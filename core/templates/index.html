@@ -1,134 +1,112 @@
-{%extends 'base.html'%}
-{% block content%}
-
-<br>
-
-<br>
-
-<div class="container">
-<div class="row ">
-<div class="col-xl-6 col-lg-6">
-<div class="card l-bg-cherry">
-<div class="card-statistic-3 p-4">
-<div class="mb-4">
-<h5 class="card-title mb-0" style="font-size: 150%;">نوبت های رزور شده امروز</h5>
-</div>
-<div class="row align-items-center mb-2 d-flex">
-<div class="col-8">
-<h2 class="d-flex align-items-center mb-0">
-{{appointment_count}}
-</h2>
-</div>
-<div class="col-4 text-right">
-<span> {{complete_percentage}}% پذیرش شده  <i class="fa fa-arrow-up"></i></span>
-</div>
-</div>
-<div class="progress mt-1 " data-height="8" style="height: 8px;">
-<div id ='appointment_section' class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{complete_percentage}}%;"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="col-xl-6 col-lg-6">
-<div class="card l-bg-blue-dark">
-<div class="card-statistic-3 p-4">
-<div class="mb-4">
-<h5 class="card-title mb-0" style="font-size: 150%;">پذیرش ها</h5>
-</div>
-<div class="row align-items-center mb-2 d-flex">
-<div class="col-8">
-<h2 class="d-flex align-items-center mb-0">
-{{today_reception}}
-</h2>
-</div>
-<div class="col-4 text-right">
-<span>{{reception_percentage}}%  از کل پذیرش ها <i class="fa fa-arrow-up"></i></span>
-</div>
-</div>
-<div class="progress mt-1 " data-height="8" style="height: 8px;">
-<div class="progress-bar l-bg-green" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{reception_percentage}}%;"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="col-xl-6 col-lg-6">
-<div class="card l-bg-green-dark">
-<div class="card-statistic-3 p-4">
-<div class="mb-4">
-<h5 class="card-title mb-0" style="font-size: 150%;" > لیست تسک ها و سفارش ها</h5>
-</div>
-<div class="row align-items-center mb-2 d-flex">
-<div class="col-8">
-<h2 class="d-flex align-items-center mb-0">
-{{total_task}}
-</h2>
-</div>
-<div class="col-4 text-right">
-<span>{{task_complete_percentage}}% انجام شده <i class="fa fa-arrow-up"></i></span>
-</div>
-</div>
-<div class="progress mt-1 " data-height="8" style="height: 8px;">
-<div class="progress-bar l-bg-orange" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{task_complete_percentage}}%;"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="col-xl-6 col-lg-6">
-<div class="card l-bg-orange-dark">
-<div class="card-statistic-3 p-4">
-<div class="mb-4">
-<h5 class="card-title mb-0" style="font-size: 150%;" >درآمد امروز </h5>
-</div>
-<div class="row align-items-center mb-2 d-flex">
-<div class="col-8">
-<h2 class="d-flex align-items-center mb-0">
-{% if today_revenue %}
-    {{today_revenue}} تومان
-{%else%}
-    0
-{%endif%}
-</h2>
-</div>
-<div class="col-4 text-right">
-<span>{{revenue_percentage}}% از درآمد کل <i class="fa fa-arrow-up"></i></span>
-</div>
-</div>
-<div class="progress mt-1 " data-height="8" style="height: 8px;">
-<div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: {{revenue_percentage}}%;"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<form class="d-flex mt-3" role="search" action="{% url 'index:national_id_search' %}" method="GET">
-    <input id="product" class="form-control me-2" type="search" placeholder="جستجوی بیمار با  کدملی"  aria-label="Search" name="query">
-    <button class="btn btn-outline-success" type="submit">جستجو</button>
-</form>
-<form class="d-flex mt-3" role="search" action="{% url 'index:case_id_search' %}" method="GET">
-    <input class="form-control me-2" type="search" placeholder="جستجوی بیمار با شماره پرونده  " aria-label="Search" name="query">
-    <button class="btn btn-outline-success" type="submit">جستجو</button>
-</form>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="container">
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-cherry">
+                <div class="card-statistic-3 p-4">
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0" style="font-size: 150%;">نوبت های رزور شده امروز</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">{{ appointment_count }}</h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span>{{ complete_percentage }}% پذیرش شده <i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="progress mt-1" style="height: 8px;">
+                        <div id="appointment_section" class="progress-bar l-bg-cyan" role="progressbar" style="width: {{ complete_percentage }}%;" aria-valuenow="{{ complete_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-blue-dark">
+                <div class="card-statistic-3 p-4">
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0" style="font-size: 150%;">پذیرش ها</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">{{ today_reception }}</h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span>{{ reception_percentage }}% از کل پذیرش ها <i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="progress mt-1" style="height: 8px;">
+                        <div class="progress-bar l-bg-green" role="progressbar" style="width: {{ reception_percentage }}%;" aria-valuenow="{{ reception_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-green-dark">
+                <div class="card-statistic-3 p-4">
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0" style="font-size: 150%;">لیست تسک ها و سفارش ها</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">{{ total_task }}</h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span>{{ task_complete_percentage }}% انجام شده <i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="progress mt-1" style="height: 8px;">
+                        <div class="progress-bar l-bg-orange" role="progressbar" style="width: {{ task_complete_percentage }}%;" aria-valuenow="{{ task_complete_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card l-bg-orange-dark">
+                <div class="card-statistic-3 p-4">
+                    <div class="mb-4">
+                        <h5 class="card-title mb-0" style="font-size: 150%;">درآمد امروز</h5>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                                {% if today_revenue %}
+                                    {{ today_revenue }} تومان
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </h2>
+                        </div>
+                        <div class="col-4 text-right">
+                            <span>{{ revenue_percentage }}% از درآمد کل <i class="fa fa-arrow-up"></i></span>
+                        </div>
+                    </div>
+                    <div class="progress mt-1" style="height: 8px;">
+                        <div class="progress-bar l-bg-cyan" role="progressbar" style="width: {{ revenue_percentage }}%;" aria-valuenow="{{ revenue_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="d-flex mt-3" role="search" action="{% url 'index:national_id_search' %}" method="GET">
+        <input id="product" class="form-control me-2" type="search" placeholder="جستجوی بیمار با کدملی" aria-label="Search" name="query">
+        <button class="btn btn-outline-success" type="submit">جستجو</button>
+    </form>
+    <form class="d-flex mt-3" role="search" action="{% url 'index:case_id_search' %}" method="GET">
+        <input class="form-control me-2" type="search" placeholder="جستجوی بیمار با شماره پرونده" aria-label="Search" name="query">
+        <button class="btn btn-outline-success" type="submit">جستجو</button>
+    </form>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mt-5">
                 <div class="card-body">
-                    <h5 class="card-title">تعداد نوبت‌ های ثبت شده برای هر سرویس در هفت روز آینده</h5>
+                    <h5 class="card-title">تعداد نوبت‌های ثبت شده برای هر سرویس در هفت روز آینده</h5>
                     <canvas id="appointmentsChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mt-5">
@@ -139,15 +117,11 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mt-5">
                 <div class="card-body">
-                    <h5 class="card-title">تعداد پذیرش های انجام شده هرسرویس</h5>
+                    <h5 class="card-title">تعداد پذیرش‌های انجام شده هر سرویس</h5>
                     <canvas id="serviceReceptionChart"></canvas>
                 </div>
             </div>
@@ -156,6 +130,7 @@
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     $(function () {
         $("#product").autocomplete({
@@ -163,20 +138,13 @@
             minLength: 2
         });
     });
-</script>
-<script>
-    // Fetch data using AJAX
+
     fetch('{% url "charts:sessions_per_doctor_chart" %}')
         .then(response => response.json())
         .then(data => {
-            // Data received, create chart
             var labels = data.labels;
             var data = data.data;
-
-            // Define an array of colors for each bar
             var colors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'];
-
-            // Create chart using Chart.js
             var ctx = document.getElementById('sessionsChart').getContext('2d');
             var chart = new Chart(ctx, {
                 type: 'bar',
@@ -185,8 +153,8 @@
                     datasets: [{
                         label: 'تعداد رزور ها',
                         data: data,
-                        backgroundColor: colors, // Use the array of colors
-                        borderColor: colors.map(color => color.replace('0.2', '1')), // Use the same colors with full opacity for border
+                        backgroundColor: colors,
+                        borderColor: colors.map(color => color.replace('0.2', '1')),
                         borderWidth: 1
                     }]
                 },
@@ -200,29 +168,22 @@
             });
         })
         .catch(error => console.error('Error fetching data:', error));
-</script>
 
-
-<script>
     fetch('{% url "charts:appointments_chart" %}')
         .then(response => response.json())
         .then(data => {
             var labels = data.dates;
             var datasets = [];
-
-            // Define an array of colors for each line
             var colors = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'];
-
             data.chart_data.forEach((service_data, index) => {
                 datasets.push({
                     label: service_data.service,
                     data: service_data.appointments,
-                    backgroundColor: colors[index], // Use a different color for each line
-                    borderColor: colors[index], // Use the same color for border to match
+                    backgroundColor: colors[index],
+                    borderColor: colors[index],
                     borderWidth: 1
                 });
             });
-
             var ctx = document.getElementById('appointmentsChart').getContext('2d');
             var chart = new Chart(ctx, {
                 type: 'line',
@@ -240,14 +201,10 @@
             });
         })
         .catch(error => console.error('Error fetching data:', error));
-</script>
 
-<script>
-    // Fetch the data from the view
     fetch("{% url 'charts:service_reception_counts' %}")
         .then(response => response.json())
         .then(data => {
-            // Prepare the chart data
             var ctx = document.getElementById('serviceReceptionChart').getContext('2d');
             var chart = new Chart(ctx, {
                 type: 'doughnut',
@@ -256,22 +213,8 @@
                     datasets: [{
                         label: 'Number of Receptions',
                         data: data.data,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+                        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
                         borderWidth: 1
                     }]
                 },
@@ -283,7 +226,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'تعداد پذیرش های انجام شده هر سرویس'
+                            text: 'تعداد پذیرش‌های انجام شده هر سرویس'
                         }
                     }
                 }
@@ -291,5 +234,4 @@
         })
         .catch(error => console.error('Error fetching data:', error));
 </script>
-
-{%endblock%}
+{% endblock %}
