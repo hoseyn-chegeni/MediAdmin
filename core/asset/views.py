@@ -31,6 +31,7 @@ class EquipmentDetailView(BaseDetailView):
     permission_required = "asset.view_equipment"
 
 
+
 class EquipmentCreateView(BaseCreateView):
     model = Equipment
     form_class = EquipmentForm
@@ -38,6 +39,13 @@ class EquipmentCreateView(BaseCreateView):
     app_name = "asset"
     url_name = "equipment_detail"
     permission_required = "asset.add_equipment"
+
+    def form_invalid(self, form):
+        """
+        If the form is invalid, render the invalid form with errors and previously entered data.
+        """
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 
 class EquipmentUpdateView(BaseUpdateView):

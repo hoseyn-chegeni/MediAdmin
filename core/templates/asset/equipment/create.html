@@ -19,46 +19,46 @@
 
                     <div class="col-sm-6">
                       <label for="name" class="form-label">نام</label>
-                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                      <input type="text" class="form-control" id="name" placeholder="" value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
                     </div>
                     
                     <div class="col-sm-6">
                       <label for="manufacturer" class="form-label">تولید کننده</label>
-                      <input type="text" class="form-control" id="manufacturer" placeholder="" value="{{object.manufacturer}}" name="manufacturer" >
+                      <input type="text" class="form-control" id="manufacturer" placeholder="" value="{% if form.data.manufacturer %}{{ form.data.manufacturer }}{% else %}{{ form.initial.manufacturer }}{% endif %}" name="manufacturer" >
                     </div>
 
                     <div class="col-sm-6">
                         <label for="model" class="form-label">مدل</label>
-                        <input type="text" class="form-control" id="model" placeholder="" value="{{object.model}}" name="model" >
+                        <input type="text" class="form-control" id="model" placeholder="" value="{% if form.data.model %}{{ form.data.model }}{% else %}{{ form.initial.model }}{% endif %}" name="model" >
                       </div>
   
                       <div class="col-sm-6">
                         <label for="serial_number" class="form-label">شماره سریال</label>
-                        <input type="text" class="form-control" id="serial_number" placeholder="" value="{{object.serial_number}}" name="serial_number" >
+                        <input type="text" class="form-control" id="serial_number" placeholder="" value="{% if form.data.serial_number %}{{ form.data.serial_number }}{% else %}{{ form.initial.serial_number }}{% endif %}" name="serial_number" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="acquisition_date" class="form-label"> تاریخ شروع استفاده از دستگاه</label>
-                        <input type="text" class="form-control" id="acquisition_date" placeholder="" value="{{object.acquisition_date}}" name="acquisition_date" data-jdp>
+                        <input type="text" class="form-control" id="acquisition_date" placeholder="" value="{% if form.data.acquisition_date %}{{ form.data.acquisition_date }}{% else %}{{ form.initial.acquisition_date }}{% endif %}" name="acquisition_date" data-jdp>
                       </div>
 
                       <div class="col-sm-6">
                         <label for="warranty_expiry_date" class="form-label">تاریخ اتمام گارانتی</label>
-                        <input type="date" class="form-control" id="warranty_expiry_date" placeholder="" value="{{object.warranty_expiry_date}}" name="warranty_expiry_date" >
+                        <input type="date" class="form-control" id="warranty_expiry_date" placeholder=""  value="{% if form.data.warranty_expiry_date %}{{ form.data.warranty_expiry_date }}{% else %}{{ form.initial.warranty_expiry_date }}{% endif %}" name="warranty_expiry_date" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="location" class="form-label">لوکیشن</label>
-                        <input type="text" class="form-control" id="location" placeholder="" value="{{object.location}}" name="location" >
+                        <input type="text" class="form-control" id="location" placeholder=""  value="{% if form.data.location %}{{ form.data.location }}{% else %}{{ form.initial.location }}{% endif %}" name="location" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="description" class="form-label">توضیحات</label>
-                        <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                        <input type="text" class="form-control" id="description" placeholder=""  value="{% if form.data.description %}{{ form.data.description }}{% else %}{{ form.initial.description }}{% endif %}"  name="description" >
                       </div>
                       <div class="col-sm-6">
                         <label for="last_maintenance_date" class="form-label">تاریخ آخرین تعمیر</label>
-                        <input type="text" class="form-control" id="last_maintenance_date" placeholder="" value="{{object.last_maintenance_date}}" name="last_maintenance_date" data-jdp >
+                        <input type="text" class="form-control" id="last_maintenance_date" placeholder="" value="{% if form.data.last_maintenance_date %}{{ form.data.last_maintenance_date }}{% else %}{{ form.initial.last_maintenance_date }}{% endif %}"  name="last_maintenance_date" data-jdp >
                       </div>
 
 
