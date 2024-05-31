@@ -123,13 +123,10 @@ def logout_view(request):
 
 
 class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
-    success_message = "Password Successfully Changed"
+    success_message = "رمز عبور با موفقیت تغییر داده شد"
     template_name = (
         "accounts/change_password.html"  # Your template for the change password form
     )
-    success_url = reverse_lazy(
-        "accounts:profile"
-    )  # URL to redirect to after successfully changing password
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -139,6 +136,11 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     def get_success_message(self, cleaned_data):
         return self.success_message
 
+
+    def get_success_url(self) -> str:
+        return reverse_lazy(
+        "accounts:user_detail", kwargs={"pk": self.request.user.id}
+    ) 
 
 class SuspendUserView(View):
     def get(self, request, pk):
