@@ -40,7 +40,9 @@ class CustomUserCreationForm(UserCreationForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = [
+            "is_superuser","is_staff","email", "first_name","last_name","date_of_birth","national_id","phone_number","address","image",
+        ]
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
