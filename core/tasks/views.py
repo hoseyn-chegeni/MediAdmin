@@ -161,7 +161,6 @@ class DeleteSelectedTasksView(View):
         return redirect("tasks:list")
 
 
-
 #############################
 #############################
 #############################
@@ -169,7 +168,8 @@ class DeleteSelectedTasksView(View):
 #############################
 #############################
 #############################
-    
+
+
 class CompletedTaskListView(BaseListView):
     model = Task
     template_name = "tasks/reports/completed_list.html"

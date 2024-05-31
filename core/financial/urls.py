@@ -16,7 +16,6 @@ from .views import (
     UnpaidInvoiceListView,
     PaidInvoiceListView,
     UnPaidInvoiceListView,
-
 )
 
 app_name = "financial"
@@ -71,5 +70,4 @@ urlpatterns = [
     ),
     path("paid_list/", PaidInvoiceListView.as_view(), name="paid_list"),
     path("unpaid_list/", UnPaidInvoiceListView.as_view(), name="unpaid_list"),
-
 ]

@@ -136,11 +136,9 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     def get_success_message(self, cleaned_data):
         return self.success_message
 
-
     def get_success_url(self) -> str:
-        return reverse_lazy(
-        "accounts:user_detail", kwargs={"pk": self.request.user.id}
-    ) 
+        return reverse_lazy("accounts:user_detail", kwargs={"pk": self.request.user.id})
+
 
 class SuspendUserView(View):
     def get(self, request, pk):

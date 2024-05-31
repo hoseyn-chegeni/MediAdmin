@@ -23,6 +23,7 @@ from services.filters import ServicesFilter
 from django.utils.timezone import now
 from datetime import timedelta
 
+
 # Create your views here.
 class DoctorListView(BaseListView):
     model = Doctor

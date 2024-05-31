@@ -180,6 +180,7 @@ class DeleteSelectedOfficeExpensesView(View):
             OfficeExpenses.objects.filter(id__in=ids).delete()  # Delete selected users
         return redirect("financial:office_expenses_list")
 
+
 #############################
 #############################
 #############################
@@ -187,7 +188,7 @@ class DeleteSelectedOfficeExpensesView(View):
 #############################
 #############################
 #############################
-    
+
 
 class PaidInvoiceListView(BaseListView):
     model = Financial
@@ -197,8 +198,9 @@ class PaidInvoiceListView(BaseListView):
     permission_required = "financial.view_financial"
 
     def get_queryset(self):
-        return super().get_queryset().filter(payment_status = 'پرداخت شده')
-    
+        return super().get_queryset().filter(payment_status="پرداخت شده")
+
+
 class UnPaidInvoiceListView(BaseListView):
     model = Financial
     template_name = "financial/reports/unpaid_list.html"
@@ -207,4 +209,4 @@ class UnPaidInvoiceListView(BaseListView):
     permission_required = "financial.view_financial"
 
     def get_queryset(self):
-        return super().get_queryset().filter(payment_status = 'پرداخت نشده')
+        return super().get_queryset().filter(payment_status="پرداخت نشده")
