@@ -1,5 +1,5 @@
 import django_filters
-from django_filters import FilterSet, DateFilter, ChoiceFilter
+from django_filters import FilterSet, DateFilter, ChoiceFilter, OrderingFilter
 from .models import Financial
 from .models import OfficeExpenses
 from django import forms
@@ -73,6 +73,12 @@ class FinancialFilter(FilterSet):
             "date_range",
             "created_at",
         ]
+    order_by = OrderingFilter(
+        fields=(("created_at", "created_at"),),
+        field_labels={
+            "created_at": "Creation Date",
+        },
+    )
 
 
 class OfficeExpensesFilter(django_filters.FilterSet):
@@ -119,3 +125,10 @@ class OfficeExpensesFilter(django_filters.FilterSet):
     class Meta:
         model = OfficeExpenses
         fields = ["user", "date", "subject", "recipient_name", "id", "date_range"]
+
+    order_by = OrderingFilter(
+        fields=(("created_at", "created_at"),),
+        field_labels={
+            "created_at": "Creation Date",
+        },
+    )

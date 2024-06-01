@@ -38,15 +38,7 @@
   <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
 </div>
 
-<div class="col-sm-6">
-  <label for="date_range">محدوده زمانی</label>
-  <select class="form-select" name="date_range" id="date_range">
-    <option value="" selected>---------</option>
-    <option value="today">امروز</option>
-    <option value="this_week">هفته گذشته</option>
-    <option value="this_month">ماه گذشته</option>
-  </select>
-</div>
+
 {%endblock%}
 {%block buttons%} 
 <div class="mb-4">

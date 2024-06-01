@@ -19,6 +19,15 @@
                     {%csrf_token%}
                     <div class="row g-3">
                         {%block filter_field%}{%endblock%}
+                        <div class="col-sm-6">
+                            <label  for="order_by">مرتب سازی</label>
+                            <select  class="form-select" name="order_by"  id="order_by">
+                              <option value="" selected="">---------</option>
+                              <option value="created_at">تاریخ ایجاد(شروع از قدیمی ترین)</option>
+                              <option value="-created_at"> تاریخ ایجاد (شروع از جدید ترین)</option>
+                            </select>
+                            </div>
+
                       <button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
                     </form>
                     <div class="mb-4">
