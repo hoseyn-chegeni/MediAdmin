@@ -274,13 +274,13 @@ class ClientAttachmentCreateForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data.get("title")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", title):
+        if not re.search(r"^[A-Za-zا-ی0-9\s]+$", title):
             raise ValidationError("عنوان سند نباید شامل کاراکترهای خاص یا اعداد باشد.")
         return title
 
     def clean_type(self):
         type = self.cleaned_data.get("type")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", type):
+        if not re.search(r"^[A-Za-zا-ی0-9\s]+$", type):
             raise ValidationError("نوع تصویر سند شامل کاراکترهای خاص یا اعداد باشد.")
         return type
 
