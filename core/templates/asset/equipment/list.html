@@ -44,6 +44,16 @@
     <option value="this_month">ماه گذشته</option>
   </select>
 </div>
+
+<div class="col-sm-6">
+  <label  for="order_by">مرتب سازی</label>
+  <select  class="form-select" name="order_by"  id="order_by">
+    <option value="" selected="">---------</option>
+    <option value="created_at">تاریخ ایجاد(شروع از قدیمی ترین)</option>
+    <option value="-created_at"> تاریخ ایجاد (شروع از جدید ترین)</option>
+  </select>
+  </div>
+  
 {%endblock%}
 {%block buttons%} 
 <form action="{% url 'asset:delete_selected_equipment' %}" method="post" id="deleteForm">
