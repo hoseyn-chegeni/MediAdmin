@@ -32,7 +32,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models import Count
-from .forms import ClientCreateForm, ClientUpdateForm, EditHealthHistoryForm, ClientCreateFromSessionForm
+from .forms import ClientCreateForm, ClientUpdateForm, EditHealthHistoryForm, ClientCreateFromSessionForm, ClientGalleryUpdateForm,ClientGalleryCreateForm
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -287,10 +287,7 @@ class ClientGalleryListView(ListView):
 
 class ClientGalleryCreateView(BaseCreateView):
     model = ClientGallery
-    fields = [
-        "title",
-        "image",
-    ]
+    form_class = ClientGalleryCreateForm
     template_name = "client/gallery/create.html"
     permission_required = "client.add_client"
 
@@ -310,9 +307,7 @@ class ClientGalleryCreateView(BaseCreateView):
 
 class ClientGalleryUpdateView(BaseUpdateView):
     model = ClientGallery
-    fields = [
-        "title",
-    ]
+    form_class = ClientGalleryUpdateForm
     template_name = "client/gallery/update.html"
     permission_required = "client.change_client"
 
