@@ -100,7 +100,7 @@
 <th scope="col">کدملی</th>
 <th scope="col">تعداد دفعات مراجعه</th>
 <th scope="col">تاریخ آخرین مراجعه</th>
-<th scope="col">علت آخرین مراجعه</th>
+<th scope="col">وضعیت</th>
 <th scope="col">اکشن ها</th>
 {%endblock%}
 {%block tbody%}
@@ -131,7 +131,11 @@
 
 
     <td class="align-middle">
-      <span>{{i.last_reception_reason}}</span>
+      {% if i.is_vip == True %}
+      <span class="badge bg-primary rounded-pill"> VIP </span>
+      {% else %}
+      <span class="badge bg-secondary rounded-pill"> اشتراک معمولی </span>
+      {% endif %}
     </td>
 
 
