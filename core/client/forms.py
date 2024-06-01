@@ -163,3 +163,51 @@ class EditHealthHistoryForm(forms.ModelForm):
     def clean_disease(self):
         return validate_no_special_characters(self.cleaned_data.get('disease', ''))
 
+
+
+
+class ClientCreateFromSessionForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = [
+            "case_id",
+            "fathers_name",
+            "date_of_birth",
+            "gender",
+            "address",
+            "marital_status",
+            "emergency_contact_name",
+            "emergency_contact_number",
+            "surgeries",
+            "allergies",
+            "medical_history",
+            "medications",
+            "smoker",
+            "disease",
+            "insurance",
+            "is_vip",
+            "image",
+        ]
+
+    def clean_case_id(self):
+        case_id = self.cleaned_data.get('case_id')
+        if case_id and not case_id.isdigit():
+            raise ValidationError('شناسه پرونده باید یک عدد مثبت باشد.')
+        return case_id
+
+    def clean_emergency_contact_name(self):
+        emergency_contact_name = self.cleaned_data.get('emergency_contact_name')
+        if re.search(r'[^a-zA-Z\s]', emergency_contact_name):
+            raise ValidationError('نام شخص تماس اضطراری نباید شامل کاراکترهای خاص یا اعداد باشد.')
+        return emergency_contact_name
+
+    def clean_emergency_contact_number(self):
+        emergency_contact_number = self.cleaned_data.get('emergency_contact_number')
+        if not emergency_contact_number.isdigit():
+            raise ValidationError('شماره تماس اضطراری باید عدد باشد.')
+        return emergency_contact_number
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Add any additional cross-field validation here if necessary
+        return cleaned_data

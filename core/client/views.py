@@ -32,7 +32,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models import Count
-from .forms import ClientCreateForm, ClientUpdateForm, EditHealthHistoryForm
+from .forms import ClientCreateForm, ClientUpdateForm, EditHealthHistoryForm, ClientCreateFromSessionForm
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -235,25 +235,7 @@ class DeleteSelectedClientView(View):
 
 class CreateClintFromSessionView(BaseCreateView):
     model = Client
-    fields = [
-        "case_id",
-        "fathers_name",
-        "date_of_birth",
-        "gender",
-        "address",
-        "marital_status",
-        "emergency_contact_name",
-        "emergency_contact_number",
-        "surgeries",
-        "allergies",
-        "medical_history",
-        "medications",
-        "smoker",
-        "disease",
-        "insurance",
-        "is_vip",
-        "image",
-    ]
+    form_class = ClientCreateFromSessionForm
     template_name = "client/create_from_session.html"
     permission_required = "client.add_client"
 
