@@ -24,7 +24,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from logs.models import ClientSMSLog
-from planner.models import Session
+from planner.models import Session, DeletedSession
 from logs.models import ClientSMSLog
 from notification.filters import ClientSMSLogFilter
 from planner.models import Session
@@ -202,6 +202,7 @@ class ClientAppointmentListView(BaseListView):
 
         # Get reception history for the client
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
+        context['deleted_session'] = DeletedSession.objects.filter(client_id = self.kwargs['pk'])
 
         return context
 

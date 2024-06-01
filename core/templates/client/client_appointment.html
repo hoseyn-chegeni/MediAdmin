@@ -98,6 +98,42 @@
     </tbody>
 </table>
 
+
+<table class="table table-bordered">
+  <thead>
+    <p>لیست نوبت های لغو شده</p>
+    <tr>
+      <th scope="col">شماره نوبت دهی</th>
+      <th scope="col">سرویس</th>
+      <th scope="col">پزشک معالجه کننده</th>
+      <th scope="col">نام پکیح</th>
+      <th scope="col">تاریخ</th>
+    </tr>
+  </thead>
+  <tbody>
+      {%for i in deleted_session%}
+    <tr class="fw-normal">
+      <td class="align-middle">
+        <span>{{i.id}}</span>
+      </td>
+      <td class="align-middle">
+          <span>{{i.service}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.service.doctor}}</span>
+        </td>
+
+        <td class="align-middle" >
+          <span>{{i.package}}</span>
+        </td>
+        <td class="align-middle">
+          <span>{{i.day}}</span>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>
+
 </div></div>
 </div>
 </div>
