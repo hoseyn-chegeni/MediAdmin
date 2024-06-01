@@ -302,5 +302,5 @@ class ClientAttachmentUpdateForm(forms.ModelForm):
     def clean_type(self):
         type = self.cleaned_data.get("type")
         if re.search(r"^[A-Za-zا-ی0-9\s]+$", type):
-            raise ValidationError("نوع تصویر سند شامل کاراکترهای خاص یا اعداد باشد.")
+            raise ValidationError("نوع سند شامل کاراکترهای خاص یا اعداد باشد.")
         return type
