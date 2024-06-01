@@ -32,7 +32,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models import Count
-
+from .forms import ClientCreateForm
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -45,7 +45,7 @@ class ClientListView(BaseListView):
 
 class ClientCreateView(BaseCreateView):
     model = Client
-    fields = "__all__"
+    form_class = ClientCreateForm
     template_name = "client/create.html"
     app_name = "client"
     url_name = "detail"
