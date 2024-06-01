@@ -17,13 +17,13 @@ class ClientCreateForm(forms.ModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", first_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", first_name):
             raise ValidationError("نام نباید شامل کاراکترهای خاص یا اعداد باشد.")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$" r"^[A-Za-zا-ی0-9\s]+$", last_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", last_name):
             raise ValidationError(
                 "نام خانوادگی نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
@@ -43,9 +43,7 @@ class ClientCreateForm(forms.ModelForm):
 
     def clean_emergency_contact_name(self):
         emergency_contact_name = self.cleaned_data.get("emergency_contact_name")
-        if re.search(
-            r"^[A-Za-zا-ی0-9\s]+$" r"^[A-Za-zا-ی0-9\s]+$", emergency_contact_name
-        ):
+        if not re.search( r"^[A-Za-zا-ی\s]+$", emergency_contact_name):
             raise ValidationError(
                 "نام شخص تماس اضطراری نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
@@ -90,13 +88,13 @@ class ClientUpdateForm(forms.ModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get("first_name")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$" r"^[A-Za-zا-ی0-9\s]+$", first_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", first_name):
             raise ValidationError("نام نباید شامل کاراکترهای خاص یا اعداد باشد.")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get("last_name")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$" r"^[A-Za-zا-ی0-9\s]+$", last_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", last_name):
             raise ValidationError(
                 "نام خانوادگی نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
@@ -116,7 +114,7 @@ class ClientUpdateForm(forms.ModelForm):
 
     def clean_emergency_contact_name(self):
         emergency_contact_name = self.cleaned_data.get("emergency_contact_name")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", emergency_contact_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", emergency_contact_name):
             raise ValidationError(
                 "نام شخص تماس اضطراری نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
@@ -135,7 +133,7 @@ class ClientUpdateForm(forms.ModelForm):
 
 
 def validate_no_special_characters(value):
-    if re.search(r"^[A-Za-zا-ی0-9\s]+$", value):
+    if not re.search(r"^[A-Za-zا-ی0-9\s]+$", value):
         raise ValidationError("این فیلد نمی‌تواند شامل کاراکترهای خاص باشد.")
     return value
 
@@ -205,7 +203,7 @@ class ClientCreateFromSessionForm(forms.ModelForm):
 
     def clean_emergency_contact_name(self):
         emergency_contact_name = self.cleaned_data.get("emergency_contact_name")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", emergency_contact_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", emergency_contact_name):
             raise ValidationError(
                 "نام شخص تماس اضطراری نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
@@ -230,7 +228,7 @@ class ClientGalleryCreateForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data.get("title")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", title):
+        if not re.search(r"^[A-Za-zا-ی0-9\s]+$", title):
             raise ValidationError(
                 "عنوان تصویر نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
@@ -251,7 +249,7 @@ class ClientGalleryUpdateForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data.get("title")
-        if re.search(r"^[A-Za-zا-ی0-9\s]+$", title):
+        if not re.search(r"^[A-Za-zا-ی0-9\s]+$", title):
             raise ValidationError(
                 "عنوان تصویر نباید شامل کاراکترهای خاص یا اعداد باشد."
             )
