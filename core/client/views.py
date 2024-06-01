@@ -273,6 +273,11 @@ class CreateClintFromSessionView(BaseCreateView):
             kwargs={"service_pk": session.service.id, "day_pk": session.day.id},
         )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["session"] = Session.objects.get(id=self.kwargs["pk"])
+        return context
+
 
 # CLIENT PHOTO GALLERY
 # CLIENT PHOTO GALLERY

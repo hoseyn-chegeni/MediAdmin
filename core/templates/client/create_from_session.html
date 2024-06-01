@@ -1,16 +1,148 @@
+{%extends 'base.html' %}
+{%block title %} ایجاد پروفایل برای {{session.first_name}} {{session.last_name}}{%endblock%}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Client</title>
-</head>
-<body>
-    <form method="post", enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input type="submit" value="Save" id="">
-    </form>
-</body>
-</html>
+{%block content %} 
+   
+<div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
+        <h2>ایجاد پروفایل برای {{session.first_name}} {{session.last_name}}</h2>
+      </div>
+
+        <div class="col-md-7 col-lg-8">
+          <h4 class="mb-3">اطلاعات</h4>
+          <form class="needs-validation" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="row g-3">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label for="case_id" class="form-label">شماره پرونده</label>
+                      <input type="text" class="form-control" id="case_id" placeholder="" value="{{object.case_id}}" name="case_id" >
+                    </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="fathers_name" class="fathers_name-label">نام پدر</label>
+                        <input type="text" class="form-control" id="fathers_name" placeholder="" value="{{object.fathers_name}}" name="fathers_name" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="date_of_birth" class="date_of_birth-label">تاریخ تولد</label>
+                        <input type="text" class="form-control" id="date_of_birth" placeholder="" value="{{object.date_of_birth}}" name="date_of_birth" data-jdp>
+                      </div>
+
+                      <div class="col-sm-6">
+                      <label  for="id_gender">جنسیت:</label>
+                      <select  class="form-select" name="gender" required="" id="id_gender">
+                        <option value="" selected="">---------</option>
+                        <option value="M">مرد</option>
+                        <option value="F">زن</option>
+                      </select>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="address" class="address-label">آدرس</label>
+                        <input type="text" class="form-control" id="address" placeholder="" value="{{object.address}}" name="address" >
+                      </div>
+
+
+                      <div class="col-sm-6">
+                        <label  for="id_gender">وضعیت تاهل:</label>
+                        <select  class="form-select" name="marital_status" required="" id="marital_status">
+                          <option value="" selected="">---------</option>
+                          <option value="S">مجرد</option>
+                          <option value="M">متاهل</option>
+                        </select>
+                        </div>
+
+
+                      <div class="col-sm-6">
+                        <label for="emergency_contact_name" class="emergency_contact_name-label">نام همراه ( شرایط اضطراری)</label>
+                        <input type="text" class="form-control" id="emergency_contact_name" placeholder="" value="{{object.emergency_contact_name}}" name="emergency_contact_name" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="emergency_contact_number" class="emergency_contact_number-label">شماره تماس همراه</label>
+                        <input type="text" class="form-control" id="emergency_contact_number" placeholder="" value="{{object.emergency_contact_number}}" name="emergency_contact_number" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="allergies" class="surgeries-label">آلرژی</label>
+                        <input type="text" class="form-control" id="surgeries" placeholder="" value="{{object.allergies}}" name="allergies" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="surgeries" class="surgeries-label">جراحی ها</label>
+                        <input type="text" class="form-control" id="surgeries" placeholder="" value="{{object.surgeries}}" name="surgeries" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="medical_history" class="medical_history-label">تاریخچه پزشکی</label>
+                        <input type="text" class="form-control" id="medical_history" placeholder="" value="{{object.medical_history}}" name="medical_history" >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label for="medications" class="medications-label">داروها</label>
+                        <input type="text" class="form-control" id="medications" placeholder="" value="{{object.medications}}" name="medications" >
+                      </div> 
+                      
+                      <div class="col-sm-6">
+                        <label for="smoker" class="smoker-label">استعمال دخانیات</label>
+                        <input type="text" class="form-control" id="smoker" placeholder="" value="{{object.smoker}}" name="smoker" >
+                      </div> 
+
+                      <div class="col-sm-6">
+                        <label for="disease" class="disease-label">بیماری</label>
+                        <input type="text" class="form-control" id="disease" placeholder="" value="{{object.disease}}" name="disease" >
+                      </div> 
+
+
+                      <div class="col-sm-6">
+                        <label for="high_risk">هشدار پرونده بیمار </label>
+                        <select class="form-select" name="high_risk" id="high_risk">
+                            {% for choice in form.high_risk.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <label for="insurance">بیمه</label>
+                        <select class="form-select" id="insurance" name="insurance">
+                            <option value="">----------</option>
+                            {% for insurance in form.fields.insurance.queryset %}
+                                <option value="{{ insurance.pk }}">
+                                    {{ insurance.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="is_vip" class="form-label">عضویت ویژه</label>
+                        <select class="form-select" name="is_vip" id="is_vip">
+                            <option value="0">خیر</option>
+                            <option value="1">بله</option>
+                        </select>
+                    </div>
+
+                    <label class="form-label" for="customFile"> تصویر بیمار</label>
+                    <input type="file" class="form-control" id="customFile" name="image" />
+
+
+            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
+          </form>
+        </div>
+      </div>
+      <br><br>
+      <br><br>
+
+    </main>
+</div>
+<script>
+  jalaliDatepicker.startWatch();
+</script>
+{%endblock%}
