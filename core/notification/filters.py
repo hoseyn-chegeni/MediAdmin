@@ -1,4 +1,4 @@
-from django_filters import CharFilter
+from django_filters import CharFilter, OrderingFilter
 from logs.models import ClientSMSLog
 from base.filters import BaseFilter
 
@@ -25,3 +25,10 @@ class ClientSMSLogFilter(BaseFilter):
             "sender_number": ["exact"],
             "status": ["exact"],
         }
+
+    order_by = OrderingFilter(
+        fields=(("created_at", "created_at"),),
+        field_labels={
+            "created_at": "Creation Date",
+        },
+    )
