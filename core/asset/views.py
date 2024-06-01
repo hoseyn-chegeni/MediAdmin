@@ -16,6 +16,7 @@ from django.utils.timezone import now
 from datetime import timedelta
 from .forms import EquipmentCreateForm, EquipmentUpdateForm
 
+
 # Medical Equipment Views Here.
 class EquipmentListView(BaseListView):
     model = Equipment
@@ -31,7 +32,6 @@ class EquipmentDetailView(BaseDetailView):
     permission_required = "asset.view_equipment"
 
 
-
 class EquipmentCreateView(BaseCreateView):
     model = Equipment
     form_class = EquipmentCreateForm
@@ -45,7 +45,6 @@ class EquipmentCreateView(BaseCreateView):
         If the form is invalid, render the invalid form with errors and previously entered data.
         """
         return self.render_to_response(self.get_context_data(form=form))
-
 
 
 class EquipmentUpdateView(BaseUpdateView):

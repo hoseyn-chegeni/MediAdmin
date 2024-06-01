@@ -6,7 +6,7 @@ from base.views import (
     BaseDetailView,
     BaseUpdateView,
 )
-from django.views.generic import ListView, DeleteView 
+from django.views.generic import ListView, DeleteView
 from .models import Client, ClientGallery, ClientAttachment
 from .filters import (
     ClientFilters,
@@ -32,7 +32,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models import Count
-from .forms import ClientCreateForm, ClientUpdateForm, EditHealthHistoryForm, ClientCreateFromSessionForm, ClientGalleryUpdateForm,ClientGalleryCreateForm
+from .forms import (
+    ClientCreateForm,
+    ClientUpdateForm,
+    EditHealthHistoryForm,
+    ClientCreateFromSessionForm,
+    ClientGalleryUpdateForm,
+    ClientGalleryCreateForm,
+    ClientAttachmentCreateForm,
+    ClientAttachmentUpdateForm,
+)
+
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -202,7 +212,9 @@ class ClientAppointmentListView(BaseListView):
 
         # Get reception history for the client
         context["client"] = Client.objects.get(id=self.kwargs["pk"])
-        context['deleted_session'] = DeletedSession.objects.filter(client_id = self.kwargs['pk'])
+        context["deleted_session"] = DeletedSession.objects.filter(
+            client_id=self.kwargs["pk"]
+        )
 
         return context
 
@@ -361,11 +373,7 @@ class ClientAttachmentListView(BaseListView):
 
 class ClientAttachmentCreateView(BaseCreateView):
     model = ClientAttachment
-    fields = [
-        "title",
-        "type",
-        "attachments",
-    ]
+    form_class = ClientAttachmentCreateForm
     template_name = "client/attachment/create.html"
     permission_required = "client.add_client"
     app_name = "client"
@@ -388,10 +396,7 @@ class ClientAttachmentCreateView(BaseCreateView):
 
 class ClientAttachmentUpdateView(BaseUpdateView):
     model = ClientAttachment
-    fields = [
-        "title",
-        "type",
-    ]
+    form_class = ClientAttachmentUpdateForm
     template_name = "client/attachment/update.html"
     permission_required = "client.change_client"
 
