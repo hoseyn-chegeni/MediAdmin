@@ -32,7 +32,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models import Count
-from .forms import ClientCreateForm, ClientUpdateForm
+from .forms import ClientCreateForm, ClientUpdateForm, EditHealthHistoryForm
 
 # Create your views here.
 class ClientListView(BaseListView):
@@ -118,15 +118,7 @@ class EditPersonalInfoView(BaseUpdateView):
 class EditHealthHistoryView(BaseUpdateView):
     model = Client
     template_name = "client/edit_health_history.html"
-    fields = [
-        "surgeries",
-        "allergies",
-        "medical_history",
-        "medications",
-        "smoker",
-        "disease",
-        "high_risk",
-    ]
+    form_class = EditHealthHistoryForm
     app_name = "client"
     url_name = "detail"
     permission_required = "client.change_client"

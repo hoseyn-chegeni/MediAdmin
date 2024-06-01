@@ -123,3 +123,43 @@ class ClientUpdateForm(forms.ModelForm):
         cleaned_data = super().clean()
         # Add any additional cross-field validation here if necessary
         return cleaned_data
+
+
+
+
+def validate_no_special_characters(value):
+    if re.search(r'[^a-zA-Z0-9\s]', value):
+        raise ValidationError('این فیلد نمی‌تواند شامل کاراکترهای خاص باشد.')
+    return value
+
+class EditHealthHistoryForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = [
+            "surgeries",
+            "allergies",
+            "medical_history",
+            "medications",
+            "smoker",
+            "disease",
+            "high_risk",
+        ]
+
+    def clean_surgeries(self):
+        return validate_no_special_characters(self.cleaned_data.get('surgeries', ''))
+
+    def clean_allergies(self):
+        return validate_no_special_characters(self.cleaned_data.get('allergies', ''))
+
+    def clean_medical_history(self):
+        return validate_no_special_characters(self.cleaned_data.get('medical_history', ''))
+
+    def clean_medications(self):
+        return validate_no_special_characters(self.cleaned_data.get('medications', ''))
+
+    def clean_smoker(self):
+        return validate_no_special_characters(self.cleaned_data.get('smoker', ''))
+
+    def clean_disease(self):
+        return validate_no_special_characters(self.cleaned_data.get('disease', ''))
+
