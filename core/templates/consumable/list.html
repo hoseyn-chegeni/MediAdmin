@@ -49,9 +49,6 @@
 </div>
 {%endblock%}
 {%block buttons%} 
-
-<button class="w-100 btn btn-lg btn-outline-success" type="submit">جستجو</button>
-</form>
 <div class="mb-4">
   <form action="{% url 'consumable:delete_selected_consumable' %}" method="post" id="deleteForm">
     {% csrf_token %}
