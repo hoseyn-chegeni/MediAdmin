@@ -1,809 +1,258 @@
 <!DOCTYPE html>
-{%load static%}  
-<html lang="en" dir="rtl" lang="fa">  
-<head>  
-<meta charset="UTF-8">  
-<title>{% block title%}{%endblock%}</title>  
-<link rel="icon" type="image/jpg" href="{% static 'JPEG-01.jpg' %}">
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-<script src="{% static 'js/color-modes.js'%}"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-<link href="{% static 'css/font.css' %}" rel="stylesheet" >
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% load static %}
+<html lang="en" dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/jpg" href="{% static 'JPEG-01.jpg' %}">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/color-modes.js' %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="{% static 'css/font.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/jalalidatepicker.min.css' %}">
+    <script type="text/javascript" src="{% static 'js/jalalidatepicker.min.js' %}"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<link type="text/css" rel="stylesheet" href="{% static 'css/jalalidatepicker.min.css'%}"></script>
-<script ype="text/javascript" src="{% static 'js/jalalidatepicker.min.js'%}"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<style>
-
-      	.card {
-    background-color: #fff;
-    border-radius: 10px;
-    border: none;
-    position: relative;
-    margin-bottom: 30px;
-    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
-}
-.l-bg-cherry {
-    background: linear-gradient(to right, #493240, #f09) !important;
-    color: #fff;
-}
-
-.l-bg-blue-dark {
-    background: linear-gradient(to right, #373b44, #4286f4) !important;
-    color: #fff;
-}
-
-.l-bg-green-dark {
-    background: linear-gradient(to right, #0a504a, #03b447) !important;
-    color: #fff;
-}
-
-.l-bg-orange-dark {
-    background: linear-gradient(to right, #a86008, #ffba56) !important;
-    color: #fff;
-}
-
-.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
-    font-size: 110px;
-}
-
-.card .card-statistic-3 .card-icon {
-    text-align: center;
-    line-height: 50px;
-    margin-left: 15px;
-    color: #000;
-    position: absolute;
-    right: -5px;
-    top: 20px;
-    opacity: 0.1;
-}
-
-.l-bg-cyan {
-    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
-    color: #fff;
-}
-
-.l-bg-green {
-    background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
-    color: #fff;
-}
-
-.l-bg-orange {
-    background: linear-gradient(to right, #f9900e, #ffba56) !important;
-    color: #fff;
-}
-
-.l-bg-cyan {
-    background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
-    color: #fff;
-}
-  
-
-body {
-font-family: 'fantasy';
-}
-
-.bd-placeholder-img {
-font-size: 1.125rem;
-text-anchor: middle;
--webkit-user-select: none;
--moz-user-select: none;
-user-select: none;
-}
-
-@media (min-width: 768px) {
-.bd-placeholder-img-lg {
-font-size: 3.5rem;
-}
-}
-
-.b-example-divider {
-width: 100%;
-height: 3rem;
-background-color: rgba(0, 0, 0, .1);
-border: solid rgba(0, 0, 0, .15);
-border-width: 1px 0;
-box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
-
-.b-example-vr {
-flex-shrink: 0;
-width: 1.5rem;
-height: 100vh;
-}
-
-.bi {
-vertical-align: -.125em;
-fill: currentColor;
-}
-
-.nav-scroller {
-position: relative;
-z-index: 2;
-height: 2.75rem;
-overflow-y: hidden;
-}
-
-.gallery-image {
-    height: 200px; /* Set the desired height for all gallery images */
-    object-fit: cover; /* Ensure the image covers the specified height */
-}
-
-.nav-scroller .nav {
-display: flex;
-flex-wrap: nowrap;
-padding-bottom: 1rem;
-margin-top: -1px;
-overflow-x: auto;
-text-align: center;
-white-space: nowrap;
--webkit-overflow-scrolling: touch;
-}
-
-.btn-bd-primary {
---bd-violet-bg: #712cf9;
---bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
---bs-btn-font-weight: 600;
---bs-btn-color: var(--bs-white);
---bs-btn-bg: var(--bd-violet-bg);
---bs-btn-border-color: var(--bd-violet-bg);
---bs-btn-hover-color: var(--bs-white);
---bs-btn-hover-bg: #6528e0;
---bs-btn-hover-border-color: #6528e0;
---bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
---bs-btn-active-color: var(--bs-btn-hover-color);
---bs-btn-active-bg: #5a23c8;
---bs-btn-active-border-color: #5a23c8;
-}
-
-.bd-mode-toggle {
-z-index: 1500;
-}
-
-.bd-mode-toggle .dropdown-menu .active .bi {
-display: block !important;
-}
-.bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+    <style>
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            border: none;
+            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1),
+                        0 0.9375rem 1.40625rem rgba(90,97,105,0.1),
+                        0 0.25rem 0.53125rem rgba(90,97,105,0.12),
+                        0 0.125rem 0.1875rem rgba(90,97,105,0.1);
         }
-      }
+        .l-bg-cherry {
+            background: linear-gradient(to right, #493240, #f09) !important;
+            color: #fff;
+        }
+        .l-bg-blue-dark {
+            background: linear-gradient(to right, #373b44, #4286f4) !important;
+            color: #fff;
+        }
+        .l-bg-green-dark {
+            background: linear-gradient(to right, #0a504a, #03b447) !important;
+            color: #fff;
+        }
+        .l-bg-orange-dark {
+            background: linear-gradient(to right, #a86008, #ffba56) !important;
+            color: #fff;
+        }
+        .card .card-statistic-3 .card-icon-large .fas,
+        .card .card-statistic-3 .card-icon-large .far,
+        .card .card-statistic-3 .card-icon-large .fab,
+        .card .card-statistic-3 .card-icon-large .fal {
+            font-size: 110px;
+        }
+        .card .card-statistic-3 .card-icon {
+            text-align: center;
+            line-height: 50px;
+            margin-left: 15px;
+            color: #000;
+            position: absolute;
+            right: -5px;
+            top: 20px;
+            opacity: 0.1;
+        }
+        .l-bg-cyan {
+            background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
+            color: #fff;
+        }
+        .l-bg-green {
+            background: linear-gradient(135deg, #23bdb8 0%, #43e794 100%) !important;
+            color: #fff;
+        }
+        .l-bg-orange {
+            background: linear-gradient(to right, #f9900e, #ffba56) !important;
+            color: #fff;
+        }
+        .gallery-image {
+            height: 200px; /* Set the desired height for all gallery images */
+            object-fit: cover; /* Ensure the image covers the specified height */
+        }
+        body {
+            font-family: 'fantasy';
+        }
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+    </style>
 
-      .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .btn-bd-primary {
-        --bd-violet-bg: #712cf9;
-        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-        --bs-btn-font-weight: 600;
-        --bs-btn-color: var(--bs-white);
-        --bs-btn-bg: var(--bd-violet-bg);
-        --bs-btn-border-color: var(--bd-violet-bg);
-        --bs-btn-hover-color: var(--bs-white);
-        --bs-btn-hover-bg: #6528e0;
-        --bs-btn-hover-border-color: #6528e0;
-        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-        --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #5a23c8;
-        --bs-btn-active-border-color: #5a23c8;
-      }
-
-      .bd-mode-toggle {
-        z-index: 1500;
-      }
-
-      .bd-mode-toggle .dropdown-menu .active .bi {
-        display: block !important;
-      }
-</style>
-
-<link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
-
-</head>  
-<body style="font-family: 'Yekan';">  
-
+    <link href="{% static 'css/bootstrap.rtl.min.css' %}" rel="stylesheet">
+</head>
+<body style="font-family: 'Yekan';">
 
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-<symbol id="check2" viewBox="0 0 16 16">
-<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-</symbol>
-<symbol id="circle-half" viewBox="0 0 16 16">
-<path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-</symbol>
-<symbol id="moon-stars-fill" viewBox="0 0 16 16">
-<path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-<path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-</symbol>
-<symbol id="sun-fill" viewBox="0 0 16 16">
-<path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-</symbol>
+    <symbol id="check2" viewBox="0 0 16 16">
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+    </symbol>
+    <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+    </symbol>
+    <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+    </symbol>
+    <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+    </symbol>
 </svg>
 
 <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-<button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-id="bd-theme"
-type="button"
-aria-expanded="false"
-data-bs-toggle="dropdown"
-aria-label="Toggle theme (auto)">
-<svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-<span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-</button>
-<ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-<li>
-<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-<svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-Light
-<svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-</button>
-</li>
-<li>
-<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-<svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-Dark
-<svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-</button>
-</li>
-<li>
-<button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-<svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
-Auto
-<svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-</button>
-</li>
-</ul>
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+            id="bd-theme"
+            type="button"
+            aria-expanded="false"
+            data-bs-toggle="dropdown"
+            aria-label="Toggle theme (auto)">
+        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
+        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+                Light
+                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
+                Dark
+                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+            </button>
+        </li>
+        <li>
+            <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+                <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
+                Auto
+                <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+            </button>
+        </li>
+    </ul>
 </div>
-
 
 <nav class="navbar navbar-dark bg-dark" aria-label="Dark offcanvas navbar">
-<div class="container-fluid">
-<a class="navbar-brand" href="{% url 'index:index' %}" >Data Teb</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-<div class="offcanvas-header">
-<h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">پنل مدیریتی</h5>
-<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-</div>
-
-<br>
-<div class="offcanvas-body">
-<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-<li class="nav-item">
-<a class="nav-link active" aria-current="page" href="{% url 'index:index' %}">صفحه اصلی </a>
-</li>
-
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-پروفایل
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'accounts:user_detail' user.id %}">پروفایل</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'accounts:change_password' %}">تغییر رمز ورود</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'two_factor:profile' %}"> مدیریت امنیت حساب کاربری</a></li>
-</ul>
-</li>
-{%if perms.accounts.view_user%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت کاربران
-</a>
-<ul class="dropdown-menu">
-</li>
-<li><a class="dropdown-item" href="{% url 'accounts:user_list' %}"> لیست کاربران</a></li>
-<li>
-  {%if perms.accounts.change_user%}
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'accounts:user_create' %}">ایجاد کاربر جدید</a></li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'permissions:list' %}"> مدیریت سطح دسترسی</a></li>
-<hr class="dropdown-divider">
-<li><a class="dropdown-item" href="{% url 'permissions:group_list' %}"> مدیریت  نقش ها</a></li>
-{%endif%}
-</ul>
-</li>        
-{%endif%}
-
-{% if perms.client.view_client%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت بیماران
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'client:list' %}"> لیست بیماران</a></li>
-{% if perms.client.add_client%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'client:create' %}">ایجاد بیمار جدید</a></li>
-{%endif%}
-{% if perms.client.view_sms%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'notification:sms_list' %}">مدیریت پیامک های ارسال شده به بیماران</a></li>
-{%endif%}
-</ul>
-</li>  
-{%endif%}    
-{%if perms.planner.view_month%}
-<li class="nav-item dropdown">            
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-نوبت دهی 
- </a>
-  <ul class="dropdown-menu">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'planner:service_card' %}">تقویم نوبت دهی سرویس ها</a></li><li>
-    <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item" href="{% url 'planner:total_list' %}">لیست نوبت های رزرو شده</a></li>
-    <li>
-    <hr class="dropdown-divider">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'planner:total_deleted_list' %}">لیست نوبت های لغو شده</a></li>
-  <li>
-  <hr class="dropdown-divider">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'planner:today_list' %}">لیست نوبت های رزرو شده امروز</a></li>
-  </ul>
-  </li>    
-{%endif%}
-{%if perms.reception.view_reception%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-پذیرش
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'reception:list' %}">لیست  پذیرش ها</a></li>
-{%if perms.reception.add_reception%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reception:create' %}">پذیرش بیمار جدید</a></li>
-{% endif %}
-</ul>
-</li>   
-{%endif %}
-
-{%if perms.financial.view_financial%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت مالی
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'financial:list' %}">لیست صورتحساب ها</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'financial:unpaid_list' %}">لیست صورتحساب های پرداخت نشده</a></li>
-{% if financial.view_officeexpenses%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'financial:office_expenses_list' %}">لیست هزینه های مطب </a></li>
-<li>
-  {% endif %}
-  {% if financial.add_officeexpenses%}
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'financial:office_expenses_create' %}">ثیت هزینه جدید برای مطب</a></li>
-{%endif%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'services:update_service_prices' %}"> افزایش قیمت دسته ای سرویس ها</a></li>
-</ul>
-</li> 
-{% endif %}
-{% if perms.doctor.view_doctor%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-پزشکان 
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'doctor:list' %}">  لیست پزشکان</a></li>
-{% if perms.doctor.add_doctor%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'doctor:create' %}">افزودن پزشک</a></li>
-  {% endif %}
-</ul>
-{%endif %}
-{%if perms.services.view_service%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت سرویس ها
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'services:list' %}">  لیست سرویس ها</a></li>
-{%if perms.service.view_package%}
-<li>
-<hr class="dropdown-divider">
-<li><a class="dropdown-item" href="{% url 'services:package_list' %}">لیست پکیح ها</a></li>
-{%endif%}
-{% if perms.service.add_service%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'services:create' %}">ایجاد سرویس جدید</a></li>
-{%endif%}
-{%if perms.service.view_servicecategory%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'services:category_list' %}">مدیریت دسته بندی سرویس ها</a></li>
-{%endif%}
-{% if perms.service.add_service%}
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'services:update_service_prices' %}"> افزایش قیمت دسته ای سرویس ها</a></li>
-{% endif %}
-</ul>
-</li> 
-{% endif %}
-
-{% if perms.prescription.view_prescription%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت نسخه ها
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'prescription:list' %}">لیست نسخه ها</a></li>
-<li>
-</ul>
-</li>
-{%endif%}
-{% if perms.tasks.view_task%}
-<li class="nav-item dropdown">            
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت تسک ها
-  </a>
-  <ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="{% url 'tasks:list' %}">لیست تسک ها </a></li>
-  {% if perms.tasks.add_task%}
-  <li>
-  <hr class="dropdown-divider">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'tasks:create' %}">ایجاد تسک جدید</a></li>
-  {%endif%}
-
-  </ul>
-  </li> 
-  {%endif%}
-
-  {%if perms.accounts.view_reports%}
-
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-گزارشات
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'reports:user_reports' %}">کاربران</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:supplier_reports' %}">تامین کنندگان</a></li>
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:equipment_reports' %}">تجهیزات پزشکی </a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:client_reports' %}">بیماران</a></li>
-
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:doctor_reports' %}">پزشکان</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:financial_reports' %}">مالی و صورتحساب ها</a></li>
-
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:insurance_reports' %}">بیمه های طرف قرارداد</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:insurance_service_reports' %}"> سرویس های تحت پوشش</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:prescription_reports' %}">نسخه ها</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:reception_reports' %}">یذیرش ها</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:service_reports' %}">سرویس ها</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:package_reports' %}">پکیح ها</a></li>
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'reports:client_sms_log_reports' %}">پیامک ها</a></li>
-
-<li>
-  <hr class="dropdown-divider">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'reports:tasks_reports' %}">تسک ها</a></li>
-
-  <li>
-    <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item" href="{% url 'reports:consumable_reports' %}">مواد مصرفی </a></li>
-
-<li>
-    <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item" href="{% url 'reports:office_expenses_reports' %}">هزینه های مطب</a></li>
-</li>
-</ul>
-{% endif %}
-{% if perms.accounts.view_import%}
-<li class="nav-item dropdown">            
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-  بارگذاری منابع
-  </a>
-  <ul class="dropdown-menu">
-  <li><a class="dropdown-item" href="{% url 'import:user' %}">کاربر</a></li>
-  <li>
-  <hr class="dropdown-divider">
-  </li>
-  <li><a class="dropdown-item" href="{% url 'import:equipment' %}">تجهیزات پزشکی</a></li>
-  <li>
-    <hr class="dropdown-divider">
-    </li>
-    <li><a class="dropdown-item" href="{% url 'import:client' %}">بیمار</a></li>
-
-    <li>
-      <hr class="dropdown-divider">
-      </li>
-      <li><a class="dropdown-item" href="{% url 'import:consumable' %}">مواد مصرفی</a></li>
-
-      <li>
-        <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="{% url 'import:supplier' %}">تامین کنندگان</a></li>
-
-        <li>
-          <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="{% url 'import:supplier' %}">پزشکان</a></li>
-
-
-        <!-- <li>
-          <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="#">صورتحساب</a></li> -->
-
-          <li>
-            <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="{% url 'import:insurance' %}">بیمه</a></li>
-
-            <li>
-              <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="{% url 'import:reception' %}">پذیرش</a></li>
-              <li>
-                <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'import:service' %}">سرویس</a></li>
-
-                <li>
-                  <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="{% url 'import:task' %}">تسک</a></li>
-            
-  </ul>
-  </li> 
-
-{%endif%}
-
-{% if perms.consumable.view_consumablev2%}
-<li class="nav-item dropdown">            
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    انبار داری
-    </a>
-    <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="{% url 'consumable:list'%}">مدیریت مواد مصرفی</a></li>
-   
-    <li>
-        <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="{% url 'consumable:category_list'%}">مدیریت دسته بندی مواد مصرفی</a></li>
-        {%if perms.consumable.view_supplier%}
-        <li>
-            <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="{% url 'consumable:supplier_list' %}">لیست تامین کنندگان</a></li>
-            {%endif%}
-            {%if perms.consumable.add_supplier%}
-            <li>
-            <hr class="dropdown-divider">
-            </li>
-            </li>
-            <li><a class="dropdown-item" href="{% url 'consumable:supplier_create' %}">ایجاد تامین کننده جدید</a></li>
-            {%endif%}
-            {%if perms.asset.view_equipment%}
-
-            <li>
-              <hr class="dropdown-divider">
-              </li>
-            <li><a class="dropdown-item" href="{% url 'asset:equipment_list' %}">لیست  تجهیزات پزشکی</a></li>
-            <li>
-            {%endif%}
-            {%if perms.asset.add_equipment%}
-
-            <li>
-              <hr class="dropdown-divider">
-              </li>
-            <li><a class="dropdown-item" href="{% url 'asset:equipment_create' %}">افزودن تجهیز پزشکی جدید</a></li>
-            <li>
-            {%endif%}
-            <li>
-            <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">لیست سفارش ها</a></li>
-    
-    </ul>
-    </li> 
-{% endif %}
-{% if perms.insurance.view_insurance%}
-<li class="nav-item dropdown">            
-<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-مدیریت بیمه ها
-</a>
-<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="{% url 'insurance:list' %}">لیست بیمه ها </a></li>
-{% if perms.insurance.add_insurance%}
-
-<li>
-<hr class="dropdown-divider">
-</li>
-<li><a class="dropdown-item" href="{% url 'insurance:create' %}">ایجاد بیمه جدید</a></li>
-{%endif%}
-</ul>
-</li> 
-{% endif %}
-<li class="nav-item">
-  <a class="nav-link active" aria-current="page" href="{% url 'reports:performance_management_report'%}">گزارش مدیریتی عملکرد کلینیک</a>
-  </li>
-<li class="nav-item">
-  <a class="nav-link active" aria-current="page" href="http://37.152.179.224/wiki/">ورود به سامانه آموزشی</a>
-  </li>
-<li class="nav-item">
-  <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">خروج</a>
-  </li>
-  <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-</div>
-</div>
-</div>
-
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index:index' %}">CRAWLER</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark" aria-controls="offcanvasNavbarDark" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">پنل مدیریتی</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <br>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'index:index' %}">صفحه اصلی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">خروج</a>
+                    </li>
+                    <br><br><br><br><br><br>
+                </ul>
+            </div>
+        </div>
+    </div>
 </nav>
 
 <section dir="ltr">
-{% if form.errors %}
-{% for field, errors in form.errors.items %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-{{ field }}:  {% for error in errors %}{{ error }}{% endfor %}
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endfor %}
-{% endif %}
+    {% if form.errors %}
+        {% for field, errors in form.errors.items %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ field }}:  {% for error in errors %}{{ error }}{% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
 
-
-{% for message in messages %}
-{%if message.tags == 'warning'%}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-{%else%}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-
-{%endif%}
-{{ message }}
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{%endfor%}
+    {% for message in messages %}
+        {% if message.tags == 'warning' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% endif %}
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
 </section>
-<div class="container">
-{%block content%}{%endblock%}
-
-</div>
-
-<div class="b-example-divider"></div>
 
 <div class="container">
-  <footer class="py-3 my-4">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">محصولات</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">مستندات آموزشی</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">پشتیبانی</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">تماس با ما</a></li>
-    </ul>
-    <p class="text-center text-body-secondary">  &copy; کلیه حقوق مادی و معنوی این اثر متعلق به گروه نرم افزاری دیتاطب می باشد .</p>
-  </footer>
+    {% block content %}{% endblock %}
 </div>
+
 
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
