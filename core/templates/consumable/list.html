@@ -87,7 +87,14 @@
     <a href="{%url 'consumable:update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
     {%endif%}
   </td>
-</tr>
+</tr> 
+{% empty%}
+<th></th>
+<th></th>
+<th></th>
+<th><span>یافت نشد</span></th>
+<th></th>
+<th></th>
 {%endfor%}
 <script>
   // JavaScript for Select All functionality
