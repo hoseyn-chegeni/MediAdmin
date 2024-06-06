@@ -75,7 +75,7 @@
     <span>{{i.name}}</span>
   </td>
   <td class="align-middle">
-    <span> {{i.category}} </span>
+    <span> {{i.category|default_if_none:"-"}} </span>
   </td>
   <td class="align-middle">
       <span>{{i.quantity}}</span>
