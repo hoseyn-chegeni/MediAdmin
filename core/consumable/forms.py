@@ -15,7 +15,9 @@ class ConsumableForm(forms.ModelForm):
         name = self.cleaned_data.get("name")
         if not re.match(r"^[A-Za-z0-9ا-ی\s]+$", name):
             raise ValidationError("نام باید فقط شامل حروف و اعداد باشد.")
+
+        name = self.cleaned_data.get("name")
+        if ConsumableV2.objects.filter(name=name).exists():
+            raise ValidationError("یک  محصول با این نام قبلاً ایجاد شده است.")
+
         return name
-
-
-
