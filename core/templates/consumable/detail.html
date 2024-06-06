@@ -19,17 +19,17 @@
               <hr>
               <p class="card-text"><strong>نام:</strong>{{object.name}}</p>
               <hr>
-              <p class="card-text"><strong>توضیحات:</strong>{{object.description}}</p>
+              <p class="card-text"><strong>توضیحات:</strong>{{object.description|default_if_none:"-"}}</p>
               <hr>
-              <p class="card-text"><strong>دسته بندی: </strong>{{object.category}}</p>
+              <p class="card-text"><strong>دسته بندی: </strong>{{object.category|default_if_none:"-"}}</p>
               <hr>
               <p class="card-text"><strong>واحد اندازه گیری: </strong>{{object.unit}}</p>
               <hr>
               <p class="card-text"><strong>حداقل سطح موجودی: </strong>{{object.minimum_stock_level}}</p>
               <hr>
-              <p class="card-text"><strong>نحوه مصرف: </strong>{{object.usage_notes}}</p>
+              <p class="card-text"><strong>نحوه مصرف: </strong>{{object.usage_notes|default_if_none:"-"}}</p>
               <hr>
-              <p class="card-text"><strong>نحوه نگهداری: </strong>{{object.storage_notes}}</p>
+              <p class="card-text"><strong>نحوه نگهداری: </strong>{{object.storage_notes|default_if_none:"-"}}</p>
               <hr>
               <p class="card-text"><strong>سطح موجودی برای یادآوری سفارش مجدد: </strong>{{object.reorder_quantity}}</p>
               <hr>
@@ -125,6 +125,11 @@
                                 {%endif%}
                               </td>
                           </tr>
+                          {%empty%}
+                          <tr>
+                            <td colspan="9" class="text-center">یافت نشد</td>
+                          </tr>
+
                           {%endfor%}
                           </tbody>
                       </table>
@@ -201,6 +206,10 @@
                                         <a href="{%url 'consumable:supplier_detail' i.supplier.id %}" data-mdb-toggle="tooltip" title="جزییات تامین کننده"><i class="fas fa-industry" ></i></a>
                                       {%endif%}
                                       </td>
+                                  </tr> 
+                                  {%empty%}
+                                  <tr>
+                                    <td colspan="9" class="text-center">یافت نشد</td>
                                   </tr>
                                   {%endfor%}
                                   </tbody>
