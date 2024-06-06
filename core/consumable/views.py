@@ -16,6 +16,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 from django.utils.timezone import now
 from datetime import timedelta
+from .forms import ConsumableForm
 
 # Create your views here.
 
@@ -48,7 +49,7 @@ class ConsumableDetailView(BaseDetailView):
 
 class ConsumableCreateView(BaseCreateView):
     model = ConsumableV2
-    fields = "__all__"
+    form_class = ConsumableForm
     template_name = "consumable/create.html"
     app_name = "consumable"
     url_name = "detail"
@@ -57,7 +58,7 @@ class ConsumableCreateView(BaseCreateView):
 
 class ConsumableUpdateView(BaseUpdateView):
     model = ConsumableV2
-    fields = "__all__"
+    form_class = ConsumableForm
     template_name = "consumable/update.html"
     app_name = "consumable"
     url_name = "detail"
