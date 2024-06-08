@@ -62,7 +62,8 @@ To get started with MediAdmin, follow these steps:
 
 3. **Run Docker-compose:**
    ```bash
-docker-compose -f docker-compose-stage.yml up --build   ```
+   docker-compose -f docker-compose-stage.yml up --build 
+   ```
 
 4. **Create a Superuser:**
    ```bash
