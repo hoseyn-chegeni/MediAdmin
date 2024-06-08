@@ -19,7 +19,7 @@
 
                     <div class="col-sm-6">
                       <label for="name" class="form-label">نام دسته بندی</label>
-                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                      <input type="text" class="form-control" id="name" placeholder="" value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
                     </div>
 
 
@@ -27,7 +27,7 @@
 
                         <div class="col-sm-6">
                             <label for="description" class="form-label">توضیحات</label>
-                            <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                            <input type="text" class="form-control" id="description" placeholder="" value="{% if form.data.description %}{{ form.data.description }}{% else %}{{ form.initial.description }}{% endif %}" name="description" >
                           </div>
       
 
