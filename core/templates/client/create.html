@@ -1,21 +1,8 @@
-{%extends 'base.html' %}
+{%extends 'base_create.html' %}
 {%block title %} ایجاد پروفایل بیمار{%endblock%}
+{%block form_title %} ایجاد پروفایل بیمار{%endblock%}
 
-{%block content %} 
-   
-<div class="container">
-    <main>
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
-        <h2>ایجاد پروفایل بیمار</h2>
-      </div>
-
-        <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">اطلاعات</h4>
-          <form class="needs-validation" method="post" enctype="multipart/form-data">
-            {%csrf_token%}
-            <div class="row g-3">
-                <div class="row g-3">
+{%block fields %} 
                     <div class="col-sm-6">
                       <label for="case_id" class="form-label">شماره پرونده</label>
                       <input type="text" class="form-control" id="case_id" placeholder=""  value="{% if form.data.case_id %}{{ form.data.case_id }}{% else %}{{ form.initial.case_id }}{% endif %}" name="case_id" >
@@ -150,18 +137,4 @@
 
                     <label class="form-label" for="customFile"> تصویر بیمار</label>
                     <input type="file" class="form-control" id="customFile" name="image" />
-
-
-            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
-          </form>
-        </div>
-      </div>
-      <br><br>
-      <br><br>
-
-    </main>
-</div>
-<script>
-  jalaliDatepicker.startWatch();
-</script>
 {%endblock%}

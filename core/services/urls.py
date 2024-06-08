@@ -29,7 +29,6 @@ from .views import (
     ServicePackageUpdateView,
     ServicePackageDeleteView,
     UpdateServicePricesView,
-    AddServiceUsingDoctorProfileView,
     DeleteSelectedServicesView,
     DeleteSelectedPackageView,
     DeleteSelectedServiceCategoryView,
