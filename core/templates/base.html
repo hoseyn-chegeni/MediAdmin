@@ -522,6 +522,10 @@ Auto
     <hr class="dropdown-divider">
     </li>
     <li><a class="dropdown-item" href="{% url 'tasks:my_list' %}">لیست تسک های من</a></li>
+    <li>
+      <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="{% url 'tasks:my_created_list' %}">تسک های ایجاد شده توسط من </a></li>
   {% if perms.tasks.add_task%}
   <li>
   <hr class="dropdown-divider">
