@@ -123,9 +123,11 @@
                                 <a href="{%url 'consumable:inventory_update' i.id %}" data-mdb-toggle="tooltip" title="ویرایش"><i class="fas fa-edit" ></i></a>
                                 {%endif%}
                                 {% if perms.consumable.view_supplier%}
+                                {% if i.supplier%}
                                 <a href="{%url 'consumable:supplier_detail' i.supplier.id %}" data-mdb-toggle="tooltip" title="جزییات تامین کننده"><i class="fas fa-industry" ></i></a>
                                 {%endif%}
-                                
+                                {%endif%}
+
                               </td>
                           </tr>
                           {%empty%}
