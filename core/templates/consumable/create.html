@@ -18,7 +18,7 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                       <label for="name" class="form-label">نام محصول</label>
-                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                      <input type="text" class="form-control" id="name" placeholder=""  value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
                     </div>
 
         <div class="col-sm-6">
@@ -34,32 +34,32 @@
 
             <div class="col-sm-6">
                 <label for="unit" class="form-label">واحد اندازه گیری</label>
-                <input type="text" class="form-control" id="unit" placeholder="" value="{{object.unit}}" name="unit" >
+                <input type="text" class="form-control" id="unit" placeholder="" value="{% if form.data.unit %}{{ form.data.unit }}{% else %}{{ form.initial.unit }}{% endif %}" name="unit" >
               </div>
 
               <div class="col-sm-6">
                 <label for="minimum_stock_level" class="form-label">حداقل سطح موجودی</label>
-                <input type="number" class="form-control" id="minimum_stock_level" placeholder="" value="{{object.minimum_stock_level}}" name="minimum_stock_level" >
+                <input type="number" class="form-control" id="minimum_stock_level" placeholder="" value="{% if form.data.minimum_stock_level %}{{ form.data.minimum_stock_level }}{% else %}{{ form.initial.minimum_stock_level }}{% endif %}" name="minimum_stock_level" >
               </div>
 
               <div class="col-sm-6">
                 <label for="usage_notes" class="form-label">نحوه مصرف</label>
-                <input type="text" class="form-control" id="usage_notes" placeholder="" value="{{object.usage_notes}}" name="usage_notes" >
+                <input type="text" class="form-control" id="usage_notes" placeholder="" value="{% if form.data.usage_notes %}{{ form.data.usage_notes }}{% else %}{{ form.initial.usage_notes }}{% endif %}" name="usage_notes" >
               </div>
 
                   <div class="col-sm-6">
                 <label for="storage_notes" class="form-label">نحوه نگهداری</label>
-                <input type="text" class="form-control" id="storage_notes" placeholder="" value="{{object.storage_notes}}" name="storage_notes" >
+                <input type="text" class="form-control" id="storage_notes" placeholder="" value="{% if form.data.storage_notes %}{{ form.data.storage_notes }}{% else %}{{ form.initial.storage_notes }}{% endif %}" name="storage_notes" >
               </div>
 
               <div class="col-sm-6">
                 <label for="description" class="form-label">توضیحات</label>
-                <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                <input type="text" class="form-control" id="description" placeholder="" value="{% if form.data.description %}{{ form.data.description }}{% else %}{{ form.initial.description }}{% endif %}" name="description" >
               </div>
 
               <div class="col-sm-6">
                 <label for="reorder_quantity" class="form-label">سطح موجودی برای یادآوری سفارش مجدد </label>
-                <input type="number" class="form-control" id="reorder_quantity" placeholder="" value="{{object.reorder_quantity}}" name="reorder_quantity" >
+                <input type="number" class="form-control" id="reorder_quantity" placeholder="" value="{% if form.data.reorder_quantity %}{{ form.data.reorder_quantity }}{% else %}{{ form.initial.reorder_quantity }}{% endif %}" name="reorder_quantity" >
               </div>
 
               <label class="form-label" for="customFile"> تصویر محصول</label>

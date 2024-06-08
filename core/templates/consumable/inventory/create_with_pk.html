@@ -17,7 +17,7 @@
             <div class="row g-3">
                     <div class="col-sm-6">
                       <label for="quantity" class="form-label">تعداد</label>
-                      <input type="number" class="form-control" id="quantity" placeholder="" value="{{object.quantity}}" name="quantity" >
+                      <input type="number" class="form-control" id="quantity" placeholder="" value="{% if form.data.quantity %}{{ form.data.quantity }}{% else %}{{ form.initial.quantity }}{% endif %}" name="quantity" >
                     </div>
 
                     <div class="col-sm-6">
@@ -32,31 +32,31 @@
 
                       <div class="col-sm-6">
                         <label for="price" class="form-label">قیمت</label>
-                        <input type="number" class="form-control" id="price" placeholder="" value="{{object.price}}" name="price" >
+                        <input type="number" class="form-control" id="price" placeholder="" value="{% if form.data.price %}{{ form.data.price }}{% else %}{{ form.initial.price }}{% endif %}"  name="price" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="purchase_date" class="form-label">تاریخ خرید</label>
-                        <input type="text" class="form-control" id="purchase_date" placeholder="" value="{{object.purchase_date}}" name="purchase_date" data-jdp>
+                        <input type="text" class="form-control" id="purchase_date" placeholder="" value="{% if form.data.purchase_date %}{{ form.data.purchase_date }}{% else %}{{ form.initial.purchase_date }}{% endif %}"name="purchase_date" data-jdp>
                       </div>
   
                       <div class="col-sm-6">
                         <label for="purchase_cost" class="form-label">هزینه خرید</label>
-                        <input type="number" class="form-control" id="purchase_cost" placeholder="" value="{{object.purchase_cost}}" name="purchase_cost" >
+                        <input type="number" class="form-control" id="purchase_cost" placeholder=""  value="{% if form.data.purchase_cost %}{{ form.data.purchase_cost }}{% else %}{{ form.initial.purchase_cost }}{% endif %}" name="purchase_cost" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="description" class="form-label">توضیحات</label>
-                        <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                        <input type="text" class="form-control" id="description" placeholder="" value="{% if form.data.description %}{{ form.data.description }}{% else %}{{ form.initial.description }}{% endif %}"name="description" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="expiration_date" class="form-label">تاریخ انقضا</label>
-                        <input type="text" class="form-control" id="expiration_date" placeholder="" value="{{object.expiration_date}}" name="expiration_date" >
+                        <input type="text" class="form-control" id="expiration_date" placeholder="" value="{% if form.data.expiration_date %}{{ form.data.expiration_date }}{% else %}{{ form.initial.expiration_date }}{% endif %}" name="expiration_date" >
                       </div>
                       <div class="col-sm-6">
                         <label for="expiration_reminder" class="form-label">چند روز پیش از فرا رسیدن انقضا یادآوری انجام شود</label>
-                        <input type="number" class="form-control" id="expiration_reminder" placeholder="" value="1" name="expiration_reminder" >
+                        <input type="number" class="form-control" id="expiration_reminder" placeholder=""value="{% if form.data.expiration_reminder %}{{ form.data.expiration_reminder }}{% else %}{{ form.initial.expiration_reminder }}{% endif %}" name="expiration_reminder" >
                       </div>
 
               <label class="form-label" for="customFile"> تصویر </label>

@@ -18,37 +18,37 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                       <label for="name" class="form-label">نام تامین کننده</label>
-                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                      <input type="text" class="form-control" id="name" placeholder=""value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
                     </div>
 
             <div class="col-sm-6">
                 <label for="contact_person" class="form-label">نام واسط</label>
-                <input type="text" class="form-control" id="contact_person" placeholder="" value="{{object.contact_person}}" name="contact_person" >
+                <input type="text" class="form-control" id="contact_person" placeholder="" value="{% if form.data.contact_person %}{{ form.data.contact_person }}{% else %}{{ form.initial.contact_person }}{% endif %}" name="contact_person" >
               </div>
 
               <div class="col-sm-6">
                 <label for="email" class="form-label">ایمیل</label>
-                <input type="text" class="form-control" id="email" placeholder="" value="{{object.email}}" name="email" >
+                <input type="text" class="form-control" id="email" placeholder="" value="{% if form.data.email %}{{ form.data.email }}{% else %}{{ form.initial.email }}{% endif %}" name="email" >
               </div>
 
               <div class="col-sm-6">
                 <label for="phone_number" class="form-label">شماره همراه</label>
-                <input type="text" class="form-control" id="phone_number" placeholder="" value="{{object.phone_number}}" name="phone_number" >
+                <input type="text" class="form-control" id="phone_number" placeholder="" value="{% if form.data.phone_number %}{{ form.data.phone_number }}{% else %}{{ form.initial.phone_number }}{% endif %}" name="phone_number" >
               </div>
 
                   <div class="col-sm-6">
                 <label for="address" class="form-label">آدرس</label>
-                <input type="text" class="form-control" id="address" placeholder="" value="{{object.address}}" name="address" >
+                <input type="text" class="form-control" id="address" placeholder="" value="{% if form.data.address %}{{ form.data.address }}{% else %}{{ form.initial.address }}{% endif %}" name="address" >
               </div>
 
               <div class="col-sm-6">
                 <label for="city" class="form-label">شهر</label>
-                <input type="text" class="form-control" id="city" placeholder="" value="{{object.city}}" name="city" >
+                <input type="text" class="form-control" id="city" placeholder="" value="{% if form.data.city %}{{ form.data.city }}{% else %}{{ form.initial.city }}{% endif %}" name="city" >
               </div>
 
               <div class="col-sm-6">
                 <label for="notes" class="form-label">یادداشت</label>
-                <input type="text" class="form-control" id="notes" placeholder="" value="{{object.notes}}" name="notes" >
+                <input type="text" class="form-control" id="notes" placeholder="" value="{% if form.data.notes %}{{ form.data.notes }}{% else %}{{ form.initial.notes }}{% endif %}" name="notes" >
               </div>
             <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
           </form>
