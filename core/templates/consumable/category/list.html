@@ -16,7 +16,7 @@
 {%block buttons%} 
 <form action="{% url 'consumable:delete_selected_category' %}" method="post" id="deleteForm">
   {% csrf_token %}
-<a href="{% url 'consumable:create' %}" class="btn btn-success">افزودن دسته بندی جدید</a>
+<a href="{% url 'consumable:category_create' %}" class="btn btn-success">افزودن دسته بندی جدید</a>
 <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
 {%endblock%}
 {%block thead%}
