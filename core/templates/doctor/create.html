@@ -18,37 +18,37 @@
                         <div class="row g-3">
                         <div class="col-sm-6">
                             <label for="first_name" class="form-label">نام</label>
-                            <input type="text" class="form-control" id="first_name" placeholder="" value="" name="first_name" required>
+                            <input type="text" class="form-control" id="first_name" placeholder="" value="{% if form.data.first_name %}{{ form.data.first_name }}{% else %}{{ form.initial.first_name }}{% endif %}" name="first_name" required>
                         </div>
 
                         <div class="col-sm-6">
                             <label for="last_name" class="form-label">نام خانوادگی</label>
-                            <input type="text" class="form-control" id="last_name" placeholder="" value="" name="last_name" required>
+                            <input type="text" class="form-control" id="last_name" placeholder=""  value="{% if form.data.last_name %}{{ form.data.last_name }}{% else %}{{ form.initial.last_name }}{% endif %}" name="last_name" required>
                         </div>
 
                         <div class="col-sm-6">
                             <label for="email" class="form-label">ایمیل<span class="text-body-secondary"></span></label>
-                            <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email" required>
+                            <input type="email" class="form-control" id="email" placeholder="you@example.com" value="{% if form.data.email %}{{ form.data.email }}{% else %}{{ form.initial.email }}{% endif %}" name="email" required>
                         </div>
                             <div class="col-sm-6">
                                 <label for="phone_number" class="form-label">شماره تماس</label>
-                                <input type="text" class="form-control" id="phone_number" placeholder="" value="" name="phone_number" required>
+                                <input type="text" class="form-control" id="phone_number" placeholder="" value="{% if form.data.phone_number %}{{ form.data.phone_number }}{% else %}{{ form.initial.phone_number }}{% endif %}" name="phone_number" required>
                             </div> 
                                 
                                 
                       <div class="col-sm-6">
                         <label for="address" class="form-label">آدرس</label>
-                        <input type="text" class="form-control" id="address" placeholder="" value="{{object.address}}" name="address" >
+                        <input type="text" class="form-control" id="address" placeholder="" value="{% if form.data.address %}{{ form.data.address }}{% else %}{{ form.initial.address }}{% endif %}" name="address" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="specialization" class="form-label">تخصص</label>
-                        <input type="text" class="form-control" id="specialization" placeholder="" value="{{object.specialization}}" name="specialization" >
+                        <input type="text" class="form-control" id="specialization" placeholder="" value="{% if form.data.specialization %}{{ form.data.specialization }}{% else %}{{ form.initial.specialization }}{% endif %}" name="specialization" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="registration_number" class="form-label">شماره نظام پزشکی</label>
-                        <input type="text" class="form-control" id="registration_number" placeholder="" value="{{object.registration_number}}" name="registration_number" >
+                        <input type="text" class="form-control" id="registration_number" placeholder="" value="{% if form.data.registration_number %}{{ form.data.registration_number }}{% else %}{{ form.initial.registration_number }}{% endif %}"  name="registration_number" >
                       </div>
 
                       <div class="col-sm-6">
