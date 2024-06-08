@@ -1,7 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 import re
-from .models import ConsumableV2
+from .models import ConsumableV2, ConsumableCategory
 from django import forms
 
 
@@ -26,6 +25,32 @@ class ConsumableUpdateForm(forms.ModelForm):
         model = ConsumableV2
         fields = "__all__"
 
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        if not re.match(r"^[A-Za-z0-9ا-ی\s]+$", name):
+            raise ValidationError("نام باید فقط شامل حروف و اعداد باشد.")
+        return name
+
+class ConsumableCategoryCreateForm(forms.ModelForm):
+    class Meta:
+        model = ConsumableCategory
+        fields = ['name','note']
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        if not re.match(r"^[A-Za-z0-9ا-ی\s]+$", name):
+            raise ValidationError("نام باید فقط شامل حروف و اعداد باشد.")
+
+        name = self.cleaned_data.get("name")
+        if ConsumableV2.objects.filter(name=name).exists():
+            raise ValidationError("یک  دسته بندی با این نام قبلاً ایجاد شده است.")
+        return name
+
+
+class ConsumableCategoryUpdateForm(forms.ModelForm):
+    class Meta:
+        model = ConsumableCategory 
+        fields = ['name','note']
+        
     def clean_name(self):
         name = self.cleaned_data.get("name")
         if not re.match(r"^[A-Za-z0-9ا-ی\s]+$", name):
