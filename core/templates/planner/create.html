@@ -35,22 +35,22 @@
 
                     <div class="col-sm-6">
                       <label for="first_name" class="form-label">نام</label>
-                      <input type="text" class="form-control" id="first_name" placeholder="" value="{{object.first_name}}" name="first_name" >
+                      <input type="text" class="form-control" id="first_name" placeholder=""value="{% if form.data.first_name %}{{ form.data.first_name }}{% else %}{{ form.initial.first_name }}{% endif %}" name="first_name" >
                     </div>
 
                     <div class="col-sm-6">
                         <label for="last_name" class="form-label">نام خانوادگی</label>
-                        <input type="text" class="form-control" id="last_name" placeholder="" value="{{object.last_name}}" name="last_name" >
+                        <input type="text" class="form-control" id="last_name" placeholder="" value="{% if form.data.last_name %}{{ form.data.last_name }}{% else %}{{ form.initial.last_name }}{% endif %}" name="last_name" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="national_id" class="form-label">کدملی</label>
-                        <input type="text" class="form-control" id="national_id" placeholder="" value="{{object.national_id}}" name="national_id" >
+                        <input type="text" class="form-control" id="national_id" placeholder="" value="{% if form.data.national_id %}{{ form.data.national_id }}{% else %}{{ form.initial.national_id }}{% endif %}" name="national_id" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="phone_number" class="form-label">شماره تماس</label>
-                        <input type="text" class="form-control" id="phone_number" placeholder="" value="{{object.phone_number}}" name="phone_number" >
+                        <input type="text" class="form-control" id="phone_number" placeholder="" value="{% if form.data.phone_number %}{{ form.data.phone_number }}{% else %}{{ form.initial.phone_number }}{% endif %}" name="phone_number" >
                       </div>
             <button class="w-100 btn btn-lg btn-outline-success" type="submit">ایجاد</button>
           </form>
