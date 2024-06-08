@@ -40,6 +40,7 @@ class EquipmentCreateView(BaseCreateView):
     url_name = "equipment_detail"
     permission_required = "asset.add_equipment"
 
+
 class EquipmentUpdateView(BaseUpdateView):
     model = Equipment
     form_class = EquipmentUpdateForm

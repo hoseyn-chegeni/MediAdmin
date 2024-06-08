@@ -5,11 +5,10 @@ from .models import ConsumableV2
 from django import forms
 
 
-
 class ConsumableCreationForm(forms.ModelForm):
     class Meta:
         model = ConsumableV2
-        fields ='__all__'
+        fields = "__all__"
 
     def clean_name(self):
         name = self.cleaned_data.get("name")
@@ -20,13 +19,12 @@ class ConsumableCreationForm(forms.ModelForm):
         if ConsumableV2.objects.filter(name=name).exists():
             raise ValidationError("یک  محصول با این نام قبلاً ایجاد شده است.")
         return name
-    
 
 
 class ConsumableUpdateForm(forms.ModelForm):
     class Meta:
         model = ConsumableV2
-        fields ='__all__'
+        fields = "__all__"
 
     def clean_name(self):
         name = self.cleaned_data.get("name")

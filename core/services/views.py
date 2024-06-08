@@ -486,4 +486,3 @@ class UpdateServicePricesView(FormView):
 
         messages.success(self.request, "افزایش فیمت با موفقیت انجام شد")
         return super().form_valid(form)
-

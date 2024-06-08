@@ -43,7 +43,7 @@ class ClientCreateForm(forms.ModelForm):
 
     def clean_emergency_contact_name(self):
         emergency_contact_name = self.cleaned_data.get("emergency_contact_name")
-        if not re.search( r"^[A-Za-zا-ی\s]+$", emergency_contact_name):
+        if not re.search(r"^[A-Za-zا-ی\s]+$", emergency_contact_name):
             raise ValidationError(
                 "نام شخص تماس اضطراری نباید شامل کاراکترهای خاص یا اعداد باشد."
             )

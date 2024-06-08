@@ -241,10 +241,12 @@ class DeleteSelectedClientView(View):
             client_ids = request.POST.getlist(
                 "client_ids"
             )  # Get the list of selected user IDs from the form
-            delete_client_count = Client.objects.filter(id__in=client_ids).delete()  # Delete selected users
+            delete_client_count = Client.objects.filter(
+                id__in=client_ids
+            ).delete()  # Delete selected users
             messages.success(
                 request, f"تعداد {delete_client_count[0]} بیمار با موفقیت حذف شدند."
-            ) 
+            )
         return redirect("client:list")
 
 
