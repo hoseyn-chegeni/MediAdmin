@@ -161,6 +161,16 @@ class DeleteSelectedTasksView(View):
         return redirect("tasks:list")
 
 
+class MyTaskListView(BaseListView):
+    model = Task
+    template_name = "tasks/my_list.html"
+    context_object_name = "tasks"
+    filterset_class = TaskFilter
+    permission_required = "tasks.view_task"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(assign_to_id=self.request.user.id)  
+    
 #############################
 #############################
 #############################

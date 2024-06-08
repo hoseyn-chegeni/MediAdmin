@@ -14,12 +14,14 @@ from .views import (
     DeleteSelectedTasksView,
     CompletedTaskListView,
     PendingTaskListView,
+    MyTaskListView,
 )
 
 app_name = "tasks"
 
 urlpatterns = [
     path("list/", TaskListView.as_view(), name="list"),
+    path("my_list/", MyTaskListView.as_view(), name="my_list"),
     path("detail/<int:pk>/", TaskDetailView.as_view(), name="detail"),
     path("create/", TaskCreateView.as_view(), name="create"),
     path("update/<int:pk>/", TaskUpdateView.as_view(), name="update"),

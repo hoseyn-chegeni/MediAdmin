@@ -518,6 +518,10 @@ Auto
   </a>
   <ul class="dropdown-menu">
   <li><a class="dropdown-item" href="{% url 'tasks:list' %}">لیست تسک ها </a></li>
+  <li>
+    <hr class="dropdown-divider">
+    </li>
+    <li><a class="dropdown-item" href="{% url 'tasks:my_list' %}">لیست تسک های من</a></li>
   {% if perms.tasks.add_task%}
   <li>
   <hr class="dropdown-divider">

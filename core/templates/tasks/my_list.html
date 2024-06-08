@@ -1,0 +1,168 @@
+{% extends 'base_list.html' %}
+{% block title %}لیست تسک های من{% endblock %}
+{%block list_title%}لیست تسک های من{%endblock%}
+{%block filter_field%}
+<div class="row g-3">
+  <div class="col-sm-6">
+    <label for="id" class="form-label">ID</label>
+    <input  class="form-control" type="number" name="id" step="any" id="id"value="{{ request.GET.id }}" >
+  </div>
+
+  <div class="col-sm-6">
+    <label for="title" class="form-label">عنوان</label>
+    <input  class="form-control" type="text" name="title" step="any" id="title" value="{{ request.GET.title }}" >
+  </div>
+
+  <div class="col-sm-6">
+    <label for="type" class="form-label">نوع تسک</label>
+    <input  class="form-control" type="text" name="type" step="any" id="type" value="{{ request.GET.type }}" >
+  </div>
+
+
+  
+  <div class="col-sm-6">
+    <label for="status">وضعیت</label>
+    <select class="form-select" name="status" id="status">
+        {% for choice in filter.form.status.field.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+
+
+<div class="col-sm-6">
+  <label for="priority">اولویت</label>
+  <select class="form-select" name="priority" id="priority">
+      {% for choice in filter.form.priority.field.choices %}
+          <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+      {% endfor %}
+  </select>
+</div>
+ 
+    <div class="col-sm-6">
+      <label for="created_by_email" class="form-label">ایمیل ایجاد کننده
+      </label>
+      <input  class="form-control" type="text" name="created_by_email" step="any" id="created_by_email" value="{{ request.GET.created_by_email }}" >
+    </div>
+
+    <div class="col-sm-6">
+      <label for="date" class="form-label">تاریخ</label>
+      <input  class="form-control" type="date" name="date" step="any" id="date" value="{{ request.GET.date }}" >
+    </div>
+
+    <div class="col-sm-6">
+      <label for="date_range">محدوده زمانی</label>
+      <select class="form-select" name="date_range" id="date_range">
+        <option value="" selected>---------</option>
+        <option value="today">امروز</option>
+        <option value="this_week">هفته گذشته</option>
+        <option value="this_month">ماه گذشته</option>
+      </select>
+    </div>
+
+{%endblock%}
+{%block buttons%} 
+<form action="{% url 'tasks:delete_selected_tasks' %}" method="post" id="deleteForm">
+  {% csrf_token %}
+  {% if perms.tasks.add_task%}
+<a href="{% url 'tasks:create' %}" class="btn btn-success me-2">ایجاد تسک جدید</a>
+{%endif%}
+{%if perms.accounts.view_reports%}
+<a href="{% url 'reports:tasks_reports' %}" class="btn btn-success me-2">گزارشات</a>
+{%endif%}
+{%if perms.tasks.delete_task%}
+<button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button> <!-- Delete button -->
+{%endif%}
+
+{%endblock%}
+{%block thead%}
+
+<th scope="col"><input type="checkbox" id="selectAll"></th
+  ><th scope="col">شماره تسک</th>
+<th scope="col">عنوان</th>
+<th scope="col">نوع تسک</th>
+<th scope="col">وضعیت</th>
+<th scope="col">اولویت</th>
+<th scope="col">کاربر ایجاد کننده</th>
+<th scope="col">تاریخ ایجاد</th>
+<th scope="col">اکشن ها</th>
+
+{%endblock%}
+{%block tbody%} 
+{%for i in tasks%}
+<tr class="fw-normal">
+  <td><input type="checkbox" name="tasks_ids" value="{{ i.id }}" class="-checkbox"></td> <!-- Checkbox -->
+
+  <th>
+    <span class="ms-2">{{i.id}}</span>
+  </th>
+  <td class="align-middle">
+    <span>{{i.title}}</span>
+  </td>
+  <td class="align-middle">
+      <span>{{i.type}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.status}}</span>
+    </td>
+
+    <td class="align-middle">
+      {% if i.priority == 'بالا' %}
+      <span class="badge bg-danger rounded-pill"> بالا </span>
+      {% elif i.priority == 'متوسط' %}
+      <span class="badge bg-success rounded-pill"> متوسط </span>
+      {% else %}
+      <span class="badge bg-info rounded-pill"> پایین </span>
+      {%endif%}
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.created_by.email}}</span>
+    </td>
+
+    <td class="align-middle">
+      <span>{{i.created_at.date}}</span>
+    </td>
+
+
+
+
+  <td class="align-middle">
+      <a href="{%url 'tasks:detail' i.id %}" data-mdb-toggle="tooltip" title="جزییات تسک"> <i class="fas fa-info-circle"></i></a>
+      {%if perms.tasks.change_task%}
+      <a href="{%url 'tasks:update' i.id %}" data-mdb-toggle="tooltip" title="ویرارش"><i class="fas fa-edit" ></i></a>
+{%endif %}
+  </td>
+</tr>
+{%endfor%}
+
+<script>
+  // JavaScript for Select All functionality
+  document.getElementById('selectAll').addEventListener('change', function() {
+      var checkboxes = document.querySelectorAll('.-checkbox');
+      for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+      }
+    });
+  
+    // Show/Hide Delete Button based on checkbox selection
+    var checkboxes = document.querySelectorAll('.-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.addEventListener('change', function() {
+        var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+        document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+      });
+    }
+  
+    // Initial check to show/hide the delete button
+    var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    document.getElementById('confirmDeleteBtn').style.display = anyChecked ? 'block' : 'none';
+  </script>
+  
+  
+{%endblock%}
+{%block delete_content%}
+تسک های انتخاب شده به طور کامل از سیستم حذف می شوند
+{%endblock%}
