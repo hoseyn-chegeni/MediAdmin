@@ -39,6 +39,9 @@ Welcome to the first official release of MediAdmin, a comprehensive Clinic Manag
 - **Dashboards:** Visual dashboards displaying key metrics and clinic performance.
 - **Reports:** Generate reports on various aspects of clinic operations including patient demographics, appointment statistics, and financial performance.
 
+![Screenshot of the  Data Analytics and Metrics page ](./core/static/analytics.png)
+
+
 ### Technical Highlights
 
 - **Django Framework:** Leveraging Django’s robust framework for a scalable and maintainable application.
