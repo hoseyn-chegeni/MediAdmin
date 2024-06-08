@@ -16,7 +16,15 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 from django.utils.timezone import now
 from datetime import timedelta
-from .forms import ConsumableCreationForm, ConsumableUpdateForm, ConsumableCategoryUpdateForm, ConsumableCategoryCreateForm
+from .forms import (
+    ConsumableCreationForm,
+    ConsumableUpdateForm,
+    ConsumableCategoryUpdateForm,
+    ConsumableCategoryCreateForm,
+    SupplierUpdateForm,
+    SupplierCreateForm
+)
+
 # Create your views here.
 
 
@@ -255,7 +263,7 @@ class SupplierDetailView(BaseDetailView):
 
 class SupplierCreateView(BaseCreateView):
     model = Supplier
-    fields = "__all__"
+    form_class = SupplierCreateForm
     template_name = "consumable/supplier/create.html"
     app_name = "consumable"
     url_name = "supplier_detail"
@@ -264,7 +272,7 @@ class SupplierCreateView(BaseCreateView):
 
 class SupplierUpdateView(BaseUpdateView):
     model = Supplier
-    fields = "__all__"
+    form_class = SupplierUpdateForm
     template_name = "consumable/supplier/update.html"
     app_name = "consumable"
     url_name = "supplier_detail"
