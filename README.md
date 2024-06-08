@@ -6,6 +6,9 @@
 
 Welcome to the first official release of MediAdmin, a comprehensive Clinic Management System designed to streamline operations in medical clinics. Built using Django, MediAdmin provides an efficient, secure, and user-friendly platform for managing clinic activities including patient records, appointments, staff management, and more.
 
+
+![Screenshot of the application](./core/static/main_page.png)
+
 ### Key Features
 
 #### 1. Patient Management
