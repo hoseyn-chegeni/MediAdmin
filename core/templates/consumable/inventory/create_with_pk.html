@@ -25,7 +25,7 @@
 
 <div class="col-sm-6">
 <label for="purchase_date" class="form-label">تاریخ خرید</label>
-<input type="text" class="form-control" id="purchase_date" placeholder="" value="{% if form.data.purchase_date %}{{ form.data.purchase_date }}{% else %}{{ form.initial.purchase_date }}{% endif %}"name="purchase_date" data-jdp>
+<input type="text" class="form-control" id="purchase_date" placeholder="" name="purchase_date" data-jdp>
 </div>
 
 <div class="col-sm-6">
@@ -40,7 +40,7 @@
 
 <div class="col-sm-6">
 <label for="expiration_date" class="form-label">تاریخ انقضا</label>
-<input type="text" class="form-control" id="expiration_date" placeholder="" value="{% if form.data.expiration_date %}{{ form.data.expiration_date }}{% else %}{{ form.initial.expiration_date }}{% endif %}" name="expiration_date" >
+<input type="date" class="form-control" id="expiration_date" placeholder="" value="{% if form.data.expiration_date %}{{ form.data.expiration_date }}{% else %}{{ form.initial.expiration_date }}{% endif %}" name="expiration_date" >
 </div>
 <div class="col-sm-6">
 <label for="expiration_reminder" class="form-label">چند روز پیش از فرا رسیدن انقضا یادآوری انجام شود</label>

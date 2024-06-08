@@ -72,7 +72,7 @@
 
                       <div class="col-sm-6">
                         <label for="expiration_date" class="form-label">تاریخ انقضا</label>
-                        <input type="text" class="form-control" id="expiration_date" placeholder="" value="{{object.expiration_date}}" name="expiration_date" >
+                        <input type="date" class="form-control" id="expiration_date" placeholder="" value="{% if object.expiration_date %}{{ object.expiration_date|date:'Y-m-d' }}{% endif %}" name="expiration_date" >
                       </div>
                       <div class="col-sm-6">
                         <label for="expiration_reminder" class="form-label">چند روز پیش از فرا رسیدن انقضا یادآوری انجام شود</label>
