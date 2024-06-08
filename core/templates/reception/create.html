@@ -18,7 +18,7 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                       <label for="reason" class="form-label">علت مراجعه</label>
-                      <input type="text" class="form-control" id="reason" placeholder="" value="{{object.reason}}" name="reason" >
+                      <input type="text" class="form-control" id="reason" placeholder="" value="{{object.reason}}"  value="{% if form.data.reason %}{{ form.data.reason }}{% else %}{{ form.initial.reason }}{% endif %}" name="reason" >
                     </div>
 
                     <div class="col-sm-6">
