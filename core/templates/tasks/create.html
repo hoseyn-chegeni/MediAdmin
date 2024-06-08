@@ -20,17 +20,17 @@
 
                     <div class="col-sm-6">
                       <label for="title" class="form-label">عنوان</label>
-                      <input type="text" class="form-control" id="title" placeholder="" value="{{object.title}}" name="title" >
+                      <input type="text" class="form-control" id="title" placeholder="" value="{% if form.data.title %}{{ form.data.title }}{% else %}{{ form.initial.title }}{% endif %}" name="title" >
                     </div>
 
                     <div class="col-sm-6">
                       <label for="description" class="form-label">توضیحات</label>
-                      <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                      <input type="text" class="form-control" id="description" placeholder="" value="{% if form.data.description %}{{ form.data.description }}{% else %}{{ form.initial.description }}{% endif %}" name="description" >
                     </div>
 
                     <div class="col-sm-6">
                       <label for="type" class="form-label">نوع تسک</label>
-                      <input type="text" class="form-control" id="type" placeholder="" value="{{object.type}}" name="type" >
+                      <input type="text" class="form-control" id="type" placeholder="" value="{% if form.data.type %}{{ form.data.type }}{% else %}{{ form.initial.type }}{% endif %}" name="type" >
                     </div>
 
 
