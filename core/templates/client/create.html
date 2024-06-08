@@ -18,33 +18,33 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                       <label for="case_id" class="form-label">شماره پرونده</label>
-                      <input type="text" class="form-control" id="case_id" placeholder="" value="{{object.case_id}}" name="case_id" >
+                      <input type="text" class="form-control" id="case_id" placeholder=""  value="{% if form.data.case_id %}{{ form.data.case_id }}{% else %}{{ form.initial.case_id }}{% endif %}" name="case_id" >
                     </div>
 
                     <div class="col-sm-6">
                         <label for="first_name" class="form-label">نام</label>
-                        <input type="text" class="form-control" id="first_name" placeholder="" value="{{object.first_name}}" name="first_name" >
+                        <input type="text" class="form-control" id="first_name" placeholder="" value="{% if form.data.first_name %}{{ form.data.first_name }}{% else %}{{ form.initial.first_name }}{% endif %}" name="first_name" >
                       </div>
   
                       <div class="col-sm-6">
                         <label for="last_name" class="last_name-label">نام خانوادگی</label>
-                        <input type="text" class="form-control" id="last_name" placeholder="" value="{{object.last_name}}" name="last_name" >
+                        <input type="text" class="form-control" id="last_name" placeholder="" value="{% if form.data.last_name %}{{ form.data.last_name }}{% else %}{{ form.initial.last_name }}{% endif %}" name="last_name" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="national_id" class="national_id-label">کدملی</label>
-                        <input type="text" class="form-control" id="national_id" placeholder="" value="{{object.national_id}}" name="national_id" >
+                        <input type="text" class="form-control" id="national_id" placeholder="" value="{% if form.data.national_id %}{{ form.data.national_id }}{% else %}{{ form.initial.national_id }}{% endif %}" name="national_id" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="fathers_name" class="fathers_name-label">نام پدر</label>
-                        <input type="text" class="form-control" id="fathers_name" placeholder="" value="{{object.fathers_name}}" name="fathers_name" >
+                        <input type="text" class="form-control" id="fathers_name" placeholder="" value="{% if form.data.fathers_name %}{{ form.data.fathers_name }}{% else %}{{ form.initial.fathers_name }}{% endif %}" name="fathers_name" >
                       </div>
 
 
                       <div class="col-sm-6">
                         <label for="date_of_birth" class="date_of_birth-label">تاریخ تولد</label>
-                        <input type="text" class="form-control" id="date_of_birth" placeholder="" value="{{object.date_of_birth}}" name="date_of_birth" data-jdp>
+                        <input type="text" class="form-control" id="date_of_birth" placeholder="" value="{% if form.data.date_of_birth %}{{ form.data.date_of_birth }}{% else %}{{ form.initial.date_of_birth }}{% endif %}" name="date_of_birth" data-jdp>
                       </div>
 
                       <div class="col-sm-6">
@@ -58,12 +58,12 @@
 
                       <div class="col-sm-6">
                         <label for="phone_number" class="phone_number-label">شماره تماس</label>
-                        <input type="text" class="form-control" id="phone_number" placeholder="" value="{{object.phone_number}}" name="phone_number" >
+                        <input type="text" class="form-control" id="phone_number" placeholder="" value="{% if form.data.phone_number %}{{ form.data.phone_number }}{% else %}{{ form.initial.phone_number }}{% endif %}" name="phone_number" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="address" class="address-label">آدرس</label>
-                        <input type="text" class="form-control" id="address" placeholder="" value="{{object.address}}" name="address" >
+                        <input type="text" class="form-control" id="address" placeholder="" value="{% if form.data.address %}{{ form.data.address }}{% else %}{{ form.initial.address }}{% endif %}" name="address" >
                       </div>
 
 
@@ -79,42 +79,42 @@
 
                       <div class="col-sm-6">
                         <label for="emergency_contact_name" class="emergency_contact_name-label">نام همراه ( شرایط اضطراری)</label>
-                        <input type="text" class="form-control" id="emergency_contact_name" placeholder="" value="{{object.emergency_contact_name}}" name="emergency_contact_name" >
+                        <input type="text" class="form-control" id="emergency_contact_name" placeholder="" value="{% if form.data.emergency_contact_name %}{{ form.data.emergency_contact_name }}{% else %}{{ form.initial.emergency_contact_name }}{% endif %}" name="emergency_contact_name" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="emergency_contact_number" class="emergency_contact_number-label">شماره تماس همراه</label>
-                        <input type="text" class="form-control" id="emergency_contact_number" placeholder="" value="{{object.emergency_contact_number}}" name="emergency_contact_number" >
+                        <input type="text" class="form-control" id="emergency_contact_number" placeholder=""  value="{% if form.data.emergency_contact_number %}{{ form.data.emergency_contact_number }}{% else %}{{ form.initial.emergency_contact_number }}{% endif %}" name="emergency_contact_number" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="allergies" class="surgeries-label">آلرژی</label>
-                        <input type="text" class="form-control" id="surgeries" placeholder="" value="{{object.allergies}}" name="allergies" >
+                        <input type="text" class="form-control" id="surgeries" placeholder=""value="{% if form.data.allergies %}{{ form.data.allergies }}{% else %}{{ form.initial.allergies }}{% endif %}" name="allergies" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="surgeries" class="surgeries-label">جراحی ها</label>
-                        <input type="text" class="form-control" id="surgeries" placeholder="" value="{{object.surgeries}}" name="surgeries" >
+                        <input type="text" class="form-control" id="surgeries" placeholder="" value="{% if form.data.surgeries %}{{ form.data.surgeries }}{% else %}{{ form.initial.surgeries }}{% endif %}" name="surgeries" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="medical_history" class="medical_history-label">تاریخچه پزشکی</label>
-                        <input type="text" class="form-control" id="medical_history" placeholder="" value="{{object.medical_history}}" name="medical_history" >
+                        <input type="text" class="form-control" id="medical_history" placeholder=""  value="{% if form.data.medical_history %}{{ form.data.medical_history }}{% else %}{{ form.initial.medical_history }}{% endif %}" name="medical_history" >
                       </div>
 
                       <div class="col-sm-6">
                         <label for="medications" class="medications-label">داروها</label>
-                        <input type="text" class="form-control" id="medications" placeholder="" value="{{object.medications}}" name="medications" >
+                        <input type="text" class="form-control" id="medications" placeholder=""  value="{% if form.data.medications %}{{ form.data.medications }}{% else %}{{ form.initial.medications }}{% endif %}"  name="medications" >
                       </div> 
                       
                       <div class="col-sm-6">
                         <label for="smoker" class="smoker-label">استعمال دخانیات</label>
-                        <input type="text" class="form-control" id="smoker" placeholder="" value="{{object.smoker}}" name="smoker" >
+                        <input type="text" class="form-control" id="smoker" placeholder=""  value="{% if form.data.smoker %}{{ form.data.smoker }}{% else %}{{ form.initial.smoker }}{% endif %}" name="smoker" >
                       </div> 
 
                       <div class="col-sm-6">
                         <label for="disease" class="disease-label">بیماری</label>
-                        <input type="text" class="form-control" id="disease" placeholder="" value="{{object.disease}}" name="disease" >
+                        <input type="text" class="form-control" id="disease" placeholder=""value="{% if form.data.disease %}{{ form.data.disease }}{% else %}{{ form.initial.disease }}{% endif %}"  name="disease" >
                       </div> 
 
 
