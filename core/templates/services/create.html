@@ -18,7 +18,7 @@
                 <div class="row g-3">
                     <div class="col-sm-6">
                       <label for="name" class="form-label">نام سرویس</label>
-                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
+                      <input type="text" class="form-control" id="name" placeholder="" value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
                     </div>
 
         <div class="col-sm-6">
@@ -35,7 +35,7 @@
 
             <div class="col-sm-6">
                 <label for="description" class="form-label">توضیحات</label>
-                <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+                <input type="text" class="form-control" id="description" placeholder="" value="{% if form.data.description %}{{ form.data.description }}{% else %}{{ form.initial.description }}{% endif %}" name="description" >
               </div>
 
 
@@ -51,47 +51,47 @@
 
                 <div class="col-sm-6">
                     <label for="duration" class="form-label">مدت زمان</label>
-                    <input type="number" class="form-control" id="duration" placeholder="" value="{{object.duration}}" name="duration" >
+                    <input type="number" class="form-control" id="duration" placeholder="" value="{% if form.data.duration %}{{ form.data.duration }}{% else %}{{ form.initial.duration }}{% endif %}" name="duration" >
                   </div>
 
                   <div class="col-sm-6">
                     <label for="price" class="form-label">قیمت</label>
-                    <input type="number" class="form-control" id="price" placeholder="" value="{{object.price}}" name="price" >
+                    <input type="number" class="form-control" id="price" placeholder=""  value="{% if form.data.price %}{{ form.data.price }}{% else %}{{ form.initial.price }}{% endif %}" name="price" >
                   </div>
 
 
                   <div class="col-sm-6">
                     <label for="preparation_instructions" class="form-label">دستورالعمل آماده سازی</label>
-                    <input type="text" class="form-control" id="preparation_instructions" placeholder="" value="{{object.preparation_instructions}}" name="preparation_instructions" >
+                    <input type="text" class="form-control" id="preparation_instructions" placeholder="" value="{% if form.data.preparation_instructions %}{{ form.data.preparation_instructions }}{% else %}{{ form.initial.preparation_instructions }}{% endif %}" name="preparation_instructions" >
                   </div>
 
 
                   <div class="col-sm-6">
                     <label for="documentation_requirements" class="form-label">ملزومات مستندسازی</label>
-                    <input type="text" class="form-control" id="documentation_requirements" placeholder="" value="{{object.documentation_requirements}}" name="documentation_requirements" >
+                    <input type="text" class="form-control" id="documentation_requirements" placeholder="" value="{% if form.data.documentation_requirements %}{{ form.data.documentation_requirements }}{% else %}{{ form.initial.documentation_requirements }}{% endif %}" name="documentation_requirements" >
                   </div>
 
 
                   <div class="col-sm-6">
                     <label for="therapeutic_measures" class="form-label">اقدامات درمانی</label>
-                    <input type="text" class="form-control" id="therapeutic_measures" placeholder="" value="{{object.therapeutic_measures}}" name="therapeutic_measures" >
+                    <input type="text" class="form-control" id="therapeutic_measures" placeholder=""  value="{% if form.data.therapeutic_measures %}{{ form.data.therapeutic_measures }}{% else %}{{ form.initial.therapeutic_measures }}{% endif %}"  name="therapeutic_measures" >
                   </div>
 
 
 
                   <div class="col-sm-6">
                     <label for="recommendations" class="form-label">توصیه ها</label>
-                    <input type="text" class="form-control" id="recommendations" placeholder="" value="{{object.recommendations}}" name="recommendations" >
+                    <input type="text" class="form-control" id="recommendations" placeholder="" value="{% if form.data.recommendations %}{{ form.data.recommendations }}{% else %}{{ form.initial.recommendations }}{% endif %}" name="recommendations" >
                   </div>
 
                   <div class="col-sm-6">
                     <label for="doctors_wage_percentage" class="form-label">میزان درصد پزشک</label>
-                    <input type="number" class="form-control" id="doctors_wage_percentage" placeholder="" value="{{object.doctors_wage_percentage}}" name="doctors_wage_percentage" >
+                    <input type="number" class="form-control" id="doctors_wage_percentage" placeholder="" value="{% if form.data.doctors_wage_percentage %}{{ form.data.doctors_wage_percentage }}{% else %}{{ form.initial.doctors_wage_percentage }}{% endif %}" name="doctors_wage_percentage" >
                   </div>
 
                   <div class="col-sm-6">
                     <label for="appointment_per_day" class="form-label">ظرفیت رزرو نوبت در روز</label>
-                    <input type="number" class="form-control" id="appointment_per_day" placeholder="" value="{{object.appointment_per_day}}" name="appointment_per_day" >
+                    <input type="number" class="form-control" id="appointment_per_day" placeholder="" value="{% if form.data.appointment_per_day %}{{ form.data.appointment_per_day }}{% else %}{{ form.initial.appointment_per_day }}{% endif %}" name="appointment_per_day" >
                   </div>
 
 

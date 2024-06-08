@@ -158,9 +158,4 @@ urlpatterns = [
         UpdateServicePricesView.as_view(),
         name="update_service_prices",
     ),
-    path(
-        "add_service/<int:pk>/",
-        AddServiceUsingDoctorProfileView.as_view(),
-        name="add_service_from_doctor_profile",
-    ),
 ]

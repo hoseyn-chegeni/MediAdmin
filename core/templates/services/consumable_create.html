@@ -29,12 +29,12 @@
 
                 <div class="col-sm-6">
                     <label for="dose" class="form-label">مقدار</label>
-                    <input type="text" class="form-control" id="dose" placeholder="" value="{{object.dose}}" name="dose" >
+                    <input type="text" class="form-control" id="dose" placeholder="" value="{% if form.data.dose %}{{ form.data.dose }}{% else %}{{ form.initial.dose }}{% endif %}"name="dose" >
                     </div>
 
                     <div class="col-sm-6">
                         <label for="note" class="form-label">یادداشت</label>
-                        <input type="text" class="form-control" id="note" placeholder="" value="{{object.note}}" name="note" >
+                        <input type="text" class="form-control" id="note" placeholder="" value="{% if form.data.note %}{{ form.data.note }}{% else %}{{ form.initial.note }}{% endif %}" name="note" >
                         </div>
     
 
