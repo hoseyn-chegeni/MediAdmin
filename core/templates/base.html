@@ -432,14 +432,14 @@ Auto
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'financial:unpaid_list' %}">لیست صورتحساب های پرداخت نشده</a></li>
-{% if financial.view_officeexpenses%}
+{% if perms.financial.view_officeexpenses%}
 <li>
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'financial:office_expenses_list' %}">لیست هزینه های مطب </a></li>
 <li>
   {% endif %}
-  {% if financial.add_officeexpenses%}
+  {% if perms.financial.add_officeexpenses%}
 <hr class="dropdown-divider">
 </li>
 <li><a class="dropdown-item" href="{% url 'financial:office_expenses_create' %}">ثیت هزینه جدید برای مطب</a></li>
