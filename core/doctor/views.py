@@ -22,7 +22,7 @@ from reception.filters import ReceptionFilter
 from services.filters import ServicesFilter
 from django.utils.timezone import now
 from datetime import timedelta
-
+from .forms import DoctorCreateForm,DoctorUpdateForm
 
 # Create your views here.
 class DoctorListView(BaseListView):
@@ -85,18 +85,7 @@ class DoctorDetailView(BaseDetailView):
 
 class DoctorCreateView(BaseCreateView):
     model = Doctor
-    fields = [
-        "first_name",
-        "last_name",
-        "email",
-        "phone_number",
-        "address",
-        "specialization",
-        "registration_number",
-        "is_active",
-        "image",
-        "user",
-    ]
+    form_class = DoctorCreateForm
     template_name = "doctor/create.html"
     app_name = "doctor"
     url_name = "detail"
@@ -109,16 +98,7 @@ class DoctorCreateView(BaseCreateView):
 
 class DoctorUpdateView(BaseUpdateView):
     model = Doctor
-    fields = [
-        "first_name",
-        "last_name",
-        "email",
-        "phone_number",
-        "address",
-        "specialization",
-        "registration_number",
-        "image",
-    ]
+    form_class = DoctorUpdateForm
     template_name = "doctor/update.html"
     app_name = "doctor"
     url_name = "detail"
