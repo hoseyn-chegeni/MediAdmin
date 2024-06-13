@@ -135,7 +135,7 @@ class EditHealthHistoryView(BaseUpdateView):
 
 
 class VipButtonView(SuccessMessageMixin, View):
-    success_message = "تغییر وضغیت بیمار به حالت ویژه موفقیت آمیز بود"
+    success_message = "تغییر وضعیت بیمار به حالت ویژه موفقیت آمیز بود"
 
     def get(self, request, pk):
         client = Client.objects.get(pk=pk)
