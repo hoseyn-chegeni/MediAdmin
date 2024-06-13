@@ -20,7 +20,7 @@ from tasks.models import Task
 from planner.models import Session, JalaliDateHandler
 from prescription.models import TemporaryPrescription, Prescription
 from datetime import date
-
+from .forms import ReceptionCreateForm,ReceptionUpdateForm, ReceptionWithClientIDCreateForm
 
 # Create your views here.
 class ReceptionListView(BaseListView):
@@ -33,14 +33,7 @@ class ReceptionListView(BaseListView):
 
 class ReceptionCreateView(BaseCreateView):
     model = Reception
-    fields = [
-        "reason",
-        "payment_type",
-        "payment_status",
-        "client",
-        "service",
-        "invoice_attachment",
-    ]
+    form_class = ReceptionCreateForm
     template_name = "reception/create.html"
     app_name = "reception"
     url_name = "detail"
@@ -95,7 +88,7 @@ class ReceptionDetailView(BaseDetailView):
 
 class ReceptionCreateViewUsingProfile(BaseCreateView):
     model = Reception
-    fields = ["reason", "payment_type", "payment_status", "service"]
+    form_class = ReceptionWithClientIDCreateForm
     template_name = "reception/create_profile.html"
     app_name = "reception"
     url_name = "detail"
@@ -158,13 +151,7 @@ class CompleteReceptionView(SuccessMessageMixin, View):
 
 class ReceptionUpdateView(BaseUpdateView):
     model = Reception
-    fields = [
-        "client",
-        "service",
-        "reason",
-        "payment_type",
-        "payment_status",
-    ]
+    form_class = ReceptionUpdateForm
     template_name = "reception/update.html"
     app_name = "reception"
     url_name = "detail"
