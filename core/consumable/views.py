@@ -22,7 +22,7 @@ from .forms import (
     ConsumableCategoryUpdateForm,
     ConsumableCategoryCreateForm,
     SupplierUpdateForm,
-    SupplierCreateForm
+    SupplierCreateForm,
 )
 
 # Create your views here.

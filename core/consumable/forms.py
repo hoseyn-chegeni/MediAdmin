@@ -72,6 +72,7 @@ class SupplierCreateForm(forms.ModelForm):
             "city",
             "notes",
         ]
+
     def clean_name(self):
         name = self.cleaned_data.get("name")
         if not re.match(r"^[A-Za-z0-9ا-ی\s]+$", name):
@@ -109,6 +110,7 @@ class SupplierUpdateForm(forms.ModelForm):
             "city",
             "notes",
         ]
+
     def clean_name(self):
         name = self.cleaned_data.get("name")
         if not re.match(r"^[A-Za-z0-9ا-ی\s]+$", name):
