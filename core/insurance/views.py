@@ -12,7 +12,7 @@ from .filters import InsuranceFilter, InsuranceServiceFilter
 from client.models import Client
 from django.contrib import messages
 from django.views.generic import View
-
+from .forms import InsuranceUpdateForm, InsuranceCreateForm
 
 # Create your views here.
 class InsuranceListView(BaseListView):
@@ -25,7 +25,7 @@ class InsuranceListView(BaseListView):
 
 class InsuranceCreateView(BaseCreateView):
     model = Insurance
-    fields = "__all__"
+    form_class = InsuranceCreateForm
     template_name = "insurance/create.html"
     app_name = "insurance"
     url_name = "detail"
@@ -47,7 +47,7 @@ class InsuranceDetailView(BaseDetailView):
 
 class InsuranceUpdateView(BaseUpdateView):
     model = Insurance
-    fields = "__all__"
+    form_class = InsuranceUpdateForm
     template_name = "insurance/update.html"
     app_name = "insurance"
     url_name = "detail"
