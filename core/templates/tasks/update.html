@@ -1,84 +1,54 @@
-{%extends 'base.html' %}
+{%extends 'base_update.html' %}
 {%block title %}ویرایش تسک {{object}}{%endblock%}
-
-{%block content %} 
-   
-<div class="container">
-    <main>
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
-        <h2>ویرایش تسک {{object}}</h2>
-      </div>
-
-        <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">اطلاعات</h4>
-          <form class="needs-validation" method="post" enctype="multipart/form-data">
-            {%csrf_token%}
-            <div class="row g-3">
-                <div class="row g-3">
-
-
-                    <div class="col-sm-6">
-                      <label for="title" class="form-label">عنوان</label>
-                      <input type="text" class="form-control" id="title" placeholder="" value="{{object.title}}" name="title" >
-                    </div>
-
-                    <div class="col-sm-6">
-                      <label for="description" class="form-label">توضیحات</label>
-                      <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
-                    </div>
-
-                    <div class="col-sm-6">
-                      <label for="type" class="form-label">نوع تسک</label>
-                      <input type="text" class="form-control" id="type" placeholder="" value="{{object.type}}" name="type" >
-                    </div>
-
-
-                <div class="col-sm-6">
-                  <label  for="priority">اولویت:</label>
-                  <select  class="form-select" name="priority"  id="priority">
-                    <option value="" selected="">---------</option>
-                    {% if object.priority == "پایین"%}
-                    <option value="پایین"  selected>پایین</option>
-                    <option value="متوسط">متوسط</option>
-                    <option value="بالا">بالا</option>
-
-                    {% elif object.priority == "متوسط"%}
-                    <option value="پایین"  >پایین</option>
-                    <option value="متوسط" selected>متوسط</option>
-                    <option value="بالا">بالا</option>
-                    {% elif object.priority == "بالا"%}
-                    <option value="پایین"  selected>پایین</option>
-                    <option value="متوسط">متوسط</option>
-                    <option value="بالا" selected>بالا</option>
-                    {% endif %}
-                  </select>
-                  </div>
-
-
-                    <div class="col-sm-6">
-                      <label  for="assign_to">اختصاص به:</label>
-                      <select  class="form-select" name="assign_to"  id="assign_to">
-                        <option value="" selected="">---------</option>
-                        {% for i in form.assign_to.field.queryset%}
-                        {% if i == object.assign_to%}
-                        <option value="{{i.id}}" selected>{{i}}</option>
-                        {%else%}
-                        <option value="{{i.id}}">{{i}}</option>
-                        {%endif%}
-                        {%endfor%}
-                      </select>
-                      </div>
-          
-
-            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
-          </form>
-        </div>
-      </div>
-      <br><br>
-      <br><br>
-
-    </main>
+{%block form_title %}ویرایش تسک {{object}}{%endblock%}
+{%block fields %} 
+<div class="col-sm-6">
+<label for="title" class="form-label">عنوان</label>
+<input type="text" class="form-control" id="title" placeholder="" value="{{object.title}}" name="title" >
 </div>
 
+<div class="col-sm-6">
+<label for="description" class="form-label">توضیحات</label>
+<input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+</div>
+
+<div class="col-sm-6">
+<label for="type" class="form-label">نوع تسک</label>
+<input type="text" class="form-control" id="type" placeholder="" value="{{object.type}}" name="type" >
+</div>
+
+<div class="col-sm-6">
+<label  for="priority">اولویت:</label>
+<select  class="form-select" name="priority"  id="priority">
+<option value="" selected="">---------</option>
+{% if object.priority == "پایین"%}
+<option value="پایین"  selected>پایین</option>
+<option value="متوسط">متوسط</option>
+<option value="بالا">بالا</option>
+
+{% elif object.priority == "متوسط"%}
+<option value="پایین"  >پایین</option>
+<option value="متوسط" selected>متوسط</option>
+<option value="بالا">بالا</option>
+{% elif object.priority == "بالا"%}
+<option value="پایین"  selected>پایین</option>
+<option value="متوسط">متوسط</option>
+<option value="بالا" selected>بالا</option>
+{% endif %}
+</select>
+</div>
+
+<div class="col-sm-6">
+<label  for="assign_to">اختصاص به:</label>
+<select  class="form-select" name="assign_to"  id="assign_to">
+<option value="" selected="">---------</option>
+{% for i in form.assign_to.field.queryset%}
+{% if i == object.assign_to%}
+<option value="{{i.id}}" selected>{{i}}</option>
+{%else%}
+<option value="{{i.id}}">{{i}}</option>
+{%endif%}
+{%endfor%}
+</select>
+</div>
 {%endblock%}

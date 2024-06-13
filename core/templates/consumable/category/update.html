@@ -1,39 +1,13 @@
-{%extends 'base.html' %}
+{%extends 'base_update.html' %}
 {%block title %} ویرایش دسته بندی {{object}}{%endblock%}
-
-{%block content %} 
-   
-<div class="container">
-    <main>
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
-        <h2>ویرایش دسته بندی {{object}}</h2>
-      </div>
-
-        <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">اطلاعات</h4>
-          <form class="needs-validation" method="post" enctype="multipart/form-data">
-            {%csrf_token%}
-            <div class="row g-3">
-                <div class="row g-3">
-                    <div class="col-sm-6">
-                      <label for="name" class="form-label">نام دسته بندی</label>
-                      <input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
-                    </div>
-
-
-              <div class="col-sm-6">
-                <label for="note" class="form-label">یادداشت</label>
-                <input type="text" class="form-control" id="note" placeholder="" value="{{object.note}}" name="note" >
-              </div>
-            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
-          </form>
-        </div>
-      </div>
-      <br><br>
-      <br><br>
-
-    </main>
+{%block form_title %} ویرایش دسته بندی {{object}}{%endblock%}
+{%block fields %} 
+<div class="col-sm-6">
+<label for="name" class="form-label">نام دسته بندی</label>
+<input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}" name="name" >
 </div>
-
+<div class="col-sm-6">
+<label for="note" class="form-label">یادداشت</label>
+<input type="text" class="form-control" id="note" placeholder="" value="{{object.note}}" name="note" >
+</div>
 {%endblock%}

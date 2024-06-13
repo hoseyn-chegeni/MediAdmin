@@ -1,65 +1,39 @@
-{%extends 'base.html' %}
+{%extends 'base_update.html' %}
 {%block title %}ویرایش اقلام دارویی نسخه {{object.prescription}}{%endblock%}
-
-{%block content %} 
-   
-<div class="container">
-    <main>
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
-        <h2>ویرایش اقلام دارویی نسخه {{object.prescription}}</h2>
-      </div>
-
-        <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">اطلاعات</h4>
-          <form class="needs-validation" method="post" enctype="multipart/form-data">
-            {%csrf_token%}
-            <div class="row g-3">
-                <div class="row g-3">
-
-                <div class="col-sm-6">
-                    <label for="medicine" class="form-label">نام دارو</label>
-                    <input type="text" class="form-control" id="medicine" placeholder="" value="{{object.medicine}}" name="medicine" >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="quantity" class="form-label">تعداد</label>
-                    <input type="number" class="form-control" id="quantity" placeholder="" value="{{object.quantity}}" name="quantity" >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="consumption_time" class="form-label">زمان مصرف </label>
-                    <input type="text" class="form-control" id="consumption_time" placeholder="" value="{{object.consumption_time}}" name="consumption_time" >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="consumption_dose" class="form-label">مقدار مصرف </label>
-                    <input type="text" class="form-control" id="consumption_dose" placeholder="" value="{{object.consumption_dose}}" name="consumption_dose" >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="how_to_use" class="form-label">طریقه مصرف </label>
-                    <input type="text" class="form-control" id="how_to_use" placeholder="" value="{{object.how_to_use}}" name="how_to_use" >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="repeat_interval" class="form-label">فاصله زمانی تکرار </label>
-                    <input type="text" class="form-control" id="repeat_interval" placeholder="" value="{{object.repeat_interval}}" name="repeat_interval" >
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label for="repeat_period" class="form-label">دوره تکرار </label>
-                    <input type="number" class="form-control" id="repeat_period" placeholder="" value="{{object.repeat_period}}" name="repeat_period" >
-                  </div>
-
-            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
-          </form>
-        </div>
-      </div>
-      <br><br>
-      <br><br>
-
-    </main>
+{%block form_title %}ویرایش اقلام دارویی نسخه {{object.prescription}}{%endblock%}
+{%block fields %} 
+<div class="col-sm-6">
+<label for="medicine" class="form-label">نام دارو</label>
+<input type="text" class="form-control" id="medicine" placeholder="" value="{{object.medicine}}" name="medicine" >
 </div>
 
+<div class="col-sm-6">
+<label for="quantity" class="form-label">تعداد</label>
+<input type="number" class="form-control" id="quantity" placeholder="" value="{{object.quantity}}" name="quantity" >
+</div>
+
+<div class="col-sm-6">
+<label for="consumption_time" class="form-label">زمان مصرف </label>
+<input type="text" class="form-control" id="consumption_time" placeholder="" value="{{object.consumption_time}}" name="consumption_time" >
+</div>
+
+<div class="col-sm-6">
+<label for="consumption_dose" class="form-label">مقدار مصرف </label>
+<input type="text" class="form-control" id="consumption_dose" placeholder="" value="{{object.consumption_dose}}" name="consumption_dose" >
+</div>
+
+<div class="col-sm-6">
+<label for="how_to_use" class="form-label">طریقه مصرف </label>
+<input type="text" class="form-control" id="how_to_use" placeholder="" value="{{object.how_to_use}}" name="how_to_use" >
+</div>
+
+<div class="col-sm-6">
+<label for="repeat_interval" class="form-label">فاصله زمانی تکرار </label>
+<input type="text" class="form-control" id="repeat_interval" placeholder="" value="{{object.repeat_interval}}" name="repeat_interval" >
+</div>
+
+<div class="col-sm-6">
+<label for="repeat_period" class="form-label">دوره تکرار </label>
+<input type="number" class="form-control" id="repeat_period" placeholder="" value="{{object.repeat_period}}" name="repeat_period" >
+</div>
 {%endblock%}

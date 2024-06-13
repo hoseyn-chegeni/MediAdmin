@@ -1,77 +1,50 @@
-{%extends 'base.html' %}
+{%extends 'base_update.html' %}
 {%block title %}ویرایش صورتحساب {{object}}{%endblock%}
-
-{%block content %} 
-   
-<div class="container">
-    <main>
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="" width="62" height="47">
-        <h2>ویرایش صورتحساب {{object}}</h2>
-      </div>
-
-        <div class="col-md-7 col-lg-8">
-          <h4 class="mb-3">اطلاعات</h4>
-          <form class="needs-validation" method="post">
-            {%csrf_token%}
-            <div class="row g-3">
-                <div class="row g-3">
-
-                <div class="col-sm-6">
-                    <label  for="user">کاربر:</label>
-                    <select  class="form-select" name="user" required="" id="user">
-                        <option value="" selected="">---------</option>
-                        {% for i in form.user.field.queryset%}
-                        {% if i == object.user %}
-                        <option value={{i.id}} selected>{{i}}</option>
-                        {% else %}
-                        <option value={{i.id}} >{{i}}</option>
-                        {%endif %}
-                        {%endfor%}
-                    </select>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="date" class="form-label">تاریخ: </label>
-                        <input type="text" class="form-control" id="date" placeholder="" value="{{object.date}}" name="date" data-jdp>
-                    </div>
-    
-                    <div class="col-sm-6">
-                        <label for="subject" class="form-label">موضوع: </label>
-                        <input type="text" class="form-control" id="subject" placeholder="" value="{{object.subject}}" name="subject" >
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="amount" class="form-label">مبلغ: </label>
-                        <input type="number" class="form-control" id="amount" placeholder="" value="{{object.amount}}" name="amount" >
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="recipient_name" class="form-label">نام دریافت کننده: </label>
-                        <input type="text" class="form-control" id="recipient_name" placeholder="" value="{{object.recipient_name}}" name="recipient_name" >
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="payment_method" class="form-label">نوع پرداخت: </label>
-                        <input type="text" class="form-control" id="payment_method" placeholder="" value="{{object.payment_method}}" name="payment_method" >
-                    </div>
-
-
-                    <div class="col-sm-6">
-                        <label for="description" class="form-label">توضیحات: </label>
-                        <input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
-                    </div>
-
-            <button class="w-100 btn btn-lg btn-outline-success" type="submit">ویرایش</button>
-          </form>
-        </div>
-      </div>
-      <br><br>
-      <br><br>
-
-    </main>
+{%block form_title %}ویرایش صورتحساب {{object}}{%endblock%}
+{%block fields %} 
+<div class="col-sm-6">
+<label  for="user">کاربر:</label>
+<select  class="form-select" name="user" required="" id="user">
+<option value="" selected="">---------</option>
+{% for i in form.user.field.queryset%}
+{% if i == object.user %}
+<option value={{i.id}} selected>{{i}}</option>
+{% else %}
+<option value={{i.id}} >{{i}}</option>
+{%endif %}
+{%endfor%}
+</select>
 </div>
-<script>
-  jalaliDatepicker.startWatch();
-</script>
+
+<div class="col-sm-6">
+<label for="date" class="form-label">تاریخ: </label>
+<input type="text" class="form-control" id="date" placeholder="" value="{{object.date}}" name="date" data-jdp>
+</div>
+
+<div class="col-sm-6">
+<label for="subject" class="form-label">موضوع: </label>
+<input type="text" class="form-control" id="subject" placeholder="" value="{{object.subject}}" name="subject" >
+</div>
+
+<div class="col-sm-6">
+<label for="amount" class="form-label">مبلغ: </label>
+<input type="number" class="form-control" id="amount" placeholder="" value="{{object.amount}}" name="amount" >
+</div>
+
+<div class="col-sm-6">
+<label for="recipient_name" class="form-label">نام دریافت کننده: </label>
+<input type="text" class="form-control" id="recipient_name" placeholder="" value="{{object.recipient_name}}" name="recipient_name" >
+</div>
+
+<div class="col-sm-6">
+<label for="payment_method" class="form-label">نوع پرداخت: </label>
+<input type="text" class="form-control" id="payment_method" placeholder="" value="{{object.payment_method}}" name="payment_method" >
+</div>
+
+
+<div class="col-sm-6">
+<label for="description" class="form-label">توضیحات: </label>
+<input type="text" class="form-control" id="description" placeholder="" value="{{object.description}}" name="description" >
+</div>
+
 {%endblock%}
