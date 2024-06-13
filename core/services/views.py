@@ -17,7 +17,7 @@ from django.views import View
 from datetime import date
 from client.models import Client
 from django.views.generic import FormView
-from .forms import ServiceSelectionForm
+from .forms import ServiceSelectionForm, ServiceUpdateForm, ServiceCreateForm
 from doctor.models import Doctor
 
 
@@ -32,7 +32,7 @@ class ServiceListView(BaseListView):
 
 class ServiceCreateView(BaseCreateView):
     model = Service
-    fields = "__all__"
+    form_class = ServiceCreateForm
     template_name = "services/create.html"
     app_name = "services"
     url_name = "detail"
@@ -100,21 +100,7 @@ class ServiceDetailView(BaseDetailView):
 
 class ServiceUpdateView(BaseUpdateView):
     model = Service
-    fields = [
-        "name",
-        "doctor",
-        "description",
-        "category",
-        "duration",
-        "price",
-        "is_active",
-        "preparation_instructions",
-        "documentation_requirements",
-        "therapeutic_measures",
-        "recommendations",
-        "medical_equipment",
-        "doctors_wage_percentage",
-    ]
+    form_class = ServiceUpdateForm
     template_name = "services/update.html"
     app_name = "services"
     url_name = "detail"
