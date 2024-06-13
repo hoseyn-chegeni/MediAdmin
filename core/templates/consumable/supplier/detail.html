@@ -33,6 +33,7 @@
               <hr>
               <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>{{object.updated_at}}</p>
               <hr>
+              <p class="card-text"><strong>ایجاد کننده: </strong>{{object.created_by.email|default_if_none:"-"}}</p>
               <!-- Add other task details as needed -->
           </div>
           </div>

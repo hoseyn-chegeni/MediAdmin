@@ -83,18 +83,17 @@ class DoctorDetailView(BaseDetailView):
         return context
 
 
-class DoctorCreateView(BaseCreateView):
+class DoctorCreateView( BaseCreateView):
     model = Doctor
     form_class = DoctorCreateForm
     template_name = "doctor/create.html"
+    permission_required = "doctor.add_doctor"
     app_name = "doctor"
     url_name = "detail"
-    permission_required = "doctor.add_doctor"
-
+    
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
-
 
 class DoctorUpdateView(BaseUpdateView):
     model = Doctor

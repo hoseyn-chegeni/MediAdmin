@@ -1,12 +1,11 @@
 from django import forms
-from .models import Doctor
 from django.core.exceptions import ValidationError
+from .models import Doctor
 import re
-
 
 class DoctorCreateForm(forms.ModelForm):
     class Meta:
-        model  = Doctor
+        model = Doctor
         fields = [
             "first_name",
             "last_name",
@@ -44,19 +43,7 @@ class DoctorCreateForm(forms.ModelForm):
         registration_number = self.cleaned_data.get("registration_number")
         if not registration_number.isdigit():
             raise ValidationError("شماره نظام پزشکی باید فقط شامل اعداد باشد")
-        
-
-    fields = [
-        "first_name",
-        "last_name",
-        "email",
-        "phone_number",
-        "address",
-        "specialization",
-        "registration_number",
-        "image",
-    ]
-
+        return registration_number
 
 class DoctorUpdateForm(forms.ModelForm):
     class Meta:

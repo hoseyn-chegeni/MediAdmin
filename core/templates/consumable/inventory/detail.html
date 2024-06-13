@@ -25,7 +25,7 @@
               <hr>
               <p class="card-text"><strong>وضعیت: </strong>{{object.status}}</p>
               <hr>
-              <p class="card-text"><strong>تامین کننده: </strong>{{object.supplier}}</p>
+              <p class="card-text"><strong>تامین کننده: </strong>{{object.supplier|default_if_none:"-"}}</p>
               <hr>
               <p class="card-text"><strong>قیمت: </strong>{{object.price}}</p>
               <hr>
@@ -41,6 +41,7 @@
               <hr>
               <p class="card-text"><strong>تاریخ آخرین تغییر: </strong>{{object.updated_at}}</p>
               <hr>
+              <p class="card-text"><strong>ایجاد کننده: </strong>{{object.created_by.email|default_if_none:"-"}}</p>
 
               <!-- Add other task details as needed -->
           </div>

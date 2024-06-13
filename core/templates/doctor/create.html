@@ -35,8 +35,11 @@
 </div>
 
 <div class="col-sm-6">
-<label for="registration_number" class="form-label">شماره نظام پزشکی</label>
-<input type="text" class="form-control" id="registration_number" placeholder="" value="{% if form.data.registration_number %}{{ form.data.registration_number }}{% else %}{{ form.initial.registration_number }}{% endif %}"  name="registration_number" >
+    <label for="registration_number" class="form-label">شماره نظام پزشکی</label>
+    <input type="text" class="form-control" id="registration_number" placeholder="" value="{{ form.registration_number.value|default:'' }}" name="registration_number">
+    {% for error in form.registration_number.errors %}
+        <div class="text-danger">{{ error }}</div>
+    {% endfor %}
 </div>
 
 <div class="col-sm-6">
