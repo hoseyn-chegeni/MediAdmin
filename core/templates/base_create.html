@@ -14,7 +14,7 @@
             <div class="window-frame">
                 <div class="window-content p-4">
                     <h4 class="mb-3">اطلاعات</h4>
-                    <form class="needs-validation" method="post">
+                    <form id="form" class="needs-validation" method="post">
                         {% csrf_token %}
                         <div class="row g-3">
                             {%block fields%}
@@ -34,7 +34,7 @@
   <script>
     // Function to reset the form fields
     function resetForm() {
-        document.getElementById("equipment-form").reset();
+        document.getElementById("form").reset();
     }
   
     // Add event listener to the reset button
