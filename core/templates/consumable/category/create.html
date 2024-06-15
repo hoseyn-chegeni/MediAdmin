@@ -4,10 +4,10 @@
 {%block fields %} 
 <div class="col-sm-6">
 <label for="name" class="form-label">نام دسته بندی</label>
-<input type="text" class="form-control" id="name" placeholder="" value="{{object.name}}"  value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
+<input type="text" class="form-control" id="name" placeholder="" value="{% if form.data.name %}{{ form.data.name }}{% else %}{{ form.initial.name }}{% endif %}" name="name" >
 </div>
 <div class="col-sm-6">
 <label for="note" class="form-label">یادداشت</label>
-<input type="text" class="form-control" id="note" placeholder="" value="{{object.note}}"  value="{% if form.data.note %}{{ form.data.note }}{% else %}{{ form.initial.note }}{% endif %}" name="note" >
+<input type="text" class="form-control" id="note" placeholder=""  value="{% if form.data.note %}{{ form.data.note }}{% else %}{{ form.initial.note }}{% endif %}" name="note" >
 </div>
 {%endblock%}
