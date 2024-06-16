@@ -76,7 +76,7 @@
 {% if perms.accounts.view_reports%}
 <a href="{% url 'reports:doctor_reports' %}" class="btn btn-success me-2">گزارشات</a>
 {% endif %}
-{% if perms.doctor.delete.doctor%}
+{% if perms.doctor.delete_doctor%}
 <button type="button" class="btn btn-success me-2" id="confirmDeleteBtn" style="display: none;">حذف</button>
 {% endif %}
 {%endblock%}
