@@ -17,7 +17,7 @@
 
 <div class="col-sm-6">
 <label  for="category">دسته بندی:</label>
-<select  class="form-select" name="category" required="" id="category">
+<select  class="form-select" name="category"  id="category">
 <option value="" selected="">---------</option>
 {% for i in form.category.field.queryset%}
 <option value="{{i.id}}">{{i}}</option>
@@ -74,7 +74,7 @@
 
 <div class="col-sm-6">
 <label  for="off_days">روزهای تعطیل:</label>
-<select  class="form-select" name="off_days" required="" id="off_days" multiple>
+<select  class="form-select" name="off_days"  id="off_days" multiple>
 <option value="" selected="">---------</option>
 {% for i in form.off_days.field.queryset%}
 <option value="{{i.id}}">{{i}}</option>
@@ -83,8 +83,8 @@
 </div>
 
 <div class="col-sm-6">
-<label  for="doctor">پزشک:</label>
-<select  class="form-select" name="doctor" required="" id="doctor" multiple>
+<label  for="medical_equipment">تجهیزات پزشکی:</label>
+<select  class="form-select" name="medical_equipment"  id="medical_equipment" multiple>
 <option value="" selected="">---------</option>
 {% for i in form.medical_equipment.field.queryset%}
 <option value="{{i.id}}">{{i}}</option>
