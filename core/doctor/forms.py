@@ -83,4 +83,4 @@ class DoctorUpdateForm(forms.ModelForm):
         registration_number = self.cleaned_data.get("registration_number")
         if not registration_number.isdigit():
             raise ValidationError("شماره نظام پزشکی باید فقط شامل اعداد باشد")
-        
+        return registration_number
