@@ -176,8 +176,11 @@ class DeleteSelectedDoctorsView(View):
         if request.method == "POST":
             user_ids = request.POST.getlist(
                 "doctor_ids"
-            )  # Get the list of selected user IDs from the form
-            Doctor.objects.filter(id__in=user_ids).delete()  # Delete selected users
+            ) 
+            deleted_users_count = Doctor.objects.filter(id__in=user_ids).delete()
+            messages.success(
+                request, f"تعداد {deleted_users_count[0]} پزشک با موفقیت حذف شدند."
+            ) 
         return redirect("doctor:list")
 
 
